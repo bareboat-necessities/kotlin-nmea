@@ -69,7 +69,7 @@ import net.sf.marineapi.ais.util.Sixbit
  * @author Henri Laurent
  */
 internal class AISMessage24Parser(content: Sixbit) : AISMessageParser(content, 160, 168), AISMessage24 {
-    override var partNumber: Int
+    override var partNumber: Int = content.getInt(FROM_A[PARTNUMBER], TO_A[PARTNUMBER])
     override var name: String? = null
     override var typeOfShipAndCargoType = 0
     override var vendorId: String? = null
@@ -87,7 +87,6 @@ internal class AISMessage24Parser(content: Sixbit) : AISMessageParser(content, 1
      * @param content Six-bit message content.
      */
     init {
-        partNumber = content.getInt(FROM_A[PARTNUMBER], TO_A[PARTNUMBER])
         partNumber = content.getInt(FROM_A[PARTNUMBER], TO_A[PARTNUMBER])
         if (partNumber == 0 && (content.length() == 160 || content.length() == 168)) {
             // Part A

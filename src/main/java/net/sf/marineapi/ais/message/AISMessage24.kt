@@ -32,7 +32,7 @@ interface AISMessage24 : AISMessage {
      * Returns the Part Number indicator for the current message.
      * @return Part Number indicator
      */
-    val partNumber: Int
+    var partNumber: Int
 
     /**
      * Returns the name of the transmitting ship.

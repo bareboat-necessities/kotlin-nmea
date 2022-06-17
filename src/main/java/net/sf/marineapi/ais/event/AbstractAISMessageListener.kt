@@ -99,15 +99,15 @@ abstract class AbstractAISMessageListener<T : AISMessage?> : AbstractSentenceLis
      * handling of received sentences.
      */
     override fun sentenceRead(sentence: AISSentence?) {
-        if (sentence!!.isFirstFragment) {
+        if (sentence!!.isFirstFragment()) {
             queue.clear()
         }
         queue.add(sentence)
-        if (sentence.isLastFragment) {
+        if (sentence.isLastFragment()) {
             val sentences = queue.toTypedArray()
             try {
                 val message = factory!!.create(*sentences)
-                if (messageType!!.isAssignableFrom(message!!.javaClass)) {
+                if (messageType!!.isAssignableFrom(message.javaClass)) {
                     onMessage(message as T)
                 }
             } catch (iae: IllegalArgumentException) {
