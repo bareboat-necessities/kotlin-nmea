@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.CURSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 
 /**
  * CUR sentence parser.
@@ -36,7 +38,7 @@ internal class CURParser : SentenceParser, CURSentence {
      * @throws IllegalArgumentException If specified String is invalid or does
      * not contain a CUR sentence.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.CUR)
+    constructor(nmea: String) : super(nmea, SentenceId.CUR) {}
 
     /**
      * Creates CUR parser with empty sentence.
@@ -54,31 +56,35 @@ internal class CURParser : SentenceParser, CURSentence {
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.BODSentence#getCurrentDirection()
 	 */
-    override val currentDirection: Double
-        get() = getDoubleValue(CURRENT_DIRECTION)
+    override fun getCurrentDirection(): Double {
+        return getDoubleValue(CURRENT_DIRECTION)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.BODSentence#getCurrentDirectionReference()
 	 */
-    override val currentDirectionReference: String
-        get() = getStringValue(DIRECTION_REFERENCE)
+    override fun getCurrentDirectionReference(): String {
+        return getStringValue(DIRECTION_REFERENCE)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.BODSentence#getCurrentHeadingReference()
 	 */
-    override val currentHeadingReference: String
-        get() = getStringValue(HEADING_REFERENCE)
+    override fun getCurrentHeadingReference(): String {
+        return getStringValue(HEADING_REFERENCE)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.BODSentence#getCurrentSpeed()
 	 */
-    override val currentSpeed: Double
-        get() = getDoubleValue(CURRENT_SPEED)
+    override fun getCurrentSpeed(): Double {
+        return getDoubleValue(CURRENT_SPEED)
+    }
 
     companion object {
         // field indices

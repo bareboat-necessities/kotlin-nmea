@@ -44,14 +44,14 @@ internal class TXTParser : SentenceParser, TXTSentence {
      *
      * @param nmea TXT sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.TXT)
+    constructor(nmea: String) : super(nmea, SentenceId.TXT) {}
 
     /**
      * Constructs an empty TXT sentence.
      *
      * @param tid TalkerId to set
      */
-    constructor(tid: TalkerId?) : super(tid, SentenceId.TXT, 4)
+    constructor(tid: TalkerId?) : super(tid, SentenceId.TXT, 4) {}
 
     override fun getMessageCount(): Int {
         return getIntValue(MESSAGE_COUNT)
@@ -75,7 +75,7 @@ internal class TXTParser : SentenceParser, TXTSentence {
         return getStringValue(IDENTIFIER)
     }
 
-    override fun setIdentifier(id: String?) {
+    override fun setIdentifier(id: String) {
         setStringValue(IDENTIFIER, id)
     }
 
@@ -83,7 +83,7 @@ internal class TXTParser : SentenceParser, TXTSentence {
         return getStringValue(MESSAGE)
     }
 
-    override fun setMessage(msg: String?) {
+    override fun setMessage(msg: String) {
         require(ASCII.matcher(msg).matches()) { "Message must be in ASCII character set" }
         setStringValue(MESSAGE, msg)
     }

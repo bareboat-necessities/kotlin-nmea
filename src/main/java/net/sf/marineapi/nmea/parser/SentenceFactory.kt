@@ -20,12 +20,64 @@
  */
 package net.sf.marineapi.nmea.parser
 
-
+import net.sf.marineapi.nmea.parser.APBParser
+import net.sf.marineapi.nmea.parser.BODParser
+import net.sf.marineapi.nmea.parser.CURParser
+import net.sf.marineapi.nmea.parser.DBTParser
+import net.sf.marineapi.nmea.parser.DPTParser
+import net.sf.marineapi.nmea.parser.DTAParser
+import net.sf.marineapi.nmea.parser.DTBParser
+import net.sf.marineapi.nmea.parser.DTMParser
+import net.sf.marineapi.nmea.parser.GBSParser
+import net.sf.marineapi.nmea.parser.GGAParser
+import net.sf.marineapi.nmea.parser.GLLParser
+import net.sf.marineapi.nmea.parser.GNSParser
+import net.sf.marineapi.nmea.parser.GSAParser
+import net.sf.marineapi.nmea.parser.GSTParser
+import net.sf.marineapi.nmea.parser.GSVParser
+import net.sf.marineapi.nmea.parser.HDGParser
+import net.sf.marineapi.nmea.parser.HDMParser
+import net.sf.marineapi.nmea.parser.HDTParser
+import net.sf.marineapi.nmea.parser.HTCParser
+import net.sf.marineapi.nmea.parser.HTDParser
+import net.sf.marineapi.nmea.parser.MDAParser
+import net.sf.marineapi.nmea.parser.MHUParser
+import net.sf.marineapi.nmea.parser.MMBParser
+import net.sf.marineapi.nmea.parser.MTAParser
+import net.sf.marineapi.nmea.parser.MTWParser
+import net.sf.marineapi.nmea.parser.MWDParser
+import net.sf.marineapi.nmea.parser.MWVParser
+import net.sf.marineapi.nmea.parser.OSDParser
+import net.sf.marineapi.nmea.parser.RMBParser
+import net.sf.marineapi.nmea.parser.RMCParser
+import net.sf.marineapi.nmea.parser.ROTParser
+import net.sf.marineapi.nmea.parser.RPMParser
+import net.sf.marineapi.nmea.parser.RSAParser
+import net.sf.marineapi.nmea.parser.RSDParser
+import net.sf.marineapi.nmea.parser.RTEParser
+import net.sf.marineapi.nmea.parser.STALKParser
+import net.sf.marineapi.nmea.parser.SentenceParser
+import net.sf.marineapi.nmea.parser.TLBParser
+import net.sf.marineapi.nmea.parser.TLLParser
+import net.sf.marineapi.nmea.parser.TTMParser
+import net.sf.marineapi.nmea.parser.TXTParser
+import net.sf.marineapi.nmea.parser.UBXParser
+import net.sf.marineapi.nmea.parser.VBWParser
+import net.sf.marineapi.nmea.parser.VDOParser
+import net.sf.marineapi.nmea.parser.VDRParser
+import net.sf.marineapi.nmea.parser.VHWParser
+import net.sf.marineapi.nmea.parser.VLWParser
+import net.sf.marineapi.nmea.parser.VTGParser
+import net.sf.marineapi.nmea.parser.VWRParser
+import net.sf.marineapi.nmea.parser.VWTParser
+import net.sf.marineapi.nmea.parser.WPLParser
+import net.sf.marineapi.nmea.parser.XDRParser
+import net.sf.marineapi.nmea.parser.XTEParser
+import net.sf.marineapi.nmea.parser.ZDAParser
 import net.sf.marineapi.nmea.sentence.Sentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import java.lang.reflect.InvocationTargetException
-import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -89,7 +141,7 @@ class SentenceFactory private constructor() {
      * implement expected constructors or is otherwise unusable.
      */
     fun createParser(nmea: String): Sentence? {
-        val sid: String = SentenceId.parseStr(nmea)
+        val sid = SentenceId.parseStr(nmea)
         return createParserImpl(sid, nmea)
     }
 
@@ -190,8 +242,8 @@ class SentenceFactory private constructor() {
         parser: Class<out SentenceParser>
     ) {
         try {
-            parser.getConstructor(String::class.java)
-            parser.getConstructor(TalkerId::class.java)
+            parser.getConstructor(*arrayOf<Class<*>>(String::class.java))
+            parser.getConstructor(*arrayOf<Class<*>>(TalkerId::class.java))
             parsers!![type] = parser
         } catch (e: SecurityException) {
             val msg = "Unable to register parser due security violation"
@@ -321,16 +373,12 @@ class SentenceFactory private constructor() {
         // map that holds registered sentence types and parser classes
         private var parsers: MutableMap<String, Class<out SentenceParser>>? = null
 
-        // singleton factory instance
-        private val INSTANCE = SentenceFactory()
-
         /**
          * Returns the singleton instance of `SentenceFactory`.
          *
          * @return SentenceFactory instance
          */
-        fun getInstance(): SentenceFactory {
-            return INSTANCE
-        }
+        // singleton factory instance
+        val instance = SentenceFactory()
     }
 }

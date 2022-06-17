@@ -20,8 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
-
+import net.sf.marineapi.nmea.sentence.DPTSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 
 /**
  * DPT sentence parser.
@@ -34,53 +35,62 @@ internal class DPTParser : SentenceParser, DPTSentence {
      *
      * @param nmea DPT sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.DPT)
+    constructor(nmea: String) : super(nmea, SentenceId.DPT) {}
 
     /**
      * Creates a new instance of DPTParser with empty data fields.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.DPT, 3)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.DPT, 3) {}
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DepthSentence#getDepth()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DepthSentence#setDepth(double)
 	 */
-    override var depth: Double
-        get() = getDoubleValue(DEPTH)
-        set(depth) {
-            setDoubleValue(DEPTH, depth, 1, 1)
-        }
+    override fun getDepth(): Double {
+        return getDoubleValue(DEPTH)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DPTSentence#getOffset()
-	 *//*
+	 */
+    override fun getOffset(): Double {
+        return getDoubleValue(OFFSET)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.DepthSentence#setDepth(double)
+	 */
+    override fun setDepth(depth: Double) {
+        setDoubleValue(DEPTH, depth, 1, 1)
+    }
+
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DPTSentence#setOffset(double)
 	 */
-    override var offset: Double
-        get() = getDoubleValue(OFFSET)
-        set(offset) {
-            setDoubleValue(OFFSET, offset, 1, 1)
-        }
+    override fun setOffset(offset: Double) {
+        setDoubleValue(OFFSET, offset, 1, 1)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DPTSentence#getMaximum()
-	 *//*
+	 */
+    override fun getMaximum(): Double {
+        return getDoubleValue(MAXIMUM)
+    }
+
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DPTSentence#setMaximum(int)
 	 */
-    override var maximum: Double
-        get() = getDoubleValue(MAXIMUM)
-        set(max) {
-            setDoubleValue(MAXIMUM, max)
-        }
+    override fun setMaximum(max: Double) {
+        setDoubleValue(MAXIMUM, max)
+    }
 
     companion object {
         private const val DEPTH = 0

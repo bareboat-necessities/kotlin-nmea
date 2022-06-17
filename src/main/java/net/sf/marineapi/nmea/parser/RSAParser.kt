@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.RSASentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.Side
 
@@ -35,7 +37,7 @@ internal class RSAParser : SentenceParser, RSASentence {
      *
      * @param nmea RSA sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.RSA)
+    constructor(nmea: String) : super(nmea, SentenceId.RSA) {}
 
     /**
      * Creates a new instance of RSAParser with empty data fields.
@@ -63,8 +65,8 @@ internal class RSAParser : SentenceParser, RSASentence {
 
     override fun getStatus(side: Side): DataStatus {
         return if (Side.STARBOARD == side) {
-            DataStatus.Companion.valueOf(getCharValue(STARBOARD_STATUS))
-        } else DataStatus.Companion.valueOf(getCharValue(PORT_STATUS))
+            DataStatus.valueOf(getCharValue(STARBOARD_STATUS))
+        } else DataStatus.valueOf(getCharValue(PORT_STATUS))
     }
 
     override fun setStatus(side: Side, status: DataStatus) {

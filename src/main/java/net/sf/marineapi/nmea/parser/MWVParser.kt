@@ -20,10 +20,11 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.MWVSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.Units
-
 
 /**
  * MWV sentence parser.
@@ -36,7 +37,7 @@ internal class MWVParser : SentenceParser, MWVSentence {
      *
      * @param nmea MWV sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.MWV)
+    constructor(nmea: String) : super(nmea, SentenceId.MWV) {}
 
     /**
      * Creates a new empty instance of MWVParser.
@@ -50,73 +51,84 @@ internal class MWVParser : SentenceParser, MWVSentence {
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#getAngle()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#setAngle(double)
 	 */
-    override var angle: Double
-        get() = getDoubleValue(WIND_ANGLE)
-        set(angle) {
-            setDegreesValue(WIND_ANGLE, angle)
-        }
+    override fun getAngle(): Double {
+        return getDoubleValue(WIND_ANGLE)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#getSpeed()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#setSpeed(double)
 	 */
-    override var speed: Double
-        get() = getDoubleValue(WIND_SPEED)
-        set(speed) {
-            require(speed >= 0) { "Speed must be positive" }
-            setDoubleValue(WIND_SPEED, speed, 1, 1)
-        }
+    override fun getSpeed(): Double {
+        return getDoubleValue(WIND_SPEED)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#getSpeedUnit()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.MWVSentence#setSpeedUnit(net.sf.marineapi
-	 * .nmea.util.Units)
 	 */
-    override var speedUnit: Units
-        get() = Units.Companion.valueOf(getCharValue(SPEED_UNITS))
-        set(unit) {
-            if (unit == Units.METER || unit == Units.KILOMETERS || unit == Units.NAUTICAL_MILES) {
-                setCharValue(SPEED_UNITS, unit.toChar())
-                return
-            }
-            throw IllegalArgumentException("Invalid unit for speed")
-        }
+    override fun getSpeedUnit(): Units {
+        return Units.valueOf(getCharValue(SPEED_UNITS))
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#getStatus()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.MWVSentence#setStatus(net.sf.marineapi
-	 * .nmea.util.DataStatus)
 	 */
-    override var status: DataStatus
-        get() = DataStatus.Companion.valueOf(getCharValue(DATA_STATUS))
-        set(status) {
-            setCharValue(DATA_STATUS, status.toChar())
-        }
+    override fun getStatus(): DataStatus {
+        return DataStatus.valueOf(getCharValue(DATA_STATUS))
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#isTrue()
 	 */
-    override val isTrue: Boolean
-        get() {
-            val ch = getCharValue(REFERENCE)
-            return ch == 'T'
+    override fun isTrue(): Boolean {
+        val ch = getCharValue(REFERENCE)
+        return ch == 'T'
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#setAngle(double)
+	 */
+    override fun setAngle(angle: Double) {
+        setDegreesValue(WIND_ANGLE, angle)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#setSpeed(double)
+	 */
+    override fun setSpeed(speed: Double) {
+        require(speed >= 0) { "Speed must be positive" }
+        setDoubleValue(WIND_SPEED, speed, 1, 1)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.MWVSentence#setSpeedUnit(net.sf.marineapi
+	 * .nmea.util.Units)
+	 */
+    override fun setSpeedUnit(unit: Units) {
+        if (unit == Units.METER || unit == Units.KILOMETERS || unit == Units.NAUTICAL_MILES) {
+            setCharValue(SPEED_UNITS, unit.toChar())
+            return
         }
+        throw IllegalArgumentException("Invalid unit for speed")
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.MWVSentence#setStatus(net.sf.marineapi
+	 * .nmea.util.DataStatus)
+	 */
+    override fun setStatus(status: DataStatus) {
+        setCharValue(DATA_STATUS, status.toChar())
+    }
 
     /*
 	 * (non-Javadoc)

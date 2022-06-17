@@ -24,7 +24,6 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.sentence.ZDASentence
 import net.sf.marineapi.nmea.util.Time
-import java.util.*
 
 /**
  * ZDA sentence parser.
@@ -38,14 +37,14 @@ internal class ZDAParser : SentenceParser, ZDASentence {
      * @param nmea ZDA sentence String
      * @throws IllegalArgumentException If specified sentence is invalid.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.ZDA)
+    constructor(nmea: String) : super(nmea, SentenceId.ZDA) {}
 
     /**
      * Creates WPL parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.ZDA, 6)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.ZDA, 6) {}
 
     /*
 	 * (non-Javadoc)

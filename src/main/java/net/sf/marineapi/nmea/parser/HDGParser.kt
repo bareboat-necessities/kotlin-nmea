@@ -36,90 +36,96 @@ internal class HDGParser : SentenceParser, HDGSentence {
      *
      * @param nmea HDG sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.HDG)
+    constructor(nmea: String) : super(nmea, SentenceId.HDG) {}
 
     /**
      * Creates a new empty HDG parser.
      *
      * @param talker Talker id to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.HDG, 5)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.HDG, 5) {}
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#getDeviation()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#setDeviation(double)
 	 */
-    override var deviation: Double
-        get() {
-            val dev = getDoubleValue(DEVIATION)
-            if (dev == 0.0) {
-                return dev
-            }
-            val dir: CompassPoint = CompassPoint.Companion.valueOf(getCharValue(DEV_DIRECTION))
-            return if (dir == CompassPoint.WEST) -dev else dev
+    override fun getDeviation(): Double {
+        val dev = getDoubleValue(DEVIATION)
+        if (dev == 0.0) {
+            return dev
         }
-        set(deviation) {
-            require(!(deviation < -180 || deviation > 180)) { "Value out of range [-180..180]" }
-            if (deviation > 0) {
-                setCharValue(DEV_DIRECTION, CompassPoint.EAST.toChar())
-            } else if (deviation < 0) {
-                setCharValue(DEV_DIRECTION, CompassPoint.WEST.toChar())
-            } else {
-                setStringValue(DEV_DIRECTION, "")
-            }
-            setDoubleValue(DEVIATION, Math.abs(deviation), 3, 1)
-        }
+        val dir = CompassPoint.valueOf(getCharValue(DEV_DIRECTION))
+        return if (dir == CompassPoint.WEST) -dev else dev
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#getHeading()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#setHeading(double)
 	 */
-    override var heading: Double
-        get() = getDoubleValue(HEADING)
-        set(heading) {
-            setDegreesValue(HEADING, heading)
-        }
+    override fun getHeading(): Double {
+        return getDoubleValue(HEADING)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#getVariation()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#setVariation(double)
 	 */
-    override var variation: Double
-        get() {
-            val `var` = getDoubleValue(VARIATION)
-            if (`var` == 0.0) {
-                return `var`
-            }
-            val dir: CompassPoint = CompassPoint.Companion.valueOf(getCharValue(VAR_DIRECTION))
-            return if (dir == CompassPoint.WEST) -`var` else `var`
+    override fun getVariation(): Double {
+        val `var` = getDoubleValue(VARIATION)
+        if (`var` == 0.0) {
+            return `var`
         }
-        set(variation) {
-            require(!(variation < -180 || variation > 180)) { "Value out of range [-180..180]" }
-            if (variation > 0) {
-                setCharValue(VAR_DIRECTION, CompassPoint.EAST.toChar())
-            } else if (variation < 0) {
-                setCharValue(VAR_DIRECTION, CompassPoint.WEST.toChar())
-            } else {
-                setStringValue(VAR_DIRECTION, "")
-            }
-            setDoubleValue(VARIATION, Math.abs(variation), 3, 1)
-        }
+        val dir = CompassPoint.valueOf(getCharValue(VAR_DIRECTION))
+        return if (dir == CompassPoint.WEST) -`var` else `var`
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.HeadingSentence#isTrue()
 	 */
-    override val isTrue: Boolean
-        get() = false
+    override fun isTrue(): Boolean {
+        return false
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#setDeviation(double)
+	 */
+    override fun setDeviation(deviation: Double) {
+        require(!(deviation < -180 || deviation > 180)) { "Value out of range [-180..180]" }
+        if (deviation > 0) {
+            setCharValue(DEV_DIRECTION, CompassPoint.EAST.toChar())
+        } else if (deviation < 0) {
+            setCharValue(DEV_DIRECTION, CompassPoint.WEST.toChar())
+        } else {
+            setStringValue(DEV_DIRECTION, "")
+        }
+        setDoubleValue(DEVIATION, Math.abs(deviation), 3, 1)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#setHeading(double)
+	 */
+    override fun setHeading(heading: Double) {
+        setDegreesValue(HEADING, heading)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#setVariation(double)
+	 */
+    override fun setVariation(variation: Double) {
+        require(!(variation < -180 || variation > 180)) { "Value out of range [-180..180]" }
+        if (variation > 0) {
+            setCharValue(VAR_DIRECTION, CompassPoint.EAST.toChar())
+        } else if (variation < 0) {
+            setCharValue(VAR_DIRECTION, CompassPoint.WEST.toChar())
+        } else {
+            setStringValue(VAR_DIRECTION, "")
+        }
+        setDoubleValue(VARIATION, Math.abs(variation), 3, 1)
+    }
 
     companion object {
         private const val HEADING = 0

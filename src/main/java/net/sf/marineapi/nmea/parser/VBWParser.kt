@@ -37,25 +37,25 @@ internal class VBWParser : SentenceParser, VBWSentence {
      * @param nmea VBW sentence String.
      * @throws IllegalArgumentException If specified sentence is invalid.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.VBW)
+    constructor(nmea: String) : super(nmea, SentenceId.VBW) {}
 
     /**
      * Create a VBW parser with an empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.VBW, 10)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.VBW, 10) {}
 
     override fun getLongWaterSpeed(): Double {
         return getDoubleValue(LONG_WATERSPEED)
     }
 
     override fun getWaterSpeedStatus(): DataStatus {
-        return DataStatus.Companion.valueOf(getCharValue(WATER_SPEED_STATUS))
+        return DataStatus.valueOf(getCharValue(WATER_SPEED_STATUS))
     }
 
     override fun getGroundSpeedStatus(): DataStatus {
-        return DataStatus.Companion.valueOf(getCharValue(GROUND_SPEED_STATUS))
+        return DataStatus.valueOf(getCharValue(GROUND_SPEED_STATUS))
     }
 
     override fun getLongGroundSpeed(): Double {
@@ -75,7 +75,7 @@ internal class VBWParser : SentenceParser, VBWSentence {
     }
 
     override fun getSternWaterSpeedStatus(): DataStatus {
-        return DataStatus.Companion.valueOf(getCharValue(STERN_SPEED_STATUS))
+        return DataStatus.valueOf(getCharValue(STERN_SPEED_STATUS))
     }
 
     override fun getSternGroundSpeed(): Double {
@@ -83,7 +83,7 @@ internal class VBWParser : SentenceParser, VBWSentence {
     }
 
     override fun getSternGroundSpeedStatus(): DataStatus {
-        return DataStatus.Companion.valueOf(getCharValue(STERN_GROUNDSPEED_STATUS))
+        return DataStatus.valueOf(getCharValue(STERN_GROUNDSPEED_STATUS))
     }
 
     override fun setLongWaterSpeed(speed: Double) {

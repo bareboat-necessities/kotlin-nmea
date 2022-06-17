@@ -20,11 +20,12 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.OSDSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.ReferenceSystem
 import net.sf.marineapi.nmea.util.Units
-import java.util.*
 
 
 /**
@@ -38,125 +39,152 @@ internal class OSDParser : SentenceParser, OSDSentence {
      *
      * @param nmea OSD sentence string.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.OSD)
+    constructor(nmea: String) : super(nmea, SentenceId.OSD) {}
 
     /**
      * Creates OSD parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.OSD, 9)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.OSD, 9) {}
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.getHeading
+     * @see OSDSentence.getHeading
      */
+    override fun getHeading(): Double {
+        return getDoubleValue(HEADING)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.setHeading
+     * @see OSDSentence.getHeadingStatus
      */
-    override var heading: Double
-        get() = getDoubleValue(HEADING)
-        set(heading) {
-            setDoubleValue(HEADING, heading)
-        }
+    override fun getHeadingStatus(): DataStatus {
+        return DataStatus.valueOf(getCharValue(HEADING_STATUS))
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.getHeadingStatus
+     * @see OSDSentence.getCourse
      */
+    override fun getCourse(): Double {
+        return getDoubleValue(COURSE)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.setHeadingStatus
+     * @see OSDSentence.getCourseReference
      */
-    override var headingStatus: DataStatus
-        get() = DataStatus.Companion.valueOf(getCharValue(HEADING_STATUS))
-        set(status) {
-            setCharValue(HEADING_STATUS, status.toChar())
-        }
+    override fun getCourseReference(): ReferenceSystem {
+        return ReferenceSystem.valueOf(getCharValue(COURSE_REFERENCE))
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.getCourse
+     * @see OSDSentence.getSpeed
      */
+    override fun getSpeed(): Double {
+        return getDoubleValue(SPEED)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.setCourse
+     * @see OSDSentence.getSpeedReference
      */
-    override var course: Double
-        get() = getDoubleValue(COURSE)
-        set(course) {
-            setDoubleValue(COURSE, course)
-        }
+    override fun getSpeedReference(): ReferenceSystem {
+        return ReferenceSystem.valueOf(getCharValue(SPEED_REFERENCE))
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.getCourseReference
+     * @see OSDSentence.getVesselSet
      */
+    override fun getVesselSet(): Double {
+        return getDoubleValue(VESSEL_SET)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.setCourseReference
+     * @see OSDSentence.getVesselDrift
      */
-    override var courseReference: ReferenceSystem
-        get() = ReferenceSystem.Companion.valueOf(getCharValue(COURSE_REFERENCE))
-        set(reference) {
-            setCharValue(COURSE_REFERENCE, reference.toChar())
-        }
+    override fun getVesselDrift(): Double {
+        return getDoubleValue(VESSEL_DRIFT)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.getSpeed
+     * @see OSDSentence.getSpeedUnits
      */
+    override fun getSpeedUnits(): Units {
+        return Units.valueOf(getCharValue(SPEED_UNITS))
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.setSpeed
+     * @see OSDSentence.setHeading
      */
-    override var speed: Double
-        get() = getDoubleValue(SPEED)
-        set(speed) {
-            setDoubleValue(SPEED, speed)
-        }
+    override fun setHeading(heading: Double) {
+        setDoubleValue(HEADING, heading)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.getSpeedReference
+     * @see OSDSentence.setHeadingStatus
      */
+    override fun setHeadingStatus(status: DataStatus) {
+        setCharValue(HEADING_STATUS, status.toChar())
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.setSpeedReference
+     * @see OSDSentence.setCourse
      */
-    override var speedReference: ReferenceSystem
-        get() = ReferenceSystem.Companion.valueOf(getCharValue(SPEED_REFERENCE))
-        set(reference) {
-            setCharValue(SPEED_REFERENCE, reference.toChar())
-        }
+    override fun setCourse(course: Double) {
+        setDoubleValue(COURSE, course)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.getVesselSet
+     * @see OSDSentence.setCourseReference
      */
+    override fun setCourseReference(reference: ReferenceSystem) {
+        setCharValue(COURSE_REFERENCE, reference.toChar())
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.setVesselSet
+     * @see OSDSentence.setSpeed
      */
-    override var vesselSet: Double
-        get() = getDoubleValue(VESSEL_SET)
-        set(set) {
-            setDoubleValue(VESSEL_SET, set)
-        }
+    override fun setSpeed(speed: Double) {
+        setDoubleValue(SPEED, speed)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.getVesselDrift
+     * @see OSDSentence.setSpeedReference
      */
+    override fun setSpeedReference(reference: ReferenceSystem) {
+        setCharValue(SPEED_REFERENCE, reference.toChar())
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.setVesselDrift
+     * @see OSDSentence.setVesselSet
      */
-    override var vesselDrift: Double
-        get() = getDoubleValue(VESSEL_DRIFT)
-        set(drift) {
-            setDoubleValue(VESSEL_DRIFT, drift)
-        }
+    override fun setVesselSet(set: Double) {
+        setDoubleValue(VESSEL_SET, set)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.getSpeedUnits
+     * @see OSDSentence.setVesselDrift
      */
+    override fun setVesselDrift(drift: Double) {
+        setDoubleValue(VESSEL_DRIFT, drift)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.OSDSentence.setSpeedUnits
+     * @see OSDSentence.setSpeedUnits
      */
-    override var speedUnits: Units
-        get() = Units.Companion.valueOf(getCharValue(SPEED_UNITS))
-        set(units) {
-            if (Arrays.asList(*VALID_SPEED_UNITS).contains(units)) {
-                setCharValue(SPEED_UNITS, units.toChar())
-            } else {
-                var err = "Speed units must be "
-                for (i in VALID_SPEED_UNITS.indices) {
-                    val u = VALID_SPEED_UNITS[i]
-                    err += u.name + "(" + u.toChar() + ")"
-                    if (i != VALID_SPEED_UNITS.size - 1) {
-                        err += ", "
-                    }
+    override fun setSpeedUnits(units: Units) {
+        if (Arrays.asList(*VALID_SPEED_UNITS).contains(units)) {
+            setCharValue(SPEED_UNITS, units.toChar())
+        } else {
+            var err = "Speed units must be "
+            for (i in VALID_SPEED_UNITS.indices) {
+                val u = VALID_SPEED_UNITS[i]
+                err += u.name + "(" + u.toChar() + ")"
+                if (i != VALID_SPEED_UNITS.size - 1) {
+                    err += ", "
                 }
-                throw IllegalArgumentException(err)
             }
+            throw IllegalArgumentException(err)
         }
+    }
 
     companion object {
         private const val HEADING = 0

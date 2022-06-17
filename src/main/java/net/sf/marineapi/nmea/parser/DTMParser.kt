@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.DTMSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 
 /**
  * DTM parser.
@@ -33,111 +35,127 @@ internal class DTMParser : SentenceParser, DTMSentence {
      *
      * @param nmea DTM sentence String to parse.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.DTM)
+    constructor(nmea: String) : super(nmea, SentenceId.DTM) {}
 
     /**
      * Creates a new empty instance of DTMParser.
      *
      * @param talker Talker ID to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.DTM, 8)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.DTM, 8) {}
 
     /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.DTMSentence#getAltitudeOffset()
 	 */
-    override val altitudeOffset: Double
-        get() = getDoubleValue(ALTITUDE_OFFSET)
+    override fun getAltitudeOffset(): Double {
+        return getDoubleValue(ALTITUDE_OFFSET)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.DTMSentence#getDatumCode()
-	 *//*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.DTMSentence#setDatumCode(java.lang.String)
 	 */
-    override var datumCode: String?
-        get() = getStringValue(DATUM_CODE)
-        set(code) {
-            setStringValue(DATUM_CODE, code)
-        }
+    override fun getDatumCode(): String {
+        return getStringValue(DATUM_CODE)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.DTMSentence#getDatumSubCode()
-	 *//*
+	 */
+    override fun getDatumSubCode(): String {
+        return getStringValue(DATUM_SUBCODE)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.sf.marineapi.nmea.sentence.DTMSentence#getLatitudeOffset()
+	 */
+    override fun getLatitudeOffset(): Double {
+        return getDoubleValue(LATITUDE_OFFSET)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.sf.marineapi.nmea.sentence.DTMSentence#getLongitudeOffset()
+	 */
+    override fun getLongitudeOffset(): Double {
+        return getDoubleValue(LONGITUDE_OFFSET)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.sf.marineapi.nmea.sentence.DTMSentence#getName()
+	 */
+    override fun getName(): String {
+        return getStringValue(DATUM_NAME)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.DTMSentence#setDatumCode(java.lang.String)
+	 */
+    override fun setDatumCode(code: String) {
+        setStringValue(DATUM_CODE, code)
+    }
+
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.DTMSentence#setDatumSubCode(java.lang.
 	 * String)
 	 */
-    override var datumSubCode: String?
-        get() = getStringValue(DATUM_SUBCODE)
-        set(code) {
-            setStringValue(DATUM_SUBCODE, code)
-        }
+    override fun setDatumSubCode(code: String) {
+        setStringValue(DATUM_SUBCODE, code)
+    }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.DTMSentence#getLatitudeOffset()
-	 *//*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.DTMSentence#setLatitudeOffset(double)
 	 */
-    override var latitudeOffset: Double
-        get() = getDoubleValue(LATITUDE_OFFSET)
-        set(offset) {
-            setDoubleValue(LATITUDE_OFFSET, offset, 1, 4)
-            if (offset < 0) {
-                setCharValue(LAT_OFFSET_HEMISPHERE, 'S')
-            } else {
-                setCharValue(LAT_OFFSET_HEMISPHERE, 'N')
-            }
+    override fun setLatitudeOffset(offset: Double) {
+        setDoubleValue(LATITUDE_OFFSET, offset, 1, 4)
+        if (offset < 0) {
+            setCharValue(LAT_OFFSET_HEMISPHERE, 'S')
+        } else {
+            setCharValue(LAT_OFFSET_HEMISPHERE, 'N')
         }
+    }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.DTMSentence#getLongitudeOffset()
-	 *//*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.DTMSentence#setLongitudeOffset(double)
 	 */
-    override var longitudeOffset: Double
-        get() = getDoubleValue(LONGITUDE_OFFSET)
-        set(offset) {
-            setDoubleValue(LONGITUDE_OFFSET, offset, 1, 4)
-            if (offset < 0) {
-                setCharValue(LON_OFFSET_HEMISPHERE, 'W')
-            } else {
-                setCharValue(LON_OFFSET_HEMISPHERE, 'E')
-            }
+    override fun setLongitudeOffset(offset: Double) {
+        setDoubleValue(LONGITUDE_OFFSET, offset, 1, 4)
+        if (offset < 0) {
+            setCharValue(LON_OFFSET_HEMISPHERE, 'W')
+        } else {
+            setCharValue(LON_OFFSET_HEMISPHERE, 'E')
         }
+    }
 
     /*
 	 * (non-Javadoc)
 	 * 
-	 * @see net.sf.marineapi.nmea.sentence.DTMSentence#getName()
-	 *//*
-	 * (non-Javadoc)
-	 * 
 	 * @see net.sf.marineapi.nmea.sentence.DTMSentence#setName(java.lang.String)
 	 */
-    override var name: String?
-        get() = getStringValue(DATUM_NAME)
-        set(name) {
-            setStringValue(DATUM_NAME, name)
-        }
+    override fun setName(name: String) {
+        setStringValue(DATUM_NAME, name)
+    }
 
     companion object {
         private const val DATUM_CODE = 0

@@ -21,8 +21,8 @@
 package net.sf.marineapi.nmea.parser
 
 import net.sf.marineapi.nmea.sentence.DTBSentence
-import net.sf.marineapi.nmea.sentence.*
-
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 
 /**
  * DTB sentence parser.
@@ -36,14 +36,14 @@ internal class DTBParser : DTAParser, DTBSentence {
      *
      * @param talker DTB talkerId
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.DTB, 8)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.DTB, 8) {}
 
     /**
      * Creates a new instance of DTBParser.
      *
      * @param nmea DTB sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.DTB)
+    constructor(nmea: String) : super(nmea, SentenceId.DTB) {}
 
     /**
      * Gets the hard-coded channel for GasFinder2. Since only GasFinder2
@@ -52,8 +52,9 @@ internal class DTBParser : DTAParser, DTBSentence {
      *
      * @return Channel number, always 2.
      */
-    override val channelNumber: Int
-        get() = 2
+    override fun getChannelNumber(): Int {
+        return 2
+    }
 
     companion object {
         const val DTB_SENTENCE_ID = "DTB"

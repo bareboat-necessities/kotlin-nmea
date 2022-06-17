@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.HDTSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 
 /**
  * HDT sentence parser.
@@ -33,7 +35,7 @@ internal class HDTParser : SentenceParser, HDTSentence {
      *
      * @param nmea HDT sentence String to parse.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.HDT)
+    constructor(nmea: String) : super(nmea, SentenceId.HDT) {}
 
     /**
      * Creates a new empty HDT sentence.
@@ -47,22 +49,26 @@ internal class HDTParser : SentenceParser, HDTSentence {
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.parser.HeadingSentence#getHeading()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.parser.HeadingSentence#setHeading(double)
 	 */
-    override var heading: Double
-        get() = getDoubleValue(HEADING)
-        set(hdt) {
-            setDegreesValue(HEADING, hdt)
-        }
+    override fun getHeading(): Double {
+        return getDoubleValue(HEADING)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.HeadingSentence#isTrue()
 	 */
-    override val isTrue: Boolean
-        get() = true
+    override fun isTrue(): Boolean {
+        return true
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.parser.HeadingSentence#setHeading(double)
+	 */
+    override fun setHeading(hdt: Double) {
+        setDegreesValue(HEADING, hdt)
+    }
 
     companion object {
         private const val HEADING = 0

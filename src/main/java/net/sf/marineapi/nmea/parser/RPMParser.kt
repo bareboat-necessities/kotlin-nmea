@@ -20,7 +20,8 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.RPMSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DataStatus
 
 /**
@@ -34,108 +35,125 @@ internal class RPMParser : SentenceParser, RPMSentence {
      *
      * @param nmea NMEA sentence String.
      */
-    constructor(nmea: String) : super(nmea)
+    constructor(nmea: String) : super(nmea) {}
 
     /**
      * Creates a new empty parser.
      *
      * @param talker TalkerId to set.
      */
-    constructor(talker: TalkerId?) : super(talker, "RPM", 5)
+    constructor(talker: TalkerId?) : super(talker, "RPM", 5) {}
 
     /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#getId()
-	 *//*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#setId(int)
 	 */
-    override var id: Int
-        get() = getIntValue(SOURCE_NUMBER)
-        set(id) {
-            setIntValue(SOURCE_NUMBER, id)
-        }
+    override fun getId(): Int {
+        return getIntValue(SOURCE_NUMBER)
+    }
 
     /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#getPitch()
-	 *//*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#setPitch(double)
 	 */
-    override var pitch: Double
-        get() = getDoubleValue(PITCH)
-        set(pitch) {
-            setDoubleValue(PITCH, pitch, 1, 1)
-        }
+    override fun getPitch(): Double {
+        return getDoubleValue(PITCH)
+    }
 
     /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#getRPM()
-	 *//*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#setRPM()
 	 */
-    override var rPM: Double
-        get() = getDoubleValue(REVOLUTIONS)
-        set(rpm) {
-            setDoubleValue(REVOLUTIONS, rpm)
-        }
+    override fun getRPM(): Double {
+        return getDoubleValue(REVOLUTIONS)
+    }
 
     /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#getSource()
-	 *//*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#setSource(char)
 	 */
-    override var source: Char
-        get() = getCharValue(SOURCE)
-        set(source) {
-            require(!(source != RPMSentence.Companion.ENGINE && source != RPMSentence.Companion.SHAFT)) { "Invalid source indicator, expected 'E' or 'S'" }
-            setCharValue(SOURCE, source)
-        }
+    override fun getSource(): Char {
+        return getCharValue(SOURCE)
+    }
 
     /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#getStatus()
-	 *//*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.RPMSentence#setStatus(net.sf.marineapi
-	 * .nmea.util.DataStatus)
 	 */
-    override var status: DataStatus
-        get() = DataStatus.Companion.valueOf(getCharValue(STATUS))
-        set(status) {
-            setCharValue(STATUS, status.toChar())
-        }
+    override fun getStatus(): DataStatus {
+        return DataStatus.valueOf(getCharValue(STATUS))
+    }
 
     /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#isEngine()
 	 */
-    override val isEngine: Boolean
-        get() = getCharValue(SOURCE) == RPMSentence.Companion.ENGINE
+    override fun isEngine(): Boolean {
+        return getCharValue(SOURCE) == RPMSentence.ENGINE
+    }
 
     /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#isShaft()
 	 */
-    override val isShaft: Boolean
-        get() = getCharValue(SOURCE) == RPMSentence.Companion.SHAFT
+    override fun isShaft(): Boolean {
+        return getCharValue(SOURCE) == RPMSentence.SHAFT
+    }
+
+    /*
+	 * (non-Javadoc)
+	 *
+	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#setId(int)
+	 */
+    override fun setId(id: Int) {
+        setIntValue(SOURCE_NUMBER, id)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 *
+	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#setPitch(double)
+	 */
+    override fun setPitch(pitch: Double) {
+        setDoubleValue(PITCH, pitch, 1, 1)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 *
+	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#setRPM()
+	 */
+    override fun setRPM(rpm: Double) {
+        setDoubleValue(REVOLUTIONS, rpm)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 *
+	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#setSource(char)
+	 */
+    override fun setSource(source: Char) {
+        require(!(source != RPMSentence.ENGINE && source != RPMSentence.SHAFT)) { "Invalid source indicator, expected 'E' or 'S'" }
+        setCharValue(SOURCE, source)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.RPMSentence#setStatus(net.sf.marineapi
+	 * .nmea.util.DataStatus)
+	 */
+    override fun setStatus(status: DataStatus) {
+        setCharValue(STATUS, status.toChar())
+    }
 
     companion object {
         private const val SOURCE = 0

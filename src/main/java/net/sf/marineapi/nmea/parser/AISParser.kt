@@ -22,8 +22,7 @@ package net.sf.marineapi.nmea.parser
 
 import net.sf.marineapi.nmea.sentence.AISSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
-
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.TalkerId
 
 /**
  * Common AIS sentence parser. Handles only the NMEA layer for VDM and VDO
@@ -43,7 +42,7 @@ internal abstract class AISParser : SentenceParser, AISSentence {
      * @param nmea NMEA sentence String.
      * @param sid Expected sentence ID
      */
-    constructor(nmea: String, sid: SentenceId) : super(nmea, sid)
+    constructor(nmea: String, sid: SentenceId) : super(nmea, sid) {}
 
     /**
      * Creates a new empty VDOParser.
@@ -51,26 +50,43 @@ internal abstract class AISParser : SentenceParser, AISSentence {
      * @param tid TalkerId to set
      * @param sid SentenceId to set
      */
-    constructor(tid: TalkerId?, sid: SentenceId) : super('!', tid, sid, 6)
+    constructor(tid: TalkerId?, sid: SentenceId) : super('!', tid, sid, 6) {}
 
-    override val numberOfFragments: Int
-        get() = getIntValue(NUMBER_OF_FRAGMENTS)
-    override val fragmentNumber: Int
-        get() = getIntValue(FRAGMENT_NUMBER)
-    override val messageId: String?
-        get() = getStringValue(MESSAGE_ID)
-    override val radioChannel: String?
-        get() = getStringValue(RADIO_CHANNEL)
-    override val payload: String?
-        get() = getStringValue(PAYLOAD)
-    override val fillBits: Int
-        get() = getIntValue(FILL_BITS)
-    override val isFragmented: Boolean
-        get() = numberOfFragments > 1
-    override val isFirstFragment: Boolean
-        get() = fragmentNumber == 1
-    override val isLastFragment: Boolean
-        get() = numberOfFragments == fragmentNumber
+    override fun getNumberOfFragments(): Int {
+        return getIntValue(NUMBER_OF_FRAGMENTS)
+    }
+
+    override fun getFragmentNumber(): Int {
+        return getIntValue(FRAGMENT_NUMBER)
+    }
+
+    override fun getMessageId(): String {
+        return getStringValue(MESSAGE_ID)
+    }
+
+    override fun getRadioChannel(): String {
+        return getStringValue(RADIO_CHANNEL)
+    }
+
+    override fun getPayload(): String {
+        return getStringValue(PAYLOAD)
+    }
+
+    override fun getFillBits(): Int {
+        return getIntValue(FILL_BITS)
+    }
+
+    override fun isFragmented(): Boolean {
+        return numberOfFragments > 1
+    }
+
+    override fun isFirstFragment(): Boolean {
+        return fragmentNumber == 1
+    }
+
+    override fun isLastFragment(): Boolean {
+        return numberOfFragments == fragmentNumber
+    }
 
     override fun isPartOfMessage(line: AISSentence): Boolean {
         return if (numberOfFragments == line.numberOfFragments &&

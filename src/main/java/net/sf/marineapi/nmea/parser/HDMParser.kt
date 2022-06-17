@@ -35,7 +35,7 @@ internal class HDMParser : SentenceParser, HDMSentence {
      *
      * @param nmea HDM sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.HDM)
+    constructor(nmea: String) : super(nmea, SentenceId.HDM) {}
 
     /**
      * Creates a new empty HDM sentence.
@@ -49,22 +49,26 @@ internal class HDMParser : SentenceParser, HDMSentence {
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.HDMSentence#getHeading()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HDMSentence#setHeading(double)
 	 */
-    override var heading: Double
-        get() = getDoubleValue(HEADING)
-        set(hdm) {
-            setDegreesValue(HEADING, hdm)
-        }
+    override fun getHeading(): Double {
+        return getDoubleValue(HEADING)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.HeadingSentence#isTrue()
 	 */
-    override val isTrue: Boolean
-        get() = false
+    override fun isTrue(): Boolean {
+        return false
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.HDMSentence#setHeading(double)
+	 */
+    override fun setHeading(hdm: Double) {
+        setDegreesValue(HEADING, hdm)
+    }
 
     companion object {
         private const val HEADING = 0

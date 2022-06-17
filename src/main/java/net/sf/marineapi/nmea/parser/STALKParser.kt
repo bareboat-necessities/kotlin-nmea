@@ -23,7 +23,6 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.STALKSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
-import java.util.*
 
 /**
  * SeaTalk $STALK sentence parser.
@@ -38,7 +37,7 @@ internal class STALKParser : SentenceParser, STALKSentence {
      *
      * @param nmea `$STALK` sentence String.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.ALK)
+    constructor(nmea: String) : super(nmea, SentenceId.ALK) {}
 
     /**
      * Constructor with TalkerId, mostly for compatibility with SentenceFactory.
@@ -56,20 +55,20 @@ internal class STALKParser : SentenceParser, STALKSentence {
         return getStringValue(COMMAND)
     }
 
-    override fun setCommand(cmd: String?) {
+    override fun setCommand(cmd: String) {
         setStringValue(COMMAND, cmd)
     }
 
-    override fun getParameters(): Array<String?> {
+    override fun getParameters(): Array<String> {
         return getStringValues(FIRST_PARAM)
     }
 
-    override fun setParameters(vararg params: String?) {
+    override fun setParameters(vararg params: String) {
         setStringValues(FIRST_PARAM, params)
     }
 
-    override fun addParameter(param: String?) {
-        val params: MutableList<String?> = ArrayList(Arrays.asList(*parameters))
+    override fun addParameter(param: String) {
+        val params: MutableList<String> = ArrayList(Arrays.asList(*parameters))
         params.add(param)
         setParameters(*params.toTypedArray())
     }

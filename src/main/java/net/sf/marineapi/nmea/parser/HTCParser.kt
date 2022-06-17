@@ -34,86 +34,111 @@ import net.sf.marineapi.nmea.util.TurnMode
  * @author Paweł Kozioł
  */
 internal open class HTCParser : SentenceParser, HTCSentence {
-    constructor(nmea: String) : super(nmea, SentenceId.HTC)
-    constructor(talker: TalkerId?) : super(talker, SentenceId.HTC, 13)
-    constructor(nmea: String, type: SentenceId) : super(nmea, type)
-    constructor(tid: TalkerId?, sid: SentenceId, size: Int) : super(tid, sid, size)
+    constructor(nmea: String) : super(nmea, SentenceId.HTC) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.HTC, 13) {}
+    constructor(nmea: String, type: SentenceId) : super(nmea, type) {}
+    constructor(tid: TalkerId?, sid: SentenceId, size: Int) : super(tid, sid, size) {}
 
-    override val override: DataStatus?
-        get() = if (hasValue(OVERRIDE)) {
-            DataStatus.Companion.valueOf(getCharValue(OVERRIDE))
+    override fun getOverride(): DataStatus {
+        return if (hasValue(OVERRIDE)) {
+            DataStatus.valueOf(getCharValue(OVERRIDE))
         } else {
             null
         }
-    override val rudderAngle: Double
-        get() = if (hasValue(COMMANDED_RUDDER_ANGLE)) {
+    }
+
+    override fun getRudderAngle(): Double {
+        return if (hasValue(COMMANDED_RUDDER_ANGLE)) {
             getDoubleValue(COMMANDED_RUDDER_ANGLE)
         } else {
             Double.NaN
         }
-    override val rudderDirection: Direction?
-        get() = if (hasValue(COMMANDED_RUDDER_DIRECTION)) {
-            Direction.Companion.valueOf(getCharValue(COMMANDED_RUDDER_DIRECTION))
+    }
+
+    override fun getRudderDirection(): Direction {
+        return if (hasValue(COMMANDED_RUDDER_DIRECTION)) {
+            Direction.valueOf(getCharValue(COMMANDED_RUDDER_DIRECTION))
         } else {
             null
         }
-    override val steeringMode: SteeringMode?
-        get() = if (hasValue(SELECTED_STEERING_MODE)) {
-            SteeringMode.Companion.valueOf(getCharValue(SELECTED_STEERING_MODE))
+    }
+
+    override fun getSteeringMode(): SteeringMode {
+        return if (hasValue(SELECTED_STEERING_MODE)) {
+            SteeringMode.valueOf(getCharValue(SELECTED_STEERING_MODE))
         } else {
             null
         }
-    override val turnMode: TurnMode?
-        get() = if (hasValue(TURN_MODE)) {
-            TurnMode.Companion.valueOf(getCharValue(TURN_MODE))
+    }
+
+    override fun getTurnMode(): TurnMode {
+        return if (hasValue(TURN_MODE)) {
+            TurnMode.valueOf(getCharValue(TURN_MODE))
         } else {
             null
         }
-    override val rudderLimit: Double
-        get() = if (hasValue(COMMANDED_RUDDER_LIMIT)) {
+    }
+
+    override fun getRudderLimit(): Double {
+        return if (hasValue(COMMANDED_RUDDER_LIMIT)) {
             getDoubleValue(COMMANDED_RUDDER_LIMIT)
         } else {
             Double.NaN
         }
-    override val offHeadingLimit: Double
-        get() = if (hasValue(COMMANDED_OFF_HEADING_LIMIT)) {
+    }
+
+    override fun getOffHeadingLimit(): Double {
+        return if (hasValue(COMMANDED_OFF_HEADING_LIMIT)) {
             getDoubleValue(COMMANDED_OFF_HEADING_LIMIT)
         } else {
             Double.NaN
         }
-    override val radiusOfTurn: Double
-        get() = if (hasValue(COMMANDED_RADIUS_OF_TURN_FOR_HEADING_CHANGES)) {
+    }
+
+    override fun getRadiusOfTurn(): Double {
+        return if (hasValue(COMMANDED_RADIUS_OF_TURN_FOR_HEADING_CHANGES)) {
             getDoubleValue(COMMANDED_RADIUS_OF_TURN_FOR_HEADING_CHANGES)
         } else {
             Double.NaN
         }
-    override val rateOfTurn: Double
-        get() = if (hasValue(COMMANDED_RATE_OF_TURN_FOR_HEADING_CHANGES)) {
+    }
+
+    override fun getRateOfTurn(): Double {
+        return if (hasValue(COMMANDED_RATE_OF_TURN_FOR_HEADING_CHANGES)) {
             getDoubleValue(COMMANDED_RATE_OF_TURN_FOR_HEADING_CHANGES)
         } else {
             Double.NaN
         }
-    override val headingToSteer: Double
-        get() = if (hasValue(COMMANDED_HEADING_TO_STEER)) {
+    }
+
+    override fun getHeadingToSteer(): Double {
+        return if (hasValue(COMMANDED_HEADING_TO_STEER)) {
             getDoubleValue(COMMANDED_HEADING_TO_STEER)
         } else {
             Double.NaN
         }
-    override val offTrackLimit: Double
-        get() = if (hasValue(COMMANDED_OFF_TRACK_LIMIT)) {
+    }
+
+    override fun getOffTrackLimit(): Double {
+        return if (hasValue(COMMANDED_OFF_TRACK_LIMIT)) {
             getDoubleValue(COMMANDED_OFF_TRACK_LIMIT)
         } else {
             Double.NaN
         }
-    override val track: Double
-        get() = if (hasValue(COMMANDED_TRACK)) {
+    }
+
+    override fun getTrack(): Double {
+        return if (hasValue(COMMANDED_TRACK)) {
             getDoubleValue(COMMANDED_TRACK)
         } else {
             Double.NaN
         }
-    override val isHeadingTrue: Boolean
-        get() = (hasValue(HEADING_REFERENCE_IN_USE)
+    }
+
+    override fun isHeadingTrue(): Boolean {
+        return (hasValue(HEADING_REFERENCE_IN_USE)
                 && getCharValue(HEADING_REFERENCE_IN_USE) == 'T')
+    }
 
     companion object {
         private const val OVERRIDE = 0

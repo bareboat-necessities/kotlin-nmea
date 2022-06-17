@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TTMSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.AcquisitionType
 import net.sf.marineapi.nmea.util.TargetStatus
 import net.sf.marineapi.nmea.util.Time
@@ -42,7 +44,7 @@ internal class TTMParser : SentenceParser, TTMSentence {
      * @throws IllegalArgumentException
      * If specified sentence is invalid.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.TTM)
+    constructor(nmea: String) : super(nmea, SentenceId.TTM) {}
 
     /**
      * Create a TTM parser with an empty sentence.
@@ -50,7 +52,7 @@ internal class TTMParser : SentenceParser, TTMSentence {
      * @param talker
      * TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.TTM, 15)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.TTM, 15) {}
 
     /*
 	 * (non-Javadoc)
@@ -169,7 +171,7 @@ internal class TTMParser : SentenceParser, TTMSentence {
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getTimeToCPA()
 	 */
     override fun getUnits(): Units {
-        return Units.Companion.valueOf(getCharValue(UNITS))
+        return Units.valueOf(getCharValue(UNITS))
     }
 
     /*
@@ -187,7 +189,7 @@ internal class TTMParser : SentenceParser, TTMSentence {
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getStatus()
 	 */
     override fun getStatus(): TargetStatus {
-        return TargetStatus.Companion.valueOf(getCharValue(STATUS))
+        return TargetStatus.valueOf(getCharValue(STATUS))
     }
 
     /*
@@ -196,7 +198,7 @@ internal class TTMParser : SentenceParser, TTMSentence {
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getAcquisitionType()
 	 */
     override fun getAcquisitionType(): AcquisitionType {
-        return AcquisitionType.Companion.valueOf(getCharValue(ACQUISITON_TYPE))
+        return AcquisitionType.valueOf(getCharValue(ACQUISITON_TYPE))
     }
 
     /*
@@ -305,7 +307,7 @@ internal class TTMParser : SentenceParser, TTMSentence {
     }
 
     /**
-     * @see net.sf.marineapi.nmea.sentence.TTMSentence.setUnits
+     * @see TTMSentence.setUnits
      */
     override fun setUnits(units: Units) {
         setCharValue(UNITS, units.toChar())
@@ -316,7 +318,7 @@ internal class TTMParser : SentenceParser, TTMSentence {
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setName()
 	 */
-    override fun setName(name: String?) {
+    override fun setName(name: String) {
         setStringValue(NAME, name)
     }
 

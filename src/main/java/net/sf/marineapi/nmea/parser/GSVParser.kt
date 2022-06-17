@@ -36,25 +36,22 @@ internal class GSVParser : SentenceParser, GSVSentence {
      *
      * @param nmea GSV Sentence
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GSV)
+    constructor(nmea: String) : super(nmea, SentenceId.GSV) {}
 
     /**
      * Creates an GSV parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.GSV, 19)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.GSV, 19) {}
 
     /*
      * (non-Javadoc)
      * @see net.sf.marineapi.nmea.sentence.GSVSentence#getSatelliteCount()
      */
-    override var satelliteCount: Int
-        get() = getIntValue(SATELLITES_IN_VIEW)
-        set(count) {
-            require(count >= 0) { "Satellite count cannot be negative" }
-            setIntValue(SATELLITES_IN_VIEW, count)
-        }
+    override fun getSatelliteCount(): Int {
+        return getIntValue(SATELLITES_IN_VIEW)
+    }
 
     /*
      * (non-Javadoc)
@@ -90,44 +87,39 @@ internal class GSVParser : SentenceParser, GSVSentence {
     /*
      * (non-Javadoc)
      * @see net.sf.marineapi.nmea.sentence.GSVSentence#getSentenceCount()
-     *//*
-     * (non-Javadoc)
-     * @see net.sf.marineapi.nmea.sentence.GSVSentence#setSentenceCount(int)
      */
-    override var sentenceCount: Int
-        get() = getIntValue(NUMBER_OF_SENTENCES)
-        set(count) {
-            require(count >= 1) { "Number of sentences cannot be negative" }
-            setIntValue(NUMBER_OF_SENTENCES, count)
-        }
+    override fun getSentenceCount(): Int {
+        return getIntValue(NUMBER_OF_SENTENCES)
+    }
 
     /*
      * (non-Javadoc)
      * @see net.sf.marineapi.nmea.sentence.GSVSentence#getSentenceIndex()
-     *//*
-     * (non-Javadoc)
-     * @see net.sf.marineapi.nmea.sentence.GSVSentence#setSentenceIndex(int)
      */
-    override var sentenceIndex: Int
-        get() = getIntValue(SENTENCE_NUMBER)
-        set(index) {
-            require(index >= 0) { "Sentence index cannot be negative" }
-            setIntValue(SENTENCE_NUMBER, index)
-        }
+    override fun getSentenceIndex(): Int {
+        return getIntValue(SENTENCE_NUMBER)
+    }
 
     /*
      * (non-Javadoc)
      * @see net.sf.marineapi.nmea.sentence.GSVSentence#isFirst()
      */
-    override val isFirst: Boolean
-        get() = sentenceIndex == 1
+    override fun isFirst(): Boolean {
+        return sentenceIndex == 1
+    }
 
     /*
      * (non-Javadoc)
      * @see net.sf.marineapi.nmea.sentence.GSVSentence#isLast()
      */
-    override val isLast: Boolean
-        get() = sentenceIndex == sentenceCount
+    override fun isLast(): Boolean {
+        return sentenceIndex == sentenceCount
+    }
+
+    override fun setSatelliteCount(count: Int) {
+        require(count >= 0) { "Satellite count cannot be negative" }
+        setIntValue(SATELLITES_IN_VIEW, count)
+    }
 
     /*
      * (non-Javadoc)
@@ -152,6 +144,24 @@ internal class GSVParser : SentenceParser, GSVSentence {
                 setStringValue(id + NOISE, "")
             }
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see net.sf.marineapi.nmea.sentence.GSVSentence#setSentenceCount(int)
+     */
+    override fun setSentenceCount(count: Int) {
+        require(count >= 1) { "Number of sentences cannot be negative" }
+        setIntValue(NUMBER_OF_SENTENCES, count)
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see net.sf.marineapi.nmea.sentence.GSVSentence#setSentenceIndex(int)
+     */
+    override fun setSentenceIndex(index: Int) {
+        require(index >= 0) { "Sentence index cannot be negative" }
+        setIntValue(SENTENCE_NUMBER, index)
     }
 
     companion object {

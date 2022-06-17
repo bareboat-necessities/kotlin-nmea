@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.ROTSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DataStatus
 
 /**
@@ -34,46 +36,52 @@ internal class ROTParser : SentenceParser, ROTSentence {
      *
      * @param nmea ROT sentence String to parse.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.ROT)
+    constructor(nmea: String) : super(nmea, SentenceId.ROT) {}
 
     /**
      * Creates a new empty ROT sentence.
      *
      * @param talker Talker id to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.ROT, 2)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.ROT, 2) {}
 
     /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.parser.RateOfTurnSentance#getRateOfTurn()
-	 *//*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.ROTSentence#setRateOfTurn(double)
 	 */
-    override var rateOfTurn: Double
-        get() = getDoubleValue(RATE_OF_TURN)
-        set(rot) {
-            setDoubleValue(RATE_OF_TURN, rot, 3, 1)
-        }
+    override fun getRateOfTurn(): Double {
+        return getDoubleValue(RATE_OF_TURN)
+    }
 
     /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.RateOfTurnSentance#getStatus()
-	 *//*
+	 */
+    override fun getStatus(): DataStatus {
+        return DataStatus.valueOf(getCharValue(STATUS))
+    }
+
+    /*
+	 * (non-Javadoc)
+	 *
+	 * @see net.sf.marineapi.nmea.sentence.ROTSentence#setRateOfTurn(double)
+	 */
+    override fun setRateOfTurn(rot: Double) {
+        setDoubleValue(RATE_OF_TURN, rot, 3, 1)
+    }
+
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.ROTSentence#setStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-    override var status: DataStatus
-        get() = DataStatus.Companion.valueOf(getCharValue(STATUS))
-        set(status) {
-            setCharValue(STATUS, status.toChar())
-        }
+    override fun setStatus(status: DataStatus) {
+        setCharValue(STATUS, status.toChar())
+    }
 
     companion object {
         private const val RATE_OF_TURN = 0

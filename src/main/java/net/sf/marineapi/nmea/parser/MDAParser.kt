@@ -20,9 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.MDASentenceimport
+import net.sf.marineapi.nmea.sentence.MDASentence
+import net.sf.marineapi.nmea.sentence.TalkerId
 
-net.sf.marineapi.nmea.sentence.TalkerId
 /**
  * Meteorological Composite - Barometric pressure, air and water temperature,
  * humidity, dew point and wind speed and direction relative to the surface of
@@ -37,7 +37,7 @@ internal class MDAParser : SentenceParser, MDASentence {
      * @param nmea
      * MWV sentence String
      */
-    constructor(nmea: String) : super(nmea, MDA_SENTENCE_ID)
+    constructor(nmea: String) : super(nmea, MDA_SENTENCE_ID) {}
 
     /**
      * Creates a new empty instance of MWVParser.
@@ -57,115 +57,153 @@ internal class MDAParser : SentenceParser, MDASentence {
         setCharValue(SECONDARY_BAROMETRIC_PRESSURE_UNIT, 'B')
     }
 
-    override var absoluteHumidity: Double
-        get() = if (hasValue(ABSOLUTE_HUMIDITY)) {
+    override fun getAbsoluteHumidity(): Double {
+        return if (hasValue(ABSOLUTE_HUMIDITY)) {
             getDoubleValue(ABSOLUTE_HUMIDITY)
         } else {
             Double.NaN
         }
-        set(humitidy) {
-            setDoubleValue(ABSOLUTE_HUMIDITY, humitidy)
-        }
-    override var airTemperature: Double
-        get() = if (hasValue(AIR_TEMPERATURE)) {
+    }
+
+    override fun getAirTemperature(): Double {
+        return if (hasValue(AIR_TEMPERATURE)) {
             getDoubleValue(AIR_TEMPERATURE)
         } else {
             Double.NaN
         }
-        set(temp) {
-            setDoubleValue(AIR_TEMPERATURE, temp)
-        }
-    override var dewPoint: Double
-        get() = if (hasValue(DEW_POINT)) {
+    }
+
+    override fun getDewPoint(): Double {
+        return if (hasValue(DEW_POINT)) {
             getDoubleValue(DEW_POINT)
         } else {
             Double.NaN
         }
-        set(dewPoint) {
-            setDoubleValue(DEW_POINT, dewPoint)
-        }
-    override var magneticWindDirection: Double
-        get() = if (hasValue(WIND_DIRECTION_MAGNETIC)) {
+    }
+
+    override fun getMagneticWindDirection(): Double {
+        return if (hasValue(WIND_DIRECTION_MAGNETIC)) {
             getDoubleValue(WIND_DIRECTION_MAGNETIC)
         } else {
             Double.NaN
         }
-        set(direction) {
-            setDoubleValue(WIND_DIRECTION_MAGNETIC, direction)
-        }
-    override var primaryBarometricPressure: Double
-        get() = if (hasValue(PRIMARY_BAROMETRIC_PRESSURE)) {
+    }
+
+    override fun getPrimaryBarometricPressure(): Double {
+        return if (hasValue(PRIMARY_BAROMETRIC_PRESSURE)) {
             getDoubleValue(PRIMARY_BAROMETRIC_PRESSURE)
         } else {
             Double.NaN
         }
-        set(pressure) {
-            setDoubleValue(PRIMARY_BAROMETRIC_PRESSURE, pressure)
-        }
-    override var primaryBarometricPressureUnit: Char
-        get() = getCharValue(PRIMARY_BAROMETRIC_PRESSURE_UNIT)
-        set(unit) {
-            setCharValue(PRIMARY_BAROMETRIC_PRESSURE_UNIT, unit)
-        }
-    override var relativeHumidity: Double
-        get() = if (hasValue(RELATIVE_HUMIDITY)) {
+    }
+
+    override fun getPrimaryBarometricPressureUnit(): Char {
+        return getCharValue(PRIMARY_BAROMETRIC_PRESSURE_UNIT)
+    }
+
+    override fun getRelativeHumidity(): Double {
+        return if (hasValue(RELATIVE_HUMIDITY)) {
             getDoubleValue(RELATIVE_HUMIDITY)
         } else {
             Double.NaN
         }
-        set(humidity) {
-            setDoubleValue(RELATIVE_HUMIDITY, humidity)
-        }
-    override var secondaryBarometricPressure: Double
-        get() = if (hasValue(SECONDARY_BAROMETRIC_PRESSURE)) {
+    }
+
+    override fun getSecondaryBarometricPressure(): Double {
+        return if (hasValue(SECONDARY_BAROMETRIC_PRESSURE)) {
             getDoubleValue(SECONDARY_BAROMETRIC_PRESSURE)
         } else {
             Double.NaN
         }
-        set(pressure) {
-            setDoubleValue(SECONDARY_BAROMETRIC_PRESSURE, pressure)
-        }
-    override var secondaryBarometricPressureUnit: Char
-        get() = getCharValue(SECONDARY_BAROMETRIC_PRESSURE_UNIT)
-        set(unit) {
-            setCharValue(SECONDARY_BAROMETRIC_PRESSURE_UNIT, unit)
-        }
-    override var trueWindDirection: Double
-        get() = if (hasValue(WIND_DIRECTION_TRUE)) {
+    }
+
+    override fun getSecondaryBarometricPressureUnit(): Char {
+        return getCharValue(SECONDARY_BAROMETRIC_PRESSURE_UNIT)
+    }
+
+    override fun getTrueWindDirection(): Double {
+        return if (hasValue(WIND_DIRECTION_TRUE)) {
             getDoubleValue(WIND_DIRECTION_TRUE)
         } else {
             Double.NaN
         }
-        set(direction) {
-            setDoubleValue(WIND_DIRECTION_TRUE, direction)
-        }
-    override var waterTemperature: Double
-        get() = if (hasValue(WATER_TEMPERATURE)) {
+    }
+
+    override fun getWaterTemperature(): Double {
+        return if (hasValue(WATER_TEMPERATURE)) {
             getDoubleValue(WATER_TEMPERATURE)
         } else {
             Double.NaN
         }
-        set(temp) {
-            setDoubleValue(WATER_TEMPERATURE, temp)
-        }
-    override var windSpeed: Double
-        get() = if (hasValue(WIND_SPEED_METERS)) {
+    }
+
+    override fun getWindSpeed(): Double {
+        return if (hasValue(WIND_SPEED_METERS)) {
             getDoubleValue(WIND_SPEED_METERS)
         } else {
             Double.NaN
         }
-        set(speed) {
-            setDoubleValue(WIND_SPEED_METERS, speed)
-        }
-    override var windSpeedKnots: Double
-        get() = if (hasValue(WIND_SPEED_KNOTS)) {
+    }
+
+    override fun getWindSpeedKnots(): Double {
+        return if (hasValue(WIND_SPEED_KNOTS)) {
             getDoubleValue(WIND_SPEED_KNOTS)
         } else {
             Double.NaN
         }
-        set(speed) {
-            setDoubleValue(WIND_SPEED_KNOTS, speed)
-        }
+    }
+
+    override fun setAbsoluteHumidity(humitidy: Double) {
+        setDoubleValue(ABSOLUTE_HUMIDITY, humitidy)
+    }
+
+    override fun setAirTemperature(temp: Double) {
+        setDoubleValue(AIR_TEMPERATURE, temp)
+    }
+
+    override fun setDewPoint(dewPoint: Double) {
+        setDoubleValue(DEW_POINT, dewPoint)
+    }
+
+    override fun setMagneticWindDirection(direction: Double) {
+        setDoubleValue(WIND_DIRECTION_MAGNETIC, direction)
+    }
+
+    override fun setPrimaryBarometricPressure(pressure: Double) {
+        setDoubleValue(PRIMARY_BAROMETRIC_PRESSURE, pressure)
+    }
+
+    override fun setPrimaryBarometricPressureUnit(unit: Char) {
+        setCharValue(PRIMARY_BAROMETRIC_PRESSURE_UNIT, unit)
+    }
+
+    override fun setRelativeHumidity(humidity: Double) {
+        setDoubleValue(RELATIVE_HUMIDITY, humidity)
+    }
+
+    override fun setSecondaryBarometricPressure(pressure: Double) {
+        setDoubleValue(SECONDARY_BAROMETRIC_PRESSURE, pressure)
+    }
+
+    override fun setSecondaryBarometricPressureUnit(unit: Char) {
+        setCharValue(SECONDARY_BAROMETRIC_PRESSURE_UNIT, unit)
+    }
+
+    override fun setTrueWindDirection(direction: Double) {
+        setDoubleValue(WIND_DIRECTION_TRUE, direction)
+    }
+
+    override fun setWaterTemperature(temp: Double) {
+        setDoubleValue(WATER_TEMPERATURE, temp)
+    }
+
+    override fun setWindSpeed(speed: Double) {
+        setDoubleValue(WIND_SPEED_METERS, speed)
+    }
+
+    override fun setWindSpeedKnots(speed: Double) {
+        setDoubleValue(WIND_SPEED_KNOTS, speed)
+    }
 
     companion object {
         const val MDA_SENTENCE_ID = "MDA"

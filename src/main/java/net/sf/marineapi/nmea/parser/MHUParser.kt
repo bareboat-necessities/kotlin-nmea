@@ -20,9 +20,10 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.MHUSentenceimport
+import net.sf.marineapi.nmea.sentence.MHUSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerId
 /**
  * MHUParser - Humidity & dew point.
  *
@@ -36,7 +37,7 @@ internal class MHUParser : SentenceParser, MHUSentence {
      *
      * @param nmea MHU sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.MHU)
+    constructor(nmea: String) : super(nmea, SentenceId.MHU) {}
 
     /**
      * Constructor for fresh MHU sentence.
@@ -47,26 +48,37 @@ internal class MHUParser : SentenceParser, MHUSentence {
         dewPointUnit = 'C'
     }
 
-    override var relativeHumidity: Double
-        get() = getDoubleValue(RELATIVE_HUMIDITY)
-        set(humidity) {
-            setDoubleValue(RELATIVE_HUMIDITY, humidity, 1, 1)
-        }
-    override var absoluteHumidity: Double
-        get() = getDoubleValue(ABSOLUTE_HUMIDITY)
-        set(humidity) {
-            setDoubleValue(ABSOLUTE_HUMIDITY, humidity, 1, 1)
-        }
-    override var dewPoint: Double
-        get() = getDoubleValue(DEW_POINT)
-        set(dewPoint) {
-            setDoubleValue(DEW_POINT, dewPoint, 1, 1)
-        }
-    override var dewPointUnit: Char
-        get() = getCharValue(DEW_POINT_UNIT)
-        set(unit) {
-            setCharValue(DEW_POINT_UNIT, unit)
-        }
+    override fun getRelativeHumidity(): Double {
+        return getDoubleValue(RELATIVE_HUMIDITY)
+    }
+
+    override fun getAbsoluteHumidity(): Double {
+        return getDoubleValue(ABSOLUTE_HUMIDITY)
+    }
+
+    override fun getDewPoint(): Double {
+        return getDoubleValue(DEW_POINT)
+    }
+
+    override fun getDewPointUnit(): Char {
+        return getCharValue(DEW_POINT_UNIT)
+    }
+
+    override fun setRelativeHumidity(humidity: Double) {
+        setDoubleValue(RELATIVE_HUMIDITY, humidity, 1, 1)
+    }
+
+    override fun setAbsoluteHumidity(humidity: Double) {
+        setDoubleValue(ABSOLUTE_HUMIDITY, humidity, 1, 1)
+    }
+
+    override fun setDewPoint(dewPoint: Double) {
+        setDoubleValue(DEW_POINT, dewPoint, 1, 1)
+    }
+
+    override fun setDewPointUnit(unit: Char) {
+        setCharValue(DEW_POINT_UNIT, unit)
+    }
 
     companion object {
         private const val RELATIVE_HUMIDITY = 0

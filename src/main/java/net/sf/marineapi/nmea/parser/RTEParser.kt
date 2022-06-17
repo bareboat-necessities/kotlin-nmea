@@ -20,9 +20,10 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.RTESentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.RouteType
-
 
 /**
  * RTE sentence parser.
@@ -35,7 +36,7 @@ internal class RTEParser : SentenceParser, RTESentence {
      *
      * @param nmea RTE sentence string.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.RTE)
+    constructor(nmea: String) : super(nmea, SentenceId.RTE) {}
 
     /**
      * Creates RTE parser with empty sentence. The created RTE sentence contains
@@ -43,7 +44,7 @@ internal class RTEParser : SentenceParser, RTESentence {
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.RTE, 4)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.RTE, 4) {}
 
     /*
 	 * (non-Javadoc)
@@ -51,7 +52,7 @@ internal class RTEParser : SentenceParser, RTESentence {
 	 * net.sf.marineapi.nmea.sentence.RTESentence#addWaypointId(java.lang.String
 	 * )
 	 */
-    override fun addWaypointId(id: String?): Int {
+    override fun addWaypointId(id: String): Int {
         val ids = waypointIds
         val newIds = arrayOfNulls<String>(ids.size + 1)
         System.arraycopy(ids, 0, newIds, 0, ids.size)
@@ -63,44 +64,26 @@ internal class RTEParser : SentenceParser, RTESentence {
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RTESentence#getRouteId()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.RTESentence#setRouteId(java.lang.String)
 	 */
-    override var routeId: String?
-        get() = getStringValue(ROUTE_ID)
-        set(id) {
-            setStringValue(ROUTE_ID, id)
-        }
+    override fun getRouteId(): String {
+        return getStringValue(ROUTE_ID)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RTESentence#getSentenceCount()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RTESentence#setSentenceCount(int)
 	 */
-    override var sentenceCount: Int
-        get() = getIntValue(NUMBER_OF_SENTENCES)
-        set(count) {
-            require(count >= 0) { "Count cannot be negative" }
-            setIntValue(NUMBER_OF_SENTENCES, count)
-        }
+    override fun getSentenceCount(): Int {
+        return getIntValue(NUMBER_OF_SENTENCES)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RTESentence#getSentenceIndex()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RTESentence#setSentenceIndex(int)
 	 */
-    override var sentenceIndex: Int
-        get() = getIntValue(SENTENCE_NUMBER)
-        set(index) {
-            require(index >= 0) { "Index cannot be negative" }
-            setIntValue(SENTENCE_NUMBER, index)
-        }
+    override fun getSentenceIndex(): Int {
+        return getIntValue(SENTENCE_NUMBER)
+    }
 
     /*
 	 * (non-Javadoc)
@@ -114,7 +97,7 @@ internal class RTEParser : SentenceParser, RTESentence {
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RTESentence#getWaypointIds()
 	 */
-    override fun getWaypointIds(): Array<String?> {
+    override fun getWaypointIds(): Array<String> {
         val temp: MutableList<String?> = ArrayList()
         for (i in FIRST_WPT until fieldCount) {
             try {
@@ -123,7 +106,7 @@ internal class RTEParser : SentenceParser, RTESentence {
                 // nevermind empty fields
             }
         }
-        return temp.toTypedArray()
+        return temp.toTypedArray<String>()
     }
 
     /*
@@ -161,6 +144,15 @@ internal class RTEParser : SentenceParser, RTESentence {
     /*
 	 * (non-Javadoc)
 	 * @see
+	 * net.sf.marineapi.nmea.sentence.RTESentence#setRouteId(java.lang.String)
+	 */
+    override fun setRouteId(id: String) {
+        setStringValue(ROUTE_ID, id)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
 	 * net.sf.marineapi.nmea.sentence.RTESentence#setRouteType(net.sf.marineapi
 	 * .nmea.util.RouteType)
 	 */
@@ -170,12 +162,30 @@ internal class RTEParser : SentenceParser, RTESentence {
 
     /*
 	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.RTESentence#setSentenceCount(int)
+	 */
+    override fun setSentenceCount(count: Int) {
+        require(count >= 0) { "Count cannot be negative" }
+        setIntValue(NUMBER_OF_SENTENCES, count)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.RTESentence#setSentenceIndex(int)
+	 */
+    override fun setSentenceIndex(index: Int) {
+        require(index >= 0) { "Index cannot be negative" }
+        setIntValue(SENTENCE_NUMBER, index)
+    }
+
+    /*
+	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.RTESentence#setWaypointIds(java.lang.String
 	 * [])
 	 */
-    override fun setWaypointIds(ids: Array<String?>?) {
-        setStringValues(FIRST_WPT, ids!!)
+    override fun setWaypointIds(ids: Array<String>) {
+        setStringValues(FIRST_WPT, ids)
     }
 
     companion object {

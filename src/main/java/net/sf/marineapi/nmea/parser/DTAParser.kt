@@ -23,9 +23,9 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.DTASentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
-import net.sf.marineapi.nmea.util.Date
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+
 
 /**
  * DTA sentence parser.
@@ -41,21 +41,21 @@ internal open class DTAParser : SentenceParser, DTASentence {
      *
      * @param talker DTA talkerId
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.DTA, 8)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.DTA, 8) {}
 
     /**
      * Creates a new instance of DTAParser.
      *
      * @param nmea DTA sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.DTA)
+    constructor(nmea: String) : super(nmea, SentenceId.DTA) {}
 
     /**
      * Creates a new instance of DTAParser.
      *
      * @param nmea DTA sentence String
      */
-    protected constructor(nmea: String, type: SentenceId) : super(nmea, type)
+    protected constructor(nmea: String, type: SentenceId) : super(nmea, type) {}
 
     /**
      * Creates a new instance of DTAParser with specified type and data fields.
@@ -64,7 +64,7 @@ internal open class DTAParser : SentenceParser, DTASentence {
      * @param type SentenceId enum
      * @param size number of data fields in DTASentence (not counting header and checksum).
      */
-    protected constructor(talker: TalkerId?, type: SentenceId, size: Int) : super(talker, type, size)
+    protected constructor(talker: TalkerId?, type: SentenceId, size: Int) : super(talker, type, size) {}
 
     /**
      * Returns the field index fixed with possible offset.
@@ -77,67 +77,73 @@ internal open class DTAParser : SentenceParser, DTASentence {
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getChannelNumber()
 	 */
-    override val channelNumber: Int
-        get() = if (offset == -1) {
+    override fun getChannelNumber(): Int {
+        return if (offset == -1) {
             1
         } else getIntValue(CHANNEL_NUMBER)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getGasConcentration()
 	 */
-    override val gasConcentration: Double
-        get() = getDoubleValue(getFieldIndex(GAS_CONCENTRATION))
+    override fun getGasConcentration(): Double {
+        return getDoubleValue(getFieldIndex(GAS_CONCENTRATION))
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getConfidenceFactorR2()
 	 */
-    override val confidenceFactorR2: Int
-        get() = getIntValue(getFieldIndex(CONFIDENCE_FACTOR_R2))
+    override fun getConfidenceFactorR2(): Int {
+        return getIntValue(getFieldIndex(CONFIDENCE_FACTOR_R2))
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getDistance()
 	 */
-    override val distance: Double
-        get() = getDoubleValue(getFieldIndex(DISTANCE))
+    override fun getDistance(): Double {
+        return getDoubleValue(getFieldIndex(DISTANCE))
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getLightLevel()
 	 */
-    override val lightLevel: Int
-        get() = getIntValue(getFieldIndex(LIGHT_LEVEL))
+    override fun getLightLevel(): Int {
+        return getIntValue(getFieldIndex(LIGHT_LEVEL))
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getDateTime()
 	 */
-    override val dateTime: Date
-        get() {
-            val value: Date
-            value = try {
-                DATE_PARSER.parse(getStringValue(getFieldIndex(DATE_TIME)))
-            } catch (ex: java.text.ParseException) {
-                throw ParseException("Field does not contain date value", ex)
-            }
-            return value
+    override fun getDateTime(): Date {
+        val value: Date
+        value = try {
+            DATE_PARSER.parse(getStringValue(getFieldIndex(DATE_TIME)))
+        } catch (ex: java.text.ParseException) {
+            throw ParseException("Field does not contain date value", ex)
         }
+        return value
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getSerialNumber()
 	 */
-    override val serialNumber: String?
-        get() = getStringValue(getFieldIndex(SER_NUMBER))
+    override fun getSerialNumber(): String {
+        return getStringValue(getFieldIndex(SER_NUMBER))
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getStatusCode()
 	 */
-    override val statusCode: Int
-        get() = getIntValue(getFieldIndex(STATUS_CODE))
+    override fun getStatusCode(): Int {
+        return getIntValue(getFieldIndex(STATUS_CODE))
+    }
 
     companion object {
         private const val CHANNEL_NUMBER = 0

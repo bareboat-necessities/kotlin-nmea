@@ -23,6 +23,7 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.GBSSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.Time
 
 /**
  * GBS sentence parser.
@@ -37,55 +38,78 @@ internal class GBSParser : SentenceParser, GBSSentence {
      *
      * @param tid Talker ID to set.
      */
-    constructor(tid: TalkerId?) : super(tid, SentenceId.GBS, 8)
+    constructor(tid: TalkerId?) : super(tid, SentenceId.GBS, 8) {}
 
     /**
      * Creates a parser for given GBS sentence.
      *
      * @param nmea GBS sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GBS)
+    constructor(nmea: String) : super(nmea, SentenceId.GBS) {}
 
-    override var latitudeError: Double
-        get() = getDoubleValue(LAT_ERROR)
-        set(err) {
-            setDoubleValue(LAT_ERROR, err)
-        }
-    override var longitudeError: Double
-        get() = getDoubleValue(LON_ERROR)
-        set(err) {
-            setDoubleValue(LON_ERROR, err)
-        }
-    override var altitudeError: Double
-        get() = getDoubleValue(ALT_ERROR)
-        set(err) {
-            setDoubleValue(ALT_ERROR, err)
-        }
-    override var satelliteId: String?
-        get() = getStringValue(SATELLITE_ID)
-        set(id) {
-            setStringValue(SATELLITE_ID, id)
-        }
-    override var probability: Double
-        get() = getDoubleValue(PROBABILITY)
-        set(probability) {
-            setDoubleValue(PROBABILITY, probability)
-        }
-    override var estimate: Double
-        get() = getDoubleValue(ESTIMATE)
-        set(estimate) {
-            setDoubleValue(ESTIMATE, estimate)
-        }
-    override var deviation: Double
-        get() = getDoubleValue(DEVIATION)
-        set(deviation) {
-            setDoubleValue(DEVIATION, deviation)
-        }
-    override var time: Time
-        get() = Time(getStringValue(UTC))
-        set(t) {
-            setStringValue(UTC, t.toString())
-        }
+    override fun getLatitudeError(): Double {
+        return getDoubleValue(LAT_ERROR)
+    }
+
+    override fun setLatitudeError(err: Double) {
+        setDoubleValue(LAT_ERROR, err)
+    }
+
+    override fun getLongitudeError(): Double {
+        return getDoubleValue(LON_ERROR)
+    }
+
+    override fun setLongitudeError(err: Double) {
+        setDoubleValue(LON_ERROR, err)
+    }
+
+    override fun getAltitudeError(): Double {
+        return getDoubleValue(ALT_ERROR)
+    }
+
+    override fun setAltitudeError(err: Double) {
+        setDoubleValue(ALT_ERROR, err)
+    }
+
+    override fun getSatelliteId(): String {
+        return getStringValue(SATELLITE_ID)
+    }
+
+    override fun setSatelliteId(id: String) {
+        setStringValue(SATELLITE_ID, id)
+    }
+
+    override fun getProbability(): Double {
+        return getDoubleValue(PROBABILITY)
+    }
+
+    override fun setProbability(probability: Double) {
+        setDoubleValue(PROBABILITY, probability)
+    }
+
+    override fun getEstimate(): Double {
+        return getDoubleValue(ESTIMATE)
+    }
+
+    override fun setEstimate(estimate: Double) {
+        setDoubleValue(ESTIMATE, estimate)
+    }
+
+    override fun getDeviation(): Double {
+        return getDoubleValue(DEVIATION)
+    }
+
+    override fun setDeviation(deviation: Double) {
+        setDoubleValue(DEVIATION, deviation)
+    }
+
+    override fun getTime(): Time {
+        return Time(getStringValue(UTC))
+    }
+
+    override fun setTime(t: Time) {
+        setStringValue(UTC, t.toString())
+    }
 
     companion object {
         private const val UTC = 0

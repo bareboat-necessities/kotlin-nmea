@@ -20,9 +20,11 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.MTASentenceimport
+import net.sf.marineapi.nmea.sentence.MTASentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.Units
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.Units
 /**
  * MTA sentence parser.
  *
@@ -34,7 +36,7 @@ internal class MTAParser : SentenceParser, MTASentence {
      *
      * @param mta MTA sentence String to parse.
      */
-    constructor(mta: String) : super(mta, SentenceId.MTA)
+    constructor(mta: String) : super(mta, SentenceId.MTA) {}
 
     /**
      * Constructor for empty MTA sentence.
@@ -48,15 +50,18 @@ internal class MTAParser : SentenceParser, MTASentence {
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.MTASentence#getTemperature()
-	 *//*
+	 */
+    override fun getTemperature(): Double {
+        return getDoubleValue(TEMPERATURE)
+    }
+
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.MTASentence#setTemperature(double)
 	 */
-    override var temperature: Double
-        get() = getDoubleValue(TEMPERATURE)
-        set(temp) {
-            setDoubleValue(TEMPERATURE, temp, 1, 2)
-        }
+    override fun setTemperature(temp: Double) {
+        setDoubleValue(TEMPERATURE, temp, 1, 2)
+    }
 
     companion object {
         private const val TEMPERATURE = 0

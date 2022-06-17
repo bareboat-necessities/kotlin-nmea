@@ -23,7 +23,9 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.sentence.XTESentence
-import net.sf.marineapi.nmea.util.*
+import net.sf.marineapi.nmea.util.DataStatus
+import net.sf.marineapi.nmea.util.Direction
+import net.sf.marineapi.nmea.util.FaaMode
 
 /**
  * XTE sentence parser.
@@ -53,7 +55,7 @@ internal class XTEParser : SentenceParser, XTESentence {
 	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getCycleLockStatus()
 	 */
     override fun getCycleLockStatus(): DataStatus {
-        return DataStatus.Companion.valueOf(getCharValue(CYCLE_LOCK_STATUS))
+        return DataStatus.valueOf(getCharValue(CYCLE_LOCK_STATUS))
     }
 
     /*
@@ -71,7 +73,7 @@ internal class XTEParser : SentenceParser, XTESentence {
 	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getMode()
 	 */
     override fun getMode(): FaaMode {
-        return FaaMode.Companion.valueOf(getCharValue(FAA_MODE))
+        return FaaMode.valueOf(getCharValue(FAA_MODE))
     }
 
     /*
@@ -80,7 +82,7 @@ internal class XTEParser : SentenceParser, XTESentence {
 	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getStatus()
 	 */
     override fun getStatus(): DataStatus {
-        return DataStatus.Companion.valueOf(getCharValue(SIGNAL_STATUS))
+        return DataStatus.valueOf(getCharValue(SIGNAL_STATUS))
     }
 
     /*
@@ -89,7 +91,7 @@ internal class XTEParser : SentenceParser, XTESentence {
 	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getSteerTo()
 	 */
     override fun getSteerTo(): Direction {
-        return Direction.Companion.valueOf(getCharValue(DIRECTION))
+        return Direction.valueOf(getCharValue(DIRECTION))
     }
 
     /*

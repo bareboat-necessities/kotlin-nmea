@@ -23,7 +23,7 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.sentence.VWTSentence
-import net.sf.marineapi.nmea.util.*
+import net.sf.marineapi.nmea.util.Direction
 
 /**
  * VWT sentence parser.
@@ -37,7 +37,7 @@ internal class VWTParser : SentenceParser, VWTSentence {
      * @param nmea VWT sentence String
      * @throws IllegalArgumentException If specified sentence is invalid
      */
-    constructor(nmea: String) : super(nmea, SentenceId.VWT)
+    constructor(nmea: String) : super(nmea, SentenceId.VWT) {}
 
     /**
      * Creates VWT parser with empty sentence.
@@ -63,7 +63,7 @@ internal class VWTParser : SentenceParser, VWTSentence {
 	 * @see net.sf.marineapi.nmea.sentence.VWTSentence#getDirectionLeftRight()
 	 */
     override fun getDirectionLeftRight(): Direction {
-        return Direction.Companion.valueOf(getCharValue(WIND_DIRECTION_LEFT_RIGHT_OF_BOW))
+        return Direction.valueOf(getCharValue(WIND_DIRECTION_LEFT_RIGHT_OF_BOW))
     }
 
     /*
@@ -86,9 +86,8 @@ internal class VWTParser : SentenceParser, VWTSentence {
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.VWTSentence#getSpeedMps()
 	 */
-    fun getTrueCourse(): Double {
-        return getDoubleValue(SPEED_MPS)
-    }
+    val trueCourse: Double
+        get() = getDoubleValue(SPEED_MPS)
 
     /*
 	 * (non-Javadoc)

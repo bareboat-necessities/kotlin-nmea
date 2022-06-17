@@ -38,112 +38,128 @@ internal class GSAParser : SentenceParser, GSASentence {
      * @param nmea GSA sentence String
      * @throws IllegalArgumentException If specified sentence is invalid.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GSA)
+    constructor(nmea: String) : super(nmea, SentenceId.GSA) {}
 
     /**
      * Creates GSA parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.GSA, 17)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.GSA, 17) {}
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GSASentence#getFixStatus()
-	 *//*
+	 */
+    override fun getFixStatus(): GpsFixStatus {
+        return GpsFixStatus.valueOf(getIntValue(FIX_MODE))
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GSASentence#getHorizontalDOP()
+	 */
+    override fun getHorizontalDOP(): Double {
+        return getDoubleValue(HORIZONTAL_DOP)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GSASentence#getMode()
+	 */
+    override fun getMode(): FaaMode {
+        return FaaMode.valueOf(getCharValue(GPS_MODE))
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GSASentence#getPositionDOP()
+	 */
+    override fun getPositionDOP(): Double {
+        return getDoubleValue(POSITION_DOP)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GSASentence#getSatelliteIds()
+	 */
+    override fun getSatelliteIds(): Array<String> {
+        val result: MutableList<String?> = ArrayList()
+        for (i in FIRST_SV..LAST_SV) {
+            if (hasValue(i)) {
+                result.add(getStringValue(i))
+            }
+        }
+        return result.toTypedArray<String>()
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GSASentence#getVerticalDOP()
+	 */
+    override fun getVerticalDOP(): Double {
+        return getDoubleValue(VERTICAL_DOP)
+    }
+
+    /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.GSASentence#setFixStatus(net.sf.marineapi
 	 * .nmea.util.GpsFixStatus)
 	 */
-    override var fixStatus: GpsFixStatus
-        get() = GpsFixStatus.Companion.valueOf(getIntValue(FIX_MODE))
-        set(status) {
-            setIntValue(FIX_MODE, status.toInt())
-        }
+    override fun setFixStatus(status: GpsFixStatus) {
+        setIntValue(FIX_MODE, status.toInt())
+    }
 
     /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSASentence#getHorizontalDOP()
-	 *//*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.GSASentence#setHorizontalPrecision(double)
 	 */
-    override var horizontalDOP: Double
-        get() = getDoubleValue(HORIZONTAL_DOP)
-        set(hdop) {
-            setDoubleValue(HORIZONTAL_DOP, hdop, 1, 1)
-        }
+    override fun setHorizontalDOP(hdop: Double) {
+        setDoubleValue(HORIZONTAL_DOP, hdop, 1, 1)
+    }
 
     /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSASentence#getMode()
-	 *//*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.GSASentence#setFaaMode(net.sf.marineapi
 	 * .nmea.util.FaaMode)
 	 */
-    override var mode: FaaMode
-        get() = FaaMode.Companion.valueOf(getCharValue(GPS_MODE))
-        set(mode) {
-            setCharValue(GPS_MODE, mode.toChar())
-        }
+    override fun setMode(mode: FaaMode) {
+        setCharValue(GPS_MODE, mode.toChar())
+    }
 
     /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSASentence#getPositionDOP()
-	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GSASentence#setPositionDOP(double)
 	 */
-    override var positionDOP: Double
-        get() = getDoubleValue(POSITION_DOP)
-        set(pdop) {
-            setDoubleValue(POSITION_DOP, pdop, 1, 1)
-        }
+    override fun setPositionDOP(pdop: Double) {
+        setDoubleValue(POSITION_DOP, pdop, 1, 1)
+    }
 
     /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSASentence#getSatelliteIds()
-	 *//*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.GSASentence#setSatelliteIds(java.lang.
 	 * String[])
 	 */
-    override var satelliteIds: Array<String?>
-        get() {
-            val result: MutableList<String?> = ArrayList()
-            for (i in FIRST_SV..LAST_SV) {
-                if (hasValue(i)) {
-                    result.add(getStringValue(i))
-                }
-            }
-            return result.toTypedArray()
+    override fun setSatelliteIds(ids: Array<String>) {
+        require(!(ids.size > LAST_SV - FIRST_SV + 1)) { "List length exceeded (12)" }
+        var j = 0
+        for (i in FIRST_SV..LAST_SV) {
+            val id = if (j < ids.size) ids[j++] else ""
+            setStringValue(i, id)
         }
-        set(ids) {
-            require(!(ids.size > LAST_SV - FIRST_SV + 1)) { "List length exceeded (12)" }
-            var j = 0
-            for (i in FIRST_SV..LAST_SV) {
-                val id = if (j < ids.size) ids[j++] else ""
-                setStringValue(i, id)
-            }
-        }
+    }
 
     /*
 	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSASentence#getVerticalDOP()
-	 *//*
-	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GSASentence#setVerticalDOP(double)
 	 */
-    override var verticalDOP: Double
-        get() = getDoubleValue(VERTICAL_DOP)
-        set(vdop) {
-            setDoubleValue(VERTICAL_DOP, vdop, 1, 1)
-        }
+    override fun setVerticalDOP(vdop: Double) {
+        setDoubleValue(VERTICAL_DOP, vdop, 1, 1)
+    }
 
     companion object {
         // field indices

@@ -37,7 +37,7 @@ internal class GNSParser : PositionParser, GNSSentence {
      *
      * @param nmea GNS sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GNS)
+    constructor(nmea: String) : super(nmea, SentenceId.GNS) {}
 
     /**
      * Constructor for empty GNS sentence.
@@ -49,11 +49,13 @@ internal class GNSParser : PositionParser, GNSSentence {
         setStringValue(MODE, "NN")
     }
 
-    override var time: Time
-        get() = Time(getStringValue(UTC_TIME))
-        set(t) {
-            setStringValue(UTC_TIME, t.toString())
-        }
+    override fun getTime(): Time {
+        return Time(getStringValue(UTC_TIME))
+    }
+
+    override fun setTime(t: Time) {
+        setStringValue(UTC_TIME, t.toString())
+    }
 
     override fun getPosition(): Position {
         return parsePosition(LATITUDE, LAT_DIRECTION, LONGITUDE, LON_DIRECTION)
@@ -65,22 +67,22 @@ internal class GNSParser : PositionParser, GNSSentence {
 
     override fun getGpsMode(): GNSSentence.Mode {
         val modes = getStringValue(MODE)
-        return GNSSentence.Mode.Companion.valueOf(modes[GPS_MODE])
+        return GNSSentence.Mode.valueOf(modes!![GPS_MODE])
     }
 
     override fun setGpsMode(gps: GNSSentence.Mode) {
         val modes = getStringValue(MODE)
-        setStringValue(MODE, gps.toChar().toString() + modes.substring(GNS_MODE))
+        setStringValue(MODE, gps.toChar().toString() + modes!!.substring(GNS_MODE))
     }
 
     override fun getGlonassMode(): GNSSentence.Mode {
         val modes = getStringValue(MODE)
-        return GNSSentence.Mode.Companion.valueOf(modes[GNS_MODE])
+        return GNSSentence.Mode.valueOf(modes!![GNS_MODE])
     }
 
     override fun setGlonassMode(gns: GNSSentence.Mode) {
         val modes = getStringValue(MODE)
-        val sb = StringBuffer(modes.length)
+        val sb = StringBuffer(modes!!.length)
         sb.append(modes[GPS_MODE])
         sb.append(gns.toChar())
         if (modes.length > 2) {
@@ -89,15 +91,15 @@ internal class GNSParser : PositionParser, GNSSentence {
         setStringValue(MODE, sb.toString())
     }
 
-    override fun getAdditionalModes(): Array<GNSSentence.Mode?> {
+    override fun getAdditionalModes(): Array<GNSSentence.Mode> {
         val mode = getStringValue(MODE)
-        if (mode.length == 2) {
+        if (mode!!.length == 2) {
             return arrayOfNulls(0)
         }
         val additional = mode.substring(VAR_MODE)
         val modes = arrayOfNulls<GNSSentence.Mode>(additional.length)
         for (i in 0 until additional.length) {
-            modes[i] = GNSSentence.Mode.Companion.valueOf(additional[i])
+            modes[i] = GNSSentence.Mode.valueOf(additional[i])
         }
         return modes
     }
@@ -105,43 +107,60 @@ internal class GNSParser : PositionParser, GNSSentence {
     override fun setAdditionalModes(vararg modes: GNSSentence.Mode) {
         val current = getStringValue(MODE)
         val sb = StringBuffer(modes.size + 2)
-        sb.append(current.substring(0, VAR_MODE))
+        sb.append(current!!.substring(0, VAR_MODE))
         for (m in modes) {
             sb.append(m.toChar())
         }
         setStringValue(MODE, sb.toString())
     }
 
-    override var satelliteCount: Int
-        get() = getIntValue(SATELLITE_COUNT)
-        set(count) {
-            setIntValue(SATELLITE_COUNT, count, 2)
-        }
-    override var horizontalDOP: Double
-        get() = getDoubleValue(HDOP)
-        set(hdop) {
-            setDoubleValue(HDOP, hdop, 1, 2)
-        }
-    override var orthometricHeight: Double
-        get() = getDoubleValue(ORTHOMETRIC_HEIGHT)
-        set(height) {
-            setDoubleValue(ORTHOMETRIC_HEIGHT, height, 1, 2)
-        }
-    override var geoidalSeparation: Double
-        get() = getDoubleValue(GEOIDAL_SEPARATION)
-        set(separation) {
-            setDoubleValue(GEOIDAL_SEPARATION, separation, 1, 2)
-        }
-    override var dgpsAge: Double
-        get() = getDoubleValue(DGPS_AGE)
-        set(age) {
-            setDoubleValue(DGPS_AGE, age, 1, 1)
-        }
-    override var dgpsStationId: String?
-        get() = getStringValue(DGPS_STATION)
-        set(stationId) {
-            setStringValue(DGPS_STATION, stationId)
-        }
+    override fun getSatelliteCount(): Int {
+        return getIntValue(SATELLITE_COUNT)
+    }
+
+    override fun setSatelliteCount(count: Int) {
+        setIntValue(SATELLITE_COUNT, count, 2)
+    }
+
+    override fun getHorizontalDOP(): Double {
+        return getDoubleValue(HDOP)
+    }
+
+    override fun setHorizontalDOP(hdop: Double) {
+        setDoubleValue(HDOP, hdop, 1, 2)
+    }
+
+    override fun getOrthometricHeight(): Double {
+        return getDoubleValue(ORTHOMETRIC_HEIGHT)
+    }
+
+    override fun setOrthometricHeight(height: Double) {
+        setDoubleValue(ORTHOMETRIC_HEIGHT, height, 1, 2)
+    }
+
+    override fun getGeoidalSeparation(): Double {
+        return getDoubleValue(GEOIDAL_SEPARATION)
+    }
+
+    override fun setGeoidalSeparation(separation: Double) {
+        setDoubleValue(GEOIDAL_SEPARATION, separation, 1, 2)
+    }
+
+    override fun getDgpsAge(): Double {
+        return getDoubleValue(DGPS_AGE)
+    }
+
+    override fun setDgpsAge(age: Double) {
+        setDoubleValue(DGPS_AGE, age, 1, 1)
+    }
+
+    override fun getDgpsStationId(): String {
+        return getStringValue(DGPS_STATION)
+    }
+
+    override fun setDgpsStationId(stationId: String) {
+        setStringValue(DGPS_STATION, stationId)
+    }
 
     companion object {
         // NMEA field indices

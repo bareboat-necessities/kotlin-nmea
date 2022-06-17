@@ -36,44 +36,54 @@ internal class HTDParser : HTCParser, HTDSentence {
      *
      * @param nmea HTD sentence String to parse.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.HTD)
+    constructor(nmea: String) : super(nmea, SentenceId.HTD) {}
 
     /**
      * Constructor for empty HTD sentence.
      *
      * @param talker Talker ID to set.
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.HTD, 17)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.HTD, 17) {}
 
-    override val rudderStatus: DataStatus?
-        get() = if (hasValue(RUDDER_STATUS)) {
-            DataStatus.Companion.valueOf(getCharValue(RUDDER_STATUS))
+    override fun getRudderStatus(): DataStatus {
+        return if (hasValue(RUDDER_STATUS)) {
+            DataStatus.valueOf(getCharValue(RUDDER_STATUS))
         } else {
             null
         }
-    override val offHeadingStatus: DataStatus?
-        get() = if (hasValue(OFF_HEADING_STATUS)) {
-            DataStatus.Companion.valueOf(getCharValue(OFF_HEADING_STATUS))
+    }
+
+    override fun getOffHeadingStatus(): DataStatus {
+        return if (hasValue(OFF_HEADING_STATUS)) {
+            DataStatus.valueOf(getCharValue(OFF_HEADING_STATUS))
         } else {
             null
         }
-    override val offTrackStatus: DataStatus?
-        get() = if (hasValue(OFF_TRACK_STATUS)) {
-            DataStatus.Companion.valueOf(getCharValue(OFF_TRACK_STATUS))
+    }
+
+    override fun getOffTrackStatus(): DataStatus {
+        return if (hasValue(OFF_TRACK_STATUS)) {
+            DataStatus.valueOf(getCharValue(OFF_TRACK_STATUS))
         } else {
             null
         }
-    override var heading: Double
-        get() = if (hasValue(HEADING)) {
+    }
+
+    override fun getHeading(): Double {
+        return if (hasValue(HEADING)) {
             getDoubleValue(HEADING)
         } else {
             Double.NaN
         }
-        set(hdt) {
-            setDoubleValue(HEADING, hdt)
-        }
-    override val isTrue: Boolean
-        get() = isHeadingTrue
+    }
+
+    override fun isTrue(): Boolean {
+        return isHeadingTrue
+    }
+
+    override fun setHeading(hdt: Double) {
+        setDoubleValue(HEADING, hdt)
+    }
 
     companion object {
         private const val RUDDER_STATUS = 13

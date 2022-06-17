@@ -19,12 +19,12 @@ internal class VDMParser : AISParser {
      *
      * @param nmea NMEA sentence String.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.VDM)
+    constructor(nmea: String) : super(nmea, SentenceId.VDM) {}
 
     /**
      * Creates a new empty VDMParser.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.VDM)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.VDM) {}
 }

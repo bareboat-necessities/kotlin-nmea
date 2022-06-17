@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.GLLSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.FaaMode
 import net.sf.marineapi.nmea.util.Position
@@ -39,14 +41,14 @@ internal class GLLParser : PositionParser, GLLSentence {
      * @throws IllegalArgumentException If the given sentence is invalid or does
      * not contain GLL sentence.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GLL)
+    constructor(nmea: String) : super(nmea, SentenceId.GLL) {}
 
     /**
      * Creates GSA parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.GLL, 7)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.GLL, 7) {}
 
     /*
 	 * (non-Javadoc)
@@ -59,21 +61,14 @@ internal class GLLParser : PositionParser, GLLSentence {
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GLLSentence#getDataStatus()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.GLLSentence#setDataStatus(net.sf.marineapi
-	 * .nmea.util.DataStatus)
 	 */
-    override var status: DataStatus
-        get() = DataStatus.Companion.valueOf(getCharValue(DATA_STATUS))
-        set(status) {
-            setCharValue(DATA_STATUS, status.toChar())
-        }
+    override fun getStatus(): DataStatus {
+        return DataStatus.valueOf(getCharValue(DATA_STATUS))
+    }
 
-    override fun getMode(): FaaMode? {
+    override fun getMode(): FaaMode {
         return if (fieldCount > MODE) {
-            FaaMode.Companion.valueOf(getCharValue(MODE))
+            FaaMode.valueOf(getCharValue(MODE))
         } else {
             null
         }
@@ -82,20 +77,11 @@ internal class GLLParser : PositionParser, GLLSentence {
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.TimeSentence#getTime()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.
-	 * nmea.util.Time)
 	 */
-    override var time: Time
-        get() {
-            val str = getStringValue(UTC_TIME)
-            return Time(str)
-        }
-        set(t) {
-            setStringValue(UTC_TIME, t.toString())
-        }
+    override fun getTime(): Time {
+        val str = getStringValue(UTC_TIME)
+        return Time(str)
+    }
 
     /*
 	 * (non-Javadoc)
@@ -109,11 +95,31 @@ internal class GLLParser : PositionParser, GLLSentence {
         )
     }
 
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.GLLSentence#setDataStatus(net.sf.marineapi
+	 * .nmea.util.DataStatus)
+	 */
+    override fun setStatus(status: DataStatus) {
+        setCharValue(DATA_STATUS, status.toChar())
+    }
+
     override fun setMode(mode: FaaMode) {
         if (this.fieldCount <= MODE) {
             this.fieldCount = 7
         }
         setCharValue(MODE, mode.toChar())
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.
+	 * nmea.util.Time)
+	 */
+    override fun setTime(t: Time) {
+        setStringValue(UTC_TIME, t.toString())
     }
 
     companion object {

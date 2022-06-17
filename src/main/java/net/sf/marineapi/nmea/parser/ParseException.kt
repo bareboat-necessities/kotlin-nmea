@@ -33,7 +33,7 @@ class ParseException : DataNotAvailableException {
      *
      * @param msg Description of the Exception
      */
-    constructor(msg: String?) : super(msg)
+    constructor(msg: String?) : super(msg) {}
 
     /**
      * Constructor with message and cause.
@@ -41,7 +41,7 @@ class ParseException : DataNotAvailableException {
      * @param msg Description of the Exception
      * @param cause Throwable that caused this exception
      */
-    constructor(msg: String?, cause: Throwable?) : super(msg, cause)
+    constructor(msg: String?, cause: Throwable?) : super(msg, cause) {}
 
     companion object {
         /** serialVersionUID  */

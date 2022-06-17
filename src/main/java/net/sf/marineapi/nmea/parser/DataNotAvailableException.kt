@@ -32,7 +32,7 @@ open class DataNotAvailableException : RuntimeException {
      *
      * @param msg Exception message
      */
-    constructor(msg: String?) : super(msg)
+    constructor(msg: String?) : super(msg) {}
 
     /**
      * Constructor
@@ -40,7 +40,7 @@ open class DataNotAvailableException : RuntimeException {
      * @param msg Exception message
      * @param cause Throwable that caused the exception
      */
-    constructor(msg: String?, cause: Throwable?) : super(msg, cause)
+    constructor(msg: String?, cause: Throwable?) : super(msg, cause) {}
 
     companion object {
         private const val serialVersionUID = -3672061046826633631L

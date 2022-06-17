@@ -24,7 +24,6 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.sentence.XDRSentence
 import net.sf.marineapi.nmea.util.Measurement
-import java.util.*
 
 /**
  *
@@ -56,20 +55,20 @@ internal class XDRParser : SentenceParser, XDRSentence {
      *
      * @param nmea XDR sentence string
      */
-    constructor(nmea: String) : super(nmea, SentenceId.XDR)
+    constructor(nmea: String) : super(nmea, SentenceId.XDR) {}
 
     /**
      * Creates XDR parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.XDR, DATA_SET_LENGTH)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.XDR, DATA_SET_LENGTH) {}
 
     /* (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#addMeasurement(net.sf.marineapi.nmea.util.Measurement[])
 	 */
-    override fun addMeasurement(vararg m: Measurement?) {
-        val ms = getMeasurements()
+    override fun addMeasurement(vararg m: Measurement) {
+        val ms = measurements
         ms.addAll(Arrays.asList(*m))
         measurements = ms
     }
@@ -93,7 +92,7 @@ internal class XDRParser : SentenceParser, XDRSentence {
     /* (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#setMeasurement(net.sf.marineapi.nmea.util.Measurement)
 	 */
-    override fun setMeasurement(m: Measurement?) {
+    override fun setMeasurement(m: Measurement) {
         fieldCount = DATA_SET_LENGTH
         insertValues(TYPE_INDEX, m)
     }
@@ -143,7 +142,7 @@ internal class XDRParser : SentenceParser, XDRSentence {
     private fun insertValues(i: Int, m: Measurement?) {
         if (m != null) {
             setStringValue(i, m.type)
-            setDoubleValue(i + VALUE_INDEX, m.value!!)
+            setDoubleValue(i + VALUE_INDEX, m.value)
             setStringValue(i + UNITS_INDEX, m.units)
             setStringValue(i + NAME_INDEX, m.name)
         }

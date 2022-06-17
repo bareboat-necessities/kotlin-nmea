@@ -39,12 +39,12 @@ internal class VDOParser : AISParser {
      *
      * @param nmea NMEA sentence String.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.VDO)
+    constructor(nmea: String) : super(nmea, SentenceId.VDO) {}
 
     /**
      * Creates a new empty VDOParser.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.VDO)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.VDO) {}
 }

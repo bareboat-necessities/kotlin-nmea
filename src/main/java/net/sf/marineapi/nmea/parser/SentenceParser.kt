@@ -23,7 +23,6 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.*
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.util.*
 
 /**
  *
@@ -57,26 +56,13 @@ import java.util.*
  */
 open class SentenceParser : Sentence {
     // The first character which will be '$' most of the times but could be '!'.
-    override var beginChar: Char
+    private var beginChar: Char
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.Sentence#getTalkerId()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.Sentence#setTalkerId(net.sf.marineapi.
-	 * nmea.util.TalkerId)
-	 */
     // The first two characters after '$'.
-    override var talkerId: TalkerId
+    private var talkerId: TalkerId
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.Sentence#getSentenceId()
-	 */
     // The next three characters after talker id.
-    override val sentenceId: String
+    private val sentenceId: String
 
     // actual data fields (sentence id and checksum omitted)
     private var fields: MutableList<String?>? = ArrayList()
@@ -97,10 +83,10 @@ open class SentenceParser : Sentence {
         beginChar = nmea[0]
         talkerId = TalkerId.parse(nmea)
         sentenceId = SentenceId.parseStr(nmea)
-        val begin: Int = nmea.indexOf(Sentence.FIELD_DELIMITER) + 1
+        val begin = nmea.indexOf(Sentence.FIELD_DELIMITER) + 1
         val end = Checksum.index(nmea)
         val csv = nmea.substring(begin, end)
-        val values: Array<String> = csv.split(Sentence.FIELD_DELIMITER.toString().toRegex()).toTypedArray()
+        val values = csv.split(Sentence.FIELD_DELIMITER.toString().toRegex()).toTypedArray()
         fields!!.addAll(Arrays.asList(*values))
     }
 
@@ -118,7 +104,8 @@ open class SentenceParser : Sentence {
         tid,
         sid.toString(),
         size
-    )
+    ) {
+    }
 
     /**
      * Creates a new empty sentence with specified begin char, talker id,
@@ -132,10 +119,10 @@ open class SentenceParser : Sentence {
     protected constructor(begin: Char, talker: TalkerId?, type: String?, size: Int) {
         require(size >= 0) { "Size cannot be negative." }
         requireNotNull(talker) { "Talker ID must be specified" }
-        require(type == null || "" != type) { "Sentence ID must be specified" }
+        require((type == null || "") != type) { "Sentence ID must be specified" }
         beginChar = begin
         talkerId = talker
-        sentenceId = type!!
+        sentenceId = type
         val values = arrayOfNulls<String>(size)
         Arrays.fill(values, "")
         fields!!.addAll(Arrays.asList(*values))
@@ -155,8 +142,8 @@ open class SentenceParser : Sentence {
      * or is not of expected type.
      */
     constructor(nmea: String, type: String?) : this(nmea) {
-        require(type == null || "" != type) { "Sentence type must be specified." }
-        val sid = sentenceId
+        require((type == null || "") != type) { "Sentence type must be specified." }
+        val sid = getSentenceId()
         if (sid != type) {
             val ptrn = "Sentence id mismatch; expected [%s], found [%s]."
             val msg = String.format(ptrn, type, sid)
@@ -171,12 +158,7 @@ open class SentenceParser : Sentence {
      * @param type Sentence type Id, e.g. "GGA or "GLL".
      * @param size Number of data fields
      */
-    constructor(talker: TalkerId?, type: String?, size: Int) : this(
-        Sentence.BEGIN_CHAR,
-        talker,
-        type,
-        size
-    )
+    constructor(talker: TalkerId?, type: String?, size: Int) : this(Sentence.BEGIN_CHAR, talker, type, size) {}
 
     /**
      * Creates a new instance of SentenceParser with specified sentence data.
@@ -186,7 +168,7 @@ open class SentenceParser : Sentence {
      * @param nmea Sentence String
      * @param type Sentence type enum
      */
-    internal constructor(nmea: String, type: SentenceId) : this(nmea, type.toString())
+    internal constructor(nmea: String, type: SentenceId) : this(nmea, type.toString()) {}
 
     /**
      * Creates a new instance of SentenceParser without any data.
@@ -195,7 +177,7 @@ open class SentenceParser : Sentence {
      * @param sid Sentence id to set in sentence
      * @param size Number of data fields following the sentence id field
      */
-    internal constructor(tid: TalkerId?, sid: SentenceId, size: Int) : this(tid, sid.toString(), size)
+    internal constructor(tid: TalkerId?, sid: SentenceId, size: Int) : this(tid, sid.toString(), size) {}
 
     /*
 	 * (non-Javadoc)
@@ -218,32 +200,32 @@ open class SentenceParser : Sentence {
     override fun getBeginChar(): Char {
         return beginChar
     }
+
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.Sentence#getFieldCount()
 	 */
-    /**
-     * Sets the number of sentence data fields. Increases or decreases the
-     * fields array, values in fields not affected by the change remain
-     * unchanged. Does nothing if specified new size is equal to count returned
-     * by [.getFieldCount].
-     *
-     * @param size Number of data fields, must be greater than zero.
-     */
-    override var fieldCount: Int
-        get() = if (fields == null) {
+    override fun getFieldCount(): Int {
+        return if (fields == null) {
             0
         } else fields!!.size
-        set(size) {
-            require(size >= 1) { "Number of fields must be greater than zero." }
-            if (size < fields!!.size) {
-                fields = fields!!.subList(0, size)
-            } else if (size > fields!!.size) {
-                for (i in fields!!.size until size) {
-                    fields!!.add("")
-                }
-            }
-        }
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.Sentence#getSentenceId()
+	 */
+    override fun getSentenceId(): String {
+        return sentenceId
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.Sentence#getTalkerId()
+	 */
+    override fun getTalkerId(): TalkerId {
+        return talkerId
+    }
 
     /*
 	 * (non-Javadoc)
@@ -253,25 +235,26 @@ open class SentenceParser : Sentence {
         return toString().hashCode()
     }
 
-    override val isAISSentence: Boolean
-        get() {
-            val types = arrayOf("VDO", "VDM")
-            return Arrays.asList(*types).contains(sentenceId)
-        }
+    override fun isAISSentence(): Boolean {
+        val types = arrayOf("VDO", "VDM")
+        return Arrays.asList(*types).contains(getSentenceId())
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.Sentence#isProprietary()
 	 */
-    override val isProprietary: Boolean
-        get() = TalkerId.P == talkerId
+    override fun isProprietary(): Boolean {
+        return TalkerId.P == getTalkerId()
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.Sentence#isValid()
 	 */
-    override val isValid: Boolean
-        get() = SentenceValidator.isValid(toString())
+    override fun isValid(): Boolean {
+        return SentenceValidator.isValid(toString())
+    }
 
     /*
 	 * (non-Javadoc)
@@ -293,6 +276,16 @@ open class SentenceParser : Sentence {
             throw IllegalArgumentException(msg)
         }
         beginChar = ch
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.Sentence#setTalkerId(net.sf.marineapi.
+	 * nmea.util.TalkerId)
+	 */
+    override fun setTalkerId(id: TalkerId) {
+        talkerId = id
     }
 
     /*
@@ -345,7 +338,7 @@ open class SentenceParser : Sentence {
      *
      * @param index Data field index in sentence
      * @return Character contained in the field
-     * @throws net.sf.marineapi.nmea.parser.ParseException If field contains more
+     * @throws ParseException If field contains more
      * than one character
      */
     fun getCharValue(index: Int): Char {
@@ -361,7 +354,7 @@ open class SentenceParser : Sentence {
      * Parse double value from the specified sentence field.
      *
      * @param index Data field index in sentence
-     * @return Field as parsed by [java.lang.Double.parseDouble]
+     * @return Field as parsed by [Double.parseDouble]
      */
     fun getDoubleValue(index: Int): Double {
         val value: Double
@@ -377,7 +370,7 @@ open class SentenceParser : Sentence {
      * Parse integer value from the specified sentence field.
      *
      * @param index Field index in sentence
-     * @return Field parsed by [java.lang.Integer.parseInt]
+     * @return Field parsed by [Integer.parseInt]
      */
     protected fun getIntValue(index: Int): Int {
         val value: Int
@@ -401,7 +394,7 @@ open class SentenceParser : Sentence {
      *
      * @param index Field index
      * @return Field value as String
-     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the field is
+     * @throws DataNotAvailableException If the field is
      * empty
      */
     fun getStringValue(index: Int): String {
@@ -490,6 +483,25 @@ open class SentenceParser : Sentence {
         dfs.decimalSeparator = '.'
         nf.decimalFormatSymbols = dfs
         setStringValue(index, nf.format(value))
+    }
+
+    /**
+     * Sets the number of sentence data fields. Increases or decreases the
+     * fields array, values in fields not affected by the change remain
+     * unchanged. Does nothing if specified new size is equal to count returned
+     * by [.getFieldCount].
+     *
+     * @param size Number of data fields, must be greater than zero.
+     */
+    fun setFieldCount(size: Int) {
+        require(size >= 1) { "Number of fields must be greater than zero." }
+        if (size < fields!!.size) {
+            fields = fields!!.subList(0, size)
+        } else if (size > fields!!.size) {
+            for (i in fields!!.size until size) {
+                fields!!.add("")
+            }
+        }
     }
 
     /**

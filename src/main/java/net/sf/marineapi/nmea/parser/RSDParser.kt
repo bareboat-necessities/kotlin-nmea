@@ -20,11 +20,11 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.RSDSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DisplayRotation
 import net.sf.marineapi.nmea.util.Units
-import java.util.*
-
 
 /**
  * RSD sentence parser
@@ -37,169 +37,208 @@ internal class RSDParser : SentenceParser, RSDSentence {
      *
      * @param nmea RSD sentence string.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.RSD)
+    constructor(nmea: String) : super(nmea, SentenceId.RSD) {}
 
     /**
      * Creates RSD parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.RSD, 13)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.RSD, 13) {}
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getOriginOneRange
+     * @see RSDSentence.getOriginOneRange
      */
+    override fun getOriginOneRange(): Double {
+        return getDoubleValue(ORIGIN_ONE_RANGE)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setOriginOneRange
+     * @see RSDSentence.getOriginOneBearing
      */
-    override var originOneRange: Double
-        get() = getDoubleValue(ORIGIN_ONE_RANGE)
-        set(range) {
-            setDoubleValue(ORIGIN_ONE_RANGE, range)
-        }
+    override fun getOriginOneBearing(): Double {
+        return getDoubleValue(ORIGIN_ONE_BEARING)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getOriginOneBearing
+     * @see RSDSentence.getVRMOneRange
      */
+    override fun getVRMOneRange(): Double {
+        return getDoubleValue(VRM_ONE_RANGE)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setOriginOneBearing
+     * @see RSDSentence.getEBLOneBearing
      */
-    override var originOneBearing: Double
-        get() = getDoubleValue(ORIGIN_ONE_BEARING)
-        set(bearing) {
-            setDoubleValue(ORIGIN_ONE_BEARING, bearing)
-        }
+    override fun getEBLOneBearing(): Double {
+        return getDoubleValue(EBL_ONE_BEARING)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getVRMOneRange
+     * @see RSDSentence.getOriginTwoRange
      */
+    override fun getOriginTwoRange(): Double {
+        return getDoubleValue(ORIGIN_TWO_RANGE)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setVRMOneRange
+     * @see RSDSentence.getOriginTwoBearing
      */
-    override var vRMOneRange: Double
-        get() = getDoubleValue(VRM_ONE_RANGE)
-        set(range) {
-            setDoubleValue(VRM_ONE_RANGE, range)
-        }
+    override fun getOriginTwoBearing(): Double {
+        return getDoubleValue(ORIGIN_TWO_BEARING)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getEBLOneBearing
+     * @see RSDSentence.getVRMTwoRange
      */
+    override fun getVRMTwoRange(): Double {
+        return getDoubleValue(VRM_TWO_RANGE)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setEBLOneBearing
+     * @see RSDSentence.getEBLTwoBearing
      */
-    override var eBLOneBearing: Double
-        get() = getDoubleValue(EBL_ONE_BEARING)
-        set(bearing) {
-            setDoubleValue(EBL_ONE_BEARING, bearing)
-        }
+    override fun getEBLTwoBearing(): Double {
+        return getDoubleValue(EBL_TWO_BEARING)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getOriginTwoRange
+     * @see RSDSentence.getCursorRange
      */
+    override fun getCursorRange(): Double {
+        return getDoubleValue(CURSOR_RANGE)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setOriginTwoRange
+     * @see RSDSentence.getCursorBearing
      */
-    override var originTwoRange: Double
-        get() = getDoubleValue(ORIGIN_TWO_RANGE)
-        set(range) {
-            setDoubleValue(ORIGIN_TWO_RANGE, range)
-        }
+    override fun getCursorBearing(): Double {
+        return getDoubleValue(CURSOR_BEARING)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getOriginTwoBearing
+     * @see RSDSentence.getRangeScale
      */
+    override fun getRangeScale(): Double {
+        return getDoubleValue(RANGE_SCALE)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setOriginTwoBearing
+     * @see RSDSentence.getRangeUnits
      */
-    override var originTwoBearing: Double
-        get() = getDoubleValue(ORIGIN_TWO_BEARING)
-        set(bearing) {
-            setDoubleValue(ORIGIN_TWO_BEARING, bearing)
-        }
+    override fun getRangeUnits(): Units {
+        return Units.valueOf(getCharValue(RANGE_UNITS))
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getVRMTwoRange
+     * @see RSDSentence.getDisplayRotation
      */
+    override fun getDisplayRotation(): DisplayRotation {
+        return DisplayRotation.valueOf(getCharValue(DISPLAY_ROTATION))
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setVRMTwoRange
+     * @see RSDSentence.setOriginOneRange
      */
-    override var vRMTwoRange: Double
-        get() = getDoubleValue(VRM_TWO_RANGE)
-        set(range) {
-            setDoubleValue(VRM_TWO_RANGE, range)
-        }
+    override fun setOriginOneRange(range: Double) {
+        setDoubleValue(ORIGIN_ONE_RANGE, range)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getEBLTwoBearing
+     * @see RSDSentence.setOriginOneBearing
      */
+    override fun setOriginOneBearing(bearing: Double) {
+        setDoubleValue(ORIGIN_ONE_BEARING, bearing)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setEBLTwoBearing
+     * @see RSDSentence.setVRMOneRange
      */
-    override var eBLTwoBearing: Double
-        get() = getDoubleValue(EBL_TWO_BEARING)
-        set(bearing) {
-            setDoubleValue(EBL_TWO_BEARING, bearing)
-        }
+    override fun setVRMOneRange(range: Double) {
+        setDoubleValue(VRM_ONE_RANGE, range)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getCursorRange
+     * @see RSDSentence.setEBLOneBearing
      */
+    override fun setEBLOneBearing(bearing: Double) {
+        setDoubleValue(EBL_ONE_BEARING, bearing)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setCursorRange
+     * @see RSDSentence.setOriginTwoRange
      */
-    override var cursorRange: Double
-        get() = getDoubleValue(CURSOR_RANGE)
-        set(range) {
-            setDoubleValue(CURSOR_RANGE, range)
-        }
+    override fun setOriginTwoRange(range: Double) {
+        setDoubleValue(ORIGIN_TWO_RANGE, range)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getCursorBearing
+     * @see RSDSentence.setOriginTwoBearing
      */
+    override fun setOriginTwoBearing(bearing: Double) {
+        setDoubleValue(ORIGIN_TWO_BEARING, bearing)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setCursorBearing
+     * @see RSDSentence.setVRMTwoRange
      */
-    override var cursorBearing: Double
-        get() = getDoubleValue(CURSOR_BEARING)
-        set(bearing) {
-            setDoubleValue(CURSOR_BEARING, bearing)
-        }
+    override fun setVRMTwoRange(range: Double) {
+        setDoubleValue(VRM_TWO_RANGE, range)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getRangeScale
+     * @see RSDSentence.setEBLTwoBearing
      */
+    override fun setEBLTwoBearing(bearing: Double) {
+        setDoubleValue(EBL_TWO_BEARING, bearing)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setRangeScale
+     * @see RSDSentence.setCursorRange
      */
-    override var rangeScale: Double
-        get() = getDoubleValue(RANGE_SCALE)
-        set(scale) {
-            setDoubleValue(RANGE_SCALE, scale)
-        }
+    override fun setCursorRange(range: Double) {
+        setDoubleValue(CURSOR_RANGE, range)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getRangeUnits
+     * @see RSDSentence.setCursorBearing
      */
+    override fun setCursorBearing(bearing: Double) {
+        setDoubleValue(CURSOR_BEARING, bearing)
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setRangeUnits
+     * @see RSDSentence.setRangeScale
      */
-    override var rangeUnits: Units
-        get() = Units.Companion.valueOf(getCharValue(RANGE_UNITS))
-        set(units) {
-            if (Arrays.asList(*VALID_RANGE_UNITS).contains(units)) {
-                setCharValue(RANGE_UNITS, units.toChar())
-            } else {
-                var err = "Range units must be "
-                for (i in VALID_RANGE_UNITS.indices) {
-                    val u = VALID_RANGE_UNITS[i]
-                    err += u.name + "(" + u.toChar() + ")"
-                    if (i != VALID_RANGE_UNITS.size - 1) {
-                        err += ", "
-                    }
+    override fun setRangeScale(scale: Double) {
+        setDoubleValue(RANGE_SCALE, scale)
+    }
+
+    /**
+     * @see RSDSentence.setRangeUnits
+     */
+    override fun setRangeUnits(units: Units) {
+        if (Arrays.asList(*VALID_RANGE_UNITS).contains(units)) {
+            setCharValue(RANGE_UNITS, units.toChar())
+        } else {
+            var err = "Range units must be "
+            for (i in VALID_RANGE_UNITS.indices) {
+                val u = VALID_RANGE_UNITS[i]
+                err += u.name + "(" + u.toChar() + ")"
+                if (i != VALID_RANGE_UNITS.size - 1) {
+                    err += ", "
                 }
-                throw IllegalArgumentException(err)
             }
+            throw IllegalArgumentException(err)
         }
+    }
+
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getDisplayRotation
+     * @see RSDSentence.setDisplayRotation
      */
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setDisplayRotation
-     */
-    override var displayRotation: DisplayRotation
-        get() = DisplayRotation.Companion.valueOf(getCharValue(DISPLAY_ROTATION))
-        set(rotation) {
-            setCharValue(DISPLAY_ROTATION, rotation.toChar())
-        }
+    override fun setDisplayRotation(rotation: DisplayRotation) {
+        setCharValue(DISPLAY_ROTATION, rotation.toChar())
+    }
 
     companion object {
         private const val ORIGIN_ONE_RANGE = 0

@@ -20,9 +20,10 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.MTWSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.Units
-
 
 /**
  * MTW Sentence parser.
@@ -35,7 +36,7 @@ internal class MTWParser : SentenceParser, MTWSentence {
      *
      * @param nmea MTW sentence string
      */
-    constructor(nmea: String) : super(nmea)
+    constructor(nmea: String) : super(nmea) {}
 
     /**
      * Creates new MTW parse without data.
@@ -49,15 +50,18 @@ internal class MTWParser : SentenceParser, MTWSentence {
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.MTWSentence#getTemperature()
-	 *//*
+	 */
+    override fun getTemperature(): Double {
+        return getDoubleValue(TEMPERATURE)
+    }
+
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.MTWSentence#setTemperature(double)
 	 */
-    override var temperature: Double
-        get() = getDoubleValue(TEMPERATURE)
-        set(temp) {
-            setDoubleValue(TEMPERATURE, temp, 1, 2)
-        }
+    override fun setTemperature(temp: Double) {
+        setDoubleValue(TEMPERATURE, temp, 1, 2)
+    }
 
     companion object {
         private const val TEMPERATURE = 0

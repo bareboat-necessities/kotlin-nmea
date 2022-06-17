@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.RMCSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
 
 /**
@@ -35,81 +37,54 @@ internal class RMCParser : PositionParser, RMCSentence {
      * @param nmea RMC sentence String.
      * @throws IllegalArgumentException If specified sentence is invalid.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.RMC)
+    constructor(nmea: String) : super(nmea, SentenceId.RMC) {}
 
     /**
      * Creates a ZDA parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.RMC, 12)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.RMC, 12) {}
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#getCorrectedCourse()
 	 */
-    override val correctedCourse: Double
-        get() = course + variation
+    override fun getCorrectedCourse(): Double {
+        return course + variation
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#getCourse()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#setCourse(double)
 	 */
-    override var course: Double
-        get() = getDoubleValue(COURSE)
-        set(cog) {
-            setDegreesValue(COURSE, cog)
-        }
+    override fun getCourse(): Double {
+        return getDoubleValue(COURSE)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DateSentence#getDate()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.DateSentence#setDate(net.sf.marineapi.
-	 * nmea.util.Date)
 	 */
-    override var date: Date
-        get() = Date(getStringValue(UTC_DATE))
-        set(date) {
-            setStringValue(UTC_DATE, date.toString())
-        }
+    override fun getDate(): Date {
+        return Date(getStringValue(UTC_DATE))
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#getDirectionOfVariation()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.RMCSentence#setDirectionOfVariation(net
-	 * .sf.marineapi.nmea.util.Direction)
 	 */
-    override var directionOfVariation: CompassPoint
-        get() = CompassPoint.Companion.valueOf(getCharValue(VAR_HEMISPHERE))
-        set(dir) {
-            require(!(dir != CompassPoint.EAST && dir != CompassPoint.WEST)) { "Invalid variation direction, expected EAST or WEST." }
-            setCharValue(VAR_HEMISPHERE, dir.toChar())
-        }
+    override fun getDirectionOfVariation(): CompassPoint {
+        return CompassPoint.valueOf(getCharValue(VAR_HEMISPHERE))
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#getFaaMode()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.RMCSentence#setFaaMode(net.sf.marineapi
-	 * .nmea.util.FaaMode)
 	 */
-    override var mode: FaaMode
-        get() = FaaMode.Companion.valueOf(getCharValue(MODE))
-        set(mode) {
-            fieldCount = 12
-            setCharValue(MODE, mode.toChar())
-        }
+    override fun getMode(): FaaMode {
+        return FaaMode.valueOf(getCharValue(MODE))
+    }
 
     /*
 	 * (non-Javadoc)
@@ -122,67 +97,79 @@ internal class RMCParser : PositionParser, RMCSentence {
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#getSpeed()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#setSpeed(double)
 	 */
-    override var speed: Double
-        get() = getDoubleValue(SPEED)
-        set(sog) {
-            setDoubleValue(SPEED, sog, 1, 1)
-        }
+    override fun getSpeed(): Double {
+        return getDoubleValue(SPEED)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#getDataStatus()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.RMCSentence#setDataStatus(net.sf.marineapi
-	 * .nmea.util.DataStatus)
 	 */
-    override var status: DataStatus
-        get() = DataStatus.Companion.valueOf(getCharValue(DATA_STATUS))
-        set(status) {
-            setCharValue(DATA_STATUS, status.toChar())
-        }
+    override fun getStatus(): DataStatus {
+        return DataStatus.valueOf(getCharValue(DATA_STATUS))
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.TimeSentence#getTime()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.
-	 * nmea.util.Time)
 	 */
-    override var time: Time
-        get() {
-            val str = getStringValue(UTC_TIME)
-            return Time(str)
-        }
-        set(t) {
-            setStringValue(UTC_TIME, t.toString())
-        }
+    override fun getTime(): Time {
+        val str = getStringValue(UTC_TIME)
+        return Time(str)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#getVariation()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#setVariation(double)
 	 */
-    override var variation: Double
-        get() {
-            var variation = getDoubleValue(MAG_VARIATION)
-            if (CompassPoint.EAST == directionOfVariation && variation > 0) {
-                variation = -variation
-            }
-            return variation
+    override fun getVariation(): Double {
+        var variation = getDoubleValue(MAG_VARIATION)
+        if (CompassPoint.EAST == directionOfVariation && variation > 0) {
+            variation = -variation
         }
-        set(var) {
-            setDegreesValue(MAG_VARIATION, `var`)
-        }
+        return variation
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#setCourse(double)
+	 */
+    override fun setCourse(cog: Double) {
+        setDegreesValue(COURSE, cog)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.DateSentence#setDate(net.sf.marineapi.
+	 * nmea.util.Date)
+	 */
+    override fun setDate(date: Date) {
+        setStringValue(UTC_DATE, date.toString())
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.RMCSentence#setDirectionOfVariation(net
+	 * .sf.marineapi.nmea.util.Direction)
+	 */
+    override fun setDirectionOfVariation(dir: CompassPoint) {
+        require(!(dir != CompassPoint.EAST && dir != CompassPoint.WEST)) { "Invalid variation direction, expected EAST or WEST." }
+        setCharValue(VAR_HEMISPHERE, dir.toChar())
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.RMCSentence#setFaaMode(net.sf.marineapi
+	 * .nmea.util.FaaMode)
+	 */
+    override fun setMode(mode: FaaMode) {
+        fieldCount = 12
+        setCharValue(MODE, mode.toChar())
+    }
 
     /*
 	 * (non-Javadoc)
@@ -192,6 +179,42 @@ internal class RMCParser : PositionParser, RMCSentence {
 	 */
     override fun setPosition(pos: Position) {
         setPositionValues(pos, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#setSpeed(double)
+	 */
+    override fun setSpeed(sog: Double) {
+        setDoubleValue(SPEED, sog, 1, 1)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.RMCSentence#setDataStatus(net.sf.marineapi
+	 * .nmea.util.DataStatus)
+	 */
+    override fun setStatus(status: DataStatus) {
+        setCharValue(DATA_STATUS, status.toChar())
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.
+	 * nmea.util.Time)
+	 */
+    override fun setTime(t: Time) {
+        setStringValue(UTC_TIME, t.toString())
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#setVariation(double)
+	 */
+    override fun setVariation(`var`: Double) {
+        setDegreesValue(MAG_VARIATION, `var`)
     }
 
     companion object {

@@ -24,12 +24,11 @@ import net.sf.marineapi.nmea.sentence.BODSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 
-
 /**
  * BOD sentence parser.
  *
  * @author Kimmo Tuukkanen
- * @see net.sf.marineapi.nmea.sentence.BODSentence
+ * @see BODSentence
  */
 internal class BODParser : SentenceParser, BODSentence {
     /**
@@ -39,7 +38,7 @@ internal class BODParser : SentenceParser, BODSentence {
      * @throws IllegalArgumentException If specified String is invalid or does
      * not contain a BOD sentence.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.BOD)
+    constructor(nmea: String) : super(nmea, SentenceId.BOD) {}
 
     /**
      * Creates GSA parser with empty sentence.
@@ -55,59 +54,71 @@ internal class BODParser : SentenceParser, BODSentence {
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.BODSentence#getDestinationWaypointId()
-	 *//*
+	 */
+    override fun getDestinationWaypointId(): String {
+        return getStringValue(DESTINATION)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.BODSentence#getMagneticBearing()
+	 */
+    override fun getMagneticBearing(): Double {
+        return getDoubleValue(BEARING_MAGN)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.BODSentence#getOriginWaypointId()
+	 */
+    override fun getOriginWaypointId(): String {
+        return getStringValue(ORIGIN)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.BODSentence#getTrueBearing()
+	 */
+    override fun getTrueBearing(): Double {
+        return getDoubleValue(BEARING_TRUE)
+    }
+
+    /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.BODSentence#setDestinationWaypointId(java
 	 * .lang.String)
 	 */
-    override var destinationWaypointId: String?
-        get() = getStringValue(DESTINATION)
-        set(id) {
-            setStringValue(DESTINATION, id)
-        }
+    override fun setDestinationWaypointId(id: String) {
+        setStringValue(DESTINATION, id)
+    }
 
     /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.BODSentence#getMagneticBearing()
-	 *//*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.BODSentence#setMagneticBearing(double)
 	 */
-    override var magneticBearing: Double
-        get() = getDoubleValue(BEARING_MAGN)
-        set(bearing) {
-            setDegreesValue(BEARING_MAGN, bearing)
-        }
+    override fun setMagneticBearing(bearing: Double) {
+        setDegreesValue(BEARING_MAGN, bearing)
+    }
 
     /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.BODSentence#getOriginWaypointId()
-	 *//*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.BODSentence#setOriginWaypointId(java.lang
 	 * .String)
 	 */
-    override var originWaypointId: String?
-        get() = getStringValue(ORIGIN)
-        set(id) {
-            setStringValue(ORIGIN, id)
-        }
+    override fun setOriginWaypointId(id: String) {
+        setStringValue(ORIGIN, id)
+    }
 
     /*
 	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.BODSentence#getTrueBearing()
-	 *//*
-	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.BODSentence#setTrueBearing(double)
 	 */
-    override var trueBearing: Double
-        get() = getDoubleValue(BEARING_TRUE)
-        set(bearing) {
-            setDegreesValue(BEARING_TRUE, bearing)
-        }
+    override fun setTrueBearing(bearing: Double) {
+        setDegreesValue(BEARING_TRUE, bearing)
+    }
 
     companion object {
         // field indices

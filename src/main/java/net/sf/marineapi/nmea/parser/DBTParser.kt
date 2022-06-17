@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.DBTSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.Units
 
 /**
@@ -34,7 +36,7 @@ internal class DBTParser : SentenceParser, DBTSentence {
      *
      * @param nmea DBT sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.DBT)
+    constructor(nmea: String) : super(nmea, SentenceId.DBT) {}
 
     /**
      * Creates a new instance of DBTParser with empty data fields.
@@ -50,41 +52,50 @@ internal class DBTParser : SentenceParser, DBTSentence {
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#getMeters()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#setMeters(double)
 	 */
-    override var depth: Double
-        get() = getDoubleValue(DEPTH_METERS)
-        set(depth) {
-            setDoubleValue(DEPTH_METERS, depth, 1, 1)
-        }
+    override fun getDepth(): Double {
+        return getDoubleValue(DEPTH_METERS)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#getFathoms()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#setFathoms(double)
 	 */
-    override var fathoms: Double
-        get() = getDoubleValue(DEPTH_FATHOMS)
-        set(depth) {
-            setDoubleValue(DEPTH_FATHOMS, depth, 1, 1)
-        }
+    override fun getFathoms(): Double {
+        return getDoubleValue(DEPTH_FATHOMS)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#getFeet()
-	 *//*
+	 */
+    override fun getFeet(): Double {
+        return getDoubleValue(DEPTH_FEET)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#setMeters(double)
+	 */
+    override fun setDepth(depth: Double) {
+        setDoubleValue(DEPTH_METERS, depth, 1, 1)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#setFathoms(double)
+	 */
+    override fun setFathoms(depth: Double) {
+        setDoubleValue(DEPTH_FATHOMS, depth, 1, 1)
+    }
+
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#setFeet(double)
 	 */
-    override var feet: Double
-        get() = getDoubleValue(DEPTH_FEET)
-        set(depth) {
-            setDoubleValue(DEPTH_FEET, depth, 1, 1)
-        }
+    override fun setFeet(depth: Double) {
+        setDoubleValue(DEPTH_FEET, depth, 1, 1)
+    }
 
     companion object {
         // TODO calculate value for all units when setting a value

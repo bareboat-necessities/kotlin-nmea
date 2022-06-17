@@ -1,6 +1,8 @@
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TLLSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.Position
 import net.sf.marineapi.nmea.util.TargetStatus
 import net.sf.marineapi.nmea.util.Time
@@ -31,8 +33,8 @@ import java.text.DecimalFormatSymbols
  * @author Epameinondas Pantzopoulos
  */
 internal class TLLParser : PositionParser, TLLSentence {
-    constructor(nmea: String) : super(nmea, SentenceId.TLL)
-    constructor(talker: TalkerId?) : super(talker, SentenceId.TLL, 9)
+    constructor(nmea: String) : super(nmea, SentenceId.TLL) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.TLL, 9) {}
 
     override fun getPosition(): Position {
         return parsePosition(LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE)
@@ -51,7 +53,7 @@ internal class TLLParser : PositionParser, TLLSentence {
     }
 
     override fun getStatus(): TargetStatus {
-        return TargetStatus.Companion.valueOf(getCharValue(STATUS))
+        return TargetStatus.valueOf(getCharValue(STATUS))
     }
 
     override fun getReference(): Boolean {
@@ -67,7 +69,7 @@ internal class TLLParser : PositionParser, TLLSentence {
         setIntValue(NUMBER, number, 2)
     }
 
-    override fun setName(name: String?) {
+    override fun setName(name: String) {
         setStringValue(NAME, name)
     }
 

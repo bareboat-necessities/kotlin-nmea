@@ -20,9 +20,10 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.MMBSentenceimport
+import net.sf.marineapi.nmea.sentence.MMBSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerId
 /**
  * MMBParser - Barometer.
  *
@@ -36,7 +37,7 @@ internal class MMBParser : SentenceParser, MMBSentence {
      *
      * @param nmea MMB sentence String.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.MMB)
+    constructor(nmea: String) : super(nmea, SentenceId.MMB) {}
 
     /**
      * Constructs a fresh MMB parser.
@@ -48,16 +49,21 @@ internal class MMBParser : SentenceParser, MMBSentence {
         setCharValue(UNIT_BARS, 'B')
     }
 
-    override var inchesOfMercury: Double
-        get() = getDoubleValue(PRESSURE_INHG)
-        set(inHg) {
-            setDoubleValue(PRESSURE_INHG, inHg)
-        }
-    override var bars: Double
-        get() = getDoubleValue(PRESSURE_BARS)
-        set(bars) {
-            setDoubleValue(PRESSURE_BARS, bars)
-        }
+    override fun getInchesOfMercury(): Double {
+        return getDoubleValue(PRESSURE_INHG)
+    }
+
+    override fun getBars(): Double {
+        return getDoubleValue(PRESSURE_BARS)
+    }
+
+    override fun setInchesOfMercury(inHg: Double) {
+        setDoubleValue(PRESSURE_INHG, inHg)
+    }
+
+    override fun setBars(bars: Double) {
+        setDoubleValue(PRESSURE_BARS, bars)
+    }
 
     companion object {
         private const val PRESSURE_INHG = 0

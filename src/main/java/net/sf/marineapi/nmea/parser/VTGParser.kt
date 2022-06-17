@@ -37,7 +37,7 @@ internal class VTGParser : SentenceParser, VTGSentence {
      * @param nmea VTG sentence String
      * @throws IllegalArgumentException If specified sentence is invalid
      */
-    constructor(nmea: String) : super(nmea, SentenceId.VTG)
+    constructor(nmea: String) : super(nmea, SentenceId.VTG) {}
 
     /**
      * Creates VTG parser with empty sentence.
@@ -64,7 +64,7 @@ internal class VTGParser : SentenceParser, VTGSentence {
 	 * @see net.sf.marineapi.nmea.sentence.VTGSentence#getMode()
 	 */
     override fun getMode(): FaaMode {
-        return FaaMode.Companion.valueOf(getCharValue(MODE))
+        return FaaMode.valueOf(getCharValue(MODE))
     }
 
     /*

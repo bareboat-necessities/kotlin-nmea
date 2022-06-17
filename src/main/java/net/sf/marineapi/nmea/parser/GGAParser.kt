@@ -22,6 +22,9 @@ package net.sf.marineapi.nmea.parser
 
 import net.sf.marineapi.nmea.sentence.GGASentence
 import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.GpsFixQuality
+import net.sf.marineapi.nmea.util.Position
 import net.sf.marineapi.nmea.util.Time
 import net.sf.marineapi.nmea.util.Units
 
@@ -38,133 +41,83 @@ internal class GGAParser : PositionParser, GGASentence {
      * @throws IllegalArgumentException If the specified sentence is invalid or
      * not a GGA sentence.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GGA)
+    constructor(nmea: String) : super(nmea, SentenceId.GGA) {}
 
     /**
      * Creates GSA parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.GGA, 14)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.GGA, 14) {}
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GGASentence#getAltitude()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GGASentence#setAltitude(double)
 	 */
-    override var altitude: Double
-        get() = getDoubleValue(ALTITUDE)
-        set(alt) {
-            setDoubleValue(ALTITUDE, alt, 1, 1)
-        }
+    override fun getAltitude(): Double {
+        return getDoubleValue(ALTITUDE)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GGASentence#getAltitudeUnits()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.GGASentence#setAltitudeUnits(net.sf.marineapi
-	 * .nmea.util.Units)
 	 */
-    override var altitudeUnits: Units
-        get() {
-            val ch = getCharValue(ALTITUDE_UNITS)
-            if (ch != GGASentence.Companion.ALT_UNIT_METERS && ch != GGASentence.Companion.ALT_UNIT_FEET) {
-                val msg = "Invalid altitude unit indicator: %s"
-                throw ParseException(String.format(msg, ch))
-            }
-            return Units.Companion.valueOf(ch)
+    override fun getAltitudeUnits(): Units {
+        val ch = getCharValue(ALTITUDE_UNITS)
+        if (ch != GGASentence.ALT_UNIT_METERS && ch != GGASentence.ALT_UNIT_FEET) {
+            val msg = "Invalid altitude unit indicator: %s"
+            throw ParseException(String.format(msg, ch))
         }
-        set(unit) {
-            setCharValue(ALTITUDE_UNITS, unit.toChar())
-        }
+        return Units.valueOf(ch)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GGASentence#getDgpsAge()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GGASentence#setDgpsAge(int)
 	 */
-    override var dgpsAge: Double
-        get() = getDoubleValue(DGPS_AGE)
-        set(age) {
-            setDoubleValue(DGPS_AGE, age, 1, 1)
-        }
+    override fun getDgpsAge(): Double {
+        return getDoubleValue(DGPS_AGE)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GGASentence#getDgpsStationId()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.GGASentence#setDgpsStationId(java.lang
-	 * .String)
 	 */
-    override var dgpsStationId: String?
-        get() = getStringValue(DGPS_STATION_ID)
-        set(id) {
-            setStringValue(DGPS_STATION_ID, id)
-        }
+    override fun getDgpsStationId(): String {
+        return getStringValue(DGPS_STATION_ID)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GGASentence#getFixQuality()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.GGASentence#setFixQuality(net.sf.marineapi
-	 * .nmea.util.GpsFixQuality)
 	 */
-    override var fixQuality: GpsFixQuality
-        get() = GpsFixQuality.Companion.valueOf(getIntValue(FIX_QUALITY))
-        set(quality) {
-            setIntValue(FIX_QUALITY, quality.toInt())
-        }
+    override fun getFixQuality(): GpsFixQuality {
+        return GpsFixQuality.valueOf(getIntValue(FIX_QUALITY))
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GGASentence#getGeoidalHeight()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GGASentence#setGeoidalHeight(double)
 	 */
-    override var geoidalHeight: Double
-        get() = getDoubleValue(GEOIDAL_HEIGHT)
-        set(height) {
-            setDoubleValue(GEOIDAL_HEIGHT, height, 1, 1)
-        }
+    override fun getGeoidalHeight(): Double {
+        return getDoubleValue(GEOIDAL_HEIGHT)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GGASentence#getGeoidalHeightUnits()
-	 *//*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.GGASentence#setGeoidalHeightUnits(net.
-	 * sf.marineapi.nmea.util.Units)
 	 */
-    override var geoidalHeightUnits: Units
-        get() = Units.Companion.valueOf(getCharValue(HEIGHT_UNITS))
-        set(unit) {
-            setCharValue(HEIGHT_UNITS, unit.toChar())
-        }
+    override fun getGeoidalHeightUnits(): Units {
+        return Units.valueOf(getCharValue(HEIGHT_UNITS))
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GGASentence#getHorizontalDOP()
-	 *//*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GGASentence#setHorizontalDOP(double)
 	 */
-    override var horizontalDOP: Double
-        get() = getDoubleValue(HORIZONTAL_DILUTION)
-        set(hdop) {
-            setDoubleValue(HORIZONTAL_DILUTION, hdop, 1, 1)
-        }
+    override fun getHorizontalDOP(): Double {
+        return getDoubleValue(HORIZONTAL_DILUTION)
+    }
 
     /*
 	 * (non-Javadoc)
@@ -179,42 +132,99 @@ internal class GGAParser : PositionParser, GGASentence {
             if (altitudeUnits == Units.FEET) {
                 alt = alt / 0.3048
             }
-            pos.altitude = alt
+            pos!!.altitude = alt
         }
-        return pos
+        return pos!!
     }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GGASentence#getSatelliteCount()
-	 *//*
- 	 * (non-Javadoc)
- 	 * @see net.sf.marineapi.nmea.sentence.GGASentence#setSatelliteCount(int)
- 	 */
-    override var satelliteCount: Int
-        get() = getIntValue(SATELLITES_IN_USE)
-        set(count) {
-            require(count >= 0) { "Satelite count cannot be negative" }
-            setIntValue(SATELLITES_IN_USE, count, 2)
-        }
+	 */
+    override fun getSatelliteCount(): Int {
+        return getIntValue(SATELLITES_IN_USE)
+    }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.TimeSentence#getTime()
-	 *//*
+	 */
+    override fun getTime(): Time {
+        val str = getStringValue(UTC_TIME)
+        return Time(str)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GGASentence#setAltitude(double)
+	 */
+    override fun setAltitude(alt: Double) {
+        setDoubleValue(ALTITUDE, alt, 1, 1)
+    }
+
+    /*
 	 * (non-Javadoc)
 	 * @see
-	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.
-	 * nmea.util.Time)
+	 * net.sf.marineapi.nmea.sentence.GGASentence#setAltitudeUnits(net.sf.marineapi
+	 * .nmea.util.Units)
 	 */
-    override var time: Time
-        get() {
-            val str = getStringValue(UTC_TIME)
-            return Time(str)
-        }
-        set(t) {
-            setStringValue(UTC_TIME, t.toString())
-        }
+    override fun setAltitudeUnits(unit: Units) {
+        setCharValue(ALTITUDE_UNITS, unit.toChar())
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GGASentence#setDgpsAge(int)
+	 */
+    override fun setDgpsAge(age: Double) {
+        setDoubleValue(DGPS_AGE, age, 1, 1)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.GGASentence#setDgpsStationId(java.lang
+	 * .String)
+	 */
+    override fun setDgpsStationId(id: String) {
+        setStringValue(DGPS_STATION_ID, id)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.GGASentence#setFixQuality(net.sf.marineapi
+	 * .nmea.util.GpsFixQuality)
+	 */
+    override fun setFixQuality(quality: GpsFixQuality) {
+        setIntValue(FIX_QUALITY, quality.toInt())
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GGASentence#setGeoidalHeight(double)
+	 */
+    override fun setGeoidalHeight(height: Double) {
+        setDoubleValue(GEOIDAL_HEIGHT, height, 1, 1)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.GGASentence#setGeoidalHeightUnits(net.
+	 * sf.marineapi.nmea.util.Units)
+	 */
+    override fun setGeoidalHeightUnits(unit: Units) {
+        setCharValue(HEIGHT_UNITS, unit.toChar())
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GGASentence#setHorizontalDOP(double)
+	 */
+    override fun setHorizontalDOP(hdop: Double) {
+        setDoubleValue(HORIZONTAL_DILUTION, hdop, 1, 1)
+    }
 
     /*
 	 * (non-Javadoc)
@@ -228,6 +238,25 @@ internal class GGAParser : PositionParser, GGASentence {
         )
         altitude = pos.altitude
         altitudeUnits = Units.METER
+    }
+
+    /*
+ 	 * (non-Javadoc)
+ 	 * @see net.sf.marineapi.nmea.sentence.GGASentence#setSatelliteCount(int)
+ 	 */
+    override fun setSatelliteCount(count: Int) {
+        require(count >= 0) { "Satelite count cannot be negative" }
+        setIntValue(SATELLITES_IN_USE, count, 2)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.
+	 * nmea.util.Time)
+	 */
+    override fun setTime(t: Time) {
+        setStringValue(UTC_TIME, t.toString())
     }
 
     companion object {

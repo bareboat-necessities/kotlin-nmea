@@ -48,7 +48,7 @@ abstract class PositionParser : SentenceParser {
      * @param type Expected Sentence ID
      * @see SentenceParser.SentenceParser
      */
-    protected constructor(nmea: String, type: SentenceId) : super(nmea, type)
+    protected constructor(nmea: String, type: SentenceId) : super(nmea, type) {}
 
     /**
      * Constructor for empty sentence.
@@ -58,7 +58,7 @@ abstract class PositionParser : SentenceParser {
      * @param size Number of empty data fields to set.
      * @see SentenceParser.SentenceParser
      */
-    protected constructor(talker: TalkerId?, type: SentenceId, size: Int) : super(talker, type, size)
+    protected constructor(talker: TalkerId?, type: SentenceId, size: Int) : super(talker, type, size) {}
 
     /**
      * Parses the hemisphere of latitude from specified field.
@@ -132,7 +132,7 @@ abstract class PositionParser : SentenceParser {
      * @throws IllegalArgumentException If specified Direction is other than
      * NORTH or SOUTH.
      */
-    fun setLatHemisphere(field: Int, hem: CompassPoint?) {
+    fun setLatHemisphere(field: Int, hem: CompassPoint) {
         require(!(hem != CompassPoint.NORTH && hem != CompassPoint.SOUTH)) {
             ("Invalid latitude hemisphere: "
                     + hem)
@@ -185,7 +185,7 @@ abstract class PositionParser : SentenceParser {
      * @throws IllegalArgumentException If specified Direction is other than
      * EAST or WEST.
      */
-    fun setLonHemisphere(field: Int, hem: CompassPoint?) {
+    fun setLonHemisphere(field: Int, hem: CompassPoint) {
         require(!(hem != CompassPoint.EAST && hem != CompassPoint.WEST)) {
             ("Invalid longitude hemisphere: "
                     + hem)
@@ -243,7 +243,7 @@ abstract class PositionParser : SentenceParser {
          * @throws ParseException If specified char is not 'N' or 'S'.
          */
         fun parseHemisphereLat(ch: Char): CompassPoint {
-            val d: CompassPoint = CompassPoint.Companion.valueOf(ch)
+            val d = CompassPoint.valueOf(ch)
             if (d != CompassPoint.NORTH && d != CompassPoint.SOUTH) {
                 throw ParseException("Invalid latitude hemisphere '$ch'")
             }
@@ -258,7 +258,7 @@ abstract class PositionParser : SentenceParser {
          * @throws ParseException If specified char is not 'E' or 'W'.
          */
         fun parseHemisphereLon(ch: Char): CompassPoint {
-            val d: CompassPoint = CompassPoint.Companion.valueOf(ch)
+            val d = CompassPoint.valueOf(ch)
             if (d != CompassPoint.EAST && d != CompassPoint.WEST) {
                 throw ParseException("Invalid longitude hemisphere $ch'")
             }
@@ -275,6 +275,7 @@ abstract class PositionParser : SentenceParser {
          * @param longitudeHemisphereIndicator Character value from the NMEA Sentence
          * @return Position object
          */
+        @JvmStatic
         fun parsePosition(
             latitudeValue: String?, latitudeHemisphereIndicator: Char,
             longitudeValue: String?, longitudeHemisphereIndicator: Char
