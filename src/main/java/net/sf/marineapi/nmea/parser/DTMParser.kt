@@ -104,7 +104,7 @@ internal class DTMParser : SentenceParser, DTMSentence {
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.DTMSentence#setDatumCode(java.lang.String)
 	 */
-    override fun setDatumCode(code: String) {
+    override fun setDatumCode(code: String?) {
         setStringValue(DATUM_CODE, code)
     }
 
@@ -115,7 +115,7 @@ internal class DTMParser : SentenceParser, DTMSentence {
 	 * net.sf.marineapi.nmea.sentence.DTMSentence#setDatumSubCode(java.lang.
 	 * String)
 	 */
-    override fun setDatumSubCode(code: String) {
+    override fun setDatumSubCode(code: String?) {
         setStringValue(DATUM_SUBCODE, code)
     }
 
@@ -153,7 +153,7 @@ internal class DTMParser : SentenceParser, DTMSentence {
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.DTMSentence#setName(java.lang.String)
 	 */
-    override fun setName(name: String) {
+    override fun setName(name: String?) {
         setStringValue(DATUM_NAME, name)
     }
 

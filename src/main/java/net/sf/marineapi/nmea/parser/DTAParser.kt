@@ -36,7 +36,7 @@ import java.util.Date
  * @see [marine-api fork](https://github.com/LoadBalanced/marine-api)
  */
 internal open class DTAParser : SentenceParser, DTASentence {
-    private val offset = if (fieldCount >= 8) 0 else -1
+    private val offset = if (getFieldCount() >= 8) 0 else -1
 
     /**
      * Creates a new instance of DTAParser with 8 data fields.

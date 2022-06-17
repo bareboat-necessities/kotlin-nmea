@@ -89,7 +89,7 @@ internal class BODParser : SentenceParser, BODSentence {
 	 * net.sf.marineapi.nmea.sentence.BODSentence#setDestinationWaypointId(java
 	 * .lang.String)
 	 */
-    override fun setDestinationWaypointId(id: String) {
+    override fun setDestinationWaypointId(id: String?) {
         setStringValue(DESTINATION, id)
     }
 
@@ -108,7 +108,7 @@ internal class BODParser : SentenceParser, BODSentence {
 	 * net.sf.marineapi.nmea.sentence.BODSentence#setOriginWaypointId(java.lang
 	 * .String)
 	 */
-    override fun setOriginWaypointId(id: String) {
+    override fun setOriginWaypointId(id: String?) {
         setStringValue(ORIGIN, id)
     }
 
