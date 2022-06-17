@@ -23,8 +23,10 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.DTASentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
+
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.util.Date
 
 
 /**

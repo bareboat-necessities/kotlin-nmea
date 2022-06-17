@@ -77,25 +77,25 @@ internal abstract class AISParser : SentenceParser, AISSentence {
     }
 
     override fun isFragmented(): Boolean {
-        return numberOfFragments > 1
+        return getNumberOfFragments() > 1
     }
 
     override fun isFirstFragment(): Boolean {
-        return fragmentNumber == 1
+        return getFragmentNumber() == 1
     }
 
     override fun isLastFragment(): Boolean {
-        return numberOfFragments == fragmentNumber
+        return getNumberOfFragments() == getFragmentNumber()
     }
 
-    override fun isPartOfMessage(line: AISSentence): Boolean {
-        return if (numberOfFragments == line.numberOfFragments &&
-            fragmentNumber < line.fragmentNumber
+    override fun isPartOfMessage(line: AISSentence?): Boolean {
+        return if (getNumberOfFragments() == line!!.getNumberOfFragments() &&
+            getFragmentNumber() < line.getFragmentNumber()
         ) {
-            if (fragmentNumber + 1 == line.fragmentNumber) {
-                radioChannel == line.radioChannel || messageId == line.messageId
+            if (getFragmentNumber() + 1 == line.getFragmentNumber()) {
+                getRadioChannel() == line.getRadioChannel() || getMessageId() == line.getMessageId()
             } else {
-                radioChannel == line.radioChannel && messageId == line.messageId
+                getRadioChannel() == line.getRadioChannel() && getMessageId() == line.getMessageId()
             }
         } else {
             false

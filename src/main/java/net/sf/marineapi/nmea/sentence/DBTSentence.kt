@@ -29,26 +29,32 @@ package net.sf.marineapi.nmea.sentence
  * @author Kimmo Tuukkanen
  */
 interface DBTSentence : DepthSentence {
+
     /**
      * Get depth in fathoms.
      *
      * @return Depth value
      */
-    /**
-     * Set depth value, in fathoms.
-     *
-     * @param depth Depth to set
-     */
-    var fathoms: Double
+    fun getFathoms(): Double
+
     /**
      * Get depth in feet.
      *
      * @return Depth value
      */
+    fun getFeet(): Double
+
+    /**
+     * Set depth value, in fathoms.
+     *
+     * @param depth Depth to set
+     */
+    fun setFathoms(depth: Double)
+
     /**
      * Set depth value, in feet.
      *
      * @param depth Depth to set
      */
-    var feet: Double
+    fun setFeet(depth: Double)
 }

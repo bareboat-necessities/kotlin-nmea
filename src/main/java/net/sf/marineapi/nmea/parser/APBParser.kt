@@ -269,8 +269,8 @@ internal class APBParser : SentenceParser, APBSentence {
 	 * net.sf.marineapi.nmea.sentence.APBSentence#setCycleLockStatus(net.sf.
 	 * marineapi.nmea.util.DataStatus)
 	 */
-    override fun setCycleLockStatus(status: DataStatus) {
-        setCharValue(CYCLE_LOCK_STATUS, status.toChar())
+    override fun setCycleLockStatus(status: DataStatus?) {
+        setCharValue(CYCLE_LOCK_STATUS, status!!.toChar())
     }
 
     /*
@@ -280,7 +280,7 @@ internal class APBParser : SentenceParser, APBSentence {
 	 * net.sf.marineapi.nmea.sentence.APBSentence#setDestinationWaypointId(java
 	 * .lang.String)
 	 */
-    override fun setDestinationWaypointId(id: String) {
+    override fun setDestinationWaypointId(id: String?) {
         setStringValue(DEST_WAYPOINT_ID, id)
     }
 
@@ -326,8 +326,8 @@ internal class APBParser : SentenceParser, APBSentence {
 	 * net.sf.marineapi.nmea.sentence.APBSentence#setStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-    override fun setStatus(status: DataStatus) {
-        setCharValue(SIGNAL_STATUS, status.toChar())
+    override fun setStatus(status: DataStatus?) {
+        setCharValue(SIGNAL_STATUS, status!!.toChar())
     }
 
     /*
@@ -337,8 +337,8 @@ internal class APBParser : SentenceParser, APBSentence {
 	 * net.sf.marineapi.nmea.sentence.APBSentence#setSteerTo(net.sf.marineapi
 	 * .nmea.util.Direction)
 	 */
-    override fun setSteerTo(direction: Direction) {
-        setCharValue(XTE_STEER_TO, direction.toChar())
+    override fun setSteerTo(direction: Direction?) {
+        setCharValue(XTE_STEER_TO, direction!!.toChar())
     }
 
     companion object {

@@ -42,12 +42,8 @@ interface BODSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Sets the destination waypoint ID.
-     *
-     * @param id ID to set
-     */
-    var destinationWaypointId: String?
+    fun getDestinationWaypointId(): String?
+
     /**
      * Get the magnetic bearing from origin to destination.
      *
@@ -61,14 +57,8 @@ interface BODSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Sets the true bearing from origin to destination, in degrees.
-     *
-     * @param bearing Bearing value
-     * @throws IllegalArgumentException If bearing value out range 0..360
-     * degrees.
-     */
-    var magneticBearing: Double
+    fun getMagneticBearing(): Double
+
     /**
      * Get the ID of origin waypoint. This field is available only when route is
      * active.
@@ -79,12 +69,8 @@ interface BODSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Sets the ID of origin waypoint.
-     *
-     * @param id ID to set.
-     */
-    var originWaypointId: String?
+    fun getOriginWaypointId(): String?
+
     /**
      * Get the true bearing from origin to destination.
      *
@@ -98,6 +84,15 @@ interface BODSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
+    fun getTrueBearing(): Double
+
+    /**
+     * Sets the destination waypoint ID.
+     *
+     * @param id ID to set
+     */
+    fun setDestinationWaypointId(id: String?)
+
     /**
      * Sets the true bearing from origin to destination, in degrees.
      *
@@ -105,5 +100,21 @@ interface BODSentence : Sentence {
      * @throws IllegalArgumentException If bearing value out range 0..360
      * degrees.
      */
-    var trueBearing: Double
+    fun setMagneticBearing(bearing: Double)
+
+    /**
+     * Sets the ID of origin waypoint.
+     *
+     * @param id ID to set.
+     */
+    fun setOriginWaypointId(id: String?)
+
+    /**
+     * Sets the true bearing from origin to destination, in degrees.
+     *
+     * @param bearing Bearing value
+     * @throws IllegalArgumentException If bearing value out range 0..360
+     * degrees.
+     */
+    fun setTrueBearing(bearing: Double)
 }

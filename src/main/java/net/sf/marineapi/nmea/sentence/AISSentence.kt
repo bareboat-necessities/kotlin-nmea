@@ -40,40 +40,41 @@ package net.sf.marineapi.nmea.sentence
  * @author Lázár József, Kimmo Tuukkanen
  */
 interface AISSentence : Sentence {
+
     /**
      * Number of fragments in the currently accumulating message.
      *
      * @return number of fragments.
      */
-    val numberOfFragments: Int
+    fun getNumberOfFragments(): Int
 
     /**
      * Returns the fragment number of this sentence (1-based).
      *
      * @return fragment index
      */
-    val fragmentNumber: Int
+    fun getFragmentNumber(): Int
 
     /**
      * Returns the sequential message ID for multi-sentence messages.
      *
      * @return sequential message ID
      */
-    val messageId: String?
+    fun getMessageId(): String?
 
     /**
      * Returns the radio channel information of the messsage.
      *
      * @return radio channel id
      */
-    val radioChannel: String?
+    fun getRadioChannel(): String?
 
     /**
      * Returns the raw 6-bit decoded message.
      *
      * @return message body
      */
-    val payload: String?
+    fun getPayload(): String?
 
     /**
      * Returns the number of fill bits required to pad the data payload to a 6
@@ -84,28 +85,28 @@ interface AISSentence : Sentence {
      *
      * @return number of fill bits
      */
-    val fillBits: Int
+    fun getFillBits(): Int
 
     /**
      * Tells if the AIS message is being delivered over multiple sentences.
      *
      * @return true if this sentence is part of a sequence
      */
-    val isFragmented: Boolean
+    fun isFragmented(): Boolean
 
     /**
      * Tells if this is the first fragment in message sequence.
      *
      * @return true if first fragment in sequence
      */
-    val isFirstFragment: Boolean
+    fun isFirstFragment(): Boolean
 
     /**
      * Tells if this is the last fragment in message sequence.
      *
      * @return true if last part of a sequence
      */
-    val isLastFragment: Boolean
+    fun isLastFragment(): Boolean
 
     /**
      *
@@ -127,5 +128,4 @@ interface AISSentence : Sentence {
      * @param sentence AISSentence to compare with.
      * @return true if this and given sentence belong in same sequence
      */
-    fun isPartOfMessage(sentence: AISSentence): Boolean
-}
+    fun isPartOfMessage(sentence: AISSentence?): Boolean}

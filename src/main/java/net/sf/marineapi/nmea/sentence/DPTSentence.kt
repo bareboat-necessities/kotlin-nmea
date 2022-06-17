@@ -38,21 +38,26 @@ interface DPTSentence : DepthSentence {
      *
      * @return Offset in meters.
      */
+    fun getOffset(): Double
+
     /**
      * Set offset to transducer.
      *
      * @param offset Offset in meters
      */
-    var offset: Double
+    fun setOffset(offset: Double)
+
     /**
      * Get maximum depth value the sounder can detect.
      *
      * @return Maximum depth, in meters.
      */
+    fun getMaximum(): Double
+
     /**
      * Set maximum depth value the sounder can detect.
      *
      * @param max Maximum depth, in meters.
      */
-    var maximum: Double
+    fun setMaximum(max: Double)
 }

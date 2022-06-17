@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.*
+import net.sf.marineapi.nmea.util.DataStatus
+import net.sf.marineapi.nmea.util.Direction
+
 
 /**
  *
@@ -43,154 +45,162 @@ import net.sf.marineapi.nmea.util.*
  * @author Kimmo Tuukkanen
  */
 interface APBSentence : Sentence {
+
     /**
      * Returns the bearing from current position to destination waypoint.
      *
      * @return bearing in degrees
      */
-    /**
-     * Sets the bearing from current position to destination waypoint.
-     *
-     * @param bearing bearing in degrees
-     */
-    var bearingPositionToDestination: Double
+    fun getBearingPositionToDestination(): Double
+
     /**
      * Returns bearing from origin to destination.
      *
      * @return bearing in degrees
      */
-    /**
-     * Sets the bearing from origin to destination.
-     *
-     * @param bearing bearing in degrees
-     */
-    var bearingOriginToDestination: Double
+    fun getBearingOriginToDestination(): Double
+
     /**
      * Returns the cross-track error magnitude/distance.
      *
      * @return Cross-track error distance in nautical miles
      */
-    /**
-     * Sets the cross-track error magnitude/distance.
-     *
-     * @param distance Cross-track error distance in nautical miles
-     */
-    var crossTrackError: Double
+    fun getCrossTrackError(): Double
+
     /**
      * Returns the unit of cross-track error.
      *
      * @return Unit char indicator
      */
-    /**
-     * Sets the unit of cross-track error.
-     *
-     * @param unit Unit char to set
-     */
-    var crossTrackUnits: Char
+    fun getCrossTrackUnits(): Char
+
     /**
      * Returns the Loran-C cycle lock status, not used for GPS.
      *
      * @return Loran-C cycle lock status.
      */
-    /**
-     * Sets the Loran-C cycle lock status. Not used for GPS, may be omitted or
-     * [DataStatus.VOID].
-     *
-     * @param status DataStatus to set
-     */
-    var cycleLockStatus: DataStatus
+    fun getCycleLockStatus(): DataStatus?
 
     /**
      * Returns the destination waypoint id/name.
      *
      * @return Waypoint id
      */
-    val destionationWaypointId: String?
+    fun getDestionationWaypointId(): String?
 
     /**
      * Returns the heading to steer to destination waypoint.
      *
      * @return Heading in degrees
      */
-    val headingToDestionation: Double
+    fun getHeadingToDestionation(): Double
+
     /**
      * Returns the signal/fix status, LORAN-C Blink or SNR warning.
      *
      * @return DataStatus
      */
-    /**
-     * Sets the signal/fix status, LORAN-C Blink or SNR warning.
-     *
-     * @param status DataStatus to set.
-     */
-    var status: DataStatus
+    fun getStatus(): DataStatus?
+
     /**
      * Returns the direction in which to steer in order to get back on route.
      *
      * @return [Direction.LEFT] or [Direction.RIGHT]
      */
-    /**
-     * Set direction in which to steer in order to get back on route.
-     *
-     * @param direction [Direction.RIGHT] or [Direction.LEFT]
-     */
-    var steerTo: Direction
+    fun getSteerTo(): Direction?
+
     /**
      * Tells if vessel has entered the arrival circle.
      *
      * @return True if entered, otherwise false.
      */
-    /**
-     * Sets the arrival circle enter status.
-     *
-     * @param isEntered True if entered, otherwise false.
-     */
-    var isArrivalCircleEntered: Boolean
+    fun isArrivalCircleEntered(): Boolean
+
     /**
      * Tells if the bearing from origin to destination is true or magnetic.
      *
      * @return True if true heading, false for magnetic.
      */
-    /**
-     * Sets the bearing from origin to destination true or magnetic.
-     *
-     * @param isTrue True if true bearing, false for magnetic.
-     */
-    var isBearingOriginToDestionationTrue: Boolean
+    fun isBearingOriginToDestionationTrue(): Boolean
+
     /**
      * Tells if the bearing from current position to destionation is true or
      * magnetic.
      *
      * @return True if true heading, false for magnetic.
      */
-    /**
-     * Sets the bearing from current position to destination true or magnetic.
-     *
-     * @param isTrue True if true bearing, false for magnetic.
-     */
-    var isBearingPositionToDestinationTrue: Boolean
+    fun isBearingPositionToDestinationTrue(): Boolean
+
     /**
      * Tells if the heading to destionation is true or magnetic.
      *
      * @return True if true heading, false for magnetic.
      */
-    /**
-     * Sets the heading to destionation true or magnetic.
-     *
-     * @param isTrue True if true heading, false for magnetic.
-     */
-    var isHeadingToDestinationTrue: Boolean
+    fun isHeadingToDestinationTrue(): Boolean
+
     /**
      * Tells if vessel has passed perpendicular at waypoint.
      *
      * @return True if passed, otherwise false.
      */
+    fun isPerpendicularPassed(): Boolean
+
     /**
-     * Sets the perpendicular to waypoint pass status.
+     * Sets the arrival circle enter status.
      *
-     * @param isPassed True if passed, otherwise false.
+     * @param isEntered True if entered, otherwise false.
      */
-    var isPerpendicularPassed: Boolean
+    fun setArrivalCircleEntered(isEntered: Boolean)
+
+    /**
+     * Sets the bearing from origin to destination.
+     *
+     * @param bearing bearing in degrees
+     */
+    fun setBearingOriginToDestination(bearing: Double)
+
+    /**
+     * Sets the bearing from origin to destination true or magnetic.
+     *
+     * @param isTrue True if true bearing, false for magnetic.
+     */
+    fun setBearingOriginToDestionationTrue(isTrue: Boolean)
+
+    /**
+     * Sets the bearing from current position to destination waypoint.
+     *
+     * @param bearing bearing in degrees
+     */
+    fun setBearingPositionToDestination(bearing: Double)
+
+    /**
+     * Sets the bearing from current position to destination true or magnetic.
+     *
+     * @param isTrue True if true bearing, false for magnetic.
+     */
+    fun setBearingPositionToDestinationTrue(isTrue: Boolean)
+
+    /**
+     * Sets the cross-track error magnitude/distance.
+     *
+     * @param distance Cross-track error distance in nautical miles
+     */
+    fun setCrossTrackError(distance: Double)
+
+    /**
+     * Sets the unit of cross-track error.
+     *
+     * @param unit Unit char to set
+     */
+    fun setCrossTrackUnits(unit: Char)
+
+    /**
+     * Sets the Loran-C cycle lock status. Not used for GPS, may be omitted or
+     * [DataStatus.VOID].
+     *
+     * @param status DataStatus to set
+     */
+    fun setCycleLockStatus(status: DataStatus?)
 
     /**
      * Returns the destination waypoint id/name.
@@ -205,6 +215,34 @@ interface APBSentence : Sentence {
      * @param heading heading in degrees
      */
     fun setHeadingToDestination(heading: Double)
+
+    /**
+     * Sets the heading to destionation true or magnetic.
+     *
+     * @param isTrue True if true heading, false for magnetic.
+     */
+    fun setHeadingToDestinationTrue(isTrue: Boolean)
+
+    /**
+     * Sets the perpendicular to waypoint pass status.
+     *
+     * @param isPassed True if passed, otherwise false.
+     */
+    fun setPerpendicularPassed(isPassed: Boolean)
+
+    /**
+     * Sets the signal/fix status, LORAN-C Blink or SNR warning.
+     *
+     * @param status DataStatus to set.
+     */
+    fun setStatus(status: DataStatus?)
+
+    /**
+     * Set direction in which to steer in order to get back on route.
+     *
+     * @param direction [Direction.RIGHT] or [Direction.LEFT]
+     */
+    fun setSteerTo(direction: Direction?)
 
     companion object {
         /** Kilometers  */

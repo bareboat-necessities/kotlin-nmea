@@ -25,6 +25,8 @@ import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.sentence.ZDASentence
 import net.sf.marineapi.nmea.util.Time
 
+import java.util.Date
+
 /**
  * ZDA sentence parser.
  *
@@ -79,8 +81,8 @@ internal class ZDAParser : SentenceParser, ZDASentence {
 	 */
     override fun getTime(): Time {
         val str = getStringValue(UTC_TIME)
-        val tzHrs = localZoneHours
-        val tzMin = localZoneMinutes
+        val tzHrs = getLocalZoneHours()
+        val tzMin = getLocalZoneMinutes()
         val t = Time(str)
         t.offsetHours = tzHrs
         t.offsetMinutes = tzMin
@@ -93,7 +95,7 @@ internal class ZDAParser : SentenceParser, ZDASentence {
 	 * net.sf.marineapi.nmea.sentence.DateSentence#setDate(net.sf.marineapi.
 	 * nmea.util.Date)
 	 */
-    override fun setDate(date: net.sf.marineapi.nmea.util.Date) {
+    override fun setDate(date: Date) {
         setIntValue(YEAR, date.year)
         setIntValue(MONTH, date.month, 2)
         setIntValue(DAY, date.day, 2)

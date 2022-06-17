@@ -26,15 +26,18 @@ package net.sf.marineapi.nmea.sentence
  * @author Kimmo Tuukkanen
  */
 interface DepthSentence : Sentence {
+
     /**
      * Get depth of water, in meters.
      *
      * @return Depth value
      */
+    fun getDepth(): Double
+
     /**
      * Set depth of water, in meters.
      *
      * @param depth Depth value
      */
-    var depth: Double
+    fun setDepth(depth: Double)
 }

@@ -101,7 +101,7 @@ interface Sentence {
      *
      * @param id TalkerId to set
      */
-    fun setTalkerId(id: TalkerId?)
+    fun setTalkerId(id: TalkerId)
 
     /**
      * Formats and validates the String representation of sentence. Throws an

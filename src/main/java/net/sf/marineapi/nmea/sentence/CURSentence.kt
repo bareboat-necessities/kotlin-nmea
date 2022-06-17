@@ -36,7 +36,7 @@ interface CURSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    val currentSpeed: Double
+    fun getCurrentSpeed(): Double
 
     /**
      * Get the current direction.
@@ -49,7 +49,7 @@ interface CURSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    val currentDirection: Double
+    fun getCurrentDirection(): Double
 
     /**
      * Get the current direction reference.
@@ -62,7 +62,7 @@ interface CURSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    val currentDirectionReference: String?
+    fun getCurrentDirectionReference(): String?
 
     /**
      * Get the current heading reference.
@@ -74,5 +74,5 @@ interface CURSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    val currentHeadingReference: String?
+    fun getCurrentHeadingReference(): String?
 }
