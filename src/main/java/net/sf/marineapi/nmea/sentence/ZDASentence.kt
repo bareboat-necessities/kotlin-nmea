@@ -21,7 +21,8 @@
 package net.sf.marineapi.nmea.sentence
 
 import net.sf.marineapi.nmea.util.Time
-import java.util.*
+
+import java.util.Date
 
 /**
  * UTC time and date with local time zone offset.

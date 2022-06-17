@@ -20,7 +20,7 @@
  */
 package net.sf.marineapi.nmea.sentence
 
-import java.util.*
+import java.util.Date
 
 /**
  *
