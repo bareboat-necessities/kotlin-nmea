@@ -20,9 +20,11 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.AISSentenceimport
+import net.sf.marineapi.nmea.sentence.AISSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.sentence.*
+
 /**
  * Common AIS sentence parser. Handles only the NMEA layer for VDM and VDO
  * sentences. The actual payload message is parsed by AIS message parsers.

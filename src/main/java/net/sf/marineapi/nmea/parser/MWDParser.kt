@@ -20,9 +20,8 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.MWDSentenceimport
+import net.sf.marineapi.nmea.sentence.*
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerId
 /**
  * Wind speed and direction.
  *

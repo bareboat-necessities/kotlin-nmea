@@ -20,9 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.BODSentenceimport
+import net.sf.marineapi.nmea.sentence.BODSentence
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerId
+
 /**
  * BOD sentence parser.
  *

@@ -20,9 +20,11 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.GGASentenceimport
+import net.sf.marineapi.nmea.sentence.GGASentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.util.Time
+import net.sf.marineapi.nmea.util.Units
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*
 /**
  * GGA sentence parser.
  *

@@ -20,11 +20,13 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.SentenceIdimport
+import net.sf.marineapi.nmea.sentence.*
+import net.sf.marineapi.nmea.util.AcquisitionType
+import net.sf.marineapi.nmea.util.TargetStatus
+import net.sf.marineapi.nmea.util.Time
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 
-net.sf.marineapi.nmea.sentence.TTMSentenceimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*import java.text.DecimalFormatimport
-
-java.text.DecimalFormatSymbols
 /**
  * TTM sentence parser.
  *

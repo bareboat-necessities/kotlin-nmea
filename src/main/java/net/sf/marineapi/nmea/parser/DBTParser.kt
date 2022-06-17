@@ -20,9 +20,8 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.DBTSentenceimport
+import net.sf.marineapi.nmea.sentence.*
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.Units
 /**
  * DBT sentence parser.
  *

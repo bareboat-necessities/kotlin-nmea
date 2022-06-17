@@ -20,9 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.RTESentenceimport
+import net.sf.marineapi.nmea.sentence.*
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.RouteType
+
 /**
  * RTE sentence parser.
  *

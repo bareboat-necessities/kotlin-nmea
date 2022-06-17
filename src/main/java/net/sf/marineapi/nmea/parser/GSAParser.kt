@@ -20,9 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.GSASentenceimport
+import net.sf.marineapi.nmea.sentence.GSASentence
+import net.sf.marineapi.nmea.sentence.SentenceId
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.FaaModeimport net.sf.marineapi.nmea.util.GpsFixStatus
 /**
  * GSA sentence parser.
  *

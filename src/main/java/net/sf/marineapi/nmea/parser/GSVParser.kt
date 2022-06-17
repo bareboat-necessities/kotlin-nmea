@@ -20,9 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.GSVSentenceimport
+import net.sf.marineapi.nmea.sentence.GSVSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.SatelliteInfo
 /**
  * GSV sentence parser.
  *

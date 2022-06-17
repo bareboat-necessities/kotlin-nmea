@@ -20,9 +20,13 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.DTASentenceimport
+import net.sf.marineapi.nmea.sentence.DTASentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.Date
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport java.text.DateFormatimport java.text.SimpleDateFormatimport java.util.*
 /**
  * DTA sentence parser.
  *

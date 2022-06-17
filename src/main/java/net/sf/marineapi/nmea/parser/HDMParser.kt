@@ -20,9 +20,9 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.HDMSentenceimport
+import net.sf.marineapi.nmea.sentence.HDMSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerId
 /**
  * HDM sentence parser.
  *

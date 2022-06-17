@@ -1,10 +1,7 @@
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.SentenceIdimport
+import net.sf.marineapi.nmea.sentence.*
 
-net.sf.marineapi.nmea.sentence.TLLSentenceimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*import java.text.DecimalFormatimport
-
-java.text.DecimalFormatSymbols
 /**
  * Sent by the Radar (ARPA / MARPA) and handled by the AIS Decoder in the same way as an AIS target
  *

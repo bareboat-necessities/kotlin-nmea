@@ -20,9 +20,14 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.HTCSentenceimport
+import net.sf.marineapi.nmea.sentence.HTCSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.DataStatus
+import net.sf.marineapi.nmea.util.Direction
+import net.sf.marineapi.nmea.util.SteeringMode
+import net.sf.marineapi.nmea.util.TurnMode
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*
 /**
  * HTC parser.
  *
