@@ -23,6 +23,8 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.*
 import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.FaaMode
+import net.sf.marineapi.nmea.util.Position
+import net.sf.marineapi.nmea.util.Time
 
 /**
  * GLL Sentence parser.

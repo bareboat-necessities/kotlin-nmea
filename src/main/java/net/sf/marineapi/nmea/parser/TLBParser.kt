@@ -20,9 +20,12 @@
  */
 package net.sf.marineapi.nmea.parser
 
+import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.SentenceIdimport
+import net.sf.marineapi.nmea.sentence.TLBSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
 
-net.sf.marineapi.nmea.sentence.TLBSentenceimport net.sf.marineapi.nmea.sentence.TalkerId
+
 /**
  * TLB sentence parser
  *

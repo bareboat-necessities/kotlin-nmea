@@ -21,7 +21,6 @@
 package net.sf.marineapi.ais.parser
 
 import net.sf.marineapi.ais.message.AISMessage18
-import net.sf.marineapi.ais.message.AISMessage18import
 import net.sf.marineapi.ais.util.Sixbit
 
 /**

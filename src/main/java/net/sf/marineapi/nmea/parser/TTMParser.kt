@@ -24,6 +24,7 @@ import net.sf.marineapi.nmea.sentence.*
 import net.sf.marineapi.nmea.util.AcquisitionType
 import net.sf.marineapi.nmea.util.TargetStatus
 import net.sf.marineapi.nmea.util.Time
+import net.sf.marineapi.nmea.util.Units
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 

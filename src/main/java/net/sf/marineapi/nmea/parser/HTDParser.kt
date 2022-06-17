@@ -21,9 +21,9 @@
 package net.sf.marineapi.nmea.parser
 
 import net.sf.marineapi.nmea.sentence.HTDSentence
-import net.sf.marineapi.nmea.sentence.HTDSentenceimport
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.DataStatus
 
 /**
  * HTD parser.
