@@ -21,7 +21,6 @@
 package net.sf.marineapi.nmea.event
 
 import net.sf.marineapi.nmea.sentence.Sentence
-import net.sf.marineapi.nmea.sentence.Sentenceimport
 import net.sf.marineapi.util.GenericTypeResolver
 
 /**

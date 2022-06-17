@@ -67,9 +67,9 @@ class PositionProvider
         var t: Time? = null
         var mode: FaaMode? = null
         var fix: GpsFixQuality? = null
-        for (s in sentences) {
+        for (s in getSentences()) {
             if (s is RMCSentence) {
-                val rmc = s as RMCSentence
+                val rmc = s
                 sog = rmc.speed
                 try {
                     cog = rmc.course
@@ -79,16 +79,16 @@ class PositionProvider
                 d = rmc.date
                 t = rmc.time
                 if (p == null) {
-                    p = rmc.position
+                    p = rmc.getPosition()
                     if (rmc.fieldCount > 11) {
                         mode = rmc.mode
                     }
                 }
             } else if (s is VTGSentence) {
-                val vtg = s as VTGSentence
-                sog = vtg.speedKnots
+                val vtg = s
+                sog = vtg.getSpeedKnots()
                 try {
-                    cog = vtg.trueCourse
+                    cog = vtg.getTrueCourse()
                 } catch (e: DataNotAvailableException) {
                     // If we are not moving, cource can be undefined. Leave null in that case.
                 }
@@ -96,7 +96,7 @@ class PositionProvider
                 // Using GGA as primary position source as it contains both
                 // position and altitude
                 val gga = s as GGASentence
-                p = gga.position
+                p = gga.getPosition()
                 fix = gga.fixQuality
 
                 // Some receivers do not provide RMC message
@@ -105,7 +105,7 @@ class PositionProvider
                 }
             } else if (s is GLLSentence && p == null) {
                 val gll = s as GLLSentence
-                p = gll.position
+                p = gll.getPosition()
             }
         }
 
@@ -129,7 +129,7 @@ class PositionProvider
 	 * @see net.sf.marineapi.provider.AbstractProvider#isValid()
 	 */
     override fun isValid(): Boolean {
-        for (s in sentences) {
+        for (s in getSentences()) {
             if (s is RMCSentence) {
                 val rmc = s as RMCSentence
                 val ds = rmc.status
@@ -137,12 +137,12 @@ class PositionProvider
                     return false
                 }
             } else if (s is GGASentence) {
-                val fq = (s as GGASentence).fixQuality
+                val fq = s.fixQuality
                 if (GpsFixQuality.INVALID == fq) {
                     return false
                 }
             } else if (s is GLLSentence) {
-                val ds = (s as GLLSentence).status
+                val ds = s.status
                 if (DataStatus.VOID == ds) {
                     return false
                 }

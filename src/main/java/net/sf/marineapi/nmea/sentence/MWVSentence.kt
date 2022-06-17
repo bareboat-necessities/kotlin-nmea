@@ -87,13 +87,6 @@ interface MWVSentence : Sentence {
      *
      * @return True if relative to true north, otherwise false (relative to bow)
      */
-    val isTrue: Boolean
+    var isTrue: Boolean
 
-    /**
-     * Set angle to relative or true.
-     *
-     * @param isTrue True for true angle, false for relative to bow.
-     * @see .setAngle
-     */
-    fun setTrue(isTrue: Boolean)
 }

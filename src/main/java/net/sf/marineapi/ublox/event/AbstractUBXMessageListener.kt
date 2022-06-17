@@ -90,10 +90,10 @@ abstract class AbstractUBXMessageListener<T : UBXMessage?> : AbstractSentenceLis
      * This method has been declared `final` to ensure the correct
      * handling of received sentences.
      */
-    override fun sentenceRead(sentence: UBXSentence) {
+    override fun sentenceRead(sentence: UBXSentence?) {
         try {
-            val message = factory!!.create(sentence)
-            if (messageType!!.isAssignableFrom(message!!.javaClass)) {
+            val message = factory!!.create(sentence!!)
+            if (messageType!!.isAssignableFrom(message.javaClass)) {
                 onMessage(message as T)
             }
         } catch (iae: IllegalArgumentException) {

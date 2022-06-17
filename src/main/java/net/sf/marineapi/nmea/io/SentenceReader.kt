@@ -20,11 +20,22 @@
  */
 package net.sf.marineapi.nmea.io
 
-import net.sf.marineapi.nmea.event.SentenceEventimport
+import net.sf.marineapi.nmea.event.SentenceEvent
+import net.sf.marineapi.nmea.event.SentenceListener
+import net.sf.marineapi.nmea.sentence.Sentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import java.io.InputStream
+import java.net.DatagramSocket
+import java.util.*
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
+import java.util.function.Consumer
 
-net.sf.marineapi.nmea.event.SentenceListenerimport net.sf.marineapi.nmea.io.SentenceReaderimport net.sf.marineapi.nmea.sentence.Sentenceimport net.sf.marineapi.nmea.sentence.SentenceIdimport java.net.DatagramSocketimport java.util.concurrent.ConcurrentHashMapimport java.util.concurrent.ConcurrentMap java.io.InputStreamimport java.lang.Exceptionimport java.util.*import java.util.function.Consumerimport
+import java.util.logging.Level
+import java.util.logging.Logger
+import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 
-java.util.logging.Levelimport java.util.logging.Logger
 /**
  * Sentence reader detects supported NMEA 0183 sentences from the specified
  * data source and dispatches them to registered listeners as sentence events.
@@ -205,7 +216,7 @@ class SentenceReader {
      * @param sentence sentence string.
      */
     fun fireSentenceEvent(sentence: Sentence?) {
-        val type = sentence.getSentenceId()
+        val type = sentence!!.sentenceId
         val targets: MutableSet<SentenceListener> = HashSet()
         if (listeners.containsKey(type)) {
             targets.addAll(listeners[type]!!)

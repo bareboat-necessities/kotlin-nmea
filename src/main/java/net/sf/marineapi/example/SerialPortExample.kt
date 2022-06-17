@@ -21,6 +21,10 @@
 package net.sf.marineapi.example
 
 import gnu.io.CommPortIdentifier
+
+import net.sf.marineapi.nmea.event.SentenceEvent
+import net.sf.marineapi.nmea.event.SentenceListener
+
 import java.io.InputStream
 import java.io.InputStreamReader
 

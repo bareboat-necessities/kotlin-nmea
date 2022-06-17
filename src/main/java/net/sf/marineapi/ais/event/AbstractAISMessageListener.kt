@@ -20,9 +20,16 @@
  */
 package net.sf.marineapi.ais.event
 
-import net.sf.marineapi.ais.message.AISMessageimport
+import net.sf.marineapi.ais.message.AISMessage
 
-net.sf.marineapi.ais.parser.AISMessageFactoryimport net.sf.marineapi.nmea.event.AbstractSentenceListenerimport net.sf.marineapi.nmea.event.SentenceListenerimport net.sf.marineapi.nmea.sentence.AISSentenceimport net.sf.marineapi.util.GenericTypeResolver java.util.*
+import  net.sf.marineapi.ais.parser.AISMessageFactory
+import net.sf.marineapi.nmea.event.AbstractSentenceListener
+import net.sf.marineapi.nmea.event.SentenceListener
+import net.sf.marineapi.nmea.sentence.AISSentence
+import net.sf.marineapi.util.GenericTypeResolver
+
+import java.util.*
+
 /**
  *
  *

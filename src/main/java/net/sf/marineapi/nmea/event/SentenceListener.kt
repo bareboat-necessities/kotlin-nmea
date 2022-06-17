@@ -20,7 +20,8 @@
  */
 package net.sf.marineapi.nmea.event
 
-java.util.*
+import java.util.EventListener
+
 /**
  * Base interface for listening to SentenceEvents.
  *

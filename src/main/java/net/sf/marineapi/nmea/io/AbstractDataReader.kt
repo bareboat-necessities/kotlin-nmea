@@ -20,9 +20,13 @@
  */
 package net.sf.marineapi.nmea.io
 
-import net.sf.marineapi.nmea.io.SentenceReaderimport
+import net.sf.marineapi.nmea.io.SentenceReader
+import net.sf.marineapi.nmea.parser.SentenceFactory
+import net.sf.marineapi.nmea.parser.UnsupportedSentenceException
+import net.sf.marineapi.nmea.sentence.SentenceValidator
 
-net.sf.marineapi.nmea.parser.SentenceFactoryimport net.sf.marineapi.nmea.parser.UnsupportedSentenceExceptionimport net.sf.marineapi.nmea.sentence.SentenceValidator java.lang.Exceptionimport java.util.logging.Logger
+import java.util.logging.Logger
+
 /**
  * Abstract base class for data readers, with common methods and run loop
  * for firing events to listeners managed by the parent [SentenceReader].
@@ -36,11 +40,10 @@ net.sf.marineapi.nmea.parser.SentenceFactoryimport net.sf.marineapi.nmea.parser.
  *
  * @author Kimmo Tuukkanen
  * @see SentenceReader.SentenceReader
- * @see SentenceReader.SentenceReader
- * @see SentenceReader.SentenceReader
  */
 abstract class AbstractDataReader : Runnable {
-    private var parent: SentenceReader? = null
+
+    var parent: SentenceReader? = null
 
     /**
      * Tells if the reader is running and actively scanning the data source for
@@ -52,39 +55,6 @@ abstract class AbstractDataReader : Runnable {
     var isRunning = true
         private set
 
-    /**
-     * Default constructor.
-     */
-    protected constructor() {}
-
-    /**
-     * Creates a new instance with parent, mainly for internal use.
-     *
-     * @param parent [SentenceReader] that owns this reader
-     */
-    internal constructor(parent: SentenceReader?) {
-        setParent(parent)
-    }
-
-    /**
-     * Returns the parent `SentenceReader`.
-     *
-     * @return The parent [SentenceReader]
-     */
-    fun getParent(): SentenceReader? {
-        return parent
-    }
-
-    /**
-     * Sets the parent `SentenceReader`.
-     *
-     * @param reader `SentenceReader` to set.
-     * @throws IllegalArgumentException If given `reader` is `null`.
-     */
-    fun setParent(reader: SentenceReader?) {
-        requireNotNull(reader) { "Parent SentenceReader cannot be set null" }
-        parent = reader
-    }
 
     /**
      * Read one NMEA-0183 sentence and return it.

@@ -42,35 +42,31 @@ internal class UBXMessage03Parser(sentence: UBXSentence) : UBXMessageParser(sent
      * @see UBXMessage03.getSatellites
      */
     override fun getSatellites(): List<UbloxSatelliteInfo> {
-        val numberOfTrackedSatellites = this.numberOfTrackedSatellites
+        val numberOfTrackedSatellites = this.getNumberOfTrackedSatellites()
         val satellites: MutableList<UbloxSatelliteInfo> = ArrayList(numberOfTrackedSatellites)
         for (i in 0 until numberOfTrackedSatellites) {
             val satelliteId = sentence.getUBXFieldIntValue(UBX_SATELLITE_ID + i * 6)
-            val satelliteStatus: UbloxSatelliteStatus = UbloxSatelliteStatus.Companion.fromStatusFlag(
+            val satelliteStatus: UbloxSatelliteStatus? = UbloxSatelliteStatus.fromStatusFlag(
                 sentence.getUBXFieldCharValue(
                     SATELLITE_STATUS + i * 6
                 )
             )
-            var satelliteAzimuth: Int
-            satelliteAzimuth = try {
+            val satelliteAzimuth: Int = try {
                 sentence.getUBXFieldIntValue(SATELLITE_AZIMUTH + i * 6)
             } catch (e: DataNotAvailableException) {
                 -1
             }
-            var satelliteElevation: Int
-            satelliteElevation = try {
+            val satelliteElevation: Int = try {
                 sentence.getUBXFieldIntValue(SATELLITE_ELEVATION + i * 6)
             } catch (e: DataNotAvailableException) {
                 -1
             }
-            var signalStrength: Int
-            signalStrength = try {
+            val signalStrength: Int = try {
                 sentence.getUBXFieldIntValue(SATELLITE_SIGNAL_STRENGTH + i * 6)
             } catch (e: DataNotAvailableException) {
                 -1
             }
-            var satelliteCarrierLockTime: Int
-            satelliteCarrierLockTime = try {
+            val satelliteCarrierLockTime: Int = try {
                 sentence.getUBXFieldIntValue(SATELLIT_CARRIER_LOCK_TIME + i * 6)
             } catch (e: DataNotAvailableException) {
                 -1

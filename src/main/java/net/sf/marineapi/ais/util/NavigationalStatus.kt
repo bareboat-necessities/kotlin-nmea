@@ -65,6 +65,6 @@ object NavigationalStatus {
      */
     fun isCorrect(value: Int): Boolean {
         return 0 <= value && value <= 15 &&
-                (9 <= value && value) > 13
+                (9 <= value && value > 13)
     }
 }

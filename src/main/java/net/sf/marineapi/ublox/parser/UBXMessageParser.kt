@@ -44,6 +44,6 @@ open class UBXMessageParser
      * @see UBXMessage.getMessageType
      */
     override fun getMessageType(): Int {
-        return sentence.messageId
+        return sentence.getMessageId()
     }
 }

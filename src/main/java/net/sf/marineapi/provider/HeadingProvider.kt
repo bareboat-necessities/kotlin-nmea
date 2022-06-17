@@ -46,7 +46,7 @@ class HeadingProvider
 	 * @see net.sf.marineapi.provider.AbstractProvider#createEvent()
 	 */
     override fun createProviderEvent(): HeadingEvent? {
-        for (s in sentences) {
+        for (s in getSentences()) {
             if (s is HeadingSentence) {
                 return HeadingEvent(this, s as HeadingSentence)
             }

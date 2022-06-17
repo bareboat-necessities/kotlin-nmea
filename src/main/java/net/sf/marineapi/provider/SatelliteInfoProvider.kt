@@ -46,12 +46,12 @@ class SatelliteInfoProvider
     override fun createProviderEvent(): SatelliteInfoEvent {
         var gsa: GSASentence? = null
         val info: MutableList<SatelliteInfo?> = ArrayList()
-        for (sentence in sentences) {
-            if ("GSA" == sentence.sentenceId) {
-                gsa = sentence
+        for (sentence in getSentences()) {
+            if ("GSA" == sentence!!.sentenceId) {
+                gsa = sentence as GSASentence?
             } else if ("GSV" == sentence.sentenceId) {
                 val gsv = sentence as GSVSentence
-                info.addAll(gsv.satelliteInfo)
+                info.addAll(gsv.getSatelliteInfo())
             }
         }
         return SatelliteInfoEvent(this, gsa, info)
@@ -66,8 +66,8 @@ class SatelliteInfoProvider
         var hasLastGSV = false
         var hasAllGSV = false
         var count = 0
-        for (s in sentences) {
-            if ("GSV" == s.sentenceId) {
+        for (s in getSentences()) {
+            if ("GSV" == s!!.sentenceId) {
                 val gsv = s as GSVSentence
                 if (!hasFirstGSV) {
                     hasFirstGSV = gsv.isFirst
