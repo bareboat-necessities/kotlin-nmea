@@ -45,7 +45,7 @@ internal class HTDParser : HTCParser, HTDSentence {
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.HTD, 17) {}
 
-    override fun getRudderStatus(): DataStatus {
+    override fun getRudderStatus(): DataStatus? {
         return if (hasValue(RUDDER_STATUS)) {
             DataStatus.valueOf(getCharValue(RUDDER_STATUS))
         } else {
@@ -53,7 +53,7 @@ internal class HTDParser : HTCParser, HTDSentence {
         }
     }
 
-    override fun getOffHeadingStatus(): DataStatus {
+    override fun getOffHeadingStatus(): DataStatus? {
         return if (hasValue(OFF_HEADING_STATUS)) {
             DataStatus.valueOf(getCharValue(OFF_HEADING_STATUS))
         } else {
@@ -61,7 +61,7 @@ internal class HTDParser : HTCParser, HTDSentence {
         }
     }
 
-    override fun getOffTrackStatus(): DataStatus {
+    override fun getOffTrackStatus(): DataStatus? {
         return if (hasValue(OFF_TRACK_STATUS)) {
             DataStatus.valueOf(getCharValue(OFF_TRACK_STATUS))
         } else {
@@ -78,7 +78,7 @@ internal class HTDParser : HTCParser, HTDSentence {
     }
 
     override fun isTrue(): Boolean {
-        return isHeadingTrue
+        return isHeadingTrue()
     }
 
     override fun setHeading(hdt: Double) {

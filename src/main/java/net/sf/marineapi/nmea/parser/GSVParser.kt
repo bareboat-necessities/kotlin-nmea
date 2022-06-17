@@ -105,7 +105,7 @@ internal class GSVParser : SentenceParser, GSVSentence {
      * @see net.sf.marineapi.nmea.sentence.GSVSentence#isFirst()
      */
     override fun isFirst(): Boolean {
-        return sentenceIndex == 1
+        return getSentenceIndex() == 1
     }
 
     /*
@@ -113,7 +113,7 @@ internal class GSVParser : SentenceParser, GSVSentence {
      * @see net.sf.marineapi.nmea.sentence.GSVSentence#isLast()
      */
     override fun isLast(): Boolean {
-        return sentenceIndex == sentenceCount
+        return getSentenceIndex() == getSentenceCount()
     }
 
     override fun setSatelliteCount(count: Int) {
@@ -127,8 +127,8 @@ internal class GSVParser : SentenceParser, GSVSentence {
      * net.sf.marineapi.nmea.sentence.GSVSentence#setSatelliteInfo(java.util
      * .List)
      */
-    override fun setSatelliteInfo(info: List<SatelliteInfo>) {
-        require(info.size <= 4) { "Maximum list size is 4" }
+    override fun setSatelliteInfo(info: List<SatelliteInfo>?) {
+        require(info!!.size <= 4) { "Maximum list size is 4" }
         var i = 0
         for (id in ID_FIELDS) {
             if (i < info.size) {

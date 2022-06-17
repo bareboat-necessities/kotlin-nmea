@@ -45,7 +45,7 @@ internal class MHUParser : SentenceParser, MHUSentence {
      * @param tid Talker ID to be used.
      */
     constructor(tid: TalkerId?) : super(tid, SentenceId.MHU, 4) {
-        dewPointUnit = 'C'
+        setDewPointUnit('C')
     }
 
     override fun getRelativeHumidity(): Double {

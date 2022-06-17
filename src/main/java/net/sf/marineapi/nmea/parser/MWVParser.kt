@@ -112,7 +112,7 @@ internal class MWVParser : SentenceParser, MWVSentence {
 	 * net.sf.marineapi.nmea.sentence.MWVSentence#setSpeedUnit(net.sf.marineapi
 	 * .nmea.util.Units)
 	 */
-    override fun setSpeedUnit(unit: Units) {
+    override fun setSpeedUnit(unit: Units?) {
         if (unit == Units.METER || unit == Units.KILOMETERS || unit == Units.NAUTICAL_MILES) {
             setCharValue(SPEED_UNITS, unit.toChar())
             return
@@ -126,8 +126,8 @@ internal class MWVParser : SentenceParser, MWVSentence {
 	 * net.sf.marineapi.nmea.sentence.MWVSentence#setStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-    override fun setStatus(status: DataStatus) {
-        setCharValue(DATA_STATUS, status.toChar())
+    override fun setStatus(status: DataStatus?) {
+        setCharValue(DATA_STATUS, status!!.toChar())
     }
 
     /*

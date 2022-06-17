@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.*
+import net.sf.marineapi.nmea.util.DataStatus
+import net.sf.marineapi.nmea.util.Units
+
 
 /**
  *
@@ -38,30 +40,52 @@ interface MWVSentence : Sentence {
      *
      * @return Wind angle in degrees.
      */
-    /**
-     * Set wind angle.
-     *
-     * @param angle Wind angle in degrees.
-     * @see .setTrue
-     */
-    var angle: Double
+    fun getAngle(): Double
+
     /**
      * Returns the wind speed.
      *
      * @return Wind speed value
      */
-    /**
-     * Set the wind speed value.
-     *
-     * @param speed Wind speed to set.
-     */
-    var speed: Double
+    fun getSpeed(): Double
+
     /**
      * Returns the wind speed unit.
      *
      * @return [Units.METER] for meters per second, [Units.KILOMETERS] for
      * kilometers per hour and [Units.NAUTICAL_MILES] for knots.
      */
+    fun getSpeedUnit(): Units?
+
+    /**
+     * Get data validity status.
+     *
+     * @return Data status
+     */
+    fun getStatus(): DataStatus?
+
+    /**
+     * Tells if the angle is relative or true.
+     *
+     * @return True if relative to true north, otherwise false (relative to bow)
+     */
+    fun isTrue(): Boolean
+
+    /**
+     * Set wind angle.
+     *
+     * @param angle Wind angle in degrees.
+     * @see .setTrue
+     */
+    fun setAngle(angle: Double)
+
+    /**
+     * Set the wind speed value.
+     *
+     * @param speed Wind speed to set.
+     */
+    fun setSpeed(speed: Double)
+
     /**
      * Set wind speed unit.
      *
@@ -69,24 +93,20 @@ interface MWVSentence : Sentence {
      * for kilometers per hour and [Units.NAUTICAL_MILES] for knots.
      * @throws IllegalArgumentException If trying to set invalid unit
      */
-    var speedUnit: Units
-    /**
-     * Get data validity status.
-     *
-     * @return Data status
-     */
+    fun setSpeedUnit(unit: Units?)
+
     /**
      * Set data validity status.
      *
      * @param status Data status to set.
      */
-    var status: DataStatus
+    fun setStatus(status: DataStatus?)
 
     /**
-     * Tells if the angle is relative or true.
+     * Set angle to relative or true.
      *
-     * @return True if relative to true north, otherwise false (relative to bow)
+     * @param isTrue True for true angle, false for relative to bow.
+     * @see .setAngle
      */
-    var isTrue: Boolean
-
+    fun setTrue(isTrue: Boolean)
 }

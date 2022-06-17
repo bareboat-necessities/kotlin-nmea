@@ -39,7 +39,7 @@ internal open class HTCParser : SentenceParser, HTCSentence {
     constructor(nmea: String, type: SentenceId) : super(nmea, type) {}
     constructor(tid: TalkerId?, sid: SentenceId, size: Int) : super(tid, sid, size) {}
 
-    override fun getOverride(): DataStatus {
+    override fun getOverride(): DataStatus? {
         return if (hasValue(OVERRIDE)) {
             DataStatus.valueOf(getCharValue(OVERRIDE))
         } else {
@@ -55,7 +55,7 @@ internal open class HTCParser : SentenceParser, HTCSentence {
         }
     }
 
-    override fun getRudderDirection(): Direction {
+    override fun getRudderDirection(): Direction? {
         return if (hasValue(COMMANDED_RUDDER_DIRECTION)) {
             Direction.valueOf(getCharValue(COMMANDED_RUDDER_DIRECTION))
         } else {
@@ -63,7 +63,7 @@ internal open class HTCParser : SentenceParser, HTCSentence {
         }
     }
 
-    override fun getSteeringMode(): SteeringMode {
+    override fun getSteeringMode(): SteeringMode? {
         return if (hasValue(SELECTED_STEERING_MODE)) {
             SteeringMode.valueOf(getCharValue(SELECTED_STEERING_MODE))
         } else {
@@ -71,7 +71,7 @@ internal open class HTCParser : SentenceParser, HTCSentence {
         }
     }
 
-    override fun getTurnMode(): TurnMode {
+    override fun getTurnMode(): TurnMode? {
         return if (hasValue(TURN_MODE)) {
             TurnMode.valueOf(getCharValue(TURN_MODE))
         } else {

@@ -31,40 +31,51 @@ interface MWDSentence : Sentence {
      * @return Wind direction, degrees True, to the nearest 0,1 degree. NaN if
      * not available.
      */
+    fun getMagneticWindDirection(): Double
+
+    /**
+     * @return Wind direction, degrees True, to the nearest 0,1 degree. NaN if
+     * not available.
+     */
+    fun getTrueWindDirection(): Double
+
+    /**
+     * @return Wind speed, meters per second, to the nearest 0,1 m/s. NaN if not
+     * available.
+     */
+    fun getWindSpeed(): Double
+
+    /**
+     * @return Wind speed, in knots, to the nearest 0,1 m/s. NaN if not
+     * available.
+     */
+    fun getWindSpeedKnots(): Double
+
     /**
      * Sets the magnetic wind direction.
      *
      * @param direction Wind direction in degrees [0..360]
      */
-    var magneticWindDirection: Double
-    /**
-     * @return Wind direction, degrees True, to the nearest 0,1 degree. NaN if
-     * not available.
-     */
+    fun setMagneticWindDirection(direction: Double)
+
     /**
      * Sets the true wind direction.
      *
      * @param direction Wind direction in degrees [0..360].
      */
-    var trueWindDirection: Double
-    /**
-     * @return Wind speed, meters per second, to the nearest 0,1 m/s. NaN if not
-     * available.
-     */
+    fun setTrueWindDirection(direction: Double)
+
     /**
      * Sets the wind speed in meters per second.
      *
      * @param speed Wind speed to set.
      */
-    var windSpeed: Double
-    /**
-     * @return Wind speed, in knots, to the nearest 0,1 m/s. NaN if not
-     * available.
-     */
+    fun setWindSpeed(speed: Double)
+
     /**
      * Sets the wind speed in knots.
      *
      * @param speed Wind speed to set.
      */
-    var windSpeedKnots: Double
+    fun setWindSpeedKnots(speed: Double)
 }

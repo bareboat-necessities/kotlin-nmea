@@ -30,15 +30,18 @@ package net.sf.marineapi.nmea.sentence
  * @author Warren Zahra, Kimmo Tuukkanen
  */
 interface MTWSentence : Sentence {
+
     /**
      * Get the water temperature.
      *
      * @return Temperature in degrees Celsius.
      */
+    fun getTemperature(): Double
+
     /**
      * Set the water temperature.
      *
      * @param temp Water temperature in degrees Celsius.
      */
-    var temperature: Double
+    fun setTemperature(temp: Double)
 }

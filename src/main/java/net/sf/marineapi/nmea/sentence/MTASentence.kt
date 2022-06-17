@@ -30,15 +30,18 @@ package net.sf.marineapi.nmea.sentence
  * @author Kimmo Tuukkanen
  */
 interface MTASentence : Sentence {
+
     /**
      * Returns the air temperature.
      *
      * @return Temperature in degrees Celsius.
      */
+    fun getTemperature(): Double
+
     /**
      * Sets the air temperature.
      *
      * @param temp Temperature in degrees Celsius.
      */
-    var temperature: Double
+    fun setTemperature(temp: Double)
 }
