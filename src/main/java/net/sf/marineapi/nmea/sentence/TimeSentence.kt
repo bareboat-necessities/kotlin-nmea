@@ -35,10 +35,12 @@ interface TimeSentence : Sentence {
      *
      * @return Time
      */
+    fun getTime(): Time?
+
     /**
      * Set the time of day.
      *
      * @param t Time to set
      */
-    var time: Time
+    fun setTime(t: Time?)
 }
