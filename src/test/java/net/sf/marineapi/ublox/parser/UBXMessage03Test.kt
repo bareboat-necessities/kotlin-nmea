@@ -19,7 +19,10 @@
  */
 package net.sf.marineapi.ublox.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.parser.SentenceFactory
+import net.sf.marineapi.nmea.sentence.UBXSentence
+import org.junit.Assert
+import org.junit.Test
 
 /**
  * Test the parsing of messages of type [UBXMessage03].
@@ -33,15 +36,15 @@ class UBXMessage03Test {
     @Test
     fun testParsinfOfUBXMessage03() {
         val sf: SentenceFactory = SentenceFactory.getInstance()
-        val sentence: Sentence = sf.createParser(message03) as Sentence
-        assertTrue("Not a UBXSentence.", sentence is UBXSentence)
-        val sentenceId: String = sentence.sentenceId
-        val messageId: Int = (sentence as UBXSentence).getMessageId()
-        assertEquals("UBX", sentenceId)
-        assertEquals("Wrong messageId.", 3, messageId)
-        val pubx03MessageParser = UBXMessage03Parser(sentence as UBXSentence)
-        assertEquals(31, pubx03MessageParser.getNumberOfTrackedSatellites())
-        val satellites: List<UbloxSatelliteInfo> = pubx03MessageParser.getSatellites()
-        assertEquals(pubx03MessageParser.getNumberOfTrackedSatellites(), satellites.size)
+        val sentence = sf.createParser(message03)
+        Assert.assertTrue("Not a UBXSentence.", sentence is UBXSentence)
+        val sentenceId = sentence!!.getSentenceId()
+        val messageId = (sentence as UBXSentence?)!!.getMessageId()
+        Assert.assertEquals("UBX", sentenceId)
+        Assert.assertEquals("Wrong messageId.", 3, messageId.toLong())
+        val pubx03MessageParser = UBXMessage03Parser((sentence as UBXSentence?)!!)
+        Assert.assertEquals(31, pubx03MessageParser.getNumberOfTrackedSatellites().toLong())
+        val satellites = pubx03MessageParser.getSatellites()
+        Assert.assertEquals(pubx03MessageParser.getNumberOfTrackedSatellites().toLong(), satellites.size.toLong())
     }
 }

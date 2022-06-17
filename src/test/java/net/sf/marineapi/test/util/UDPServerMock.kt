@@ -8,6 +8,7 @@ import java.net.InetAddress
  * Dummy UDP server repeating single NMEA sentence.
  */
 class UDPServerMock : Runnable {
+    @JvmField
     val TXT = "\$IITXT,1,1,UDP,TEST*0F"
     private var socket: DatagramSocket? = null
     private var running = true

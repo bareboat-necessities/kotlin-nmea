@@ -8,8 +8,8 @@ import net.sf.marineapi.nmea.sentence.TalkerId
  * SentenceParser.
  */
 class FOOParser : SentenceParser, FOOSentence {
-    constructor(s: String?) : super(s!!, "FOO")
-    constructor(tid: TalkerId?) : super(tid, "FOO", 3)
+    constructor(s: String?) : super(s!!, "FOO") {}
+    constructor(tid: TalkerId?) : super(tid, "FOO", 3) {}
 
     override val valueA: String
         get() = getStringValue(0)

@@ -20,7 +20,10 @@
  */
 package net.sf.marineapi.nmea.util
 
-import org.junit.Assert.assertEquals
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
+import java.util.*
 
 /**
  * @author Kimmo Tuukkanen
@@ -30,7 +33,7 @@ class DateTest {
     private var cal: GregorianCalendar? = null
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Before
     @Throws(Exception::class)
@@ -40,64 +43,64 @@ class DateTest {
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Date.Date].
+     * Test method for [Date.Date].
      */
     @Test
     fun testConstructor() {
-        assertEquals(cal.get(Calendar.YEAR), instance!!.getYear())
-        assertEquals(cal.get(Calendar.MONTH) + 1, instance!!.getMonth())
-        assertEquals(cal.get(Calendar.DAY_OF_MONTH), instance!!.getDay())
+        Assert.assertEquals(cal!![Calendar.YEAR].toLong(), instance!!.getYear().toLong())
+        Assert.assertEquals((cal!![Calendar.MONTH] + 1).toLong(), instance!!.getMonth().toLong())
+        Assert.assertEquals(cal!![Calendar.DAY_OF_MONTH].toLong(), instance!!.getDay().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Date.Date].
+     * [Date.Date].
      */
     @Test
     fun testConstructorWithValues() {
         val d = Date(2010, 6, 15)
-        assertEquals(2010, d.getYear())
-        assertEquals(6, d.getMonth())
-        assertEquals(15, d.getDay())
+        Assert.assertEquals(2010, d.getYear().toLong())
+        Assert.assertEquals(6, d.getMonth().toLong())
+        Assert.assertEquals(15, d.getDay().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Date.Date].
+     * [Date.Date].
      */
     @Test
     fun testConstructorWithString() {
         val d = Date("150610")
-        assertEquals(2010, d.getYear())
-        assertEquals(6, d.getMonth())
-        assertEquals(15, d.getDay())
+        Assert.assertEquals(2010, d.getYear().toLong())
+        Assert.assertEquals(6, d.getMonth().toLong())
+        Assert.assertEquals(15, d.getDay().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Date.equals].
+     * [Date.equals].
      */
     @Test
     fun testEqualsAfterInit() {
         val d = Date()
-        assertTrue(d.equals(instance))
+        Assert.assertTrue(d.equals(instance))
         val one = Date(2010, 6, 15)
         val two = Date(2010, 6, 15)
-        assertTrue(one.equals(two))
+        Assert.assertTrue(one.equals(two))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Date.equals].
+     * [Date.equals].
      */
     @Test
     fun testEqualsItself() {
-        assertTrue(instance!!.equals(instance))
+        Assert.assertTrue(instance!!.equals(instance))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Date.equals].
+     * [Date.equals].
      */
     @Test
     fun testEqualsWhenChanged() {
@@ -107,182 +110,182 @@ class DateTest {
         val a = Date(y, m, d)
         val b = Date(y, m, d)
         a.setDay(b.getDay() - 1)
-        assertFalse(a.equals(b))
+        Assert.assertFalse(a.equals(b))
         b.setDay(a.getDay())
-        assertTrue(a.equals(b))
+        Assert.assertTrue(a.equals(b))
         a.setMonth(b.getMonth() - 1)
-        assertFalse(a.equals(b))
+        Assert.assertFalse(a.equals(b))
         b.setMonth(a.getMonth())
-        assertTrue(a.equals(b))
+        Assert.assertTrue(a.equals(b))
         a.setYear(b.getYear() - 1)
-        assertFalse(a.equals(b))
+        Assert.assertFalse(a.equals(b))
         b.setYear(a.getYear())
-        assertTrue(a.equals(b))
+        Assert.assertTrue(a.equals(b))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Date.equals].
+     * [Date.equals].
      */
     @Test
     fun testEqualsWrongType() {
-        val str: Any = String("foobar")
+        val str: String = "foobar"
         val dbl: Any = java.lang.Double.valueOf(123.0)
-        assertFalse(instance!!.equals(str))
-        assertFalse(instance!!.equals(dbl))
+        Assert.assertFalse(instance!!.equals(str))
+        Assert.assertFalse(instance!!.equals(dbl))
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Date.getDay].
+     * Test method for [Date.getDay].
      */
     @Test
     fun testGetDay() {
-        assertEquals(cal.get(Calendar.DAY_OF_MONTH), instance!!.getDay())
+        Assert.assertEquals(cal!![Calendar.DAY_OF_MONTH].toLong(), instance!!.getDay().toLong())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Date.getMonth].
+     * Test method for [Date.getMonth].
      */
     @Test
     fun testGetMonth() {
-        assertEquals(cal.get(Calendar.MONTH) + 1, instance!!.getMonth())
+        Assert.assertEquals((cal!![Calendar.MONTH] + 1).toLong(), instance!!.getMonth().toLong())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Date.getYear].
+     * Test method for [Date.getYear].
      */
     @Test
     fun testGetYear() {
-        assertEquals(cal.get(Calendar.YEAR), instance!!.getYear())
+        Assert.assertEquals(cal!![Calendar.YEAR].toLong(), instance!!.getYear().toLong())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Date.setDay].
+     * Test method for [Date.setDay].
      */
     @Test
     fun testSetDay() {
         val day = 10
         instance!!.setDay(day)
-        assertEquals(day, instance!!.getDay())
+        Assert.assertEquals(day.toLong(), instance!!.getDay().toLong())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Date.setDay].
+     * Test method for [Date.setDay].
      */
     @Test
     fun testSetDayOutOfBounds() {
         var day = 0
         try {
             instance!!.setDay(day)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
         day = 32
         try {
             instance!!.setDay(day)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Date.setMonth].
+     * Test method for [Date.setMonth].
      */
     @Test
     fun testSetMonth() {
         val month = 10
         instance!!.setMonth(month)
-        assertEquals(month, instance!!.getMonth())
+        Assert.assertEquals(month.toLong(), instance!!.getMonth().toLong())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Date.setMonth].
+     * Test method for [Date.setMonth].
      */
     @Test
     fun testSetMonthOutOfBounds() {
         var month = 0
         try {
             instance!!.setMonth(month)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
         month = 32
         try {
             instance!!.setMonth(month)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Date.setYear].
+     * Test method for [Date.setYear].
      */
     @Test
     fun testSetYearFiveDigits() {
         try {
             instance!!.setYear(10000)
-            fail("Did not throw IllegalArgumentException")
+            Assert.fail("Did not throw IllegalArgumentException")
         } catch (e: IllegalArgumentException) {
             // pass
         }
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Date.setYear].
+     * Test method for [Date.setYear].
      */
     @Test
     fun testSetYearFourDigit() {
         for (year in 1000..9999) {
             instance!!.setYear(year)
-            assertEquals(year, instance!!.getYear())
+            Assert.assertEquals(year.toLong(), instance!!.getYear().toLong())
         }
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Date.setYear].
+     * Test method for [Date.setYear].
      */
     @Test
     fun testSetYearNegative() {
         try {
             instance!!.setYear(-1)
-            fail("Did not throw IllegalArgumentException")
+            Assert.fail("Did not throw IllegalArgumentException")
         } catch (e: IllegalArgumentException) {
             // pass
         }
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Date.setYear].
+     * Test method for [Date.setYear].
      */
     @Test
     fun testSetYearThreeDigits() {
         try {
             instance!!.setYear(100)
-            fail("Did not throw IllegalArgumentException")
+            Assert.fail("Did not throw IllegalArgumentException")
         } catch (e: IllegalArgumentException) {
             // pass
         }
         try {
             instance!!.setYear(999)
-            fail("Did not throw IllegalArgumentException")
+            Assert.fail("Did not throw IllegalArgumentException")
         } catch (e: IllegalArgumentException) {
             // pass
         }
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Date.setYear].
+     * Test method for [Date.setYear].
      */
     @Test
     fun testSetYearTwoDigit() {
         var century = 2000
         for (year in 0..99) {
             instance!!.setYear(year)
-            assertEquals(century + year, instance!!.getYear())
+            Assert.assertEquals((century + year).toLong(), instance!!.getYear().toLong())
             if (year == Date.PIVOT_YEAR) {
                 century = 1900
             }
@@ -292,52 +295,52 @@ class DateTest {
     @Test
     fun testToStringTwoDigitYear() {
         val d = Date(13, 9, 2)
-        assertEquals("020913", d.toString())
+        Assert.assertEquals("020913", d.toString())
     }
 
     @Test
     fun testToStringFourDigitYear() {
         val d = Date(2013, 9, 2)
-        assertEquals("020913", d.toString())
+        Assert.assertEquals("020913", d.toString())
     }
 
     @Test
     fun testToISO8601TwoDigitYear() {
         val d = Date(13, 9, 2)
-        assertEquals("2013-09-02", d.toISO8601())
+        Assert.assertEquals("2013-09-02", d.toISO8601())
     }
 
     @Test
     fun testToISO8601FourDigitYear() {
         val d = Date(2013, 9, 2)
-        assertEquals("2013-09-02", d.toISO8601())
+        Assert.assertEquals("2013-09-02", d.toISO8601())
     }
 
     @Test
     fun testToISO8601WithTime() {
         val d = Date(2013, 9, 2)
         val t = Time(2, 7, 9.0)
-        assertEquals("2013-09-02T02:07:09+00:00", d.toISO8601(t))
+        Assert.assertEquals("2013-09-02T02:07:09+00:00", d.toISO8601(t))
     }
 
     @Test
     fun testToISO8601WithTimeAndZeroZone() {
         val d = Date(2013, 9, 2)
         val t = Time(2, 7, 9.0, 0, 0)
-        assertEquals("2013-09-02T02:07:09+00:00", d.toISO8601(t))
+        Assert.assertEquals("2013-09-02T02:07:09+00:00", d.toISO8601(t))
     }
 
     @Test
     fun testToISO8601WithTimeAndPositiveOffset() {
         val d = Date(2013, 9, 2)
         val t = Time(2, 7, 9.0, 2, 0)
-        assertEquals("2013-09-02T02:07:09+02:00", d.toISO8601(t))
+        Assert.assertEquals("2013-09-02T02:07:09+02:00", d.toISO8601(t))
     }
 
     @Test
     fun testToISO8601WithTimeAndNegativeOffset() {
         val d = Date(2013, 9, 2)
         val t = Time(2, 7, 9.0, -2, 5)
-        assertEquals("2013-09-02T02:07:09-02:05", d.toISO8601(t))
+        Assert.assertEquals("2013-09-02T02:07:09-02:05", d.toISO8601(t))
     }
 }

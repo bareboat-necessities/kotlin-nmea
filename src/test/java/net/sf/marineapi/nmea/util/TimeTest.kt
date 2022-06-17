@@ -20,7 +20,10 @@
  */
 package net.sf.marineapi.nmea.util
 
-import org.junit.Assert.assertEquals
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
+import java.util.*
 import java.util.Date
 
 /**
@@ -30,7 +33,7 @@ class TimeTest {
     private var time: Time? = null
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Before
     @Throws(Exception::class)
@@ -45,54 +48,54 @@ class TimeTest {
     fun testDateRoundTrip() {
         val now = Date()
         time!!.setTime(now)
-        val result: Date = time!!.toDate(now)
-        assertEquals(now, result)
-        assertEquals(now.time, result.time)
+        val result = time!!.toDate(now)
+        Assert.assertEquals(now, result)
+        Assert.assertEquals(now.time, result.time)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Time.toString]
+     * [Time.toString]
      * .
      */
     @Test
     fun testFormatTimeNoDecimals() {
         val t = Time(1, 2, 3.0)
-        assertEquals("010203.000", t.toString())
+        Assert.assertEquals("010203.000", t.toString())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Time.toString]
+     * [Time.toString]
      * .
      */
     @Test
     fun testFormatTimeWithDecimals() {
         val t = Time(1, 2, 3.456)
-        assertEquals("010203.456", t.toString())
+        Assert.assertEquals("010203.456", t.toString())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Time.toString]
+     * [Time.toString]
      * .
      */
     @Test
     fun testFormatTimeWithOneDecimal() {
         val t = Time(1, 2, 3.4)
-        assertEquals("010203.400", t.toString())
+        Assert.assertEquals("010203.400", t.toString())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Time.getHour].
+     * Test method for [Time.getHour].
      */
     @Test
     fun testGetHour() {
-        assertEquals(1, time!!.getHour())
+        Assert.assertEquals(1, time!!.getHour().toLong())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Time.getMilliseconds]
+     * Test method for [Time.getMilliseconds]
      * .
      */
     @Test
@@ -100,27 +103,27 @@ class TimeTest {
         time!!.setHour(12)
         time!!.setMinutes(1)
         time!!.setSeconds(1.0)
-        assertEquals(43261000, time!!.milliseconds)
+        Assert.assertEquals(43261000, time!!.milliseconds)
         time!!.setHour(18)
         time!!.setMinutes(1)
         time!!.setSeconds(1.123)
-        assertEquals(64861123, time!!.milliseconds)
+        Assert.assertEquals(64861123, time!!.milliseconds)
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Time.getMinutes].
+     * Test method for [Time.getMinutes].
      */
     @Test
     fun testGetMinutes() {
-        assertEquals(2, time!!.getMinutes())
+        Assert.assertEquals(2, time!!.getMinutes().toLong())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Time.getSeconds].
+     * Test method for [Time.getSeconds].
      */
     @Test
     fun testGetSeconds() {
-        assertEquals(3.4, time!!.getSeconds(), 0.001)
+        Assert.assertEquals(3.4, time!!.getSeconds(), 0.001)
     }
 
     /**
@@ -130,9 +133,9 @@ class TimeTest {
     @Test
     fun testParseTimeWithDecimals() {
         val t = Time("010203.456")
-        assertEquals(1, t.getHour())
-        assertEquals(2, t.getMinutes())
-        assertEquals(3.456, t.getSeconds(), 0.001)
+        Assert.assertEquals(1, t.getHour().toLong())
+        Assert.assertEquals(2, t.getMinutes().toLong())
+        Assert.assertEquals(3.456, t.getSeconds(), 0.001)
     }
 
     /**
@@ -142,9 +145,9 @@ class TimeTest {
     @Test
     fun testParseTimeWithOneDecimal() {
         val t = Time("010203.4")
-        assertEquals(1, t.getHour())
-        assertEquals(2, t.getMinutes())
-        assertEquals(3.4, t.getSeconds(), 0.001)
+        Assert.assertEquals(1, t.getHour().toLong())
+        Assert.assertEquals(2, t.getMinutes().toLong())
+        Assert.assertEquals(3.4, t.getSeconds(), 0.001)
     }
 
     /**
@@ -154,41 +157,41 @@ class TimeTest {
     @Test
     fun testParseTimeWithoutDecimals() {
         val t = Time("010203")
-        assertEquals(1, t.getHour())
-        assertEquals(2, t.getMinutes())
-        assertEquals(3.0, t.getSeconds(), 0.001)
+        Assert.assertEquals(1, t.getHour().toLong())
+        Assert.assertEquals(2, t.getMinutes().toLong())
+        Assert.assertEquals(3.0, t.getSeconds(), 0.001)
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Time.setHour].
+     * Test method for [Time.setHour].
      */
     @Test
     fun testSetHour() {
         time!!.setHour(12)
-        assertEquals(12, time!!.getHour())
+        Assert.assertEquals(12, time!!.getHour().toLong())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Time.setHour].
+     * Test method for [Time.setHour].
      */
     @Test
     fun testSetInvalidHour() {
         try {
             time!!.setHour(60)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Time.setMinutes].
+     * Test method for [Time.setMinutes].
      */
     @Test
     fun testSetInvalidMinutes() {
         try {
             time!!.setMinutes(60)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -196,48 +199,48 @@ class TimeTest {
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Time.setSeconds].
+     * [Time.setSeconds].
      */
     @Test
     fun testSetInvalidSeconds() {
         try {
             time!!.setSeconds(60.0)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Time.setMinutes].
+     * Test method for [Time.setMinutes].
      */
     @Test
     fun testSetMinutes() {
         time!!.setMinutes(30)
-        assertEquals(30, time!!.getMinutes())
+        Assert.assertEquals(30, time!!.getMinutes().toLong())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Time.setHour].
+     * Test method for [Time.setHour].
      */
     @Test
     fun testSetNegativeHour() {
         try {
             time!!.setHour(-1)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Time.setMinutes].
+     * Test method for [Time.setMinutes].
      */
     @Test
     fun testSetNegativeMinutes() {
         try {
             time!!.setMinutes(-1)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -245,50 +248,50 @@ class TimeTest {
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Time.setSeconds].
+     * [Time.setSeconds].
      */
     @Test
     fun testSetNegativeSeconds() {
         try {
             time!!.setSeconds(-0.001)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.util.Time.setSeconds].
+     * Test method for [Time.setSeconds].
      */
     @Test
     fun testSetSeconds() {
         time!!.setSeconds(45.12345)
-        assertEquals(45.12345, time!!.getSeconds(), 0.001)
+        Assert.assertEquals(45.12345, time!!.getSeconds(), 0.001)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Time.setTime].
+     * [Time.setTime].
      */
     @Test
     fun testSetTime() {
         val now = Date()
         time!!.setTime(now)
         val cal = GregorianCalendar()
-        cal.setTime(now)
-        val hours: Int = cal.get(Calendar.HOUR_OF_DAY)
-        val minutes: Int = cal.get(Calendar.MINUTE)
-        val fullSeconds: Int = cal.get(Calendar.SECOND)
-        val milliSeconds: Int = cal.get(Calendar.MILLISECOND)
+        cal.time = now
+        val hours = cal[Calendar.HOUR_OF_DAY]
+        val minutes = cal[Calendar.MINUTE]
+        val fullSeconds = cal[Calendar.SECOND]
+        val milliSeconds = cal[Calendar.MILLISECOND]
         val seconds = fullSeconds + milliSeconds / 1000.0
-        assertEquals(hours, time!!.getHour())
-        assertEquals(minutes, time!!.getMinutes())
-        assertEquals(seconds, time!!.getSeconds(), 0.001)
+        Assert.assertEquals(hours.toLong(), time!!.getHour().toLong())
+        Assert.assertEquals(minutes.toLong(), time!!.getMinutes().toLong())
+        Assert.assertEquals(seconds, time!!.getSeconds(), 0.001)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Time.toDate].
+     * [Time.toDate].
      */
     @Test
     fun testToDate() {
@@ -296,31 +299,31 @@ class TimeTest {
         val result: Calendar = GregorianCalendar()
 
         // set cal to reference date/time (date portion not significant)
-        cal.set(Calendar.HOUR_OF_DAY, 0)
-        cal.set(Calendar.MINUTE, 0)
-        cal.set(Calendar.SECOND, 3)
-        cal.set(Calendar.MILLISECOND, 400)
+        cal[Calendar.HOUR_OF_DAY] = 0
+        cal[Calendar.MINUTE] = 0
+        cal[Calendar.SECOND] = 3
+        cal[Calendar.MILLISECOND] = 400
 
         // convert Time to Date and insert to result Calendar for comparison
-        val d: Date = time!!.toDate(cal.getTime())
-        result.setTime(d)
-        val resultHour: Int = result.get(Calendar.HOUR_OF_DAY)
-        val resultMinute: Int = result.get(Calendar.MINUTE)
-        val resultFullSeconds: Int = result.get(Calendar.SECOND)
-        val resultMilliseconds: Int = result.get(Calendar.MILLISECOND)
+        val d = time!!.toDate(cal.time)
+        result.time = d
+        val resultHour = result[Calendar.HOUR_OF_DAY]
+        val resultMinute = result[Calendar.MINUTE]
+        val resultFullSeconds = result[Calendar.SECOND]
+        val resultMilliseconds = result[Calendar.MILLISECOND]
         val resultSeconds = resultFullSeconds + resultMilliseconds / 1000.0
 
         // Time portion, should match values in Time exactly
-        assertEquals(time!!.getHour(), resultHour)
-        assertEquals(time!!.getMinutes(), resultMinute)
-        assertEquals(time!!.getSeconds(), resultSeconds, 0.001)
+        Assert.assertEquals(time!!.getHour().toLong(), resultHour.toLong())
+        Assert.assertEquals(time!!.getMinutes().toLong(), resultMinute.toLong())
+        Assert.assertEquals(time!!.getSeconds(), resultSeconds, 0.001)
 
         // Date portion should not have changed
-        assertEquals(cal.get(Calendar.YEAR), result.get(Calendar.YEAR))
-        assertEquals(cal.get(Calendar.MONTH), result.get(Calendar.MONTH))
-        assertEquals(
-            cal.get(Calendar.DAY_OF_YEAR),
-            result.get(Calendar.DAY_OF_YEAR)
+        Assert.assertEquals(cal[Calendar.YEAR].toLong(), result[Calendar.YEAR].toLong())
+        Assert.assertEquals(cal[Calendar.MONTH].toLong(), result[Calendar.MONTH].toLong())
+        Assert.assertEquals(
+            cal[Calendar.DAY_OF_YEAR].toLong(),
+            result[Calendar.DAY_OF_YEAR].toLong()
         )
     }
 
@@ -329,10 +332,10 @@ class TimeTest {
         val a = Time(1, 2, 3.456)
         val b = Time(1, 2, 3.456)
         val c = Time(2, 3, 4.567)
-        assertTrue(a.equals(a))
-        assertTrue(a.equals(b))
-        assertFalse(a.equals(c))
-        assertFalse(a.equals(Any()))
-        assertEquals(a.hashCode(), b.hashCode())
+        Assert.assertTrue(a.equals(a))
+        Assert.assertTrue(a.equals(b))
+        Assert.assertFalse(a.equals(c))
+        Assert.assertFalse(a.equals(Any()))
+        Assert.assertEquals(a.hashCode().toLong(), b.hashCode().toLong())
     }
 }

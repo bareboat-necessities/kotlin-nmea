@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.util
 
-import org.junit.Assert.assertEquals
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 /**
  * WaypointTest
@@ -39,24 +41,24 @@ class WaypointTest {
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Waypoint.setDescription]
+     * [Waypoint.setDescription]
      * .
      */
     @Test
     fun testDescription() {
-        assertEquals("", point!!.description)
+        Assert.assertEquals("", point!!.description)
         point!!.description = desc
-        assertEquals(desc, point!!.description)
+        Assert.assertEquals(desc, point!!.description)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.util.Waypoint.setId].
+     * [Waypoint.setId].
      */
     @Test
     fun testId() {
-        assertEquals(id1, point!!.id)
+        Assert.assertEquals(id1, point!!.id)
         point!!.id = id2
-        assertEquals(id2, point!!.id)
+        Assert.assertEquals(id2, point!!.id)
     }
 }

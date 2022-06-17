@@ -1,7 +1,20 @@
 package net.sf.marineapi.provider
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.event.SentenceEvent
+import net.sf.marineapi.nmea.io.SentenceReader
+import net.sf.marineapi.nmea.parser.HDGTest
+import net.sf.marineapi.nmea.parser.HDMTest
+import net.sf.marineapi.nmea.parser.HDTTest
+import net.sf.marineapi.nmea.parser.SentenceFactory
+import net.sf.marineapi.provider.event.HeadingEvent
+import net.sf.marineapi.provider.event.HeadingListener
+import net.sf.marineapi.provider.event.ProviderListener
+import org.junit.After
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 import java.io.File
+import java.io.FileInputStream
 
 /**
  * @author Kimmo Tuukkanen
@@ -12,68 +25,68 @@ class HeadingProviderTest : HeadingListener {
     private var event: HeadingEvent? = null
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Before
     @Throws(Exception::class)
     fun setUp() {
-        factory = SentenceFactory.getInstance()
+        factory = SentenceFactory.instance
         val file = File("target/test-classes/data/sample1.txt")
         val str = FileInputStream(file)
         val r = SentenceReader(str)
         instance = HeadingProvider(r)
-        instance!!.addListener(this)
+        instance!!.addListener(this as ProviderListener<HeadingEvent?>)
         event = null
     }
 
     @After
     fun tearDown() {
-        instance!!.removeListener(this)
+        instance!!.removeListener(this as ProviderListener<HeadingEvent?>)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.provider.AbstractProvider.sentenceRead]
+     * [AbstractProvider.sentenceRead]
      * .
      */
     @Test
     fun testHDMSentenceRead() {
-        val s: Sentence = factory.createParser(HDMTest.Companion.EXAMPLE)
-        assertNull(event)
+        val s = factory!!.createParser(HDMTest.EXAMPLE)
+        Assert.assertNull(event)
         instance!!.sentenceRead(SentenceEvent(this, s))
-        assertNotNull(event)
-        assertEquals(90.0, event.getHeading(), 0.1)
-        assertFalse(event.isTrue())
+        Assert.assertNotNull(event)
+        Assert.assertEquals(90.0, event!!.getHeading(), 0.1)
+        Assert.assertFalse(event!!.isTrue())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.provider.AbstractProvider.sentenceRead]
+     * [AbstractProvider.sentenceRead]
      * .
      */
     @Test
     fun testHDTSentenceRead() {
-        val s: Sentence = factory.createParser(HDTTest.Companion.EXAMPLE)
-        assertNull(event)
+        val s = factory!!.createParser(HDTTest.EXAMPLE)
+        Assert.assertNull(event)
         instance!!.sentenceRead(SentenceEvent(this, s))
-        assertNotNull(event)
-        assertEquals(90.1, event.getHeading(), 0.1)
-        assertTrue(event.isTrue())
+        Assert.assertNotNull(event)
+        Assert.assertEquals(90.1, event!!.getHeading(), 0.1)
+        Assert.assertTrue(event!!.isTrue())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.provider.AbstractProvider.sentenceRead]
+     * [AbstractProvider.sentenceRead]
      * .
      */
     @Test
     fun testHDGSentenceRead() {
-        val s: Sentence = factory.createParser(HDGTest.Companion.EXAMPLE)
-        assertNull(event)
+        val s = factory!!.createParser(HDGTest.EXAMPLE)
+        Assert.assertNull(event)
         instance!!.sentenceRead(SentenceEvent(this, s))
-        assertNotNull(event)
-        assertEquals(123.4, event.getHeading(), 0.1)
-        assertFalse(event.isTrue())
+        Assert.assertNotNull(event)
+        Assert.assertEquals(123.4, event!!.getHeading(), 0.1)
+        Assert.assertFalse(event!!.isTrue())
     }
 
     /*
