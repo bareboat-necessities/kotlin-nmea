@@ -41,9 +41,7 @@ import java.util.logging.Logger
  * @author Kimmo Tuukkanen
  * @see SentenceReader.SentenceReader
  */
-abstract class AbstractDataReader : Runnable {
-
-    var parent: SentenceReader? = null
+abstract class AbstractDataReader(var parent: SentenceReader? = null) : Runnable {
 
     /**
      * Tells if the reader is running and actively scanning the data source for

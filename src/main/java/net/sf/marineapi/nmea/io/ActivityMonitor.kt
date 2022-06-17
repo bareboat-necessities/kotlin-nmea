@@ -58,9 +58,9 @@ internal class ActivityMonitor
     fun tick() {
         if (lastUpdated > 0) {
             val elapsed = System.currentTimeMillis() - lastUpdated
-            val timeout = parent.getPauseTimeout()
+            val timeout = parent!!.pauseTimeout
             if (elapsed >= timeout) {
-                parent!!.fireReadingPaused()
+                parent.fireReadingPaused()
                 reset()
             }
         }
