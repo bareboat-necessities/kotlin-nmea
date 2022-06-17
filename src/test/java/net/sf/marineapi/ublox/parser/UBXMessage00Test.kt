@@ -38,7 +38,7 @@ class UBXMessage00Test {
     fun testParsinfOfUBXMessage00() {
         val message00 =
             "\$PUBX,00,202920.00,1932.33821,N,15555.72641,W,451.876,G3,3.3,4.0,0.177,0.00,-0.035,,1.11,1.39,1.15,17,0,0*62"
-        val sf: SentenceFactory = SentenceFactory.getInstance()
+        val sf: SentenceFactory = SentenceFactory.instance
         val sentence = sf.createParser(message00)
         Assert.assertTrue("Not a UBXSentence.", sentence is UBXSentence)
         val sentenceId = sentence!!.getSentenceId()
