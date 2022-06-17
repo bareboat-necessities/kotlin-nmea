@@ -1,7 +1,8 @@
 package net.sf.marineapi.ais.parser
 
-import junit.framework.TestCase.assertEquals
+import net.sf.marineapi.ais.message.AISMessage24
 import net.sf.marineapi.ais.util.Sixbit
+import org.junit.Assert
 import org.junit.Test
 
 /**
@@ -16,29 +17,29 @@ class AISMessage24ParserTest {
     private val payloadB = "H1c2;qDTijklmno31<<C970`43<1"
     private val sixbitA = Sixbit(payloadA, 2)
     private val sixbitB = Sixbit(payloadB, 0)
-    private val partA = AISMessage24Parser(sixbitA)
-    private val partB = AISMessage24Parser(sixbitB)
+    private val partA: AISMessage24 = AISMessage24Parser(sixbitA)
+    private val partB: AISMessage24 = AISMessage24Parser(sixbitB)
 
     @get:Throws(Exception::class)
     @get:Test
     val partNumber: Unit
         get() {
-            assertEquals(0, partA.partNumber)
-            assertEquals(1, partB.partNumber)
+            Assert.assertEquals(0, partA.partNumber.toLong())
+            Assert.assertEquals(1, partB.partNumber.toLong())
         }
 
     @get:Throws(Exception::class)
     @get:Test
     val name: Unit
         get() {
-            assertEquals("THIS IS A CLASS B UN", partA.name)
+            Assert.assertEquals("THIS IS A CLASS B UN", partA.name)
         }
 
     @get:Throws(Exception::class)
     @get:Test
     val typeOfShipAndCargoType: Unit
         get() {
-            assertEquals(36, partB.typeOfShipAndCargoType)
+            Assert.assertEquals(36, partB.typeOfShipAndCargoType.toLong())
         }
 
     // TODO correct? should be "1234567" according to http://www.maritec.co.za/tools/aisvdmvdodecoding/
@@ -47,7 +48,7 @@ class AISMessage24ParserTest {
     val vendorId: Unit
         get() {
             // TODO correct? should be "1234567" according to http://www.maritec.co.za/tools/aisvdmvdodecoding/
-            assertEquals("123", partB.vendorId)
+            Assert.assertEquals("123", partB.vendorId)
         }
 
     // TODO correct?
@@ -56,7 +57,7 @@ class AISMessage24ParserTest {
     val unitModelCode: Unit
         get() {
             // TODO correct?
-            assertEquals(13, partB.unitModelCode)
+            Assert.assertEquals(13, partB.unitModelCode.toLong())
         }
 
     // TODO correct?
@@ -65,41 +66,41 @@ class AISMessage24ParserTest {
     val serialNumber: Unit
         get() {
             // TODO correct?
-            assertEquals(220599, partB.serialNumber)
+            Assert.assertEquals(220599, partB.serialNumber.toLong())
         }
 
     @get:Throws(Exception::class)
     @get:Test
     val callSign: Unit
         get() {
-            assertEquals("CALLSIG", partB.callSign)
+            Assert.assertEquals("CALLSIG", partB.callSign)
         }
 
     @get:Throws(Exception::class)
     @get:Test
     val bow: Unit
         get() {
-            assertEquals(5, partB.bow)
+            Assert.assertEquals(5, partB.bow.toLong())
         }
 
     @get:Throws(Exception::class)
     @get:Test
     val stern: Unit
         get() {
-            assertEquals(4, partB.stern)
+            Assert.assertEquals(4, partB.stern.toLong())
         }
 
     @get:Throws(Exception::class)
     @get:Test
     val port: Unit
         get() {
-            assertEquals(3, partB.port)
+            Assert.assertEquals(3, partB.port.toLong())
         }
 
     @get:Throws(Exception::class)
     @get:Test
     val starboard: Unit
         get() {
-            assertEquals(12, partB.starboard)
+            Assert.assertEquals(12, partB.starboard.toLong())
         }
 }

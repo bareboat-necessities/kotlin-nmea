@@ -1,8 +1,8 @@
 package net.sf.marineapi.ais.parser
 
-import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertFalse
+import net.sf.marineapi.ais.message.AISMessage27
 import net.sf.marineapi.ais.util.Sixbit
+import org.junit.Assert
 import org.junit.Test
 
 /**
@@ -15,65 +15,65 @@ class AISMessage27ParserTest {
     // !AIVDM,1,1,,,Kk:qFP0?fhT8=7m@,0*50
     private val payload = "Kk:qFP0?fhT8=7m@"
     private val sixbit = Sixbit(payload, 0)
-    private val message = AisMessage27Parser(sixbit)
+    private val message: AISMessage27 = AisMessage27Parser(sixbit)
 
     @get:Test
     val repeatIndicator: Unit
         get() {
-            assertEquals(3, message.repeatIndicator)
+            Assert.assertEquals(3, message.repeatIndicator.toLong())
         }
 
     @get:Test
     val mMSI: Unit
         get() {
-            assertEquals(212752000, message.mMSI)
+            Assert.assertEquals(212752000, message.mMSI.toLong())
         }
 
     @get:Test
     val isAccurate: Unit
         get() {
-            assertFalse(message.isAccurate)
+            Assert.assertFalse(message.isAccurate)
         }
 
     @get:Test
     val raimFlag: Unit
         get() {
-            assertFalse(message.rAIMFlag)
+            Assert.assertFalse(message.rAIMFlag)
         }
 
     @get:Test
     val navigationalStatus: Unit
         get() {
-            assertEquals(0, message.navigationalStatus)
+            Assert.assertEquals(0, message.navigationalStatus.toLong())
         }
 
     @get:Test
     val longitude: Unit
         get() {
-            assertEquals(-7.3566666666666665, message.longitudeInDegrees.toDouble(), 0.0)
+            Assert.assertEquals(-7.3566666666666665, message.longitudeInDegrees, 0.0)
         }
 
     @get:Test
     val latitude: Unit
         get() {
-            assertEquals(56.36333333333334, message.latitudeInDegrees.toDouble(), 0.0)
+            Assert.assertEquals(56.36333333333334, message.latitudeInDegrees, 0.0)
         }
 
     @get:Test
     val speedOverGround: Unit
         get() {
-            assertEquals(15.0, message.speedOverGround.toDouble(), 0.0)
+            Assert.assertEquals(15.0, message.speedOverGround, 0.0)
         }
 
     @get:Test
     val courseOverGround: Unit
         get() {
-            assertEquals(340.0, message.courseOverGround, 0)
+            Assert.assertEquals(340.0, message.courseOverGround, 0.0)
         }
 
     @get:Test
     val positionLatency: Unit
         get() {
-            assertEquals(0, message.positionLatency)
+            Assert.assertEquals(0, message.positionLatency.toLong())
         }
 }
