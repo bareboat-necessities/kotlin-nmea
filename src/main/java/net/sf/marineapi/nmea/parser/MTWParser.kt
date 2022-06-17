@@ -36,7 +36,7 @@ internal class MTWParser : SentenceParser, MTWSentence {
      *
      * @param nmea MTW sentence string
      */
-    constructor(nmea: String) : super(nmea) {}
+    constructor(nmea: String) : super(nmea)
 
     /**
      * Creates new MTW parse without data.

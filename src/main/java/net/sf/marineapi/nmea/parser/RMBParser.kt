@@ -38,14 +38,14 @@ internal class RMBParser : PositionParser, RMBSentence {
      *
      * @param nmea RMB sentence string
      */
-    constructor(nmea: String) : super(nmea, SentenceId.RMB) {}
+    constructor(nmea: String) : super(nmea, SentenceId.RMB)
 
     /**
      * Creates RMB parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.RMB, 13) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.RMB, 13)
 
     /*
 	 * (non-Javadoc)
@@ -80,7 +80,7 @@ internal class RMBParser : PositionParser, RMBSentence {
         val p = parsePosition(
             DEST_LAT, DEST_LAT_HEM, DEST_LON, DEST_LON_HEM
         )
-        return p!!.toWaypoint(id)
+        return p.toWaypoint(id)
     }
 
     /*

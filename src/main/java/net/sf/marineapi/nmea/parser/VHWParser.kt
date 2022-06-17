@@ -35,7 +35,7 @@ internal class VHWParser : SentenceParser, VHWSentence {
      *
      * @param nmea VHW sentence String
      */
-    constructor(nmea: String) : super(nmea) {}
+    constructor(nmea: String) : super(nmea)
 
     /**
      * Creates a new empty VHW parser instance.

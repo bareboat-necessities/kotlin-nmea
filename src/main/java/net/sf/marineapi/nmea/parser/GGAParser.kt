@@ -41,14 +41,14 @@ internal class GGAParser : PositionParser, GGASentence {
      * @throws IllegalArgumentException If the specified sentence is invalid or
      * not a GGA sentence.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GGA) {}
+    constructor(nmea: String) : super(nmea, SentenceId.GGA)
 
     /**
      * Creates GSA parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.GGA, 14) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.GGA, 14)
 
     /*
 	 * (non-Javadoc)
@@ -132,9 +132,9 @@ internal class GGAParser : PositionParser, GGASentence {
             if (getAltitudeUnits() == Units.FEET) {
                 alt /= 0.3048
             }
-            pos!!.altitude = alt
+            pos.altitude = alt
         }
-        return pos!!
+        return pos
     }
 
     /*

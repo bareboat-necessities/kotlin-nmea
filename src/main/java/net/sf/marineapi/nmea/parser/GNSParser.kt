@@ -37,7 +37,7 @@ internal class GNSParser : PositionParser, GNSSentence {
      *
      * @param nmea GNS sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GNS) {}
+    constructor(nmea: String) : super(nmea, SentenceId.GNS)
 
     /**
      * Constructor for empty GNS sentence.
@@ -67,22 +67,22 @@ internal class GNSParser : PositionParser, GNSSentence {
 
     override fun getGpsMode(): GNSSentence.Mode {
         val modes = getStringValue(MODE)
-        return GNSSentence.Mode.valueOf(modes!![GPS_MODE])
+        return GNSSentence.Mode.valueOf(modes[GPS_MODE])
     }
 
     override fun setGpsMode(gps: GNSSentence.Mode?) {
         val modes = getStringValue(MODE)
-        setStringValue(MODE, gps!!.toChar().toString() + modes!!.substring(GNS_MODE))
+        setStringValue(MODE, gps!!.toChar().toString() + modes.substring(GNS_MODE))
     }
 
     override fun getGlonassMode(): GNSSentence.Mode {
         val modes = getStringValue(MODE)
-        return GNSSentence.Mode.valueOf(modes!![GNS_MODE])
+        return GNSSentence.Mode.valueOf(modes[GNS_MODE])
     }
 
     override fun setGlonassMode(gns: GNSSentence.Mode?) {
         val modes = getStringValue(MODE)
-        val sb = StringBuffer(modes!!.length)
+        val sb = StringBuffer(modes.length)
         sb.append(modes[GPS_MODE])
         sb.append(gns!!.toChar())
         if (modes.length > 2) {
@@ -93,7 +93,7 @@ internal class GNSParser : PositionParser, GNSSentence {
 
     override fun getAdditionalModes(): Array<GNSSentence.Mode?> {
         val mode = getStringValue(MODE)
-        if (mode!!.length == 2) {
+        if (mode.length == 2) {
             return arrayOfNulls(0)
         }
         val additional = mode.substring(VAR_MODE)
@@ -107,7 +107,7 @@ internal class GNSParser : PositionParser, GNSSentence {
     override fun setAdditionalModes(vararg modes: GNSSentence.Mode?) {
         val current = getStringValue(MODE)
         val sb = StringBuffer(modes.size + 2)
-        sb.append(current!!.substring(0, VAR_MODE))
+        sb.append(current.substring(0, VAR_MODE))
         for (m in modes) {
             sb.append(m!!.toChar())
         }

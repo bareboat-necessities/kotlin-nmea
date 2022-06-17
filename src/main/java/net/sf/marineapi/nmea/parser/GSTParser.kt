@@ -38,14 +38,14 @@ internal class GSTParser : SentenceParser, GSTSentence {
      * @throws IllegalArgumentException If the specified sentence is invalid or
      * not a GST sentence.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GST) {}
+    constructor(nmea: String) : super(nmea, SentenceId.GST)
 
     /**
      * Creates GSA parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.GST, 8) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.GST, 8)
 
     /*
 	 * (non-Javadoc)

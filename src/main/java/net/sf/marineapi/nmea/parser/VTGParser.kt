@@ -37,7 +37,7 @@ internal class VTGParser : SentenceParser, VTGSentence {
      * @param nmea VTG sentence String
      * @throws IllegalArgumentException If specified sentence is invalid
      */
-    constructor(nmea: String) : super(nmea, SentenceId.VTG) {}
+    constructor(nmea: String) : super(nmea, SentenceId.VTG)
 
     /**
      * Creates VTG parser with empty sentence.

@@ -35,14 +35,14 @@ internal class DTMParser : SentenceParser, DTMSentence {
      *
      * @param nmea DTM sentence String to parse.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.DTM) {}
+    constructor(nmea: String) : super(nmea, SentenceId.DTM)
 
     /**
      * Creates a new empty instance of DTMParser.
      *
      * @param talker Talker ID to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.DTM, 8) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.DTM, 8)
 
     /*
 	 * (non-Javadoc)

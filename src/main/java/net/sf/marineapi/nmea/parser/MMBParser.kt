@@ -37,7 +37,7 @@ internal class MMBParser : SentenceParser, MMBSentence {
      *
      * @param nmea MMB sentence String.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.MMB) {}
+    constructor(nmea: String) : super(nmea, SentenceId.MMB)
 
     /**
      * Constructs a fresh MMB parser.

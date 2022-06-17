@@ -44,14 +44,14 @@ internal class TXTParser : SentenceParser, TXTSentence {
      *
      * @param nmea TXT sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.TXT) {}
+    constructor(nmea: String) : super(nmea, SentenceId.TXT)
 
     /**
      * Constructs an empty TXT sentence.
      *
      * @param tid TalkerId to set
      */
-    constructor(tid: TalkerId?) : super(tid, SentenceId.TXT, 4) {}
+    constructor(tid: TalkerId?) : super(tid, SentenceId.TXT, 4)
 
     override fun getMessageCount(): Int {
         return getIntValue(MESSAGE_COUNT)

@@ -37,14 +37,14 @@ internal class WPLParser : PositionParser, WPLSentence {
      * @param nmea WPL sentence String.
      * @throws IllegalArgumentException If specified sentence is invalid.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.WPL) {}
+    constructor(nmea: String) : super(nmea, SentenceId.WPL)
 
     /**
      * Creates WPL parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.WPL, 5) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.WPL, 5)
 
     /*
 	 * (non-Javadoc)
@@ -55,7 +55,7 @@ internal class WPLParser : PositionParser, WPLSentence {
         val p = parsePosition(
             LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE
         )
-        return p!!.toWaypoint(id)
+        return p.toWaypoint(id)
     }
 
     /*

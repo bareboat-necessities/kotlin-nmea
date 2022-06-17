@@ -23,8 +23,6 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.STALKSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * SeaTalk $STALK sentence parser.
@@ -39,7 +37,7 @@ internal class STALKParser : SentenceParser, STALKSentence {
      *
      * @param nmea `$STALK` sentence String.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.ALK) {}
+    constructor(nmea: String) : super(nmea, SentenceId.ALK)
 
     /**
      * Constructor with TalkerId, mostly for compatibility with SentenceFactory.

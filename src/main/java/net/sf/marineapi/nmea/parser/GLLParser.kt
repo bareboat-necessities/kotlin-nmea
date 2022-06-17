@@ -41,14 +41,14 @@ internal class GLLParser : PositionParser, GLLSentence {
      * @throws IllegalArgumentException If the given sentence is invalid or does
      * not contain GLL sentence.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GLL) {}
+    constructor(nmea: String) : super(nmea, SentenceId.GLL)
 
     /**
      * Creates GSA parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.GLL, 7) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.GLL, 7)
 
     /*
 	 * (non-Javadoc)

@@ -50,14 +50,11 @@ import net.sf.marineapi.ais.util.*
 internal open class AISPositionReportBParser : AISMessageParser, AISPositionReportB {
     private var fSOG = 0
     override var isAccurate = false
-        set
     private var fLongitude = 0
     private var fLatitude = 0
     private var fCOG = 0
     override var trueHeading = 0
-        set
     override var timeStamp = 0
-        set
 
     /**
      * Constructor.

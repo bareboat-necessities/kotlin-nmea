@@ -57,14 +57,14 @@ internal class XDRParser : SentenceParser, XDRSentence {
      *
      * @param nmea XDR sentence string
      */
-    constructor(nmea: String) : super(nmea, SentenceId.XDR) {}
+    constructor(nmea: String) : super(nmea, SentenceId.XDR)
 
     /**
      * Creates XDR parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.XDR, DATA_SET_LENGTH) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.XDR, DATA_SET_LENGTH)
 
     /* (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#addMeasurement(net.sf.marineapi.nmea.util.Measurement[])

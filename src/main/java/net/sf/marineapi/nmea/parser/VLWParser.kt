@@ -34,14 +34,14 @@ internal class VLWParser : SentenceParser, VLWSentence {
      *
      * @param nmea NMEA sentence STring.
      */
-    constructor(nmea: String) : super(nmea) {}
+    constructor(nmea: String) : super(nmea)
 
     /**
      * Creates a new empty instance of VLWParser.
      *
      * @param talker TalkerId to set.
      */
-    constructor(talker: TalkerId?) : super(talker, "VLW", 4) {}
+    constructor(talker: TalkerId?) : super(talker, "VLW", 4)
 
     /*
 	 * (non-Javadoc)

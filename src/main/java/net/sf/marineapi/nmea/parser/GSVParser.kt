@@ -36,14 +36,14 @@ internal class GSVParser : SentenceParser, GSVSentence {
      *
      * @param nmea GSV Sentence
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GSV) {}
+    constructor(nmea: String) : super(nmea, SentenceId.GSV)
 
     /**
      * Creates an GSV parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.GSV, 19) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.GSV, 19)
 
     /*
      * (non-Javadoc)

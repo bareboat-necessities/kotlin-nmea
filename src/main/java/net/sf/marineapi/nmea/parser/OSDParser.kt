@@ -40,14 +40,14 @@ internal class OSDParser : SentenceParser, OSDSentence {
      *
      * @param nmea OSD sentence string.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.OSD) {}
+    constructor(nmea: String) : super(nmea, SentenceId.OSD)
 
     /**
      * Creates OSD parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.OSD, 9) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.OSD, 9)
 
     /**
      * @see OSDSentence.getHeading

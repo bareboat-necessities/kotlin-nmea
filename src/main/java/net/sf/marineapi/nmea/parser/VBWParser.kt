@@ -37,14 +37,14 @@ internal class VBWParser : SentenceParser, VBWSentence {
      * @param nmea VBW sentence String.
      * @throws IllegalArgumentException If specified sentence is invalid.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.VBW) {}
+    constructor(nmea: String) : super(nmea, SentenceId.VBW)
 
     /**
      * Create a VBW parser with an empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.VBW, 10) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.VBW, 10)
 
     override fun getLongWaterSpeed(): Double {
         return getDoubleValue(LONG_WATERSPEED)

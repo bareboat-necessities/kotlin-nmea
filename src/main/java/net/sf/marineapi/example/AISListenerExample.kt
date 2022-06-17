@@ -31,7 +31,7 @@ import java.io.*
  *
  * @author Jozéph Lázár
  */
-class AISListenerExample(file: File?) : AbstractAISMessageListener<AISMessage01>() {
+class AISListenerExample(val file: File?) : AbstractAISMessageListener<AISMessage01>() {
     private val reader: SentenceReader
 
     /**
@@ -42,7 +42,7 @@ class AISListenerExample(file: File?) : AbstractAISMessageListener<AISMessage01>
     init {
 
         // create sentence reader and provide input stream
-        val stream: InputStream = FileInputStream(file)
+        val stream: InputStream = FileInputStream(file!!)
         reader = SentenceReader(stream)
 
         // listen for for all AIS VDM messages

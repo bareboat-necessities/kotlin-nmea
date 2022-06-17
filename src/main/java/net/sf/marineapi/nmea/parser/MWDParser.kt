@@ -35,7 +35,7 @@ internal class MWDParser : SentenceParser, MWDSentence {
      *
      * @param nmea MWV sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.MWD) {}
+    constructor(nmea: String) : super(nmea, SentenceId.MWD)
 
     /**
      * Creates a new empty instance of MWDParser.

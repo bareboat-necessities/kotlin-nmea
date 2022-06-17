@@ -106,8 +106,7 @@ open class SentenceParser : Sentence {
         tid,
         sid.toString(),
         size
-    ) {
-    }
+    )
 
     /**
      * Creates a new empty sentence with specified begin char, talker id,
@@ -160,7 +159,7 @@ open class SentenceParser : Sentence {
      * @param type Sentence type Id, e.g. "GGA or "GLL".
      * @param size Number of data fields
      */
-    constructor(talker: TalkerId?, type: String?, size: Int) : this(Sentence.BEGIN_CHAR, talker, type, size) {}
+    constructor(talker: TalkerId?, type: String?, size: Int) : this(Sentence.BEGIN_CHAR, talker, type, size)
 
     /**
      * Creates a new instance of SentenceParser with specified sentence data.
@@ -170,7 +169,7 @@ open class SentenceParser : Sentence {
      * @param nmea Sentence String
      * @param type Sentence type enum
      */
-    internal constructor(nmea: String, type: SentenceId) : this(nmea, type.toString()) {}
+    internal constructor(nmea: String, type: SentenceId) : this(nmea, type.toString())
 
     /**
      * Creates a new instance of SentenceParser without any data.
@@ -179,7 +178,7 @@ open class SentenceParser : Sentence {
      * @param sid Sentence id to set in sentence
      * @param size Number of data fields following the sentence id field
      */
-    internal constructor(tid: TalkerId?, sid: SentenceId, size: Int) : this(tid, sid.toString(), size) {}
+    internal constructor(tid: TalkerId?, sid: SentenceId, size: Int) : this(tid, sid.toString(), size)
 
     /*
 	 * (non-Javadoc)

@@ -89,7 +89,7 @@ abstract class AbstractDataReader(var parent: SentenceReader? = null) : Runnable
                 parent!!.handleException("Data read failed", e)
                 try {
                     Thread.sleep(SLEEP_TIME.toLong())
-                } catch (interruptException: InterruptedException) {
+                } catch (_: InterruptedException) {
                 }
             } finally {
                 monitor.tick()

@@ -38,14 +38,14 @@ internal class GBSParser : SentenceParser, GBSSentence {
      *
      * @param tid Talker ID to set.
      */
-    constructor(tid: TalkerId?) : super(tid, SentenceId.GBS, 8) {}
+    constructor(tid: TalkerId?) : super(tid, SentenceId.GBS, 8)
 
     /**
      * Creates a parser for given GBS sentence.
      *
      * @param nmea GBS sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GBS) {}
+    constructor(nmea: String) : super(nmea, SentenceId.GBS)
 
     override fun getLatitudeError(): Double {
         return getDoubleValue(LAT_ERROR)

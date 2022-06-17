@@ -36,7 +36,7 @@ internal class DBTParser : SentenceParser, DBTSentence {
      *
      * @param nmea DBT sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.DBT) {}
+    constructor(nmea: String) : super(nmea, SentenceId.DBT)
 
     /**
      * Creates a new instance of DBTParser with empty data fields.

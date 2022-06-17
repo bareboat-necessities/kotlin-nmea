@@ -34,10 +34,10 @@ import net.sf.marineapi.nmea.util.TurnMode
  * @author Paweł Kozioł
  */
 internal open class HTCParser : SentenceParser, HTCSentence {
-    constructor(nmea: String) : super(nmea, SentenceId.HTC) {}
-    constructor(talker: TalkerId?) : super(talker, SentenceId.HTC, 13) {}
-    constructor(nmea: String, type: SentenceId) : super(nmea, type) {}
-    constructor(tid: TalkerId?, sid: SentenceId, size: Int) : super(tid, sid, size) {}
+    constructor(nmea: String) : super(nmea, SentenceId.HTC)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.HTC, 13)
+    constructor(nmea: String, type: SentenceId) : super(nmea, type)
+    constructor(tid: TalkerId?, sid: SentenceId, size: Int) : super(tid, sid, size)
 
     override fun getOverride(): DataStatus? {
         return if (hasValue(OVERRIDE)) {

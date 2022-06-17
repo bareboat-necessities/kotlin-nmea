@@ -37,7 +37,7 @@ internal class VWTParser : SentenceParser, VWTSentence {
      * @param nmea VWT sentence String
      * @throws IllegalArgumentException If specified sentence is invalid
      */
-    constructor(nmea: String) : super(nmea, SentenceId.VWT) {}
+    constructor(nmea: String) : super(nmea, SentenceId.VWT)
 
     /**
      * Creates VWT parser with empty sentence.

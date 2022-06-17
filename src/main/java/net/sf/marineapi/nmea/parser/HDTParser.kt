@@ -35,7 +35,7 @@ internal class HDTParser : SentenceParser, HDTSentence {
      *
      * @param nmea HDT sentence String to parse.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.HDT) {}
+    constructor(nmea: String) : super(nmea, SentenceId.HDT)
 
     /**
      * Creates a new empty HDT sentence.

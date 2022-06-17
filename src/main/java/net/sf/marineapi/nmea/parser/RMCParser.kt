@@ -40,14 +40,14 @@ internal class RMCParser : PositionParser, RMCSentence {
      * @param nmea RMC sentence String.
      * @throws IllegalArgumentException If specified sentence is invalid.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.RMC) {}
+    constructor(nmea: String) : super(nmea, SentenceId.RMC)
 
     /**
      * Creates a ZDA parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.RMC, 12) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.RMC, 12)
 
     /*
 	 * (non-Javadoc)

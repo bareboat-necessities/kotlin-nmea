@@ -243,8 +243,8 @@ class SentenceFactory private constructor() {
         parser: Class<out SentenceParser>
     ) {
         try {
-            parser.getConstructor(*arrayOf<Class<*>>(String::class.java))
-            parser.getConstructor(*arrayOf<Class<*>>(TalkerId::class.java))
+            parser.getConstructor(String::class.java)
+            parser.getConstructor(TalkerId::class.java)
             parsers!![type] = parser
         } catch (e: SecurityException) {
             val msg = "Unable to register parser due security violation"

@@ -36,14 +36,14 @@ internal class ROTParser : SentenceParser, ROTSentence {
      *
      * @param nmea ROT sentence String to parse.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.ROT) {}
+    constructor(nmea: String) : super(nmea, SentenceId.ROT)
 
     /**
      * Creates a new empty ROT sentence.
      *
      * @param talker Talker id to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.ROT, 2) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.ROT, 2)
 
     /*
 	 * (non-Javadoc)

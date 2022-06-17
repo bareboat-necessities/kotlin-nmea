@@ -37,7 +37,7 @@ internal class VWRParser : SentenceParser, VWRSentence {
      * @param nmea VWR sentence String
      * @throws IllegalArgumentException If specified sentence is invalid
      */
-    constructor(nmea: String) : super(nmea, SentenceId.VWR) {}
+    constructor(nmea: String) : super(nmea, SentenceId.VWR)
 
     /**
      * Creates VWR parser with empty sentence.

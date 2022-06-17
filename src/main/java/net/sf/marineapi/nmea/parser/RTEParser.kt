@@ -36,7 +36,7 @@ internal class RTEParser : SentenceParser, RTESentence {
      *
      * @param nmea RTE sentence string.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.RTE) {}
+    constructor(nmea: String) : super(nmea, SentenceId.RTE)
 
     /**
      * Creates RTE parser with empty sentence. The created RTE sentence contains
@@ -44,7 +44,7 @@ internal class RTEParser : SentenceParser, RTESentence {
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.RTE, 4) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.RTE, 4)
 
     /*
 	 * (non-Javadoc)

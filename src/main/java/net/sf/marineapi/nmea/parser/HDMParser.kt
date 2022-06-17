@@ -35,7 +35,7 @@ internal class HDMParser : SentenceParser, HDMSentence {
      *
      * @param nmea HDM sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.HDM) {}
+    constructor(nmea: String) : super(nmea, SentenceId.HDM)
 
     /**
      * Creates a new empty HDM sentence.

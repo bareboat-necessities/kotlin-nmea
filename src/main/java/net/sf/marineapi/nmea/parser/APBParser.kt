@@ -36,14 +36,14 @@ internal class APBParser : SentenceParser, APBSentence {
      *
      * @param nmea NMEA sentence String.
      */
-    constructor(nmea: String) : super(nmea) {}
+    constructor(nmea: String) : super(nmea)
 
     /**
      * Creates a new empty APBParser.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, "APB", 14) {}
+    constructor(talker: TalkerId?) : super(talker, "APB", 14)
 
     /*
 	 * (non-Javadoc)

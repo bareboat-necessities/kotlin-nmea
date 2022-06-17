@@ -36,14 +36,14 @@ internal class DTBParser : DTAParser, DTBSentence {
      *
      * @param talker DTB talkerId
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.DTB, 8) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.DTB, 8)
 
     /**
      * Creates a new instance of DTBParser.
      *
      * @param nmea DTB sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.DTB) {}
+    constructor(nmea: String) : super(nmea, SentenceId.DTB)
 
     /**
      * Gets the hard-coded channel for GasFinder2. Since only GasFinder2

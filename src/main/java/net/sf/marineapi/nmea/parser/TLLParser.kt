@@ -33,8 +33,8 @@ import java.text.DecimalFormatSymbols
  * @author Epameinondas Pantzopoulos
  */
 internal class TLLParser : PositionParser, TLLSentence {
-    constructor(nmea: String) : super(nmea, SentenceId.TLL) {}
-    constructor(talker: TalkerId?) : super(talker, SentenceId.TLL, 9) {}
+    constructor(nmea: String) : super(nmea, SentenceId.TLL)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.TLL, 9)
 
     override fun getPosition(): Position {
         return parsePosition(LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE)

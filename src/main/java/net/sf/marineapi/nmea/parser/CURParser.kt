@@ -38,7 +38,7 @@ internal class CURParser : SentenceParser, CURSentence {
      * @throws IllegalArgumentException If specified String is invalid or does
      * not contain a CUR sentence.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.CUR) {}
+    constructor(nmea: String) : super(nmea, SentenceId.CUR)
 
     /**
      * Creates CUR parser with empty sentence.

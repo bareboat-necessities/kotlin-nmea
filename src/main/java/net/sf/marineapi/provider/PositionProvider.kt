@@ -26,7 +26,6 @@ import net.sf.marineapi.nmea.sentence.*
 import net.sf.marineapi.nmea.util.*
 
 import net.sf.marineapi.provider.event.PositionEvent
-import java.util.*
 import java.util.Date
 
 /**
@@ -96,17 +95,15 @@ class PositionProvider
             } else if (s is GGASentence) {
                 // Using GGA as primary position source as it contains both
                 // position and altitude
-                val gga = s
-                p = gga.getPosition()
-                fix = gga.getFixQuality()
+                p = s.getPosition()
+                fix = s.getFixQuality()
 
                 // Some receivers do not provide RMC message
                 if (t == null) {
-                    t = gga.getTime()
+                    t = s.getTime()
                 }
             } else if (s is GLLSentence && p == null) {
-                val gll = s
-                p = gll.getPosition()
+                p = s.getPosition()
             }
         }
 
@@ -132,9 +129,8 @@ class PositionProvider
     override fun isValid(): Boolean {
         for (s in getSentences()) {
             if (s is RMCSentence) {
-                val rmc = s
-                val ds = rmc.getStatus()
-                if (DataStatus.VOID == ds || rmc.getFieldCount() > 11 && FaaMode.NONE == rmc.getMode()) {
+                val ds = s.getStatus()
+                if (DataStatus.VOID == ds || s.getFieldCount() > 11 && FaaMode.NONE == s.getMode()) {
                     return false
                 }
             } else if (s is GGASentence) {
