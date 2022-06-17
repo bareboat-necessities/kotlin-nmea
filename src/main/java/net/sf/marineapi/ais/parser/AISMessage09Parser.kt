@@ -20,9 +20,10 @@
  */
 package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage09import
+import net.sf.marineapi.ais.message.AISMessage09
+import net.sf.marineapi.ais.util.*
 
-net.sf.marineapi.ais.util.*import java.text.DecimalFormat
+import java.text.DecimalFormat
 
 /**
  * AIS Message 9 implementation: Standard SAR Aircraft Position Report

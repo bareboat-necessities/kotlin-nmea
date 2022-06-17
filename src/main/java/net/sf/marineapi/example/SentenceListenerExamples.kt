@@ -56,10 +56,10 @@ class SentenceListenerExamples(file: File?) {
             val s = event.sentence
             if ("GLL" == s.sentenceId) {
                 val gll = s as GLLSentence
-                println("GLL position: " + gll.position)
+                println("GLL position: " + gll.getPosition())
             } else if ("GGA" == s.sentenceId) {
                 val gga = s as GGASentence
-                println("GGA position: " + gga.position)
+                println("GGA position: " + gga.getPosition())
             }
         }
     }

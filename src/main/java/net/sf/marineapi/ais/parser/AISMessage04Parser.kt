@@ -20,9 +20,9 @@
  */
 package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage04import
+import net.sf.marineapi.ais.message.AISMessage04
+import net.sf.marineapi.ais.util.Sixbit
 
-net.sf.marineapi.ais.util.Sixbit
 /**
  * AIS Message 4 implementation: Base Station Report.
  *

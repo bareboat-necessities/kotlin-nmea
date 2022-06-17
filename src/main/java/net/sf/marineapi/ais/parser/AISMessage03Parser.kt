@@ -20,9 +20,9 @@
  */
 package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage03import
+import net.sf.marineapi.ais.message.AISMessage03
+import net.sf.marineapi.ais.util.Sixbit
 
-net.sf.marineapi.ais.util.Sixbit
 /**
  * AIS Message 3 implementation: Position report.
  *

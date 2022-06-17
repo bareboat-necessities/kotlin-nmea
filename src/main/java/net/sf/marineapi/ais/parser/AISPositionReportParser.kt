@@ -20,9 +20,9 @@
  */
 package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISPositionReportimport
+import net.sf.marineapi.ais.message.AISPositionReport
+import net.sf.marineapi.ais.util.*
 
-net.sf.marineapi.ais.util.*
 /**
  * Parser for all position report messages.
  *

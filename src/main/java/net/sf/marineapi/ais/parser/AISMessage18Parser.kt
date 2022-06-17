@@ -20,9 +20,10 @@
  */
 package net.sf.marineapi.ais.parser
 
+import net.sf.marineapi.ais.message.AISMessage18
 import net.sf.marineapi.ais.message.AISMessage18import
+import net.sf.marineapi.ais.util.Sixbit
 
-net.sf.marineapi.ais.util.Sixbit
 /**
  * AIS message 18 parser, Standard Class B CS Position Report.
  *

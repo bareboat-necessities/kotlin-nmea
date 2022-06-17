@@ -1,7 +1,5 @@
 package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage27import
-
 net.sf.marineapi.ais.util.*
 /**
  * AIS Message 27 implementation - LONG-RANGE AUTOMATIC IDENTIFCATION SYSTEM BROADCAST MESSAGE

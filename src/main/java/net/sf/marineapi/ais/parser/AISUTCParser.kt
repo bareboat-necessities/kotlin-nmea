@@ -20,9 +20,9 @@
  */
 package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISUTCReportimport
+import net.sf.marineapi.ais.message.AISUTCReport
+import net.sf.marineapi.ais.util.*
 
-net.sf.marineapi.ais.util.*
 /**
  * AIS Base station and Mobile Station UTC reporting
  *

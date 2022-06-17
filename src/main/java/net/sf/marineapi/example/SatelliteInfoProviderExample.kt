@@ -56,7 +56,7 @@ class SatelliteInfoProviderExample(file: File?) : SatelliteInfoListener {
 	 */
     override fun providerUpdate(event: SatelliteInfoEvent) {
         println("-- GSV report --")
-        for (si in event.satelliteInfo) {
+        for (si in event.getSatelliteInfo()) {
             val ptrn = "%s: %d, %d"
             val msg = String.format(
                 ptrn, si.id, si!!.azimuth, si
