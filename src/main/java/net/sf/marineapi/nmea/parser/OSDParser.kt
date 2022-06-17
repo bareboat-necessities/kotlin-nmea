@@ -26,6 +26,7 @@ import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.ReferenceSystem
 import net.sf.marineapi.nmea.util.Units
+import java.util.*
 
 
 /**
@@ -121,8 +122,8 @@ internal class OSDParser : SentenceParser, OSDSentence {
     /**
      * @see OSDSentence.setHeadingStatus
      */
-    override fun setHeadingStatus(status: DataStatus) {
-        setCharValue(HEADING_STATUS, status.toChar())
+    override fun setHeadingStatus(status: DataStatus?) {
+        setCharValue(HEADING_STATUS, status!!.toChar())
     }
 
     /**
@@ -135,8 +136,8 @@ internal class OSDParser : SentenceParser, OSDSentence {
     /**
      * @see OSDSentence.setCourseReference
      */
-    override fun setCourseReference(reference: ReferenceSystem) {
-        setCharValue(COURSE_REFERENCE, reference.toChar())
+    override fun setCourseReference(reference: ReferenceSystem?) {
+        setCharValue(COURSE_REFERENCE, reference!!.toChar())
     }
 
     /**
@@ -149,8 +150,8 @@ internal class OSDParser : SentenceParser, OSDSentence {
     /**
      * @see OSDSentence.setSpeedReference
      */
-    override fun setSpeedReference(reference: ReferenceSystem) {
-        setCharValue(SPEED_REFERENCE, reference.toChar())
+    override fun setSpeedReference(reference: ReferenceSystem?) {
+        setCharValue(SPEED_REFERENCE, reference!!.toChar())
     }
 
     /**
@@ -170,9 +171,9 @@ internal class OSDParser : SentenceParser, OSDSentence {
     /**
      * @see OSDSentence.setSpeedUnits
      */
-    override fun setSpeedUnits(units: Units) {
-        if (Arrays.asList(*VALID_SPEED_UNITS).contains(units)) {
-            setCharValue(SPEED_UNITS, units.toChar())
+    override fun setSpeedUnits(units: Units?) {
+        if (listOf(*VALID_SPEED_UNITS).contains(units)) {
+            setCharValue(SPEED_UNITS, units!!.toChar())
         } else {
             var err = "Speed units must be "
             for (i in VALID_SPEED_UNITS.indices) {
