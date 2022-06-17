@@ -20,9 +20,9 @@
  */
 package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage21import
+import net.sf.marineapi.ais.message.AISMessage21
+import net.sf.marineapi.ais.util.*
 
-net.sf.marineapi.ais.util.*
 /**
  * AIS Message 21 implementation: Aid-to-Navigation Report.
  *
@@ -133,7 +133,7 @@ internal class AISMessage21Parser(content: Sixbit) : AISMessageParser(content, 2
         result += SEPARATOR + "Pos acc: " + (if (isAccurate) "high" else "low") + " accuracy"
         result += SEPARATOR + "Lon:     " + Longitude28.toString(fLongitude)
         result += SEPARATOR + "Lat:     " + Latitude27.toString(fLatitude)
-        val dim = "Bow: " + bow + ", Stern: " + stern + ", Port: " + port + ", Starboard: " + starboard + " [m]"
+        val dim = "Bow: $bow, Stern: $stern, Port: $port, Starboard: $starboard [m]"
         result += SEPARATOR + "Dim:       " + dim
         result += SEPARATOR + "Sec:     " + utcSecond
         result += SEPARATOR + "Off Position Indicator: " + if (offPositionIndicator) "yes" else "no"
