@@ -9,6 +9,7 @@ import net.sf.marineapi.test.util.FOOParser
 import net.sf.marineapi.test.util.FOOSentence
 import net.sf.marineapi.test.util.VDMParser
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -17,7 +18,7 @@ import org.junit.Test
  * @author Kimmo Tuukkanen
  */
 class SentenceFactoryTest {
-    private val instance: SentenceFactory = SentenceFactory.getInstance()
+    private val instance: SentenceFactory = SentenceFactory.instance
 
     /**
      * @throws Exception
@@ -165,21 +166,6 @@ class SentenceFactoryTest {
      * .
      */
     @Test
-    fun testCreateParserWithNull() {
-        try {
-            instance.createParser(null)
-            Assert.fail("Did not throw exception")
-        } catch (e: IllegalArgumentException) {
-            // pass
-        }
-    }
-
-    /**
-     * Test method for
-     * [SentenceFactory.createParser]
-     * .
-     */
-    @Test
     fun testCreateParserWithRandom() {
         try {
             instance.createParser("asdqas,dwersa,dsdfas,das")
@@ -287,7 +273,7 @@ class SentenceFactoryTest {
     @Test
     fun testGetInstance() {
         Assert.assertNotNull(instance)
-        Assert.assertTrue(instance == SentenceFactory.getInstance())
-        assertEquals(instance, SentenceFactory.getInstance())
+        Assert.assertTrue(instance == SentenceFactory.instance)
+        assertEquals(instance, SentenceFactory.instance)
     }
 }
