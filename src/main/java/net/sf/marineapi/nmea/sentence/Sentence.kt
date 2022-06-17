@@ -49,7 +49,7 @@ interface Sentence {
      *
      * @return Data field count
      */
-    val fieldCount: Int
+    var fieldCount: Int
 
     /**
      * Get the sentence ID that specifies the sentence type and data it holds.
@@ -59,7 +59,7 @@ interface Sentence {
      * @return Sentence id String, e.g. "GLL" or "GGA".
      * @see SentenceId
      */
-    val sentenceId: String
+    var sentenceId: String
     /**
      * Gets the talker ID of the sentence. Talker ID is the next two characters
      * after `$` in sentence address field. For example, in case of
@@ -80,21 +80,21 @@ interface Sentence {
      *
      * @return True if AIS sentence, otherwise false.
      */
-    val isAISSentence: Boolean
+    var isAISSentence: Boolean
 
     /**
      * Tells if the sentence is of proprietary format.
      *
      * @return True if proprietary, otherwise false.
      */
-    val isProprietary: Boolean
+    var isProprietary: Boolean
 
     /**
      * Tells if the sentence formatting matches NMEA 0183 format.
      *
      * @return True if validly formatted, otherwise false.
      */
-    val isValid: Boolean
+    var isValid: Boolean
 
     /**
      * Resets the sentence contents, i.e. removes all existing values from data
