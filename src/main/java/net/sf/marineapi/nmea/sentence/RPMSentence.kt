@@ -22,82 +22,98 @@ package net.sf.marineapi.nmea.sentence
 
 import net.sf.marineapi.nmea.util.DataStatus
 
+
 /**
  * Revolutions, measured from shaft or engine.
  *
  * @author Kimmo Tuukkanen
  */
 interface RPMSentence : Sentence {
+
     /**
      * Returns the engine or shaft number/id.
      *
      * @return Engine of shaft number
      */
-    /**
-     * Sets the engine or shaft number/id.
-     *
-     * @param id ID to set.
-     */
-    var id: Int
+    fun getId(): Int
+
     /**
      * Returns the propeller pitch, % of maximum.
      *
      * @return Pitch value, negative values denote astern.
      */
-    /**
-     * Sets the propeller pitch, % of maximum.
-     *
-     * @param pitch Pitch value to set, negative values denote astern.
-     */
-    var pitch: Double
+    fun getPitch(): Double
+
     /**
      * Returns the revolutions value.
      *
      * @return Speed, revolutions per minute.
      */
-    /**
-     * Sets the revolutions value.
-     *
-     * @param rpm Revolutions per minute.
-     */
-    var rPM: Double
+    fun getRPM(): Double
+
     /**
      * Returns the measurement source, engine or shaft.
      *
      * @return 'E' for engine, 'S' for shaft.
      */
-    /**
-     * Sets the source indicator, engine or shaft.
-     *
-     * @param source 'E' for engine or 'S' for shaft.
-     * @throws IllegalArgumentException If specified char is not 'E' or 'S'.
-     */
-    var source: Char
+    fun getSource(): Char
+
     /**
      * Returns the data validity status.
      *
      * @return DataStatus
      */
-    /**
-     * Sets the data validity status.
-     *
-     * @param status DataStatus to set.
-     */
-    var status: DataStatus
+    fun getStatus(): DataStatus?
 
     /**
      * Tells if the data source is engine.
      *
      * @return True if engine, otherwise false.
      */
-    val isEngine: Boolean
+    fun isEngine(): Boolean
 
     /**
      * Tells if the data source is shaft.
      *
      * @return True for shaft, otherwise false.
      */
-    val isShaft: Boolean
+    fun isShaft(): Boolean
+
+    /**
+     * Sets the engine or shaft number/id.
+     *
+     * @param id ID to set.
+     */
+    fun setId(id: Int)
+
+    /**
+     * Sets the propeller pitch, % of maximum.
+     *
+     * @param pitch Pitch value to set, negative values denote astern.
+     */
+    fun setPitch(pitch: Double)
+
+    /**
+     * Sets the revolutions value.
+     *
+     * @param rpm Revolutions per minute.
+     */
+    fun setRPM(rpm: Double)
+
+    /**
+     * Sets the source indicator, engine or shaft.
+     *
+     * @param source 'E' for engine or 'S' for shaft.
+     * @throws IllegalArgumentException If specified char is not 'E' or 'S'.
+     */
+    fun setSource(source: Char)
+
+    /**
+     * Sets the data validity status.
+     *
+     * @param status DataStatus to set.
+     */
+    fun setStatus(status: DataStatus?)
 
     companion object {
         /** Source indicator for engine  */

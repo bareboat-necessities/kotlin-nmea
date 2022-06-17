@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.*
+import net.sf.marineapi.nmea.util.DisplayRotation
+import net.sf.marineapi.nmea.util.Units
+
 
 /**
  * Radar system data<br></br>
@@ -32,6 +34,7 @@ import net.sf.marineapi.nmea.util.*
  * @author Joshua Sweaney
  */
 interface RSDSentence {
+
     /**
      * Get the range of the origin for VRM1 and EBL1.
      * @return double the range of Origin 1
@@ -40,11 +43,8 @@ interface RSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the range for origin one
-     * @param range the range
-     */
-    var originOneRange: Double
+    fun getOriginOneRange(): Double
+
     /**
      * Get the bearing of the origin for VRM1 and EBL1 (in degrees), from 0 degrees.
      * @return double the bearing of Origin 1
@@ -53,11 +53,8 @@ interface RSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the bearing for origin one
-     * @param bearing the bearing
-     */
-    var originOneBearing: Double
+    fun getOriginOneBearing(): Double
+
     /**
      * Get the range of variable range marker 1
      * @return double VRM 1 range
@@ -66,11 +63,8 @@ interface RSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the range of VRM one
-     * @param range the range
-     */
-    var vRMOneRange: Double
+    fun getVRMOneRange(): Double
+
     /**
      * Get the bearing of electronic bearing line 1, from 0 degrees
      * @return double EBL 1 bearing
@@ -79,11 +73,8 @@ interface RSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the bearing of EBL one
-     * @param bearing the bearing
-     */
-    var eBLOneBearing: Double
+    fun getEBLOneBearing(): Double
+
     /**
      * Get the range of the origin for VRM2 and EBL2.
      * @return double the range of Origin 2
@@ -92,11 +83,8 @@ interface RSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the range for origin two
-     * @param range the range
-     */
-    var originTwoRange: Double
+    fun getOriginTwoRange(): Double
+
     /**
      * Get the bearing of the origin for VRM2 and EBL2 (in degrees), from 0 degrees.
      * @return double the bearing of Origin 2
@@ -105,11 +93,8 @@ interface RSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the bearing for origin two
-     * @param bearing double the bearing
-     */
-    var originTwoBearing: Double
+    fun getOriginTwoBearing(): Double
+
     /**
      * Get the range of variable range marker 2
      * @return double VRM 2 range
@@ -118,11 +103,8 @@ interface RSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the range of VRM two
-     * @param range the range
-     */
-    var vRMTwoRange: Double
+    fun getVRMTwoRange(): Double
+
     /**
      * Get the bearing of electronic bearing line 2, from 0 degrees
      * @return double EBL 2 bearing
@@ -131,11 +113,8 @@ interface RSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the bearing of EBL two
-     * @param bearing the bearing
-     */
-    var eBLTwoBearing: Double
+    fun getEBLTwoBearing(): Double
+
     /**
      * Get current cursor position range
      * @return double current cursor range
@@ -144,11 +123,8 @@ interface RSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the cursor range
-     * @param range the range
-     */
-    var cursorRange: Double
+    fun getCursorRange(): Double
+
     /**
      * Get current cursor position bearing
      * @return double current cursor bearing
@@ -157,11 +133,8 @@ interface RSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the cursor bearing
-     * @param bearing the bearing
-     */
-    var cursorBearing: Double
+    fun getCursorBearing(): Double
+
     /**
      * Get the current selected range scale
      * @return double current range scale
@@ -170,11 +143,8 @@ interface RSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the range scale
-     * @param rangeScale the range scale
-     */
-    var rangeScale: Double
+    fun getRangeScale(): Double
+
     /**
      * Get the units used for range measurements in this sentence
      * @return Units the units used for the ranges (either kilometres, nautical miles, or statute miles)
@@ -183,11 +153,8 @@ interface RSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the range units
-     * @param units the units used for the ranges (either kilometres, nautical miles, or statute miles)
-     */
-    var rangeUnits: Units
+    fun getRangeUnits(): Units?
+
     /**
      * Get the selected display rotation of the radar system
      * @return DisplayRotation the display rotation
@@ -196,9 +163,83 @@ interface RSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
+    fun getDisplayRotation(): DisplayRotation?
+
+    /**
+     * Set the range for origin one
+     * @param range the range
+     */
+    fun setOriginOneRange(range: Double)
+
+    /**
+     * Set the bearing for origin one
+     * @param bearing the bearing
+     */
+    fun setOriginOneBearing(bearing: Double)
+
+    /**
+     * Set the range of VRM one
+     * @param range the range
+     */
+    fun setVRMOneRange(range: Double)
+
+    /**
+     * Set the bearing of EBL one
+     * @param bearing the bearing
+     */
+    fun setEBLOneBearing(bearing: Double)
+
+    /**
+     * Set the range for origin two
+     * @param range the range
+     */
+    fun setOriginTwoRange(range: Double)
+
+    /**
+     * Set the bearing for origin two
+     * @param bearing double the bearing
+     */
+    fun setOriginTwoBearing(bearing: Double)
+
+    /**
+     * Set the range of VRM two
+     * @param range the range
+     */
+    fun setVRMTwoRange(range: Double)
+
+    /**
+     * Set the bearing of EBL two
+     * @param bearing the bearing
+     */
+    fun setEBLTwoBearing(bearing: Double)
+
+    /**
+     * Set the cursor range
+     * @param range the range
+     */
+    fun setCursorRange(range: Double)
+
+    /**
+     * Set the cursor bearing
+     * @param bearing the bearing
+     */
+    fun setCursorBearing(bearing: Double)
+
+    /**
+     * Set the range scale
+     * @param rangeScale the range scale
+     */
+    fun setRangeScale(rangeScale: Double)
+
+    /**
+     * Set the range units
+     * @param units the units used for the ranges (either kilometres, nautical miles, or statute miles)
+     */
+    fun setRangeUnits(units: Units?)
+
     /**
      * Set the display rotation
      * @param rotation the display rotation
      */
-    var displayRotation: DisplayRotation
+    fun setDisplayRotation(rotation: DisplayRotation?)
 }
