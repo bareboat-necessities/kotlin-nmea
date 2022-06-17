@@ -23,6 +23,7 @@ package net.sf.marineapi.nmea.sentence
 import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.FaaMode
 
+
 /**
  * Current geographic position and time.
  *
@@ -42,6 +43,8 @@ interface GLLSentence : PositionSentence, TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
+    fun getStatus(): DataStatus?
+
     /**
      * Set the data quality status, valid or invalid.
      *
@@ -51,7 +54,7 @@ interface GLLSentence : PositionSentence, TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    var status: DataStatus
+    fun setStatus(status: DataStatus?)
 
     /**
      * Get the FAA operating mode for GPS. Notice that this field is available in NMEA v3.0 and later.
@@ -70,5 +73,5 @@ interface GLLSentence : PositionSentence, TimeSentence {
      *
      * @param mode FaaMode enum to set
      */
-    fun setMode(mode: FaaMode)
+    fun setMode(mode: FaaMode?)
 }

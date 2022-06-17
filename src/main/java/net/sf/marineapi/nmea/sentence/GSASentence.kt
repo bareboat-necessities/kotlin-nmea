@@ -23,6 +23,7 @@ package net.sf.marineapi.nmea.sentence
 import net.sf.marineapi.nmea.util.FaaMode
 import net.sf.marineapi.nmea.util.GpsFixStatus
 
+
 /**
  * Precision of GPS fix and list of active satellites. Dilution of precision
  * (DOP) is an indication of the effect of satellite geometry on the accuracy of
@@ -44,12 +45,8 @@ interface GSASentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the GPS fix mode; 2D, 3D or no fix.
-     *
-     * @param status Status to set
-     */
-    var fixStatus: GpsFixStatus
+    fun getFixStatus(): GpsFixStatus?
+
     /**
      * Get the horizontal dilution Of precision (HDOP).
      *
@@ -59,12 +56,8 @@ interface GSASentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the horizontal dilution of precision (HDOP).
-     *
-     * @param hdop Precision value to set
-     */
-    var horizontalDOP: Double
+    fun getHorizontalDOP(): Double
+
     /**
      * Get the FAA operation mode of GPS.
      *
@@ -74,12 +67,8 @@ interface GSASentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the FAA operation mode of GPS.
-     *
-     * @param mode Mode to set
-     */
-    var mode: FaaMode
+    fun getMode(): FaaMode?
+
     /**
      * Get the dilution of precision (PDOP) for position.
      *
@@ -89,12 +78,8 @@ interface GSASentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the dilution of precision for position.
-     *
-     * @param pdop Precision value to set
-     */
-    var positionDOP: Double
+    fun getPositionDOP(): Double
+
     /**
      * Get list of satellites used for acquiring the GPS fix.
      *
@@ -104,12 +89,8 @@ interface GSASentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set list of satellites used for acquiring the GPS fix.
-     *
-     * @param ids List of satellite IDs, maximum length of array is 12.
-     */
-    var satelliteIds: Array<String?>
+    fun getSatelliteIds(): Array<String?>?
+
     /**
      * Get the vertical dilution of precision (VDOP).
      *
@@ -119,10 +100,47 @@ interface GSASentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
+    fun getVerticalDOP(): Double
+
+    /**
+     * Set the GPS fix mode; 2D, 3D or no fix.
+     *
+     * @param status Status to set
+     */
+    fun setFixStatus(status: GpsFixStatus?)
+
+    /**
+     * Set the horizontal dilution of precision (HDOP).
+     *
+     * @param hdop Precision value to set
+     */
+    fun setHorizontalDOP(hdop: Double)
+
+    /**
+     * Set the FAA operation mode of GPS.
+     *
+     * @param mode Mode to set
+     */
+    fun setMode(mode: FaaMode?)
+
+    /**
+     * Set the dilution of precision for position.
+     *
+     * @param pdop Precision value to set
+     */
+    fun setPositionDOP(pdop: Double)
+
+    /**
+     * Set list of satellites used for acquiring the GPS fix.
+     *
+     * @param ids List of satellite IDs, maximum length of array is 12.
+     */
+    fun setSatelliteIds(ids: Array<String?>?)
+
     /**
      * Set the vertical dilution of precision (VDOP).
      *
      * @param vdop Precision value to set
      */
-    var verticalDOP: Double
+    fun setVerticalDOP(vdop: Double)
 }

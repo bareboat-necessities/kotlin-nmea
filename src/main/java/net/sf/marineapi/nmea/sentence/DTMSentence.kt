@@ -36,62 +36,77 @@ interface DTMSentence : Sentence {
      *
      * @return Altitude offset, in meters.
      */
-    val altitudeOffset: Double
+    fun getAltitudeOffset(): Double
+
     /**
      * Returns the local datum code.
      *
      * @return Datum code
      */
-    /**
-     * Sets the local datum code.
-     *
-     * @param code Code to set
-     */
-    var datumCode: String?
+    fun getDatumCode(): String?
+
     /**
      * Returns the local datum subcode, may be blank.
      *
      * @return Datum subcode
      */
-    /**
-     * Sets the local datum code, may be blank.
-     *
-     * @param code Code to set
-     */
-    var datumSubCode: String?
+    fun getDatumSubCode(): String?
+
     /**
      * Returns the latitude offset. Positive values depict northern offset,
      * negative for southern.
      *
      * @return Offset value in minutes.
      */
+    fun getLatitudeOffset(): Double
+
+    /**
+     * Returns the longitude offset. Positive values for east, negative west.
+     *
+     * @return Longitude offset in minutes.
+     */
+    fun getLongitudeOffset(): Double
+
+    /**
+     * Returns the datum name, e.g. "W84" for WGS84 used by GPS.
+     *
+     * @return Datum name
+     */
+    fun getName(): String?
+
+    /**
+     * Sets the local datum code.
+     *
+     * @param code Code to set
+     */
+    fun setDatumCode(code: String?)
+
+    /**
+     * Sets the local datum code, may be blank.
+     *
+     * @param code Code to set
+     */
+    fun setDatumSubCode(code: String?)
+
     /**
      * Sets the latitude offset. Positive values depict northern offset,
      * negative for southern.
      *
      * @param offset Latitude offset in minutes.
      */
-    var latitudeOffset: Double
-    /**
-     * Returns the longitude offset. Positive values for east, negative west.
-     *
-     * @return Longitude offset in minutes.
-     */
+    fun setLatitudeOffset(offset: Double)
+
     /**
      * Sets the longitude offset. Positive values for east, negative west.
      *
      * @param offset Longitude offset in minutes.
      */
-    var longitudeOffset: Double
-    /**
-     * Returns the datum name, e.g. "W84" for WGS84 used by GPS.
-     *
-     * @return Datum name
-     */
+    fun setLongitudeOffset(offset: Double)
+
     /**
      * Sets the datum name.
      *
      * @param name Name to set.
      */
-    var name: String?
+    fun setName(name: String?)
 }

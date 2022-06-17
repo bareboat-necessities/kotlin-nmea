@@ -40,12 +40,8 @@ interface GSTSentence : TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Sets the RMS value of the pseudorange residuals.
-     *
-     * @param rms RMS value of the pseudorange residuals
-     */
-    var pseudoRangeResidualsRMS: Double
+    fun getPseudoRangeResidualsRMS(): Double
+
     /**
      * Get standard deviation (meters) of semi-major axis of error ellipse.
      *
@@ -55,12 +51,8 @@ interface GSTSentence : TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Sets the standard deviation (meters) of semi-major axis of error ellipse.
-     *
-     * @param error semi-major error ellipse error
-     */
-    var semiMajorError: Double
+    fun getSemiMajorError(): Double
+
     /**
      * Get standard deviation (meters) of semi-minor axis of error ellipse.
      *
@@ -70,12 +62,8 @@ interface GSTSentence : TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Sets the standard deviation (meters) of semi-minor axis of error ellipse.
-     *
-     * @param error semi-minor error ellipse error
-     */
-    var semiMinorError: Double
+    fun getSemiMinorError(): Double
+
     /**
      * Get error ellipse orientation, degrees from true north
      *
@@ -85,12 +73,8 @@ interface GSTSentence : TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Sets the error ellipse orientation, degrees from true north.
-     *
-     * @param orientation error ellipse orientation
-     */
-    var errorEllipseOrientation: Double
+    fun getErrorEllipseOrientation(): Double
+
     /**
      * Get standard deviation (meters) of latitude error.
      *
@@ -100,12 +84,8 @@ interface GSTSentence : TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Sets the standard deviation (meters) of latitude error.
-     *
-     * @param error latitude 1 sigma error
-     */
-    var latitudeError: Double
+    fun getLatitudeError(): Double
+
     /**
      * Get standard deviation (meters) of longitude error.
      *
@@ -115,12 +95,8 @@ interface GSTSentence : TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Sets the standard deviation (meters) of longitude error.
-     *
-     * @param error longitude 1 sigma error
-     */
-    var longitudeError: Double
+    fun getLongitudeError(): Double
+
     /**
      * Get standard deviation (meters) of altitude error.
      *
@@ -130,10 +106,55 @@ interface GSTSentence : TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
+    fun getAltitudeError(): Double
+
+
+    /**
+     * Sets the RMS value of the pseudorange residuals.
+     *
+     * @param rms RMS value of the pseudorange residuals
+     */
+    fun setPseudoRangeResidualsRMS(rms: Double)
+
+    /**
+     * Sets the standard deviation (meters) of semi-major axis of error ellipse.
+     *
+     * @param error semi-major error ellipse error
+     */
+    fun setSemiMajorError(error: Double)
+
+    /**
+     * Sets the standard deviation (meters) of semi-minor axis of error ellipse.
+     *
+     * @param error semi-minor error ellipse error
+     */
+    fun setSemiMinorError(error: Double)
+
+    /**
+     * Sets the error ellipse orientation, degrees from true north.
+     *
+     * @param orientation error ellipse orientation
+     */
+    fun setErrorEllipseOrientation(orientation: Double)
+
+    /**
+     * Sets the standard deviation (meters) of latitude error.
+     *
+     * @param error latitude 1 sigma error
+     */
+    fun setLatitudeError(error: Double)
+
+    /**
+     * Sets the standard deviation (meters) of longitude error.
+     *
+     * @param error longitude 1 sigma error
+     */
+    fun setLongitudeError(error: Double)
+
     /**
      * Sets the standard deviation (meters) of altitude error.
      *
      * @param error height 1 sigma error
      */
-    var altitudeError: Double
+    fun setAltitudeError(error: Double)
 }

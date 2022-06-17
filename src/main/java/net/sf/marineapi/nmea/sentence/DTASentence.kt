@@ -20,7 +20,7 @@
  */
 package net.sf.marineapi.nmea.sentence
 
-import java.util.Date
+import java.util.*
 
 /**
  *
@@ -38,51 +38,52 @@ import java.util.Date
  * @see DTBSentence
  */
 interface DTASentence : Sentence {
+
     /**
      * Gets the optional channel number (GasFinderMC only).
      * @return Channel number 1 - 8.
      */
-    val channelNumber: Int
+    fun getChannelNumber(): Int
 
     /**
      * Gets the max eight-digit Gas Concentration.
      * @return Gas Concentration in ppmm (parts per million meter)
      */
-    val gasConcentration: Double
+    fun getGasConcentration(): Double
 
     /**
      * Gets the two-digit Confidence Factor.
      * @return Confidence Factor as number between 0 - 99.
      */
-    val confidenceFactorR2: Int
+    fun getConfidenceFactorR2(): Int
 
     /**
      * Gets the max four-digit distance to retro.
      * @return distance in meters (GasFinder2) or meters x 10 (GasFinderMC).
      */
-    val distance: Double
+    fun getDistance(): Double
 
     /**
      * Gets the max five-digit Light Level.
      * @return Light Level as integer.
      */
-    val lightLevel: Int
+    fun getLightLevel(): Int
 
     /**
      * Gets the max nineteen-digit current date/time.
      * @return date/time as YYYY/MM/DD hh:mm:ss.
      */
-    val dateTime: Date
+    fun getDateTime(): Date?
 
     /**
      * Gets the max ten-char. device serial number.
      * @return Serial Number id
      */
-    val serialNumber: String?
+    fun getSerialNumber(): String?
 
     /**
      * Gets the max 4-digit status code.
      * @return Status Code as number in range: 1 - 0xFFFF
      */
-    val statusCode: Int
+    fun getStatusCode(): Int
 }

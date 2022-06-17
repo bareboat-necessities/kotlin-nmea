@@ -103,35 +103,35 @@ interface GNSSentence : PositionSentence, TimeSentence {
      *
      * @return GPS operational mode
      */
-    fun getGpsMode(): Mode
+    fun getGpsMode(): Mode?
 
     /**
      * Sets the current GPS mode.
      *
      * @param gps GPS operational mode to set.
      */
-    fun setGpsMode(gps: Mode)
+    fun setGpsMode(gps: Mode?)
 
     /**
      * Gets the current GLONASS mode.
      *
      * @return GLONASS operational mode
      */
-    fun getGlonassMode(): Mode
+    fun getGlonassMode(): Mode?
 
     /**
      * Sets the current GLONASS mode.
      *
      * @param gns GLONASS operational mode to set.
      */
-    fun setGlonassMode(gns: Mode)
+    fun setGlonassMode(gns: Mode?)
 
     /**
      * Returns all additional operation modes, excluding GPS and GLONASS.
      *
      * @return Array of additional modes or empty array if no modes are set.
      */
-    fun getAdditionalModes(): Array<Mode?>
+    fun getAdditionalModes(): Array<Mode?>?
 
     /**
      * Sets the additional operational modes, leaving GPS and GLONASS modes unaffected
@@ -139,43 +139,53 @@ interface GNSSentence : PositionSentence, TimeSentence {
      *
      * @param modes Array of additional modes to set
      */
-    fun setAdditionalModes(vararg modes: Mode)
+    fun setAdditionalModes(vararg modes: Mode?)
+
     /**
      * Get the number of active satellites in use for currect fix.
      *
      * @return Number of satellites 0..99
      */
+    fun getSatelliteCount(): Int
+
     /**
      * Sets the number of satellites used for current fix.
      *
      * @param count Number of satellites to set
      * @throws IllegalArgumentException If given count is out of bounds 0..99
      */
-    var satelliteCount: Int
+    fun setSatelliteCount(count: Int)
+
     /**
      * Returns the Horizontal Dilution Of Precision, calculated using all available
      * satellites (GPS, GLONASS and any future satellites).
      *
      * @return HDOP value
      */
+    fun getHorizontalDOP(): Double
+
     /**
      * Sets the Horizontal Dilution Of Precision value, calculated using all available
      * satellites (GPS, GLONASS and any future satellites).
      *
      * @param hdop HDOP value to set
      */
-    var horizontalDOP: Double
+    fun setHorizontalDOP(hdop: Double)
+
     /**
      * Returns the orthometric height (MSL reference).
      *
      * @return Height in meters
      */
+    fun getOrthometricHeight(): Double
+
     /**
      * Sets the orthometric height (MSL reference).
      *
      * @param height Height to set, in meters.
      */
-    var orthometricHeight: Double
+    fun setOrthometricHeight(height: Double)
+
     /**
      * Returns geoidal separation, the difference between the earth ellipsoid surface
      * and mean-sea-level (geoid) surface defined by the reference datum used in the
@@ -183,6 +193,8 @@ interface GNSSentence : PositionSentence, TimeSentence {
      *
      * @return Geoidal separation in meters.
      */
+    fun getGeoidalSeparation(): Double
+
     /**
      * Returns geoidal separation, the difference between the earth ellipsoid surface
      * and mean-sea-level (geoid) surface defined by the reference datum used in the
@@ -190,7 +202,8 @@ interface GNSSentence : PositionSentence, TimeSentence {
      *
      * @param separation Geoidal separation in meters.
      */
-    var geoidalSeparation: Double
+    fun setGeoidalSeparation(separation: Double)
+
     /**
      * Returns the age of differential GPS data.
      *
@@ -200,6 +213,8 @@ interface GNSSentence : PositionSentence, TimeSentence {
      *
      * @return Age of differential data.
      */
+    fun getDgpsAge(): Double
+
     /**
      * Sets the age of differential GPS data.
      *
@@ -209,16 +224,19 @@ interface GNSSentence : PositionSentence, TimeSentence {
      *
      * @param age Age to set, negative values will reset the field empty.
      */
-    var dgpsAge: Double
+    fun setDgpsAge(age: Double)
+
     /**
      * Returns the differential reference station ID.
      *
      * @return Station ID, 0000..4095
      */
+    fun getDgpsStationId(): String?
+
     /**
      * Sets the differential reference station ID.
      *
      * @param id Station ID to set, 0-4095
      */
-    var dgpsStationId: String?
+    fun setDgpsStationId(id: String?)
 }

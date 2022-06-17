@@ -22,6 +22,7 @@ package net.sf.marineapi.nmea.sentence
 
 import net.sf.marineapi.nmea.util.SatelliteInfo
 
+
 /**
  * Detailed GPS satellite data; satellites in view, satellite elevation, azimuth
  * and signal noise ratio (SNR). GSV sentences are transmitted typically in
@@ -43,44 +44,28 @@ interface GSVSentence : Sentence {
      *
      * @return Satellite count
      */
-    /**
-     * Set the number of satellites in view.
-     *
-     * @param count Satellite count
-     * @throws IllegalArgumentException If specified number is negative
-     */
-    var satelliteCount: Int
+    fun getSatelliteCount(): Int
 
     /**
      * Get the satellites information.
      *
      * @return List of SatelliteInfo objects.
      */
-    fun getSatelliteInfo(): List<SatelliteInfo>
+    fun getSatelliteInfo(): List<SatelliteInfo?>?
+
     /**
      * Get the total number of sentences in GSV sequence.
      *
      * @return Number of sentences
      */
-    /**
-     * Set the total number of sentences in GSV sequence.
-     *
-     * @param count Number of sentences
-     * @throws IllegalArgumentException If specified count is negative
-     */
-    var sentenceCount: Int
+    fun getSentenceCount(): Int
+
     /**
      * Get the index of this sentence in GSV sequence.
      *
      * @return Sentence index
      */
-    /**
-     * Set the index of this sentence in GSV sequence.
-     *
-     * @param index Sentence index to set
-     * @throws IllegalArgumentException If specified index is negative
-     */
-    var sentenceIndex: Int
+    fun getSentenceIndex(): Int
 
     /**
      * Tells if this is the first sentence in GSV sequence.
@@ -89,7 +74,7 @@ interface GSVSentence : Sentence {
      * @see .getSentenceCount
      * @see .getSentenceIndex
      */
-    val isFirst: Boolean
+    fun isFirst(): Boolean
 
     /**
      * Tells if this is the last sentence in GSV sequence. This is a convenience
@@ -99,7 +84,15 @@ interface GSVSentence : Sentence {
      *
      * @return `true` if first, otherwise `false`.
      */
-    val isLast: Boolean
+    fun isLast(): Boolean
+
+    /**
+     * Set the number of satellites in view.
+     *
+     * @param count Satellite count
+     * @throws IllegalArgumentException If specified number is negative
+     */
+    fun setSatelliteCount(count: Int)
 
     /**
      * Set the satellite information.
@@ -108,5 +101,21 @@ interface GSVSentence : Sentence {
      * @throws IllegalArgumentException If specified list size is greater that
      * maximum allowed number of satellites per sentence (4).
      */
-    fun setSatelliteInfo(info: List<SatelliteInfo>)
+    fun setSatelliteInfo(info: List<SatelliteInfo?>?)
+
+    /**
+     * Set the total number of sentences in GSV sequence.
+     *
+     * @param count Number of sentences
+     * @throws IllegalArgumentException If specified count is negative
+     */
+    fun setSentenceCount(count: Int)
+
+    /**
+     * Set the index of this sentence in GSV sequence.
+     *
+     * @param index Sentence index to set
+     * @throws IllegalArgumentException If specified index is negative
+     */
+    fun setSentenceIndex(index: Int)
 }

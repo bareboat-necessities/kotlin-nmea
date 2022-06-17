@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.*
+import net.sf.marineapi.nmea.util.GpsFixQuality
+import net.sf.marineapi.nmea.util.Units
+
 
 /**
  * Global Positioning System fix data. Current position, time and other fix
@@ -42,12 +44,8 @@ interface GGASentence : PositionSentence, TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the antenna altitude.
-     *
-     * @param alt Altitude to set
-     */
-    var altitude: Double
+    fun getAltitude(): Double
+
     /**
      * Gets the altitude units, meters or feet.
      *
@@ -57,12 +55,8 @@ interface GGASentence : PositionSentence, TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Sets the unit of altitude.
-     *
-     * @param unit Units to set
-     */
-    var altitudeUnits: Units
+    fun getAltitudeUnits(): Units?
+
     /**
      * Gets the age of differential GPS data (DGPS).
      *
@@ -72,12 +66,8 @@ interface GGASentence : PositionSentence, TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Sets the age of differential GPS data (DGPS).
-     *
-     * @param age Seconds since last valid RTCM transmission to set.
-     */
-    var dgpsAge: Double
+    fun getDgpsAge(): Double
+
     /**
      * Gets the ID of DGPS station.
      *
@@ -87,12 +77,8 @@ interface GGASentence : PositionSentence, TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Sets the ID of DGPS station.
-     *
-     * @param id Station ID to set
-     */
-    var dgpsStationId: String?
+    fun getDgpsStationId(): String?
+
     /**
      * Get the GPS fix quality.
      *
@@ -102,12 +88,8 @@ interface GGASentence : PositionSentence, TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Sets the GPS fix quality.
-     *
-     * @param quality Fix quality to set
-     */
-    var fixQuality: GpsFixQuality
+    fun getFixQuality(): GpsFixQuality?
+
     /**
      * Get height/separation of geoid above WGS84 ellipsoid, i.e. difference
      * between WGS-84 earth ellipsoid and mean sea level. Negative values are
@@ -119,14 +101,8 @@ interface GGASentence : PositionSentence, TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set height/separation of geoid above WGS84 ellipsoid, i.e. difference
-     * between WGS-84 earth ellipsoid and mean sea level. Negative values are
-     * below WGS-84 ellipsoid.
-     *
-     * @param height Height value to set
-     */
-    var geoidalHeight: Double
+    fun getGeoidalHeight(): Double
+
     /**
      * Get units of height above geoid.
      *
@@ -136,12 +112,8 @@ interface GGASentence : PositionSentence, TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Get unit of height above geoid.
-     *
-     * @param unit Unit to set
-     */
-    var geoidalHeightUnits: Units
+    fun getGeoidalHeightUnits(): Units?
+
     /**
      * Get the horizontal dilution of precision (HDOP), i.e. the relative
      * accuracy of horizontal position.
@@ -152,13 +124,8 @@ interface GGASentence : PositionSentence, TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the horizontal dilution of precision (HDOP), i.e. the relative
-     * accuracy of horizontal position.
-     *
-     * @param hdop Horizontal dilution
-     */
-    var horizontalDOP: Double
+    fun getHorizontalDOP(): Double
+
     /**
      * Get the number of active satellites in use.
      *
@@ -168,13 +135,74 @@ interface GGASentence : PositionSentence, TimeSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
+    fun getSatelliteCount(): Int
+
+    /**
+     * Set the antenna altitude.
+     *
+     * @param alt Altitude to set
+     */
+    fun setAltitude(alt: Double)
+
+    /**
+     * Sets the unit of altitude.
+     *
+     * @param unit Units to set
+     */
+    fun setAltitudeUnits(unit: Units?)
+
+    /**
+     * Sets the age of differential GPS data (DGPS).
+     *
+     * @param age Seconds since last valid RTCM transmission to set.
+     */
+    fun setDgpsAge(age: Double)
+
+    /**
+     * Sets the ID of DGPS station.
+     *
+     * @param id Station ID to set
+     */
+    fun setDgpsStationId(id: String?)
+
+    /**
+     * Sets the GPS fix quality.
+     *
+     * @param quality Fix quality to set
+     */
+    fun setFixQuality(quality: GpsFixQuality?)
+
+    /**
+     * Set height/separation of geoid above WGS84 ellipsoid, i.e. difference
+     * between WGS-84 earth ellipsoid and mean sea level. Negative values are
+     * below WGS-84 ellipsoid.
+     *
+     * @param height Height value to set
+     */
+    fun setGeoidalHeight(height: Double)
+
+    /**
+     * Get unit of height above geoid.
+     *
+     * @param unit Unit to set
+     */
+    fun setGeoidalHeightUnits(unit: Units?)
+
+    /**
+     * Set the horizontal dilution of precision (HDOP), i.e. the relative
+     * accuracy of horizontal position.
+     *
+     * @param hdop Horizontal dilution
+     */
+    fun setHorizontalDOP(hdop: Double)
+
     /**
      * Sets the number of active satellites in use.
      *
      * @param count Number of satellites to set.
      * @throws IllegalArgumentException If given count is negative.
      */
-    var satelliteCount: Int
+    fun setSatelliteCount(count: Int)
 
     companion object {
         /**
