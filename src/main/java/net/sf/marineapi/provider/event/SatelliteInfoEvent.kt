@@ -54,7 +54,7 @@ class SatelliteInfoEvent
      * @return Satellite ids list as reported by GSA sentence.
      */
     fun getSatelliteIds(): Array<String?>? {
-        return gsa.getSatelliteIds()
+        return gsa!!.getSatelliteIds()
     }
 
     /**
@@ -72,7 +72,7 @@ class SatelliteInfoEvent
      * @return HDOP value as reported by GSA sentence.
      */
     fun getHorizontalPrecision(): Double {
-        return gsa.getHorizontalDOP()
+        return gsa!!.getHorizontalDOP()
     }
 
     /**
@@ -81,7 +81,7 @@ class SatelliteInfoEvent
      * @return VDOP as reported by GSA sentence.
      */
     fun getVerticalPrecision(): Double {
-        return gsa.getVerticalDOP()
+        return gsa!!.getVerticalDOP()
     }
 
     /**
@@ -90,7 +90,7 @@ class SatelliteInfoEvent
      * @return PDOP as reported by GSA sentence.
      */
     fun getPositionPrecision(): Double {
-        return gsa.getPositionDOP()
+        return gsa!!.getPositionDOP()
     }
 
     /**
@@ -99,7 +99,7 @@ class SatelliteInfoEvent
      * @return FaaMode enum value
      */
     fun getGpsMode(): FaaMode? {
-        return gsa.getMode()
+        return gsa!!.getMode()
     }
 
     /**
@@ -108,7 +108,7 @@ class SatelliteInfoEvent
      * @return GpsFixStatus enum value
      */
     fun getGpsFixStatus(): GpsFixStatus? {
-        return gsa.getFixStatus()
+        return gsa!!.getFixStatus()
     }
 
     companion object {

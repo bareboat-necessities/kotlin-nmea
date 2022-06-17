@@ -47,11 +47,11 @@ class SatelliteInfoProvider
         var gsa: GSASentence? = null
         val info: MutableList<SatelliteInfo?> = ArrayList()
         for (sentence in getSentences()) {
-            if ("GSA" == sentence!!.sentenceId) {
+            if ("GSA" == sentence!!.getSentenceId()) {
                 gsa = sentence as GSASentence?
-            } else if ("GSV" == sentence.sentenceId) {
+            } else if ("GSV" == sentence.getSentenceId()) {
                 val gsv = sentence as GSVSentence
-                info.addAll(gsv.getSatelliteInfo())
+                info.addAll(gsv.getSatelliteInfo()!!)
             }
         }
         return SatelliteInfoEvent(this, gsa, info)
@@ -67,15 +67,15 @@ class SatelliteInfoProvider
         var hasAllGSV = false
         var count = 0
         for (s in getSentences()) {
-            if ("GSV" == s!!.sentenceId) {
+            if ("GSV" == s!!.getSentenceId()) {
                 val gsv = s as GSVSentence
                 if (!hasFirstGSV) {
-                    hasFirstGSV = gsv.isFirst
+                    hasFirstGSV = gsv.isFirst()
                 }
                 if (!hasLastGSV) {
-                    hasLastGSV = gsv.isLast
+                    hasLastGSV = gsv.isLast()
                 }
-                hasAllGSV = gsv.sentenceCount == ++count
+                hasAllGSV = gsv.getSentenceCount() == ++count
             }
         }
         return hasOne("GSA") && hasAllGSV && hasFirstGSV && hasLastGSV
