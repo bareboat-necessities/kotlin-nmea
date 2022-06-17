@@ -66,8 +66,8 @@ internal class GLLParser : PositionParser, GLLSentence {
         return DataStatus.valueOf(getCharValue(DATA_STATUS))
     }
 
-    override fun getMode(): FaaMode {
-        return if (fieldCount > MODE) {
+    override fun getMode(): FaaMode? {
+        return if (getFieldCount() > MODE) {
             FaaMode.valueOf(getCharValue(MODE))
         } else {
             null
@@ -101,15 +101,15 @@ internal class GLLParser : PositionParser, GLLSentence {
 	 * net.sf.marineapi.nmea.sentence.GLLSentence#setDataStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-    override fun setStatus(status: DataStatus) {
-        setCharValue(DATA_STATUS, status.toChar())
+    override fun setStatus(status: DataStatus?) {
+        setCharValue(DATA_STATUS, status!!.toChar())
     }
 
-    override fun setMode(mode: FaaMode) {
-        if (this.fieldCount <= MODE) {
-            this.fieldCount = 7
+    override fun setMode(mode: FaaMode?) {
+        if (this.getFieldCount() <= MODE) {
+            this.setFieldCount(7)
         }
-        setCharValue(MODE, mode.toChar())
+        setCharValue(MODE, mode!!.toChar())
     }
 
     /*
@@ -118,7 +118,7 @@ internal class GLLParser : PositionParser, GLLSentence {
 	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.
 	 * nmea.util.Time)
 	 */
-    override fun setTime(t: Time) {
+    override fun setTime(t: Time?) {
         setStringValue(UTC_TIME, t.toString())
     }
 

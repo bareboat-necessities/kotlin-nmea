@@ -83,14 +83,14 @@ internal class GSAParser : SentenceParser, GSASentence {
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GSASentence#getSatelliteIds()
 	 */
-    override fun getSatelliteIds(): Array<String> {
+    override fun getSatelliteIds(): Array<String?> {
         val result: MutableList<String?> = ArrayList()
         for (i in FIRST_SV..LAST_SV) {
             if (hasValue(i)) {
                 result.add(getStringValue(i))
             }
         }
-        return result.toTypedArray<String>()
+        return result.toTypedArray()
     }
 
     /*
@@ -107,8 +107,8 @@ internal class GSAParser : SentenceParser, GSASentence {
 	 * net.sf.marineapi.nmea.sentence.GSASentence#setFixStatus(net.sf.marineapi
 	 * .nmea.util.GpsFixStatus)
 	 */
-    override fun setFixStatus(status: GpsFixStatus) {
-        setIntValue(FIX_MODE, status.toInt())
+    override fun setFixStatus(status: GpsFixStatus?) {
+        setIntValue(FIX_MODE, status!!.toInt())
     }
 
     /*
@@ -126,8 +126,8 @@ internal class GSAParser : SentenceParser, GSASentence {
 	 * net.sf.marineapi.nmea.sentence.GSASentence#setFaaMode(net.sf.marineapi
 	 * .nmea.util.FaaMode)
 	 */
-    override fun setMode(mode: FaaMode) {
-        setCharValue(GPS_MODE, mode.toChar())
+    override fun setMode(mode: FaaMode?) {
+        setCharValue(GPS_MODE, mode!!.toChar())
     }
 
     /*
@@ -144,8 +144,8 @@ internal class GSAParser : SentenceParser, GSASentence {
 	 * net.sf.marineapi.nmea.sentence.GSASentence#setSatelliteIds(java.lang.
 	 * String[])
 	 */
-    override fun setSatelliteIds(ids: Array<String>) {
-        require(!(ids.size > LAST_SV - FIRST_SV + 1)) { "List length exceeded (12)" }
+    override fun setSatelliteIds(ids: Array<String?>?) {
+        require(!(ids!!.size > LAST_SV - FIRST_SV + 1)) { "List length exceeded (12)" }
         var j = 0
         for (i in FIRST_SV..LAST_SV) {
             val id = if (j < ids.size) ids[j++] else ""

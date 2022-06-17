@@ -127,16 +127,16 @@ internal class GSVParser : SentenceParser, GSVSentence {
      * net.sf.marineapi.nmea.sentence.GSVSentence#setSatelliteInfo(java.util
      * .List)
      */
-    override fun setSatelliteInfo(info: List<SatelliteInfo>?) {
+    override fun setSatelliteInfo(info: List<SatelliteInfo?>?) {
         require(info!!.size <= 4) { "Maximum list size is 4" }
         var i = 0
         for (id in ID_FIELDS) {
             if (i < info.size) {
                 val si = info[i++]
-                setStringValue(id, si.id)
-                setIntValue(id + ELEVATION, si.elevation)
-                setIntValue(id + AZIMUTH, si.azimuth, 3)
-                setIntValue(id + NOISE, si.noise)
+                setStringValue(id, si!!.id)
+                setIntValue(id + ELEVATION, si.getElevation())
+                setIntValue(id + AZIMUTH, si.getAzimuth(), 3)
+                setIntValue(id + NOISE, si.getNoise())
             } else {
                 setStringValue(id, "")
                 setStringValue(id + ELEVATION, "")

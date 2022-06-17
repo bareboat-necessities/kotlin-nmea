@@ -128,9 +128,9 @@ internal class GGAParser : PositionParser, GGASentence {
             LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE
         )
         if (hasValue(ALTITUDE) && hasValue(ALTITUDE_UNITS)) {
-            var alt = altitude
-            if (altitudeUnits == Units.FEET) {
-                alt = alt / 0.3048
+            var alt = getAltitude()
+            if (getAltitudeUnits() == Units.FEET) {
+                alt /= 0.3048
             }
             pos!!.altitude = alt
         }
@@ -168,8 +168,8 @@ internal class GGAParser : PositionParser, GGASentence {
 	 * net.sf.marineapi.nmea.sentence.GGASentence#setAltitudeUnits(net.sf.marineapi
 	 * .nmea.util.Units)
 	 */
-    override fun setAltitudeUnits(unit: Units) {
-        setCharValue(ALTITUDE_UNITS, unit.toChar())
+    override fun setAltitudeUnits(unit: Units?) {
+        setCharValue(ALTITUDE_UNITS, unit!!.toChar())
     }
 
     /*
@@ -186,7 +186,7 @@ internal class GGAParser : PositionParser, GGASentence {
 	 * net.sf.marineapi.nmea.sentence.GGASentence#setDgpsStationId(java.lang
 	 * .String)
 	 */
-    override fun setDgpsStationId(id: String) {
+    override fun setDgpsStationId(id: String?) {
         setStringValue(DGPS_STATION_ID, id)
     }
 
@@ -196,8 +196,8 @@ internal class GGAParser : PositionParser, GGASentence {
 	 * net.sf.marineapi.nmea.sentence.GGASentence#setFixQuality(net.sf.marineapi
 	 * .nmea.util.GpsFixQuality)
 	 */
-    override fun setFixQuality(quality: GpsFixQuality) {
-        setIntValue(FIX_QUALITY, quality.toInt())
+    override fun setFixQuality(quality: GpsFixQuality?) {
+        setIntValue(FIX_QUALITY, quality!!.toInt())
     }
 
     /*
@@ -214,8 +214,8 @@ internal class GGAParser : PositionParser, GGASentence {
 	 * net.sf.marineapi.nmea.sentence.GGASentence#setGeoidalHeightUnits(net.
 	 * sf.marineapi.nmea.util.Units)
 	 */
-    override fun setGeoidalHeightUnits(unit: Units) {
-        setCharValue(HEIGHT_UNITS, unit.toChar())
+    override fun setGeoidalHeightUnits(unit: Units?) {
+        setCharValue(HEIGHT_UNITS, unit!!.toChar())
     }
 
     /*
@@ -236,8 +236,8 @@ internal class GGAParser : PositionParser, GGASentence {
         setPositionValues(
             pos, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE
         )
-        altitude = pos.altitude
-        altitudeUnits = Units.METER
+        setAltitude(pos.altitude)
+        setAltitudeUnits(Units.METER)
     }
 
     /*
@@ -255,7 +255,7 @@ internal class GGAParser : PositionParser, GGASentence {
 	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.
 	 * nmea.util.Time)
 	 */
-    override fun setTime(t: Time) {
+    override fun setTime(t: Time?) {
         setStringValue(UTC_TIME, t.toString())
     }
 

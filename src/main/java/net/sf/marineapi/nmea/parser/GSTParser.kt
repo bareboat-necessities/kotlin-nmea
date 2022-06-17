@@ -117,7 +117,7 @@ internal class GSTParser : SentenceParser, GSTSentence {
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.nmea.util.Time)
 	 */
-    override fun setTime(t: Time) {
+    override fun setTime(t: Time?) {
         setStringValue(UTC_TIME, t.toString())
     }
 

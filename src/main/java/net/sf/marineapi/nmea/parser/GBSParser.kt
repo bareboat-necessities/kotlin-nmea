@@ -75,7 +75,7 @@ internal class GBSParser : SentenceParser, GBSSentence {
         return getStringValue(SATELLITE_ID)
     }
 
-    override fun setSatelliteId(id: String) {
+    override fun setSatelliteId(id: String?) {
         setStringValue(SATELLITE_ID, id)
     }
 
@@ -107,7 +107,7 @@ internal class GBSParser : SentenceParser, GBSSentence {
         return Time(getStringValue(UTC))
     }
 
-    override fun setTime(t: Time) {
+    override fun setTime(t: Time?) {
         setStringValue(UTC, t.toString())
     }
 
