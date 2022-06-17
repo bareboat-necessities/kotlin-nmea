@@ -52,11 +52,11 @@ internal class ZDAParser : SentenceParser, ZDASentence {
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DateSentence#getDate()
 	 */
-    override fun getDate(): net.sf.marineapi.nmea.util.Date {
+    override fun getDate(): Date {
         val y = getIntValue(YEAR)
         val m = getIntValue(MONTH)
         val d = getIntValue(DAY)
-        return net.sf.marineapi.nmea.util.Date(y, m, d)
+        return Date(y, m, d)
     }
 
     /*
@@ -95,8 +95,8 @@ internal class ZDAParser : SentenceParser, ZDASentence {
 	 * net.sf.marineapi.nmea.sentence.DateSentence#setDate(net.sf.marineapi.
 	 * nmea.util.Date)
 	 */
-    override fun setDate(date: Date) {
-        setIntValue(YEAR, date.year)
+    override fun setDate(date: Date?) {
+        setIntValue(YEAR, date!!.year)
         setIntValue(MONTH, date.month, 2)
         setIntValue(DAY, date.day, 2)
     }
@@ -125,7 +125,7 @@ internal class ZDAParser : SentenceParser, ZDASentence {
 	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.
 	 * nmea.util.Time)
 	 */
-    override fun setTime(t: Time) {
+    override fun setTime(t: Time?) {
         setStringValue(UTC_TIME, t.toString())
     }
 
@@ -135,10 +135,10 @@ internal class ZDAParser : SentenceParser, ZDASentence {
 	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTimeAndLocalZone(net.sf.marineapi.
 	 * nmea.util.Time)
 	 */
-    override fun setTimeAndLocalZone(t: Time) {
-        time = t
-        localZoneHours = t.offsetHours
-        localZoneMinutes = t.offsetMinutes
+    override fun setTimeAndLocalZone(t: Time?) {
+        setTime(t)
+        setLocalZoneHours(t!!.offsetHours)
+        setLocalZoneMinutes(t.offsetMinutes)
     }
 
     /*
@@ -146,9 +146,9 @@ internal class ZDAParser : SentenceParser, ZDASentence {
 	 * @see net.sf.marineapi.nmea.sentence.ZDASentence#toDate()
 	 */
     override fun toDate(): Date {
-        val d = date
-        val t = time
-        return t.toDate(d.toDate())
+        val d = getDate()
+        val t = getTime()
+        return t.toDate(d)
     }
 
     companion object {

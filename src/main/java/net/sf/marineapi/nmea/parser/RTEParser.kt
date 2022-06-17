@@ -52,8 +52,8 @@ internal class RTEParser : SentenceParser, RTESentence {
 	 * net.sf.marineapi.nmea.sentence.RTESentence#addWaypointId(java.lang.String
 	 * )
 	 */
-    override fun addWaypointId(id: String): Int {
-        val ids = waypointIds
+    override fun addWaypointId(id: String?): Int {
+        val ids = getWaypointIds()
         val newIds = arrayOfNulls<String>(ids.size + 1)
         System.arraycopy(ids, 0, newIds, 0, ids.size)
         newIds[newIds.size - 1] = id
@@ -90,23 +90,23 @@ internal class RTEParser : SentenceParser, RTESentence {
 	 * @see net.sf.marineapi.nmea.sentence.RTESentence#getWaypointCount()
 	 */
     override fun getWaypointCount(): Int {
-        return waypointIds.size
+        return getWaypointIds().size
     }
 
     /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RTESentence#getWaypointIds()
 	 */
-    override fun getWaypointIds(): Array<String> {
+    override fun getWaypointIds(): Array<String?> {
         val temp: MutableList<String?> = ArrayList()
-        for (i in FIRST_WPT until fieldCount) {
+        for (i in FIRST_WPT until getFieldCount()) {
             try {
                 temp.add(getStringValue(i))
             } catch (e: DataNotAvailableException) {
                 // nevermind empty fields
             }
         }
-        return temp.toTypedArray<String>()
+        return temp.toTypedArray()
     }
 
     /*
@@ -122,7 +122,7 @@ internal class RTEParser : SentenceParser, RTESentence {
 	 * @see net.sf.marineapi.nmea.sentence.RTESentence#isFirst()
 	 */
     override fun isFirst(): Boolean {
-        return sentenceIndex == 1
+        return getSentenceIndex() == 1
     }
 
     /*
@@ -130,7 +130,7 @@ internal class RTEParser : SentenceParser, RTESentence {
 	 * @see net.sf.marineapi.nmea.sentence.RTESentence#isLast()
 	 */
     override fun isLast(): Boolean {
-        return sentenceIndex == sentenceCount
+        return getSentenceIndex() == getSentenceCount()
     }
 
     /*
@@ -146,7 +146,7 @@ internal class RTEParser : SentenceParser, RTESentence {
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.RTESentence#setRouteId(java.lang.String)
 	 */
-    override fun setRouteId(id: String) {
+    override fun setRouteId(id: String?) {
         setStringValue(ROUTE_ID, id)
     }
 
@@ -156,8 +156,8 @@ internal class RTEParser : SentenceParser, RTESentence {
 	 * net.sf.marineapi.nmea.sentence.RTESentence#setRouteType(net.sf.marineapi
 	 * .nmea.util.RouteType)
 	 */
-    override fun setRouteType(type: RouteType) {
-        setCharValue(STATUS, type.toChar())
+    override fun setRouteType(type: RouteType?) {
+        setCharValue(STATUS, type!!.toChar())
     }
 
     /*
@@ -184,8 +184,8 @@ internal class RTEParser : SentenceParser, RTESentence {
 	 * net.sf.marineapi.nmea.sentence.RTESentence#setWaypointIds(java.lang.String
 	 * [])
 	 */
-    override fun setWaypointIds(ids: Array<String>) {
-        setStringValues(FIRST_WPT, ids)
+    override fun setWaypointIds(ids: Array<String?>?) {
+        setStringValues(FIRST_WPT, ids!!)
     }
 
     companion object {

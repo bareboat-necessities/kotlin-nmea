@@ -23,6 +23,8 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.STALKSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * SeaTalk $STALK sentence parser.
@@ -55,20 +57,20 @@ internal class STALKParser : SentenceParser, STALKSentence {
         return getStringValue(COMMAND)
     }
 
-    override fun setCommand(cmd: String) {
+    override fun setCommand(cmd: String?) {
         setStringValue(COMMAND, cmd)
     }
 
-    override fun getParameters(): Array<String> {
-        return getStringValues(FIRST_PARAM)
+    override fun getParameters(): Array<String?> {
+        return getStringValues(FIRST_PARAM) as Array<String?>
     }
 
-    override fun setParameters(vararg params: String) {
+    override fun setParameters(vararg params: String?) {
         setStringValues(FIRST_PARAM, params)
     }
 
-    override fun addParameter(param: String) {
-        val params: MutableList<String> = ArrayList(Arrays.asList(*parameters))
+    override fun addParameter(param: String?) {
+        val params: MutableList<String> = ArrayList(Arrays.asList(getParameters()))
         params.add(param)
         setParameters(*params.toTypedArray())
     }

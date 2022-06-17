@@ -20,7 +20,8 @@
  */
 package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.Date
+import java.util.*
+
 
 /**
  * Sentences that contains date information. Notice that some sentences may

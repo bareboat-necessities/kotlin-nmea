@@ -78,6 +78,7 @@ import net.sf.marineapi.nmea.sentence.Sentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import java.lang.reflect.InvocationTargetException
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -198,7 +199,7 @@ class SentenceFactory private constructor() {
      */
     fun listParsers(): List<String> {
         val keys: Set<String> = parsers!!.keys
-        return Arrays.asList(*keys.toTypedArray())
+        return listOf(*keys.toTypedArray())
     }
 
     /**

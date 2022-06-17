@@ -22,6 +22,7 @@ package net.sf.marineapi.nmea.sentence
 
 import net.sf.marineapi.nmea.util.RouteType
 
+
 /**
  * GPS route data and list of waypoints.
  *
@@ -32,6 +33,7 @@ import net.sf.marineapi.nmea.util.RouteType
  * @author Kimmo Tuukkanen
  */
 interface RTESentence : Sentence {
+
     /**
      * Add a waypoint ID at the end of waypoint list. The number of waypoint id
      * fields is increased by one on each addition.
@@ -40,6 +42,7 @@ interface RTESentence : Sentence {
      * @return The total number of waypoint IDs after addition.
      */
     fun addWaypointId(id: String?): Int
+
     /**
      * Get the number or name of the route.
      *
@@ -49,12 +52,8 @@ interface RTESentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the route name or number.
-     *
-     * @param id Route ID or name as String
-     */
-    var routeId: String?
+    fun getRouteId(): String?
+
     /**
      * Get the number of sentences in RTE sequence.
      *
@@ -65,13 +64,8 @@ interface RTESentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the number of sentences in RTE sequence.
-     *
-     * @param count Sentence count in sequence
-     * @throws IllegalArgumentException If the specified count is negative.
-     */
-    var sentenceCount: Int
+    fun getSentenceCount(): Int
+
     /**
      * Get the index of sentence in RTE sequence.
      *
@@ -82,13 +76,7 @@ interface RTESentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the index of sentence in RTE sequence.
-     *
-     * @param index Sentence index in sequence
-     * @throws IllegalArgumentException If specified index is negative.
-     */
-    var sentenceIndex: Int
+    fun getSentenceIndex(): Int
 
     /**
      * Get the number of waypoints IDs in this sentence.
@@ -99,7 +87,8 @@ interface RTESentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    val waypointCount: Int
+    fun getWaypointCount(): Int
+
     /**
      * Get the list of route waypoints.
      *
@@ -109,12 +98,7 @@ interface RTESentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the list of route waypoints.
-     *
-     * @param ids String array of waypoint IDs
-     */
-    var waypointIds: Array<String?>?
+    fun getWaypointIds(): Array<String?>?
 
     /**
      * Tells if the sentence holds a current active route data.
@@ -125,7 +109,7 @@ interface RTESentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    val isActiveRoute: Boolean
+    fun isActiveRoute(): Boolean
 
     /**
      * Tells if this is the first sentence in RTE sequence.
@@ -136,7 +120,7 @@ interface RTESentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If sentence index or count
      * fields contain unexpected or illegal value.
      */
-    val isFirst: Boolean
+    fun isFirst(): Boolean
 
     /**
      * Tells if this is the last sentence in RTE sequence.
@@ -147,7 +131,7 @@ interface RTESentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If sentence index or count
      * fields contain unexpected or illegal value.
      */
-    val isLast: Boolean
+    fun isLast(): Boolean
 
     /**
      * Tells if the sentence holds a current working route data.
@@ -158,12 +142,42 @@ interface RTESentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If status field contains
      * illegal value.
      */
-    val isWorkingRoute: Boolean
+    fun isWorkingRoute(): Boolean
+
+    /**
+     * Set the route name or number.
+     *
+     * @param id Route ID or name as String
+     */
+    fun setRouteId(id: String?)
 
     /**
      * Set the type of route.
      *
      * @param type RouteType to set
      */
-    fun setRouteType(type: RouteType)
+    fun setRouteType(type: RouteType?)
+
+    /**
+     * Set the number of sentences in RTE sequence.
+     *
+     * @param count Sentence count in sequence
+     * @throws IllegalArgumentException If the specified count is negative.
+     */
+    fun setSentenceCount(count: Int)
+
+    /**
+     * Set the index of sentence in RTE sequence.
+     *
+     * @param index Sentence index in sequence
+     * @throws IllegalArgumentException If specified index is negative.
+     */
+    fun setSentenceIndex(index: Int)
+
+    /**
+     * Set the list of route waypoints.
+     *
+     * @param ids String array of waypoint IDs
+     */
+    fun setWaypointIds(ids: Array<String?>?)
 }

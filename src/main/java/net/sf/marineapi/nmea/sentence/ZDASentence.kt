@@ -21,8 +21,7 @@
 package net.sf.marineapi.nmea.sentence
 
 import net.sf.marineapi.nmea.util.Time
-
-import java.util.Date
+import java.util.*
 
 /**
  * UTC time and date with local time zone offset.
@@ -75,7 +74,7 @@ interface ZDASentence : TimeSentence, DateSentence {
      *
      * @param t Time to be inserted in sentence.
      */
-    fun setTimeAndLocalZone(t: Time)
+    fun setTimeAndLocalZone(t: Time?)
 
     /**
      * Get date and time as [java.util.Date].
