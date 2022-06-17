@@ -73,30 +73,30 @@ class AbstractSentenceListenerTest {
 
     @Test
     fun testBasicListenerWithExpectedSentence() {
-        val bl: BasicListener = BasicListener()
+        val bl = BasicListener()
         bl.sentenceRead(BOD_EVENT)
         assertNotNull(bl.received)
-        assertEquals(BOD.toSentence(), bl.received.toSentence())
+        assertEquals(BOD!!.toSentence(), bl.received!!.toSentence())
     }
 
     @Test
     fun testBasicListenerWithOtherSentence() {
-        val bl: BasicListener = BasicListener()
+        val bl = BasicListener()
         bl.sentenceRead(GGA_EVENT)
         assertNull(bl.received)
     }
 
     @Test
     fun testExtendedBasicListenerWithExpectedSentence() {
-        val ebl: ExtendedBasicListener = ExtendedBasicListener()
+        val ebl = ExtendedBasicListener()
         ebl.sentenceRead(BOD_EVENT)
         assertNotNull(ebl.received)
-        assertEquals(BOD.toSentence(), ebl.received.toSentence())
+        assertEquals(BOD!!.toSentence(), ebl.received!!.toSentence())
     }
 
     @Test
     fun testExtendedBasicListenerWithUnexpectedSentence() {
-        val ebl: ExtendedBasicListener = ExtendedBasicListener()
+        val ebl = ExtendedBasicListener()
         ebl.sentenceRead(GGA_EVENT)
         assertNull(ebl.received)
     }
@@ -108,7 +108,7 @@ class AbstractSentenceListenerTest {
         )
         gl.sentenceRead(GGA_EVENT)
         assertNotNull(gl.received)
-        assertEquals(GGA.toSentence(), gl.received.toSentence())
+        assertEquals(GGA!!.toSentence(), gl.received!!.toSentence())
         assertEquals("1", gl.stringify(1))
     }
 
@@ -127,7 +127,7 @@ class AbstractSentenceListenerTest {
             ExtendedGenericsListener(GGASentence::class.java)
         egl.sentenceRead(GGA_EVENT)
         assertNotNull(egl.received)
-        assertEquals(GGA.toSentence(), egl.received.toSentence())
+        assertEquals(GGA!!.toSentence(), egl.received!!.toSentence())
         assertEquals(3556498, egl.hashify("test"))
         assertEquals("3", egl.stringify(3))
     }
@@ -147,7 +147,7 @@ class AbstractSentenceListenerTest {
         val ghl = GenericsHidingListener<Double>()
         ghl.sentenceRead(BOD_EVENT)
         assertNotNull(ghl.received)
-        assertEquals(BOD.toSentence(), ghl.received.toSentence())
+        assertEquals(BOD!!.toSentence(), ghl.received!!.toSentence())
         assertEquals("4.5", ghl.dummy(4.5))
         assertEquals("5", ghl.stringify(5))
     }
@@ -198,7 +198,7 @@ class AbstractSentenceListenerTest {
             return obj.hashCode()
         }
 
-        override var received: C
+        override var received: C?
             get() = super.received
             set(received) {
                 super.received = received

@@ -14,7 +14,7 @@ class AISMessage04Test {
     // !AIVDM,1,1,,A,400TcdiuiT7VDR>3nIfr6>i00000,0*78
     private val payload = "400TcdiuiT7VDR>3nIfr6>i00000"
     private val sixbit: Sixbit = Sixbit(payload, 0)
-    private val msg: AISMessage04 = AISMessage04Parser(sixbit)
+    private val msg = AISMessage04Parser(sixbit)
 
     @get:Throws(Exception::class)
     @get:Test

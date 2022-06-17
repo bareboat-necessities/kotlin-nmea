@@ -13,11 +13,11 @@ class AbstractAISMessageListenerTest {
     private val sf = SentenceFactory.getInstance()
     private val mf = AISMessageFactory.instance
     private val AIS_01 = sf.createParser("!AIVDM,1,1,,A,13aEOK?P00PD2wVMdLDRhgvL289?,0*26") as AISSentence
-    private val MSG_01 = mf.create(AIS_01) as AISMessage01
+    private val MSG_01 = mf!!.create(AIS_01) as AISMessage01
     private val AIS_05_1 =
         sf.createParser("!AIVDM,2,1,3,B,55P5TL01VIaAL@7WKO@mBplU@<PDhh000000001S;AJ::4A80?4i@E53,0*3E") as AISSentence
     private val AIS_05_2 = sf.createParser("!AIVDM,2,2,3,B,1@0000000000000,2*55") as AISSentence
-    private val MSG_05 = mf.create(AIS_05_1, AIS_05_2) as AISMessage05
+    private val MSG_05 = mf!!.create(AIS_05_1, AIS_05_2) as AISMessage05
 
     @Test
     fun testConstructor() {

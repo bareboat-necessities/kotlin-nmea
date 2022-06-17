@@ -15,7 +15,7 @@ class AISMessage09ParserTest {
     // !AIVDO,1,1,,A,95M2oQ@41Tr4L4H@eRvQ;2h20000,0*0D
     private val payload = "95M2oQ@41Tr4L4H@eRvQ;2h20000"
     private val sixbit: Sixbit = Sixbit(payload, 0)
-    private val msg: AISMessage09 = AISMessage09Parser(sixbit)
+    private val msg = AISMessage09Parser(sixbit)
 
     @get:Throws(Exception::class)
     @get:Test
@@ -28,7 +28,7 @@ class AISMessage09ParserTest {
     @get:Test
     val speedOverGround: Unit
         get() {
-            assertEquals(100.0, msg.speedOverGround, 0.1)
+            assertEquals(100.0, msg.speedOverGround.toDouble(), 0.1)
         }
 
     @get:Throws(Exception::class)

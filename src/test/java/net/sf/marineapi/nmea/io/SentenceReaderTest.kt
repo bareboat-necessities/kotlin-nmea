@@ -16,6 +16,7 @@ import net.sf.marineapi.nmea.sentence.Sentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TXTSentence
 import net.sf.marineapi.test.util.UDPServerMock
+import org.junit.Before
 import org.junit.Test
 import java.io.FileInputStream
 import java.net.DatagramSocket
@@ -24,12 +25,15 @@ import java.net.InetAddress
 class SentenceReaderTest {
     private var sentence: Sentence? = null
     private var reader: SentenceReader? = null
+
     private var dummyListener: SentenceListener? = null
     private var testListener: SentenceListener? = null
+
     private var paused = false
     private var started = false
     private var stopped = false
     private var stream: InputStream? = null
+
     @Before
     @Throws(Exception::class)
     fun setUp() {
@@ -38,25 +42,25 @@ class SentenceReaderTest {
         reader = SentenceReader(stream)
         dummyListener = DummySentenceListener()
         testListener = TestSentenceListener()
-        reader!!.addSentenceListener(dummyListener)
-        reader.addSentenceListener(testListener, SentenceId.GGA)
+        reader!!.addSentenceListener(dummyListener as DummySentenceListener)
+        reader!!.addSentenceListener(testListener as TestSentenceListener, SentenceId.GGA)
     }
 
     @Test
     @Throws(Throwable::class)
     fun testConstructorWithCustomReader() {
-        val reader = SentenceReader(DummyDataReader(TXTTest.Companion.EXAMPLE))
+        val reader = SentenceReader(DummyDataReader(TXTTest.EXAMPLE))
         reader.addSentenceListener(TestSentenceListener())
         reader.start()
         Thread.sleep(200)
         reader.stop()
-        assertEquals(sentence.toString(), TXTTest.Companion.EXAMPLE)
+        assertEquals(sentence.toString(), TXTTest.EXAMPLE)
     }
 
     @Test
     fun testAddSentenceListenerSentenceListenerString() {
         val dummy = DummySentenceListener()
-        reader.addSentenceListener(dummy, "GLL")
+        reader!!.addSentenceListener(dummy, "GLL")
     }
 
     @Test
@@ -67,24 +71,24 @@ class SentenceReaderTest {
     @Test
     fun testRemoveSentenceListener() {
         assertFalse(started)
-        reader!!.removeSentenceListener(testListener)
+        reader!!.removeSentenceListener(testListener!!)
         reader!!.fireReadingStarted()
         assertFalse(started)
     }
 
     @Test
     fun testRemoveSentenceListenerByType() {
-        reader!!.removeSentenceListener(testListener)
-        reader!!.removeSentenceListener(dummyListener)
+        reader!!.removeSentenceListener(testListener!!)
+        reader!!.removeSentenceListener(dummyListener!!)
         assertEquals(0, reader!!.sentenceListeners.size)
-        reader.addSentenceListener(testListener, SentenceId.GLL)
-        reader.addSentenceListener(dummyListener, SentenceId.GGA)
+        reader!!.addSentenceListener(testListener!!, SentenceId.GLL)
+        reader!!.addSentenceListener(dummyListener!!, SentenceId.GGA)
         assertEquals(2, reader!!.sentenceListeners.size)
-        reader.removeSentenceListener(testListener, SentenceId.GLL)
+        reader!!.removeSentenceListener(testListener!!, SentenceId.GLL)
         assertEquals(1, reader!!.sentenceListeners.size)
-        reader.removeSentenceListener(dummyListener, SentenceId.GNS)
+        reader!!.removeSentenceListener(dummyListener!!, SentenceId.GNS)
         assertEquals(1, reader!!.sentenceListeners.size)
-        reader.removeSentenceListener(dummyListener, SentenceId.GGA)
+        reader!!.removeSentenceListener(dummyListener!!, SentenceId.GGA)
         assertEquals(0, reader!!.sentenceListeners.size)
     }
 
@@ -160,8 +164,8 @@ class SentenceReaderTest {
     @Test
     fun testFireSentenceEventWithUnexpectedType() {
         assertNull(sentence)
-        val sf: SentenceFactory = SentenceFactory.getInstance()
-        val s: Sentence = sf.createParser(BODTest.Companion.EXAMPLE)
+        val sf = SentenceFactory.getInstance()
+        val s = sf.createParser(BODTest.EXAMPLE)
         reader!!.fireSentenceEvent(s)
         assertNull(sentence)
     }
