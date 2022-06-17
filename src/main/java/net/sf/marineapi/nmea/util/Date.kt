@@ -20,7 +20,9 @@
  */
 package net.sf.marineapi.nmea.util
 
-import java.util.*
+import java.util.GregorianCalendar
+import java.util.Calendar
+
 
 /**
  * Represents a calendar date (day-month-year) transmitted in sentences that

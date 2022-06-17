@@ -22,7 +22,9 @@ package net.sf.marineapi.nmea.util
 
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.util.*
+
+import java.util.GregorianCalendar
+import java.util.Calendar
 import java.util.Date
 
 /**
