@@ -36,7 +36,7 @@ internal class TLBParser : SentenceParser, TLBSentence {
      * @param nmea TLB sentence string.
      */
     constructor(nmea: String) : super(nmea, SentenceId.TLB) {
-        require(fieldCount % 2 == 0) { "Invalid TLB sentence. Must contain pairs of target numbers and labels." }
+        require(getFieldCount() % 2 == 0) { "Invalid TLB sentence. Must contain pairs of target numbers and labels." }
     }
 
     /**
@@ -51,7 +51,7 @@ internal class TLBParser : SentenceParser, TLBSentence {
      * @see TLBSentence.getTargetIds
      */
     override fun getTargetIds(): IntArray {
-        val ids = IntArray((fieldCount / 2))
+        val ids = IntArray((getFieldCount() / 2))
         var i = 0
         var j = 0
         while (j < ids.size) {
@@ -65,8 +65,8 @@ internal class TLBParser : SentenceParser, TLBSentence {
     /**
      * @see TLBSentence.getTargetLabels
      */
-    override fun getTargetLabels(): Array<String> {
-        val labels = arrayOfNulls<String>((fieldCount / 2))
+    override fun getTargetLabels(): Array<String?> {
+        val labels = arrayOfNulls<String>((getFieldCount() / 2))
         var i = 1
         var j = 0
         while (j < labels.size) {
@@ -84,9 +84,9 @@ internal class TLBParser : SentenceParser, TLBSentence {
     /**
      * @see TLBSentence.addTargetLabel
      */
-    override fun addTargetLabel(targetId: Int, targetLabel: String) {
-        val ids = targetIds
-        val labels = targetLabels
+    override fun addTargetLabel(targetId: Int, targetLabel: String?) {
+        val ids = getTargetIds()
+        val labels = getTargetLabels()
         val newFields = arrayOfNulls<String>((ids.size + 1) * 2)
 
         // Since the ID part of each (ID,label) pair comes first, we will consider that
@@ -115,7 +115,7 @@ internal class TLBParser : SentenceParser, TLBSentence {
     /**
      * @see TLBSentence.setTargetPairs
      */
-    override fun setTargetPairs(ids: IntArray, labels: Array<String>) {
+    override fun setTargetPairs(ids: IntArray, labels: Array<String?>) {
         require(ids.size == labels.size) { "The ID and Label arrays must be the same length." }
         val newFields = arrayOfNulls<String>(ids.size * 2)
         var i = 0

@@ -24,6 +24,8 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.sentence.XDRSentence
 import net.sf.marineapi.nmea.util.Measurement
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  *
@@ -67,10 +69,10 @@ internal class XDRParser : SentenceParser, XDRSentence {
     /* (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#addMeasurement(net.sf.marineapi.nmea.util.Measurement[])
 	 */
-    override fun addMeasurement(vararg m: Measurement) {
-        val ms = measurements
-        ms.addAll(Arrays.asList(*m))
-        measurements = ms
+    override fun addMeasurement(vararg m: Measurement?) {
+        val ms = getMeasurements()
+        ms.addAll(listOf(*m) as Collection<Measurement>)
+        setMeasurements(ms)
     }
 
     /* (non-Javadoc)
@@ -79,7 +81,7 @@ internal class XDRParser : SentenceParser, XDRSentence {
     override fun getMeasurements(): MutableList<Measurement> {
         val result = ArrayList<Measurement>()
         var i = 0
-        while (i < fieldCount) {
+        while (i < getFieldCount()) {
             val value = fetchValues(i)
             if (!value.isEmpty) {
                 result.add(value)
@@ -92,8 +94,8 @@ internal class XDRParser : SentenceParser, XDRSentence {
     /* (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#setMeasurement(net.sf.marineapi.nmea.util.Measurement)
 	 */
-    override fun setMeasurement(m: Measurement) {
-        fieldCount = DATA_SET_LENGTH
+    override fun setMeasurement(m: Measurement?) {
+        setFieldCount(DATA_SET_LENGTH)
         insertValues(TYPE_INDEX, m)
     }
 
@@ -101,7 +103,7 @@ internal class XDRParser : SentenceParser, XDRSentence {
 	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#setMeasurements(java.util.List)
 	 */
     override fun setMeasurements(measurements: List<Measurement>) {
-        fieldCount = measurements.size * DATA_SET_LENGTH
+        setFieldCount(measurements.size * DATA_SET_LENGTH)
         var i = 0
         for (m in measurements) {
             insertValues(i, m)
@@ -142,7 +144,7 @@ internal class XDRParser : SentenceParser, XDRSentence {
     private fun insertValues(i: Int, m: Measurement?) {
         if (m != null) {
             setStringValue(i, m.type)
-            setDoubleValue(i + VALUE_INDEX, m.value)
+            setDoubleValue(i + VALUE_INDEX, m.value!!)
             setStringValue(i + UNITS_INDEX, m.units)
             setStringValue(i + NAME_INDEX, m.name)
         }

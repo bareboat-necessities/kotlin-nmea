@@ -69,17 +69,17 @@ internal class TLLParser : PositionParser, TLLSentence {
         setIntValue(NUMBER, number, 2)
     }
 
-    override fun setName(name: String) {
+    override fun setName(name: String?) {
         setStringValue(NAME, name)
     }
 
     override fun setTime(t: Time) {
-        var str = String.format("%02d%02d", t.hour, t.minutes)
+        var str = String.format("%02d%02d", t.getHour(), t.getMinutes())
         val nf = DecimalFormat("00.00")
         val dfs = DecimalFormatSymbols()
         dfs.decimalSeparator = '.'
         nf.decimalFormatSymbols = dfs
-        str += nf.format(t.seconds)
+        str += nf.format(t.getSeconds())
         setStringValue(UTC_TIME, str)
     }
 
