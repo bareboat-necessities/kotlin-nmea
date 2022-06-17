@@ -14,6 +14,7 @@ import org.junit.Test
 class TTMTest {
     private var empty: TTMParser? = null
     private var ttm: TTMParser? = null
+
     @Before
     fun setUp() {
         try {

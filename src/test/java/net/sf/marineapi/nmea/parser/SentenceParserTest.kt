@@ -51,7 +51,7 @@ class SentenceParserTest {
     @Test
     fun testConstructorWithCustomParser() {
         val foo = "FOO"
-        val sf: SentenceFactory = SentenceFactory.getInstance()
+        val sf: SentenceFactory = SentenceFactory.instance
         sf.registerParser(foo, FOOParser::class.java)
         val fooSentence = "\$GPFOO,B,A,R"
         val fp: FOOSentence = FOOParser(fooSentence)
@@ -117,21 +117,6 @@ class SentenceParserTest {
         Assert.assertEquals(Sentence.BEGIN_CHAR.code.toLong(), s.getBeginChar().code.toLong())
         Assert.assertEquals(TalkerId.P, s.getTalkerId())
         Assert.assertEquals("RWIILOG", s.getSentenceId())
-    }
-
-    /**
-     * Test method for SenteceParser constructor.
-     */
-    @Test
-    fun testConstructorWithNulls() {
-        try {
-            SentenceParser(null, null as String?)
-            Assert.fail("Did not throw exception")
-        } catch (iae: IllegalArgumentException) {
-            // OK
-        } catch (e: Exception) {
-            Assert.fail(e.message)
-        }
     }
 
     /**
@@ -468,7 +453,7 @@ class SentenceParserTest {
 
     /**
      * Test method for
-     * [§(int)][SentenceParser.].
+     * [§(int)][SentenceParser].
      */
     @Test
     fun testToSentenceWithMaxLengthOnLimit() {
