@@ -141,7 +141,7 @@ abstract class AbstractProvider<T : ProviderEvent?> : SentenceListener {
     protected fun hasOne(vararg id: String?): Boolean {
         val ids = Arrays.asList(*id)
         for (s in getSentences()) {
-            if (ids.contains(s!!.sentenceId)) {
+            if (ids.contains(s!!.getSentenceId())) {
                 return true
             }
         }

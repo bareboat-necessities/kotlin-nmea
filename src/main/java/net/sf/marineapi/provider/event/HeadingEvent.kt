@@ -40,8 +40,8 @@ class HeadingEvent(source: Any?, s: HeadingSentence) : ProviderEvent(source) {
      * @param s HeadingSentence that triggered the event.
      */
     init {
-        heading = s.heading
-        isTrue = s.isTrue
+        heading = s.getHeading()
+        isTrue = s.isTrue()
     }
 
     /**

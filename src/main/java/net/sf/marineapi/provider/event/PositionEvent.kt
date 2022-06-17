@@ -20,6 +20,7 @@
  */
 package net.sf.marineapi.provider.event
 
+import java.util.Date
 import net.sf.marineapi.nmea.util.*
 
 /**

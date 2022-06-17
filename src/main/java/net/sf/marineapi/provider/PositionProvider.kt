@@ -24,7 +24,10 @@ import net.sf.marineapi.nmea.io.SentenceReader
 import net.sf.marineapi.nmea.parser.DataNotAvailableException
 import net.sf.marineapi.nmea.sentence.*
 import net.sf.marineapi.nmea.util.*
+
 import net.sf.marineapi.provider.event.PositionEvent
+import java.util.*
+import java.util.Date
 
 /**
  *
@@ -69,18 +72,18 @@ class PositionProvider
         var fix: GpsFixQuality? = null
         for (s in getSentences()) {
             if (s is RMCSentence) {
-                sog = s.speed
+                sog = s.getSpeed()
                 try {
-                    cog = s.course
+                    cog = s.getCourse()
                 } catch (e: DataNotAvailableException) {
                     // If we are not moving, cource can be undefined. Leave null in that case.
                 }
-                d = s.date
-                t = s.time
+                d = s.getDate()
+                t = s.getTime()
                 if (p == null) {
                     p = s.getPosition()
-                    if (s.fieldCount > 11) {
-                        mode = s.mode
+                    if (s.getFieldCount() > 11) {
+                        mode = s.getMode()
                     }
                 }
             } else if (s is VTGSentence) {
@@ -95,11 +98,11 @@ class PositionProvider
                 // position and altitude
                 val gga = s
                 p = gga.getPosition()
-                fix = gga.fixQuality
+                fix = gga.getFixQuality()
 
                 // Some receivers do not provide RMC message
                 if (t == null) {
-                    t = gga.time
+                    t = gga.getTime()
                 }
             } else if (s is GLLSentence && p == null) {
                 val gll = s
@@ -130,17 +133,17 @@ class PositionProvider
         for (s in getSentences()) {
             if (s is RMCSentence) {
                 val rmc = s
-                val ds = rmc.status
-                if (DataStatus.VOID == ds || rmc.fieldCount > 11 && FaaMode.NONE == rmc.mode) {
+                val ds = rmc.getStatus()
+                if (DataStatus.VOID == ds || rmc.getFieldCount() > 11 && FaaMode.NONE == rmc.getMode()) {
                     return false
                 }
             } else if (s is GGASentence) {
-                val fq = s.fixQuality
+                val fq = s.getFixQuality()
                 if (GpsFixQuality.INVALID == fq) {
                     return false
                 }
             } else if (s is GLLSentence) {
-                val ds = s.status
+                val ds = s.getStatus()
                 if (DataStatus.VOID == ds) {
                     return false
                 }
