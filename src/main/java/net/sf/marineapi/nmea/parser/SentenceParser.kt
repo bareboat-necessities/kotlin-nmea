@@ -23,6 +23,8 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.*
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  *
@@ -119,13 +121,13 @@ open class SentenceParser : Sentence {
     protected constructor(begin: Char, talker: TalkerId?, type: String?, size: Int) {
         require(size >= 0) { "Size cannot be negative." }
         requireNotNull(talker) { "Talker ID must be specified" }
-        require((type == null || "") != type) { "Sentence ID must be specified" }
+        require((type == null) || ("" == type)) { "Sentence ID must be specified" }
         beginChar = begin
         talkerId = talker
-        sentenceId = type
+        sentenceId = type!!
         val values = arrayOfNulls<String>(size)
         Arrays.fill(values, "")
-        fields!!.addAll(Arrays.asList(*values))
+        fields!!.addAll(listOf(*values))
     }
 
     /**
@@ -142,7 +144,7 @@ open class SentenceParser : Sentence {
      * or is not of expected type.
      */
     constructor(nmea: String, type: String?) : this(nmea) {
-        require((type == null || "") != type) { "Sentence type must be specified." }
+        require((type == null) || ("" == type)) { "Sentence type must be specified." }
         val sid = getSentenceId()
         if (sid != type) {
             val ptrn = "Sentence id mismatch; expected [%s], found [%s]."
