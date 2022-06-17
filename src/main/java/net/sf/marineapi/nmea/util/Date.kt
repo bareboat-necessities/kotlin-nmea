@@ -173,7 +173,7 @@ class Date {
      * three-digit value.
      */
     fun setYear(year: Int) {
-        require((year < 0 || year > 99 && year < 1000 || year) <= 9999) { "Year must be two or four digit value" }
+        require((year < 0 || year > 99) && (year < 1000 || year <= 9999)) { "Year must be two or four digit value" }
         if (year < 100 && year > PIVOT_YEAR) {
             this.year = 1900 + year
         } else if (year < 100 && year <= PIVOT_YEAR) {

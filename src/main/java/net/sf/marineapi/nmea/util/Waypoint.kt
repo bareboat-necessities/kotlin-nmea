@@ -20,7 +20,6 @@
  */
 package net.sf.marineapi.nmea.util
 
-java.util.Date
 /**
  * Waypoint represents a named geographic location.
  *

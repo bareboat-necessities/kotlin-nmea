@@ -20,9 +20,10 @@
  */
 package net.sf.marineapi.nmea.event
 
-import net.sf.marineapi.nmea.sentence.Sentenceimport
+import net.sf.marineapi.nmea.sentence.Sentence
 
-java.lang.IllegalArgumentExceptionimport java.util.*
+import java.util.*
+
 /**
  * Sentence events occur when a valid NMEA 0183 sentence has been read from the
  * data source.
