@@ -1,123 +1,115 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.Before
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-public class TXTTest {
-
-    public static final String EXAMPLE = "$GPTXT,01,01,TARG1,Message*35";
-
-    private TXTParser txt;
-    private TXTParser empty;
-
+class TXTTest {
+    private var txt: TXTParser? = null
+    private var empty: TXTParser? = null
     @Before
-    public void setUp() {
+    fun setUp() {
         try {
-            txt = new TXTParser(EXAMPLE);
-            empty = new TXTParser(TalkerId.II);
-        } catch (Exception e) {
-            fail(e.getMessage());
+            txt = TXTParser(EXAMPLE)
+            empty = TXTParser(TalkerId.II)
+        } catch (e: Exception) {
+            fail(e.message)
         }
     }
 
     @Test
-    public void testStringConstructor() {
-        assertEquals(TalkerId.GP, txt.getTalkerId());
-        assertEquals("TXT", txt.getSentenceId());
-        assertEquals(4, txt.getFieldCount());
+    fun testStringConstructor() {
+        assertEquals(TalkerId.GP, txt!!.talkerId)
+        assertEquals("TXT", txt!!.sentenceId)
+        assertEquals(4, txt!!.fieldCount)
     }
 
     @Test
-    public void testTalkerIdConstructor() {
-        assertEquals(TalkerId.II, empty.getTalkerId());
-        assertEquals("TXT", empty.getSentenceId());
-        assertEquals(4, empty.getFieldCount());
+    fun testTalkerIdConstructor() {
+        assertEquals(TalkerId.II, empty!!.talkerId)
+        assertEquals("TXT", empty!!.sentenceId)
+        assertEquals(4, empty!!.fieldCount)
     }
 
     @Test
-    public void testGetMessageIndex() {
-        assertEquals(1, txt.getMessageIndex());
+    fun testGetMessageIndex() {
+        assertEquals(1, txt!!.getMessageIndex())
     }
 
     @Test
-    public void testSetMessageIndex() {
-        empty.setMessageIndex(1);
-        assertEquals(1, empty.getMessageIndex());
+    fun testSetMessageIndex() {
+        empty!!.setMessageIndex(1)
+        assertEquals(1, empty!!.getMessageIndex())
     }
 
     @Test
-    public void testSetMessageIndexThrows() {
+    fun testSetMessageIndexThrows() {
         try {
-            empty.setMessageIndex(-1);
-            fail("setMessageIndex didn't throw on -1");
-        } catch (IllegalArgumentException iae) {
+            empty!!.setMessageIndex(-1)
+            fail("setMessageIndex didn't throw on -1")
+        } catch (iae: IllegalArgumentException) {
             // pass
-        } catch (Exception e) {
-            fail(e.getMessage());
+        } catch (e: Exception) {
+            fail(e.message)
         }
     }
 
     @Test
-    public void testGetMessageCount() {
-        assertEquals(1, txt.getMessageCount());
+    fun testGetMessageCount() {
+        assertEquals(1, txt!!.getMessageCount())
     }
 
     @Test
-    public void testSetMessageCount() {
-        empty.setMessageCount(1);
-        assertEquals(1, empty.getMessageCount());
+    fun testSetMessageCount() {
+        empty!!.setMessageCount(1)
+        assertEquals(1, empty!!.getMessageCount())
     }
 
     @Test
-    public void testSetMessageCountThrows() {
+    fun testSetMessageCountThrows() {
         try {
-            empty.setMessageCount(0);
-            fail("setMessageIndex didn't throw on 0");
-        } catch (IllegalArgumentException iae) {
+            empty!!.setMessageCount(0)
+            fail("setMessageIndex didn't throw on 0")
+        } catch (iae: IllegalArgumentException) {
             // pass
-        } catch (Exception e) {
-            fail(e.getMessage());
+        } catch (e: Exception) {
+            fail(e.message)
         }
     }
 
     @Test
-    public void testGetIndentifier() {
-        assertEquals("TARG1", txt.getIdentifier());
+    fun testGetIndentifier() {
+        assertEquals("TARG1", txt!!.getIdentifier())
     }
 
     @Test
-    public void testSetIndentifier() {
-        empty.setIdentifier("FOOBAR");
-        assertEquals("FOOBAR", empty.getIdentifier());
+    fun testSetIndentifier() {
+        empty!!.setIdentifier("FOOBAR")
+        assertEquals("FOOBAR", empty!!.getIdentifier())
     }
 
     @Test
-    public void testGetMessage() {
-        assertEquals("Message", txt.getMessage());
+    fun testGetMessage() {
+        assertEquals("Message", txt!!.getMessage())
     }
 
     @Test
-    public void testSetMessage() {
-        empty.setMessage("xyzzy");
-        assertEquals("xyzzy", empty.getMessage());
+    fun testSetMessage() {
+        empty!!.setMessage("xyzzy")
+        assertEquals("xyzzy", empty!!.getMessage())
     }
 
     @Test
-    public void testSetMessageNonASCII() {
+    fun testSetMessageNonASCII() {
         try {
-            empty.setMessage("€€ääööåå");
-            fail("setMessage() did not throw on non-ASCII input");
-        } catch (IllegalArgumentException iae) {
+            empty!!.setMessage("€€ääööåå")
+            fail("setMessage() did not throw on non-ASCII input")
+        } catch (iae: IllegalArgumentException) {
             // pass
-        } catch (Exception e) {
-            fail(e.getMessage());
+        } catch (e: Exception) {
+            fail(e.message)
         }
     }
 
+    companion object {
+        const val EXAMPLE = "\$GPTXT,01,01,TARG1,Message*35"
+    }
 }
-
-

@@ -18,61 +18,57 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import org.junit.Test;
+import org.junit.Assert.assertEquals
 
 /**
  * @author Kimmo Tuukkanen
  */
-public class SentenceIdTest {
+class SentenceIdTest {
+    @Test
+    fun testParseKnownId() {
+        val s = SentenceId.parse("\$GPGLL,,,,,,,")
+        assertEquals(SentenceId.GLL, s)
+    }
 
-	@Test
-	public void testParseKnownId() {
-		SentenceId s = SentenceId.parse("$GPGLL,,,,,,,");
-		assertEquals(SentenceId.GLL, s);
-	}
+    @Test
+    fun testParseUnknownId() {
+        try {
+            SentenceId.parse("\$ABCDE,,,,,,")
+            fail("Did not throw exception")
+        } catch (e: Exception) {
+            // pass
+        }
+    }
 
-	@Test
-	public void testParseUnknownId() {
-		try {
-			SentenceId.parse("$ABCDE,,,,,,");
-			fail("Did not throw exception");
-		} catch (Exception e) {
-			// pass
-		}
-	}
+    @Test
+    fun testParseStrStandardId() {
+        val s = SentenceId.parseStr("\$GPGLL,,,,,,,")
+        assertEquals("GLL", s)
+    }
 
-	@Test
-	public void testParseStrStandardId() {
-		String s = SentenceId.parseStr("$GPGLL,,,,,,,");
-		assertEquals("GLL", s);
-	}
+    @Test
+    fun testParseStrNormalLengthProprietaryId() {
+        val s = SentenceId.parseStr("\$PGRMZ,,,,,,,")
+        assertEquals("GRMZ", s)
+    }
 
-	@Test
-	public void testParseStrNormalLengthProprietaryId() {
-		String s = SentenceId.parseStr("$PGRMZ,,,,,,,");
-		assertEquals("GRMZ", s);
-	}
+    @Test
+    fun testParseStrShortProprietaryId() {
+        val s = SentenceId.parseStr("\$PBVE,,,,,,,")
+        assertEquals("BVE", s)
+    }
 
-	@Test
-	public void testParseStrShortProprietaryId() {
-		String s = SentenceId.parseStr("$PBVE,,,,,,,");
-		assertEquals("BVE", s);
-	}
+    @Test
+    fun testParseStrShortestPossibleProprietaryId() {
+        val s = SentenceId.parseStr("\$PAB,,,,,,,")
+        assertEquals("AB", s)
+    }
 
-	@Test
-	public void testParseStrShortestPossibleProprietaryId() {
-		String s = SentenceId.parseStr("$PAB,,,,,,,");
-		assertEquals("AB", s);
-	}
-
-	@Test
-	public void testParseStrLongestPossibleProprietaryId() {
-		String s = SentenceId.parseStr("$PABCDEFGHI,,,,,,,");
-		assertEquals("ABCDEFGHI", s);
-	}
+    @Test
+    fun testParseStrLongestPossibleProprietaryId() {
+        val s = SentenceId.parseStr("\$PABCDEFGHI,,,,,,,")
+        assertEquals("ABCDEFGHI", s)
+    }
 }

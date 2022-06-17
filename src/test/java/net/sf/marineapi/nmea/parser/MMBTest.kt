@@ -1,59 +1,58 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.MMBSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.Before
 
 /**
  * MMBTest
  *
  * @author Kimmo Tuukkanen
  */
-public class MMBTest {
-
-    public static final String EXAMPLE = "$IIMMB,29.9870,I,1.0154,B*75";
-
-    MMBSentence mmb;
-    MMBSentence empty;
-
+class MMBTest {
+    var mmb: MMBSentence? = null
+    var empty: MMBSentence? = null
     @Before
-    public void setUp() throws Exception {
-        mmb = new MMBParser(EXAMPLE);
-        empty = new MMBParser(TalkerId.WI);
+    @Throws(Exception::class)
+    fun setUp() {
+        mmb = MMBParser(EXAMPLE)
+        empty = MMBParser(TalkerId.WI)
     }
 
     @Test
-    public void testConstructors() {
-        assertEquals(4, mmb.getFieldCount());
-        assertEquals(4, empty.getFieldCount());
-        assertEquals(TalkerId.II, mmb.getTalkerId());
-        assertEquals(TalkerId.WI, empty.getTalkerId());
-        assertEquals(SentenceId.MMB.name(), empty.getSentenceId());
+    fun testConstructors() {
+        assertEquals(4, mmb.fieldCount)
+        assertEquals(4, empty.fieldCount)
+        assertEquals(TalkerId.II, mmb.talkerId)
+        assertEquals(TalkerId.WI, empty.talkerId)
+        assertEquals(SentenceId.MMB.name, empty.sentenceId)
     }
 
     @Test
-    public void testGetInchesOfMercury() throws Exception {
-        assertEquals(29.9870, mmb.getInchesOfMercury(), 0.0001);
+    @Throws(Exception::class)
+    fun testGetInchesOfMercury() {
+        assertEquals(29.9870, mmb.inchesOfMercury, 0.0001)
     }
 
     @Test
-    public void testGetBars() throws Exception {
-        assertEquals(1.0154, mmb.getBars(), 0.0001);
+    @Throws(Exception::class)
+    fun testGetBars() {
+        assertEquals(1.0154, mmb.bars, 0.0001)
     }
 
     @Test
-    public void testSetInchesOfMercury() throws Exception {
-        mmb.setInchesOfMercury(29.9999);
-        assertEquals(29.9999, mmb.getInchesOfMercury(), 0.0001);
+    @Throws(Exception::class)
+    fun testSetInchesOfMercury() {
+        mmb.inchesOfMercury = 29.9999
+        assertEquals(29.9999, mmb.inchesOfMercury, 0.0001)
     }
 
     @Test
-    public void testSetBars() throws Exception {
-        mmb.setBars(1.1234);
-        assertEquals(1.1234, mmb.getBars(), 0.0001);
+    @Throws(Exception::class)
+    fun testSetBars() {
+        mmb.bars = 1.1234
+        assertEquals(1.1234, mmb.bars, 0.0001)
+    }
+
+    companion object {
+        const val EXAMPLE = "\$IIMMB,29.9870,I,1.0154,B*75"
     }
 }

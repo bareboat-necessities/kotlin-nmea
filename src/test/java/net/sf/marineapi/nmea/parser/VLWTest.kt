@@ -1,81 +1,76 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import static org.junit.Assert.assertEquals;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.sentence.VLWSentence;
+import org.junit.Assert.assertEquals
 
-import org.junit.Before;
-import org.junit.Test;
+class VLWTest {
+    var vlw: VLWSentence? = null
+    var empty: VLWSentence? = null
+    @Before
+    @Throws(Exception::class)
+    fun setUp() {
+        vlw = VLWParser(EXAMPLE)
+        empty = VLWParser(TalkerId.VD)
+    }
 
-public class VLWTest {
+    @Test
+    fun testVLWParserString() {
+        assertEquals(TalkerId.VW, vlw.talkerId)
+        assertEquals("VLW", vlw.sentenceId)
+        assertEquals(4, vlw.fieldCount)
+    }
 
-	public static final String EXAMPLE = "$VWVLW,2.8,N,0.8,N";
-	
-	VLWSentence vlw;
-	VLWSentence empty;
-	
-	@Before
-	public void setUp() throws Exception {
-		vlw = new VLWParser(EXAMPLE);
-		empty = new VLWParser(TalkerId.VD);
-	}
+    @Test
+    fun testVLWParserTalkerId() {
+        assertEquals(TalkerId.VD, empty.talkerId)
+        assertEquals("VLW", empty.sentenceId)
+        assertEquals(4, empty.fieldCount)
+    }
 
-	@Test
-	public void testVLWParserString() {
-		assertEquals(TalkerId.VW, vlw.getTalkerId());
-		assertEquals("VLW", vlw.getSentenceId());
-		assertEquals(4, vlw.getFieldCount());
-	}
+    @Test
+    fun testGetTotal() {
+        assertEquals(2.8, vlw.getTotal(), 0.1)
+    }
 
-	@Test
-	public void testVLWParserTalkerId() {
-		assertEquals(TalkerId.VD, empty.getTalkerId());
-		assertEquals("VLW", empty.getSentenceId());
-		assertEquals(4, empty.getFieldCount());
-	}
+    @Test
+    fun testGetTotalUnits() {
+        assertEquals('N', vlw.getTotalUnits())
+    }
 
-	@Test
-	public void testGetTotal() {
-		assertEquals(2.8, vlw.getTotal(), 0.1);
-	}
+    @Test
+    fun testGetTrip() {
+        assertEquals(0.8, vlw.getTrip(), 0.1)
+    }
 
-	@Test
-	public void testGetTotalUnits() {
-		assertEquals('N', vlw.getTotalUnits());
-	}
+    @Test
+    fun testGetTripUnits() {
+        assertEquals('N', vlw.getTripUnits())
+    }
 
-	@Test
-	public void testGetTrip() {
-		assertEquals(0.8, vlw.getTrip(), 0.1);
-	}
+    @Test
+    fun testSetTotal() {
+        empty.setTotal(3.14)
+        assertEquals(3.1, empty.getTotal(), 0.1)
+    }
 
-	@Test
-	public void testGetTripUnits() {
-		assertEquals('N', vlw.getTripUnits());
-	}
+    @Test
+    fun testSetTotalUnits() {
+        empty.setTotalUnits(VLWSentence.KM)
+        assertEquals(VLWSentence.KM, empty.getTotalUnits())
+    }
 
-	@Test
-	public void testSetTotal() {
-		empty.setTotal(3.14);
-		assertEquals(3.1, empty.getTotal(), 0.1);
-	}
+    @Test
+    fun testSetTrip() {
+        empty.setTrip(0.0)
+        assertEquals(0.0, empty.getTrip(), 0.1)
+    }
 
-	@Test
-	public void testSetTotalUnits() {
-		empty.setTotalUnits(VLWSentence.KM);
-		assertEquals(VLWSentence.KM, empty.getTotalUnits());
-	}
+    @Test
+    fun testSetTripUnits() {
+        empty.setTripUnits(VLWSentence.NM)
+        assertEquals(VLWSentence.NM, empty.getTripUnits())
+    }
 
-	@Test
-	public void testSetTrip() {
-		empty.setTrip(0.0);
-		assertEquals(0.0, empty.getTrip(), 0.1);
-	}
-
-	@Test
-	public void testSetTripUnits() {
-		empty.setTripUnits(VLWSentence.NM);
-		assertEquals(VLWSentence.NM, empty.getTripUnits());
-	}
-
+    companion object {
+        const val EXAMPLE = "\$VWVLW,2.8,N,0.8,N"
+    }
 }

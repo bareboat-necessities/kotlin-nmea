@@ -1,5 +1,4 @@
-package net.sf.marineapi.nmea.sentence;
-
+package net.sf.marineapi.nmea.sentence
 /* 
  * TalkerIdTest.java
  * Copyright (C) 2011 Kimmo Tuukkanen
@@ -20,56 +19,51 @@ package net.sf.marineapi.nmea.sentence;
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.Assert.assertEquals
 
 /**
  * @author Kimmo Tuukkanen
  */
-public class TalkerIdTest {
+class TalkerIdTest {
+    /**
+     * @throws java.lang.Exception
+     */
+    @Before
+    @Throws(Exception::class)
+    fun setUp() {
+    }
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.sentence.TalkerId.parse].
+     */
+    @Test
+    fun testParse() {
+        assertEquals(TalkerId.GP, TalkerId.parse("\$GPGLL,,,,,,,"))
+        assertEquals(TalkerId.GL, TalkerId.parse("\$GLGSV,,,,,,,"))
+        assertEquals(TalkerId.GN, TalkerId.parse("\$GNGSV,,,,,,,"))
+        assertEquals(TalkerId.II, TalkerId.parse("\$IIDPT,,,,,,,"))
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.sentence.TalkerId#parse(java.lang.String)}.
-	 */
-	@Test
-	public void testParse() {
-		assertEquals(TalkerId.GP, TalkerId.parse("$GPGLL,,,,,,,"));
-		assertEquals(TalkerId.GL, TalkerId.parse("$GLGSV,,,,,,,"));
-		assertEquals(TalkerId.GN, TalkerId.parse("$GNGSV,,,,,,,"));
-		assertEquals(TalkerId.II, TalkerId.parse("$IIDPT,,,,,,,"));
-	}
+    @Test
+    fun testParseProprietary() {
+        assertEquals(TalkerId.P, TalkerId.parse("\$PRWIILOG,GGA,A,T,1,0"))
+    }
 
-	@Test
-	public void testParseProprietary() {
-		assertEquals(TalkerId.P, TalkerId.parse("$PRWIILOG,GGA,A,T,1,0"));
-	}
+    @Test
+    fun testParseAIS() {
+        assertEquals(TalkerId.AI, TalkerId.parse("!AIVDM,,,,,,,"))
+        assertEquals(TalkerId.AB, TalkerId.parse("!ABVDM,,,,,,,"))
+        assertEquals(TalkerId.BS, TalkerId.parse("!BSVDM,,,,,,,"))
+    }
 
-	@Test
-	public void testParseAIS() {
-		assertEquals(TalkerId.AI, TalkerId.parse("!AIVDM,,,,,,,"));	
-		assertEquals(TalkerId.AB, TalkerId.parse("!ABVDM,,,,,,,"));	
-		assertEquals(TalkerId.BS, TalkerId.parse("!BSVDM,,,,,,,"));	
-	}
-
-	@Test
-	public void testParseUnknown() {
-		try {
-			TalkerId.parse("$XXXXX,,,,,,");
-			fail("Did not throw exception");
-		} catch (Exception e) {
-			// pass
-		}		
-	}
-
+    @Test
+    fun testParseUnknown() {
+        try {
+            TalkerId.parse("\$XXXXX,,,,,,")
+            fail("Did not throw exception")
+        } catch (e: Exception) {
+            // pass
+        }
+    }
 }

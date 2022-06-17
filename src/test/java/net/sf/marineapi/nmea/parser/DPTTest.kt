@@ -1,73 +1,68 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import static org.junit.Assert.assertEquals;
-import net.sf.marineapi.nmea.sentence.DPTSentence;
-import net.sf.marineapi.nmea.sentence.TalkerId;
+import org.junit.Assert.assertEquals
 
-import org.junit.Before;
-import org.junit.Test;
+class DPTTest {
+    var empty: DPTSentence? = null
+    var dpt: DPTSentence? = null
+    @Before
+    @Throws(Exception::class)
+    fun setUp() {
+        empty = DPTParser(TalkerId.II)
+        dpt = DPTParser(EXAMPLE)
+    }
 
-public class DPTTest {
+    @Test
+    fun testDPTParser() {
+        assertEquals(TalkerId.II, empty.talkerId)
+        assertEquals("DPT", empty.sentenceId)
+        assertEquals(3, empty.fieldCount)
+    }
 
-	public static final String EXAMPLE = "$IIDPT,012.6,-1.0,100";
-	DPTSentence empty;
-	DPTSentence dpt;
+    @Test
+    fun testDPTParserString() {
+        assertEquals(TalkerId.II, dpt.talkerId)
+        assertEquals("DPT", dpt.sentenceId)
+        assertEquals(3, dpt.fieldCount)
+    }
 
-	@Before
-	public void setUp() throws Exception {
-		empty = new DPTParser(TalkerId.II);
-		dpt = new DPTParser(EXAMPLE);
-	}
+    @Test
+    fun testGetDepth() {
+        assertEquals(12.6, dpt.depth, 0.01)
+    }
 
-	@Test
-	public void testDPTParser() {
-		assertEquals(TalkerId.II, empty.getTalkerId());
-		assertEquals("DPT", empty.getSentenceId());
-		assertEquals(3, empty.getFieldCount());
+    @Test
+    fun testGetOffset() {
+        assertEquals(-1.0, dpt.offset, 0.01)
+    }
 
-	}
+    @Test
+    fun testSetDepth() {
+        val depth = 1.2333333
+        empty.depth = depth
+        assertEquals(depth, empty.depth, 0.1)
+    }
 
-	@Test
-	public void testDPTParserString() {
-		assertEquals(TalkerId.II, dpt.getTalkerId());
-		assertEquals("DPT", dpt.getSentenceId());
-		assertEquals(3, dpt.getFieldCount());
-	}
+    @Test
+    fun testSetOffset() {
+        val offset = 1.555555
+        empty.offset = offset
+        assertEquals(offset, empty.offset, 0.1)
+    }
 
-	@Test
-	public void testGetDepth() {
-		assertEquals(12.6, dpt.getDepth(), 0.01);
-	}
+    @Test
+    fun testGetMaximum() {
+        assertEquals(100, dpt.maximum, 1)
+    }
 
-	@Test
-	public void testGetOffset() {
-		assertEquals(-1.0, dpt.getOffset(), 0.01);
-	}
+    @Test
+    fun testSetMaximum() {
+        val max = 123
+        dpt.maximum = max
+        assertEquals(max, dpt.maximum, 1)
+    }
 
-	@Test
-	public void testSetDepth() {
-		final double depth = 1.2333333;
-		empty.setDepth(depth);
-		assertEquals(depth, empty.getDepth(), 0.1);
-	}
-
-	@Test
-	public void testSetOffset() {
-		final double offset = 1.555555;
-		empty.setOffset(offset);
-		assertEquals(offset, empty.getOffset(), 0.1);
-	}
-
-	@Test
-	public void testGetMaximum() {
-		assertEquals(100, dpt.getMaximum(), 1);
-	}
-
-	@Test
-	public void testSetMaximum() {
-		final int max = 123;
-		dpt.setMaximum(max);
-		assertEquals(max, dpt.getMaximum(), 1);
-	}
-
+    companion object {
+        const val EXAMPLE = "\$IIDPT,012.6,-1.0,100"
+    }
 }

@@ -1,89 +1,112 @@
-package net.sf.marineapi.ais.parser;
+package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage09;
-import net.sf.marineapi.ais.util.Sixbit;
-import org.junit.Test;
+import net.sf.marineapi.ais.message.AISMessage09
+import net.sf.marineapi.ais.util.Sixbit
 
-import static org.junit.Assert.*;
+import org.junit.Test
+import junit.framework.TestCase.*
 
 /**
  * Tests for AIS message 9 parser.
  *
  * Expected values based on http://www.maritec.co.za/tools/aisvdmvdodecoding/
  */
-public class AISMessage09ParserTest {
-
+class AISMessage09ParserTest {
     // !AIVDO,1,1,,A,95M2oQ@41Tr4L4H@eRvQ;2h20000,0*0D
-    private final String payload = "95M2oQ@41Tr4L4H@eRvQ;2h20000";
-    private final Sixbit sixbit = new Sixbit(payload, 0);
-    private final AISMessage09 msg = new AISMessage09Parser(sixbit);
+    private val payload = "95M2oQ@41Tr4L4H@eRvQ;2h20000"
+    private val sixbit: Sixbit = Sixbit(payload, 0)
+    private val msg: AISMessage09 = AISMessage09Parser(sixbit)
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val altitude: Unit
+        get() {
+            assertEquals(16, msg.altitude)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val speedOverGround: Unit
+        get() {
+            assertEquals(100.0, msg.speedOverGround, 0.1)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val positionAccuracy: Unit
+        get() {
+            assertEquals(true, msg.isAccurate)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val longitudeInDegrees: Unit
+        get() {
+            assertEquals(-82.91646, msg.longitudeInDegrees, 0.00001)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val latitudeInDegrees: Unit
+        get() {
+            assertEquals(29.20575, msg.latitudeInDegrees, 0.00001)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val courseOverGround: Unit
+        get() {
+            assertEquals(30.0, msg.courseOverGround, 0.1)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val timeStamp: Unit
+        get() {
+            assertEquals(11, msg.timeStamp)
+        }
+
+    // 1 == false, "not available" (default)
+    @get:Throws(Exception::class)
+    @get:Test
+    val dTEFlag: Unit
+        get() {
+            // 1 == false, "not available" (default)
+            assertEquals(false, msg.dTEFlag)
+        }
+
+    // 0 == Autonomous and continuous mode (default)
+    @get:Throws(Exception::class)
+    @get:Test
+    val assignedModeFlag: Unit
+        get() {
+            // 0 == Autonomous and continuous mode (default)
+            assertEquals(false, msg.assignedModeFlag)
+        }
+
+    // 0 = RAIM not in use (default)
+    @get:Throws(Exception::class)
+    @get:Test
+    val rAIMFlag: Unit
+        get() {
+            // 0 = RAIM not in use (default)
+            assertEquals(false, msg.rAIMFlag)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val radioStatus: Unit
+        get() {
+            assertEquals(0, msg.radioStatus)
+        }
 
     @Test
-    public void getAltitude() throws Exception {
-        assertEquals(16, msg.getAltitude());
+    fun hasLatitude() {
+        assertEquals(true, msg.hasLatitude())
     }
 
     @Test
-    public void getSpeedOverGround() throws Exception {
-        assertEquals(100.0, msg.getSpeedOverGround(), 0.1);
+    fun hasLongitude() {
+        assertEquals(true, msg.hasLongitude())
     }
-
-    @Test
-    public void getPositionAccuracy() throws Exception {
-        assertEquals(true, msg.isAccurate());
-    }
-
-    @Test
-    public void getLongitudeInDegrees() throws Exception {
-        assertEquals(-82.91646, msg.getLongitudeInDegrees(), 0.00001);
-    }
-
-    @Test
-    public void getLatitudeInDegrees() throws Exception {
-        assertEquals(29.20575, msg.getLatitudeInDegrees(), 0.00001);
-    }
-
-    @Test
-    public void getCourseOverGround() throws Exception {
-        assertEquals(30.0, msg.getCourseOverGround(), 0.1);
-    }
-
-    @Test
-    public void getTimeStamp() throws Exception {
-        assertEquals(11, msg.getTimeStamp());
-    }
-
-    @Test
-    public void getDTEFlag() throws Exception {
-        // 1 == false, "not available" (default)
-        assertEquals(false, msg.getDTEFlag());
-    }
-
-    @Test
-    public void getAssignedModeFlag() throws Exception {
-        // 0 == Autonomous and continuous mode (default)
-        assertEquals(false, msg.getAssignedModeFlag());
-    }
-
-    @Test
-    public void getRAIMFlag() throws Exception {
-        // 0 = RAIM not in use (default)
-        assertEquals(false, msg.getRAIMFlag());
-    }
-
-    @Test
-    public void getRadioStatus() throws Exception {
-        assertEquals(0, msg.getRadioStatus());
-    }
-
-    @Test
-    public void hasLatitude() {
-        assertEquals(true, msg.hasLatitude());
-    }
-
-    @Test
-    public void hasLongitude() {
-        assertEquals(true, msg.hasLongitude());
-    }
-
 }

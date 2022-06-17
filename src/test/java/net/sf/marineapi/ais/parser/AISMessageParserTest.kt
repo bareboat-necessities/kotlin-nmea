@@ -1,141 +1,133 @@
-package net.sf.marineapi.ais.parser;
+package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.util.Sixbit;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.Test
 
 /**
  * Test common AIS message parser.
  */
-public class AISMessageParserTest {
-
-    private final String payload = "13aEOK?P00PD2wVMdLDRhgvL289?";
-    private final Sixbit sixbit = new Sixbit(payload, 0);
-    private final AISMessageParser parser = new AISMessageParser(sixbit);
-
+class AISMessageParserTest {
+    private val payload = "13aEOK?P00PD2wVMdLDRhgvL289?"
+    private val sixbit: Sixbit = Sixbit(payload, 0)
+    private val parser = AISMessageParser(sixbit)
     @Test
-    public void testGetMessageType() {
-        assertEquals(1, parser.getMessageType());
+    fun testGetMessageType() {
+        assertEquals(1, parser.messageType)
     }
 
     @Test
-    public void testGetMMSI() {
-        assertEquals(244670316, parser.getMMSI());
+    fun testGetMMSI() {
+        assertEquals(244670316, parser.mMSI)
     }
 
     @Test
-    public void testGetRepeatIndicator() {
-        assertEquals(0, parser.getRepeatIndicator());
+    fun testGetRepeatIndicator() {
+        assertEquals(0, parser.repeatIndicator)
     }
 
     @Test
-    public void testGetSixbit() {
-        Sixbit decoder = parser.getSixbit();
-        assertEquals(sixbit.getPayload(), decoder.getPayload());
+    fun testGetSixbit() {
+        val decoder: Sixbit = parser.sixbit
+        assertEquals(sixbit.payload, decoder.payload)
     }
 
     @Test
-    public void testAppend() {
-        AISMessageParser msg = new AISMessageParser();
-        msg.append(payload, 1, 0);
-        assertEquals(1, msg.getMessageType());
-        assertEquals(0, msg.getRepeatIndicator());
-        assertEquals(244670316, msg.getMMSI());
-        assertEquals(payload, msg.getSixbit().getPayload());
+    fun testAppend() {
+        val msg = AISMessageParser()
+        msg.append(payload, 1, 0)
+        assertEquals(1, msg.messageType)
+        assertEquals(0, msg.repeatIndicator)
+        assertEquals(244670316, msg.mMSI)
+        assertEquals(payload, msg.sixbit.getPayload())
     }
 
     @Test
-    public void testAppendIncorrectOrder() {
+    fun testAppendIncorrectOrder() {
         try {
-            AISMessageParser msg = new AISMessageParser();
-            msg.append(payload, 2, 0);
-        } catch (IllegalArgumentException iae) {
-            assertEquals("Invalid fragment index or sequence order", iae.getMessage());
-        } catch (Exception e) {
-            fail("Unexpected exception was thrown; " + e.getMessage());
-        }
-    }
-
-
-    @Test
-    public void testAppendInvalidTail() {
-        try {
-            AISMessageParser msg = new AISMessageParser();
-            msg.append(payload, 1, 0);
-            msg.append(payload, 1, 0);
-            fail("AISMessageParser.append() did not throw exception");
-        } catch (IllegalArgumentException iae) {
-            assertEquals("Invalid fragment index or sequence order", iae.getMessage());
-        } catch (Exception e) {
-            fail("Unexpected exception thrown from AISMessageParser.append()");
-        }
-
-    }
-
-    @Test
-    public void testAppendEmptyString() {
-        try {
-            AISMessageParser msg = new AISMessageParser();
-            msg.append("", 1, 0);
-            fail("AISMessageParser.append() did not throw exception");
-        } catch (IllegalArgumentException iae) {
-            assertEquals("Message fragment cannot be null or empty", iae.getMessage());
-        } catch (Exception e) {
-            fail("Unexpected exception thrown from AISMessageParser.append()");
+            val msg = AISMessageParser()
+            msg.append(payload, 2, 0)
+        } catch (iae: IllegalArgumentException) {
+            assertEquals("Invalid fragment index or sequence order", iae.message)
+        } catch (e: Exception) {
+            fail("Unexpected exception was thrown; " + e.message)
         }
     }
 
     @Test
-    public void testAppendNull() {
+    fun testAppendInvalidTail() {
         try {
-            AISMessageParser msg = new AISMessageParser();
-            msg.append(null, 1, 0);
-            fail("AISMessageParser.append() did not throw exception");
-        } catch (IllegalArgumentException iae) {
-            assertEquals("Message fragment cannot be null or empty", iae.getMessage());
-        } catch (Exception e) {
-            fail("Unexpected exception thrown from AISMessageParser.append()");
+            val msg = AISMessageParser()
+            msg.append(payload, 1, 0)
+            msg.append(payload, 1, 0)
+            fail("AISMessageParser.append() did not throw exception")
+        } catch (iae: IllegalArgumentException) {
+            assertEquals("Invalid fragment index or sequence order", iae.message)
+        } catch (e: Exception) {
+            fail("Unexpected exception thrown from AISMessageParser.append()")
         }
     }
 
     @Test
-    public void testAppendNegativeFillBits() {
+    fun testAppendEmptyString() {
         try {
-            AISMessageParser msg = new AISMessageParser();
-            msg.append(payload, 1, -1);
-            fail("AISMessageParser.append() did not throw exception");
-        } catch (IllegalArgumentException iae) {
-            assertEquals("Fill bits cannot be negative", iae.getMessage());
-        } catch (Exception e) {
-            fail("Unexpected exception thrown from AISMessageParser.append()");
+            val msg = AISMessageParser()
+            msg.append("", 1, 0)
+            fail("AISMessageParser.append() did not throw exception")
+        } catch (iae: IllegalArgumentException) {
+            assertEquals("Message fragment cannot be null or empty", iae.message)
+        } catch (e: Exception) {
+            fail("Unexpected exception thrown from AISMessageParser.append()")
         }
     }
 
     @Test
-    public void testAppendInvalidIndex() {
+    fun testAppendNull() {
         try {
-            AISMessageParser msg = new AISMessageParser();
-            msg.append(payload, 0, 0);
-            fail("AISMessageParser.append() did not throw exception");
-        } catch (IllegalArgumentException iae) {
-            assertEquals("Invalid fragment index or sequence order", iae.getMessage());
-        } catch (Exception e) {
-            fail("Unexpected exception thrown from AISMessageParser.append()");
+            val msg = AISMessageParser()
+            msg.append(null, 1, 0)
+            fail("AISMessageParser.append() did not throw exception")
+        } catch (iae: IllegalArgumentException) {
+            assertEquals("Message fragment cannot be null or empty", iae.message)
+        } catch (e: Exception) {
+            fail("Unexpected exception thrown from AISMessageParser.append()")
         }
     }
 
     @Test
-    public void testGetWithoutMessage() {
+    fun testAppendNegativeFillBits() {
         try {
-            AISMessageParser msg = new AISMessageParser();
-            msg.getMMSI();
-            fail("Getter did not throw exception");
-        } catch (IllegalStateException ise) {
-            assertEquals("Message is empty!", ise.getMessage());
-        } catch (Exception e) {
-            fail("Unexpected exception: " + e.getMessage());
+            val msg = AISMessageParser()
+            msg.append(payload, 1, -1)
+            fail("AISMessageParser.append() did not throw exception")
+        } catch (iae: IllegalArgumentException) {
+            assertEquals("Fill bits cannot be negative", iae.message)
+        } catch (e: Exception) {
+            fail("Unexpected exception thrown from AISMessageParser.append()")
+        }
+    }
+
+    @Test
+    fun testAppendInvalidIndex() {
+        try {
+            val msg = AISMessageParser()
+            msg.append(payload, 0, 0)
+            fail("AISMessageParser.append() did not throw exception")
+        } catch (iae: IllegalArgumentException) {
+            assertEquals("Invalid fragment index or sequence order", iae.message)
+        } catch (e: Exception) {
+            fail("Unexpected exception thrown from AISMessageParser.append()")
+        }
+    }
+
+    @Test
+    fun testGetWithoutMessage() {
+        try {
+            val msg = AISMessageParser()
+            msg.mMSI
+            fail("Getter did not throw exception")
+        } catch (ise: IllegalStateException) {
+            assertEquals("Message is empty!", ise.message)
+        } catch (e: Exception) {
+            fail("Unexpected exception: " + e.message)
         }
     }
 }

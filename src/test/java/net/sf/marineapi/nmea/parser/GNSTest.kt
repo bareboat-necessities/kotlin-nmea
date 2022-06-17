@@ -18,194 +18,212 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.GNSSentence;
-import net.sf.marineapi.nmea.sentence.GNSSentence.Mode;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.CompassPoint;
-import net.sf.marineapi.nmea.util.Position;
-import net.sf.marineapi.nmea.util.Time;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import net.sf.marineapi.nmea.sentence.GNSSentence
+import net.sf.marineapi.nmea.util.Position
+import net.sf.marineapi.nmea.util.Time
+import org.junit.Before
 
 /**
  * GNS parser tests
  *
  * @author Kimmo Tuukkanen
  */
-public class GNSTest {
-
-    public static final String EXAMPLE = "$GNGNS,014035.00,4332.69262,S,17235.48549,E,RR,13,0.9,25.63,11.24,,*70";
-
-    GNSSentence gns;
-    GNSSentence empty;
-
+class GNSTest {
+    var gns: GNSSentence? = null
+    var empty: GNSSentence? = null
     @Before
-    public void setUp() throws Exception {
+    @Throws(Exception::class)
+    fun setUp() {
+        gns = GNSParser(EXAMPLE)
+        assertEquals(TalkerId.GN, gns.talkerId)
+        assertEquals(SentenceId.GNS.name, gns.sentenceId)
+        assertEquals(12, gns.fieldCount)
+        empty = GNSParser(TalkerId.GP)
+        assertEquals(TalkerId.GP, empty.talkerId)
+        assertEquals(SentenceId.GNS.name, empty.sentenceId)
+        assertEquals(12, empty.fieldCount)
+    }
 
-        gns = new GNSParser(EXAMPLE);
-        assertEquals(TalkerId.GN, gns.getTalkerId());
-        assertEquals(SentenceId.GNS.name(), gns.getSentenceId());
-        assertEquals(12, gns.getFieldCount());
+    @get:Throws(Exception::class)
+    @get:Test
+    val time: Unit
+        get() {
+            val t: Time = gns.time
+            assertEquals(1, t.getHour())
+            assertEquals(40, t.getMinutes())
+            assertEquals(35.00, t.getSeconds(), 0.001)
+        }
 
-        empty = new GNSParser(TalkerId.GP);
-        assertEquals(TalkerId.GP, empty.getTalkerId());
-        assertEquals(SentenceId.GNS.name(), empty.getSentenceId());
-        assertEquals(12, empty.getFieldCount());
+    @Test
+    @Throws(Exception::class)
+    fun setTime() {
+        gns.time = Time(10, 20, 30.0)
+        assertEquals(10, gns.time.getHour())
+        assertEquals(20, gns.time.getMinutes())
+        assertEquals(30.0, gns.time.getSeconds(), 0.1)
+    }
+
+    // 4332.69262,S,17235.48549,E
+    @get:Throws(Exception::class)
+    @get:Test
+    val position: Unit
+        get() {
+
+            // 4332.69262,S,17235.48549,E
+            val LAT = -(43 + 32.69262 / 60)
+            val LON = 172 + 35.48549 / 60
+            val p: Position = gns.getPosition()
+            assertEquals(LAT, p.latitude, 0.00001)
+            assertEquals(CompassPoint.SOUTH, p.latitudeHemisphere)
+            assertEquals(LON, p.longitude, 0.00001)
+            assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
+        }
+
+    @Test
+    @Throws(Exception::class)
+    fun setPosition() {
+        val LAT = 61.23456
+        val LON = 21.23456
+        empty.setPosition(Position(LAT, LON))
+        val p: Position = empty.getPosition()
+        assertEquals(LAT, p.latitude, 0.00001)
+        assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
+        assertEquals(LON, p.longitude, 0.00001)
+        assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
+    }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val gpsMode: Unit
+        get() {
+            assertEquals(GNSSentence.Mode.RTK, gns.getGpsMode())
+            assertEquals(GNSSentence.Mode.NONE, empty.getGpsMode())
+        }
+
+    @Test
+    @Throws(Exception::class)
+    fun setGpsMode() {
+        gns.setGpsMode(GNSSentence.Mode.DGPS)
+        assertTrue(gns.toString().contains(",DR,"))
+        assertEquals(GNSSentence.Mode.DGPS, gns.getGpsMode())
+        assertEquals(GNSSentence.Mode.RTK, gns.getGlonassMode())
+        assertEquals(0, gns.getAdditionalModes().size)
+    }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val glonassMode: Unit
+        get() {
+            assertEquals(GNSSentence.Mode.RTK, gns.getGlonassMode())
+            assertEquals(GNSSentence.Mode.NONE, empty.getGlonassMode())
+        }
+
+    @Test
+    @Throws(Exception::class)
+    fun setGlonassMode() {
+        gns.setGlonassMode(GNSSentence.Mode.FRTK)
+        assertTrue(gns.toString().contains(",RF,"))
+        assertEquals(GNSSentence.Mode.FRTK, gns.getGlonassMode())
+        assertEquals(GNSSentence.Mode.RTK, gns.getGpsMode())
+        assertEquals(0, gns.getAdditionalModes().size)
     }
 
     @Test
-    public void getTime() throws Exception {
-        Time t = gns.getTime();
-        assertEquals(1, t.getHour());
-        assertEquals(40, t.getMinutes());
-        assertEquals(35.00, t.getSeconds(), 0.001);
+    @Throws(Exception::class)
+    fun setAdditionalModes() {
+        gns.setAdditionalModes(GNSSentence.Mode.AUTOMATIC, GNSSentence.Mode.ESTIMATED)
+        assertTrue(gns.toString().contains(",RRAE,"))
+        assertEquals(GNSSentence.Mode.RTK, gns.getGpsMode())
+        assertEquals(GNSSentence.Mode.RTK, gns.getGlonassMode())
+    }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val additionalModes: Unit
+        get() {
+            gns.setAdditionalModes(GNSSentence.Mode.AUTOMATIC, GNSSentence.Mode.ESTIMATED)
+            val additional: Array<GNSSentence.Mode> = gns.getAdditionalModes()
+            assertEquals(2, additional.size)
+            assertEquals(GNSSentence.Mode.AUTOMATIC, additional[0])
+            assertEquals(GNSSentence.Mode.ESTIMATED, additional[1])
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val satelliteCount: Unit
+        get() {
+            assertEquals(13, gns.satelliteCount)
+        }
+
+    @Test
+    @Throws(Exception::class)
+    fun setSatelliteCount() {
+        gns.satelliteCount = 8
+        assertTrue(gns.toString().contains(",08,"))
+        assertEquals(8, gns.satelliteCount)
+    }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val horizontalDOP: Unit
+        get() {
+            assertEquals(0.9, gns.horizontalDOP, 0.001)
+        }
+
+    @Test
+    @Throws(Exception::class)
+    fun setHorizontalDOP() {
+        gns.horizontalDOP = 0.123
+        assertEquals(0.12, gns.horizontalDOP, 0.001)
+    }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val orthometricHeight: Unit
+        get() {
+            assertEquals(25.63, gns.orthometricHeight, 0.001)
+        }
+
+    @Test
+    @Throws(Exception::class)
+    fun setOrthometricHeight() {
+        gns.orthometricHeight = 12.342
+        assertEquals(12.34, gns.orthometricHeight, 0.0001)
+    }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val geoidalSeparation: Unit
+        get() {
+            assertEquals(11.24, gns.geoidalSeparation, 0.001)
+        }
+
+    @Test
+    @Throws(Exception::class)
+    fun setGeoidalSeparation() {
+        gns.geoidalSeparation = 1.234
+        assertEquals(1.23, gns.geoidalSeparation, 0.001)
     }
 
     @Test
-    public void setTime() throws Exception {
-        gns.setTime(new Time(10, 20, 30));
-        assertEquals(10, gns.getTime().getHour());
-        assertEquals(20, gns.getTime().getMinutes());
-        assertEquals(30.0, gns.getTime().getSeconds(), 0.1);
+    @Throws(Exception::class)
+    fun testDgpsAge() {
+        empty.dgpsAge = 10
+        assertTrue(empty.toString().contains(",10.0,*"))
+        assertEquals(10, empty.dgpsAge, 0.1)
     }
 
     @Test
-    public void getPosition() throws Exception {
-
-        // 4332.69262,S,17235.48549,E
-        final double LAT = -(43 + 32.69262 / 60);
-        final double LON = 172 + 35.48549 / 60;
-        Position p = gns.getPosition();
-
-        assertEquals(LAT, p.getLatitude(), 0.00001);
-        assertEquals(CompassPoint.SOUTH, p.getLatitudeHemisphere());
-        assertEquals(LON, p.getLongitude(), 0.00001);
-        assertEquals(CompassPoint.EAST, p.getLongitudeHemisphere());
+    @Throws(Exception::class)
+    fun testDgpsStationId() {
+        gns.dgpsStationId = "1234"
+        assertTrue(gns.toString().contains(",1234*"))
+        assertEquals("1234", gns.dgpsStationId)
     }
 
-    @Test
-    public void setPosition() throws Exception {
-
-        final double LAT = 61.23456;
-        final double LON = 21.23456;
-
-        empty.setPosition(new Position(LAT, LON));
-        Position p = empty.getPosition();
-
-        assertEquals(LAT, p.getLatitude(), 0.00001);
-        assertEquals(CompassPoint.NORTH, p.getLatitudeHemisphere());
-        assertEquals(LON, p.getLongitude(), 0.00001);
-        assertEquals(CompassPoint.EAST, p.getLongitudeHemisphere());
+    companion object {
+        const val EXAMPLE = "\$GNGNS,014035.00,4332.69262,S,17235.48549,E,RR,13,0.9,25.63,11.24,,*70"
     }
-
-    @Test
-    public void getGpsMode() throws Exception {
-        assertEquals(Mode.RTK, gns.getGpsMode());
-        assertEquals(Mode.NONE, empty.getGpsMode());
-    }
-
-    @Test
-    public void setGpsMode() throws Exception {
-        gns.setGpsMode(Mode.DGPS);
-        assertTrue(gns.toString().contains(",DR,"));
-        assertEquals(Mode.DGPS, gns.getGpsMode());
-        assertEquals(Mode.RTK, gns.getGlonassMode());
-        assertEquals(0, gns.getAdditionalModes().length);
-    }
-
-    @Test
-    public void getGlonassMode() throws Exception {
-        assertEquals(Mode.RTK, gns.getGlonassMode());
-        assertEquals(Mode.NONE, empty.getGlonassMode());
-    }
-
-    @Test
-    public void setGlonassMode() throws Exception {
-        gns.setGlonassMode(Mode.FRTK);
-        assertTrue(gns.toString().contains(",RF,"));
-        assertEquals(Mode.FRTK, gns.getGlonassMode());
-        assertEquals(Mode.RTK, gns.getGpsMode());
-        assertEquals(0, gns.getAdditionalModes().length);
-    }
-
-    @Test
-    public void setAdditionalModes() throws Exception {
-        gns.setAdditionalModes(Mode.AUTOMATIC, Mode.ESTIMATED);
-        assertTrue(gns.toString().contains(",RRAE,"));
-        assertEquals(Mode.RTK, gns.getGpsMode());
-        assertEquals(Mode.RTK, gns.getGlonassMode());
-    }
-
-    @Test
-    public void getAdditionalModes() throws Exception {
-        gns.setAdditionalModes(Mode.AUTOMATIC, Mode.ESTIMATED);
-        Mode[] additional = gns.getAdditionalModes();
-        assertEquals(2, additional.length);
-        assertEquals(Mode.AUTOMATIC, additional[0]);
-        assertEquals(Mode.ESTIMATED, additional[1]);
-    }
-
-    @Test
-    public void getSatelliteCount() throws Exception {
-        assertEquals(13, gns.getSatelliteCount());
-    }
-
-    @Test
-    public void setSatelliteCount() throws Exception {
-        gns.setSatelliteCount(8);
-        assertTrue(gns.toString().contains(",08,"));
-        assertEquals(8, gns.getSatelliteCount());
-    }
-
-    @Test
-    public void getHorizontalDOP() throws Exception {
-        assertEquals(0.9, gns.getHorizontalDOP(), 0.001);
-    }
-
-    @Test
-    public void setHorizontalDOP() throws Exception {
-        gns.setHorizontalDOP(0.123);
-        assertEquals(0.12, gns.getHorizontalDOP(), 0.001);
-    }
-
-    @Test
-    public void getOrthometricHeight() throws Exception {
-        assertEquals(25.63, gns.getOrthometricHeight(), 0.001);
-    }
-
-    @Test
-    public void setOrthometricHeight() throws Exception {
-        gns.setOrthometricHeight(12.342);
-        assertEquals(12.34, gns.getOrthometricHeight(), 0.0001);
-    }
-
-    @Test
-    public void getGeoidalSeparation() throws Exception {
-        assertEquals(11.24, gns.getGeoidalSeparation(), 0.001);
-    }
-
-    @Test
-    public void setGeoidalSeparation() throws Exception {
-        gns.setGeoidalSeparation(1.234);
-        assertEquals(1.23, gns.getGeoidalSeparation(), 0.001);
-    }
-
-    @Test
-    public void testDgpsAge() throws Exception {
-        empty.setDgpsAge(10);
-        assertTrue(empty.toString().contains(",10.0,*"));
-        assertEquals(10, empty.getDgpsAge(), 0.1);
-    }
-
-    @Test
-    public void testDgpsStationId() throws Exception {
-        gns.setDgpsStationId("1234");
-        assertTrue(gns.toString().contains(",1234*"));
-        assertEquals("1234", gns.getDgpsStationId());
-    }
-
 }

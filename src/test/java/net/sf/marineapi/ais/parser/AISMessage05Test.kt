@@ -1,106 +1,133 @@
-package net.sf.marineapi.ais.parser;
+package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage05;
-import net.sf.marineapi.ais.util.Sixbit;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.Test
 
 /**
  * AIS Message 05 parser test.
  *
  * Expected values according to http://www.maritec.co.za/aisvdmvdodecoding1.php
  */
-public class AISMessage05Test {
-
+class AISMessage05Test {
     // !AIVDM,2,1,0,A,58wt8Ui`g??r21`7S=:22058<v05Htp000000015>8OA;0sk,0*7B
     // !AIVDM,2,2,0,A,eQ8823mDm3kP00000000000,2*5D
-    private final String payload = "58wt8Ui`g??r21`7S=:22058<v05Htp000000015>8OA;0skeQ8823mDm3kP00000000000";
-    private final Sixbit sixbit = new Sixbit(payload, 2);
-    private final AISMessage05 msg = new AISMessage05Parser(sixbit);
+    private val payload = "58wt8Ui`g??r21`7S=:22058<v05Htp000000015>8OA;0skeQ8823mDm3kP00000000000"
+    private val sixbit: Sixbit = Sixbit(payload, 2)
+    private val msg: AISMessage05 = AISMessage05Parser(sixbit)
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val aISVersionIndicator: Unit
+        get() {
+            assertEquals(0, msg.aISVersionIndicator)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val iMONumber: Unit
+        get() {
+            assertEquals(439303422, msg.iMONumber)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val callSign: Unit
+        get() {
+            assertEquals("ZA83R", msg.callSign)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val name: Unit
+        get() {
+            assertEquals("ARCO AVON", msg.name)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val typeOfShipAndCargoType: Unit
+        get() {
+            assertEquals(69, msg.typeOfShipAndCargoType)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val bow: Unit
+        get() {
+            assertEquals(113, msg.bow)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val stern: Unit
+        get() {
+            assertEquals(31, msg.stern)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val port: Unit
+        get() {
+            assertEquals(17, msg.port)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val starboard: Unit
+        get() {
+            assertEquals(11, msg.starboard)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val typeOfEPFD: Unit
+        get() {
+            assertEquals(0, msg.typeOfEPFD)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val eTAMonth: Unit
+        get() {
+            assertEquals(3, msg.eTAMonth)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val eTADay: Unit
+        get() {
+            assertEquals(23, msg.eTADay)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val eTAHour: Unit
+        get() {
+            assertEquals(19, msg.eTAHour)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val eTAMinute: Unit
+        get() {
+            assertEquals(45, msg.eTAMinute)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val maximumDraught: Unit
+        get() {
+            assertEquals(13.2, msg.maximumDraught, 0.1)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val destination: Unit
+        get() {
+            assertEquals("HOUSTON", msg.destination)
+        }
 
     @Test
-    public void getAISVersionIndicator() throws Exception {
-        assertEquals(0, msg.getAISVersionIndicator());
-    }
-
-    @Test
-    public void getIMONumber() throws Exception {
-        assertEquals(439303422, msg.getIMONumber());
-    }
-
-    @Test
-    public void getCallSign() throws Exception {
-        assertEquals("ZA83R", msg.getCallSign());
-    }
-
-    @Test
-    public void getName() throws Exception {
-        assertEquals("ARCO AVON", msg.getName());
-    }
-
-    @Test
-    public void getTypeOfShipAndCargoType() throws Exception {
-        assertEquals(69, msg.getTypeOfShipAndCargoType());
-    }
-
-    @Test
-    public void getBow() throws Exception {
-        assertEquals(113, msg.getBow());
-    }
-
-    @Test
-    public void getStern() throws Exception {
-        assertEquals(31, msg.getStern());
-    }
-
-    @Test
-    public void getPort() throws Exception {
-        assertEquals(17, msg.getPort());
-    }
-
-    @Test
-    public void getStarboard() throws Exception {
-        assertEquals(11, msg.getStarboard());
-    }
-
-    @Test
-    public void getTypeOfEPFD() throws Exception {
-        assertEquals(0, msg.getTypeOfEPFD());
-    }
-
-    @Test
-    public void getETAMonth() throws Exception {
-        assertEquals(3, msg.getETAMonth());
-    }
-
-    @Test
-    public void getETADay() throws Exception {
-        assertEquals(23, msg.getETADay());
-    }
-
-    @Test
-    public void getETAHour() throws Exception {
-        assertEquals(19, msg.getETAHour());
-    }
-
-    @Test
-    public void getETAMinute() throws Exception {
-        assertEquals(45, msg.getETAMinute());
-    }
-
-    @Test
-    public void getMaximumDraught() throws Exception {
-        assertEquals(13.2, msg.getMaximumDraught(), 0.1);
-    }
-
-    @Test
-    public void getDestination() throws Exception {
-        assertEquals("HOUSTON", msg.getDestination());
-    }
-
-    @Test
-    public void testIsDteReady() {
-        assertFalse(msg.isDteReady());
+    fun testIsDteReady() {
+        assertFalse(msg.isDteReady)
     }
 }

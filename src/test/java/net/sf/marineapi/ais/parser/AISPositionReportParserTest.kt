@@ -1,101 +1,117 @@
-package net.sf.marineapi.ais.parser;
+package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISPositionReport;
-import net.sf.marineapi.ais.util.Sixbit;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.Test
 
 /**
  * AISPositionReportParser test, covering parsers for types 01, 02 and 03.
  *
  * Expected values based on http://www.maritec.co.za/tools/aisvdmvdodecoding/
  */
-public class AISPositionReportParserTest {
-
+class AISPositionReportParserTest {
     // !AIVDM,1,1,,A,13u?etPv2;0n:dDPwUM1U1Cb069D,0*23
-    private final String payload = "13u?etPv2;0n:dDPwUM1U1Cb069D";
-    private final Sixbit sixbit = new Sixbit(payload, 0);
-    private final AISPositionReport msg = new AISPositionReportParser(sixbit);
+    private val payload = "13u?etPv2;0n:dDPwUM1U1Cb069D"
+    private val sixbit: Sixbit = Sixbit(payload, 0)
+    private val msg: AISPositionReport = AISPositionReportParser(sixbit)
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val navigationalStatus: Unit
+        get() {
+            assertEquals(0, msg.navigationalStatus)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val rateOfTurn: Unit
+        get() {
+            assertEquals(-2.9, msg.rateOfTurn, 0.1)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val speedOverGround: Unit
+        get() {
+            assertEquals(13.9, msg.speedOverGround, 0.1)
+        }
+
+    // 0 == low (> 10 meters)
+    @get:Throws(Exception::class)
+    @get:Test
+    val positionAccuracy: Unit
+        get() {
+            // 0 == low (> 10 meters)
+            assertFalse(msg.isAccurate)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val longitudeInDegrees: Unit
+        get() {
+            assertEquals(11.8329767, msg.longitudeInDegrees, 0.0000001)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val latitudeInDegrees: Unit
+        get() {
+            assertEquals(57.6603533, msg.latitudeInDegrees, 0.0000001)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val courseOverGround: Unit
+        get() {
+            assertEquals(40.4, msg.courseOverGround, 0.1)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val trueHeading: Unit
+        get() {
+            assertEquals(41, msg.trueHeading)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val timeStamp: Unit
+        get() {
+            assertEquals(53, msg.timeStamp)
+        }
+
+    @get:Throws(Exception::class)
+    @get:Test
+    val manouverIndicator: Unit
+        get() {
+            assertEquals(0, msg.manouverIndicator)
+        }
 
     @Test
-    public void getNavigationalStatus() throws Exception {
-        assertEquals(0, msg.getNavigationalStatus());
+    fun hasLatitude() {
+        assertEquals(true, msg.hasLatitude())
     }
 
     @Test
-    public void getRateOfTurn() throws Exception {
-        assertEquals(-2.9, msg.getRateOfTurn(), 0.1);
+    fun hasLongitude() {
+        assertEquals(true, msg.hasLongitude())
     }
 
     @Test
-    public void getSpeedOverGround() throws Exception {
-        assertEquals(13.9, msg.getSpeedOverGround(), 0.1);
+    fun hasRateOfTurn() {
+        assertEquals(true, msg.hasRateOfTurn())
     }
 
     @Test
-    public void getPositionAccuracy() throws Exception {
-        // 0 == low (> 10 meters)
-        assertFalse(msg.isAccurate());
+    fun hasCourseOverGround() {
+        assertEquals(true, msg.hasCourseOverGround())
     }
 
     @Test
-    public void getLongitudeInDegrees() throws Exception {
-        assertEquals(11.8329767, msg.getLongitudeInDegrees(), 0.0000001);
+    fun hasSpeedOverGround() {
+        assertEquals(true, msg.hasSpeedOverGround())
     }
 
     @Test
-    public void getLatitudeInDegrees() throws Exception {
-        assertEquals(57.6603533, msg.getLatitudeInDegrees(), 0.0000001);
-    }
-
-    @Test
-    public void getCourseOverGround() throws Exception {
-        assertEquals(40.4, msg.getCourseOverGround(), 0.1);
-    }
-
-    @Test
-    public void getTrueHeading() throws Exception {
-        assertEquals(41, msg.getTrueHeading());
-    }
-
-    @Test
-    public void getTimeStamp() throws Exception {
-        assertEquals(53, msg.getTimeStamp());
-    }
-
-    @Test
-    public void getManouverIndicator() throws Exception {
-        assertEquals(0, msg.getManouverIndicator());
-    }
-
-    @Test
-    public void hasLatitude() {
-        assertEquals(true, msg.hasLatitude());
-    }
-
-    @Test
-    public void hasLongitude() {
-        assertEquals(true, msg.hasLongitude());
-    }
-
-    @Test
-    public void hasRateOfTurn() {
-        assertEquals(true, msg.hasRateOfTurn());
-    }
-
-    @Test
-    public void hasCourseOverGround() {
-        assertEquals(true, msg.hasCourseOverGround());
-    }
-
-    @Test
-    public void hasSpeedOverGround() {
-        assertEquals(true, msg.hasSpeedOverGround());
-    }
-
-    @Test
-    public void hasTimeStamp() {
-        assertEquals(true, msg.hasTimeStamp());
+    fun hasTimeStamp() {
+        assertEquals(true, msg.hasTimeStamp())
     }
 }

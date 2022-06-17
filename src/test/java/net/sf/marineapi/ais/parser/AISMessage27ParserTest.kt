@@ -1,71 +1,76 @@
-package net.sf.marineapi.ais.parser;
+package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage27;
-import net.sf.marineapi.ais.util.Sixbit;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.Test
 
 /**
  * AIS message 27 parser tests
- * <p>
+ *
+ *
  * According to the specification: https://www.navcen.uscg.gov/?pageName=AISMessage27
  */
-public class AISMessage27ParserTest {
-
+class AISMessage27ParserTest {
     // !AIVDM,1,1,,,Kk:qFP0?fhT8=7m@,0*50
-    private final String payload = "Kk:qFP0?fhT8=7m@";
-    private final Sixbit sixbit = new Sixbit(payload, 0);
-    private final AISMessage27 message = new AisMessage27Parser(sixbit);
+    private val payload = "Kk:qFP0?fhT8=7m@"
+    private val sixbit: Sixbit = Sixbit(payload, 0)
+    private val message: AISMessage27 = AisMessage27Parser(sixbit)
 
-    @Test
-    public void getRepeatIndicator() {
-        assertEquals(3, message.getRepeatIndicator());
-    }
+    @get:Test
+    val repeatIndicator: Unit
+        get() {
+            assertEquals(3, message.repeatIndicator)
+        }
 
-    @Test
-    public void getMMSI() {
-        assertEquals(212752000, message.getMMSI());
-    }
+    @get:Test
+    val mMSI: Unit
+        get() {
+            assertEquals(212752000, message.mMSI)
+        }
 
-    @Test
-    public void isAccurate() {
-        assertFalse(message.isAccurate());
-    }
+    @get:Test
+    val isAccurate: Unit
+        get() {
+            assertFalse(message.isAccurate)
+        }
 
-    @Test
-    public void getRaimFlag() {
-        assertFalse(message.getRAIMFlag());
-    }
+    @get:Test
+    val raimFlag: Unit
+        get() {
+            assertFalse(message.rAIMFlag)
+        }
 
-    @Test
-    public void getNavigationalStatus() {
-        assertEquals(0, message.getNavigationalStatus());
-    }
+    @get:Test
+    val navigationalStatus: Unit
+        get() {
+            assertEquals(0, message.navigationalStatus)
+        }
 
-    @Test
-    public void getLongitude() {
-        assertEquals(-7.3566666666666665, message.getLongitudeInDegrees(), 0);
-    }
+    @get:Test
+    val longitude: Unit
+        get() {
+            assertEquals(-7.3566666666666665, message.longitudeInDegrees, 0)
+        }
 
-    @Test
-    public void getLatitude() {
-        assertEquals(56.36333333333334, message.getLatitudeInDegrees(), 0);
-    }
+    @get:Test
+    val latitude: Unit
+        get() {
+            assertEquals(56.36333333333334, message.latitudeInDegrees, 0)
+        }
 
-    @Test
-    public void getSpeedOverGround() {
-        assertEquals(15.0, message.getSpeedOverGround(), 0);
-    }
+    @get:Test
+    val speedOverGround: Unit
+        get() {
+            assertEquals(15.0, message.speedOverGround, 0)
+        }
 
-    @Test
-    public void getCourseOverGround() {
-        assertEquals(340.0, message.getCourseOverGround(), 0);
-    }
+    @get:Test
+    val courseOverGround: Unit
+        get() {
+            assertEquals(340.0, message.courseOverGround, 0)
+        }
 
-    @Test
-    public void getPositionLatency() {
-        assertEquals(0, message.getPositionLatency());
-    }
-
+    @get:Test
+    val positionLatency: Unit
+        get() {
+            assertEquals(0, message.positionLatency)
+        }
 }

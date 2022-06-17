@@ -18,124 +18,94 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.provider;
+package net.sf.marineapi.provider
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import java.io.File;
-import java.io.FileInputStream;
-
-import net.sf.marineapi.nmea.event.SentenceEvent;
-import net.sf.marineapi.nmea.io.SentenceReader;
-import net.sf.marineapi.nmea.parser.GGATest;
-import net.sf.marineapi.nmea.parser.GLLTest;
-import net.sf.marineapi.nmea.parser.RMCTest;
-import net.sf.marineapi.nmea.parser.SentenceFactory;
-import net.sf.marineapi.nmea.sentence.Sentence;
-import net.sf.marineapi.provider.event.PositionEvent;
-import net.sf.marineapi.provider.event.PositionListener;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.Assert.assertNotNull
+import java.io.File
 
 /**
  * @author Kimmo Tuukkanen
  */
-public class PositionProviderTest implements PositionListener {
+class PositionProviderTest : PositionListener {
+    var event: PositionEvent? = null
+    var instance: PositionProvider? = null
 
-	PositionEvent event;
-	PositionProvider instance;
+    /**
+     * @throws java.lang.Exception
+     */
+    @Before
+    @Throws(Exception::class)
+    fun setUp() {
+        val f = File("target/test-classes/data/Navibe-GM720.txt")
+        val str = FileInputStream(f)
+        val r = SentenceReader(str)
+        instance = PositionProvider(r)
+        instance!!.addListener(this)
+    }
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-		File f = new File("target/test-classes/data/Navibe-GM720.txt");
-		FileInputStream str = new FileInputStream(f);
-		SentenceReader r = new SentenceReader(str);
-		instance = new PositionProvider(r);
-		instance.addListener(this);
-	}
+    /**
+     * @throws java.lang.Exception
+     */
+    @After
+    @Throws(Exception::class)
+    fun tearDown() {
+        instance!!.removeListener(this)
+    }
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-		instance.removeListener(this);
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.provider.AbstractProvider.sentenceRead]
+     * .
+     */
+    @Test
+    fun testSentenceReadWithGGA() {
+        val sf: SentenceFactory = SentenceFactory.getInstance()
+        val gga: Sentence = sf.createParser(GGATest.Companion.EXAMPLE)
+        assertNull(event)
+        instance!!.sentenceRead(SentenceEvent(this, gga))
+        assertNull(event)
+        val rmc: Sentence = sf.createParser(RMCTest.Companion.EXAMPLE)
+        assertNull(event)
+        instance!!.sentenceRead(SentenceEvent(this, rmc))
+        assertNotNull(event)
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.provider.AbstractProvider#sentenceRead(net.sf.marineapi.nmea.event.SentenceEvent)}
-	 * .
-	 */
-	@Test
-	public void testSentenceReadWithGGA() {
+    /**
+     * Test method for
+     * [net.sf.marineapi.provider.AbstractProvider.sentenceRead]
+     * .
+     */
+    @Test
+    fun testSentenceReadWithGLL() {
+        val sf: SentenceFactory = SentenceFactory.getInstance()
+        val gll: Sentence = sf.createParser(GLLTest.Companion.EXAMPLE)
+        assertNull(event)
+        instance!!.sentenceRead(SentenceEvent(this, gll))
+        assertNull(event)
+        val rmc: Sentence = sf.createParser(RMCTest.Companion.EXAMPLE)
+        instance!!.sentenceRead(SentenceEvent(this, rmc))
+        assertNotNull(event)
+    }
 
-		SentenceFactory sf = SentenceFactory.getInstance();
-		Sentence gga = sf.createParser(GGATest.EXAMPLE);
+    @Test
+    fun testSentenceReadWithLegacyRMC() {
+        val sf: SentenceFactory = SentenceFactory.getInstance()
+        val gll: Sentence = sf.createParser(GLLTest.Companion.EXAMPLE)
+        assertNull(event)
+        instance!!.sentenceRead(SentenceEvent(this, gll))
+        assertNull(event)
+        val rmc: Sentence = sf.createParser(RMCTest.Companion.EXAMPLE_LEGACY)
+        instance!!.sentenceRead(SentenceEvent(this, rmc))
+        assertNotNull(event)
+    }
 
-		assertNull(event);
-		instance.sentenceRead(new SentenceEvent(this, gga));
-		assertNull(event);
-
-		Sentence rmc = sf.createParser(RMCTest.EXAMPLE);
-
-		assertNull(event);
-		instance.sentenceRead(new SentenceEvent(this, rmc));
-		assertNotNull(event);
-
-	}
-
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.provider.AbstractProvider#sentenceRead(net.sf.marineapi.nmea.event.SentenceEvent)}
-	 * .
-	 */
-	@Test
-	public void testSentenceReadWithGLL() {
-
-		SentenceFactory sf = SentenceFactory.getInstance();
-		Sentence gll = sf.createParser(GLLTest.EXAMPLE);
-
-		assertNull(event);
-		instance.sentenceRead(new SentenceEvent(this, gll));
-		assertNull(event);
-
-		Sentence rmc = sf.createParser(RMCTest.EXAMPLE);
-		instance.sentenceRead(new SentenceEvent(this, rmc));
-		assertNotNull(event);
-
-	}
-
-	@Test
-	public void testSentenceReadWithLegacyRMC() {
-
-		SentenceFactory sf = SentenceFactory.getInstance();
-		Sentence gll = sf.createParser(GLLTest.EXAMPLE);
-
-		assertNull(event);
-		instance.sentenceRead(new SentenceEvent(this, gll));
-		assertNull(event);
-
-		Sentence rmc = sf.createParser(RMCTest.EXAMPLE_LEGACY);
-		instance.sentenceRead(new SentenceEvent(this, rmc));
-		assertNotNull(event);
-
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.provider.event.PositionListener#providerUpdate(net.sf.marineapi
 	 * .provider.event.PositionEvent)
 	 */
-	public void providerUpdate(PositionEvent evt) {
-		event = evt;
-	}
-
+    override fun providerUpdate(evt: PositionEvent) {
+        event = evt
+    }
 }

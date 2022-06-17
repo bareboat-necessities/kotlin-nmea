@@ -1,96 +1,85 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.STALKSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.Before
 
 /**
  * $STALK parser test
  */
-public class STALKTest {
-
-    public static final String EXAMPLE = "$STALK,52,A1,00,00*36";
-
-    private STALKSentence stalk;
-    private STALKSentence empty;
-
+class STALKTest {
+    private var stalk: STALKSentence? = null
+    private var empty: STALKSentence? = null
     @Before
-    public void setUp() {
+    fun setUp() {
         try {
-            stalk = new STALKParser(EXAMPLE);
-            empty = new STALKParser(TalkerId.ST);
-        } catch (Exception e) {
-            fail(e.getMessage());
+            stalk = STALKParser(EXAMPLE)
+            empty = STALKParser(TalkerId.ST)
+        } catch (e: Exception) {
+            fail(e.message)
         }
     }
 
     @Test
-    public void testConstructor() {
-
-        assertEquals(4, stalk.getFieldCount());
-        assertEquals(TalkerId.ST, stalk.getTalkerId());
-        assertEquals(SentenceId.ALK.name(), stalk.getSentenceId());
-
-        assertEquals(2, empty.getFieldCount());
-        assertEquals(TalkerId.ST, empty.getTalkerId());
-        assertEquals(SentenceId.ALK.name(), empty.getSentenceId());
+    fun testConstructor() {
+        assertEquals(4, stalk.fieldCount)
+        assertEquals(TalkerId.ST, stalk.talkerId)
+        assertEquals(SentenceId.ALK.name, stalk.sentenceId)
+        assertEquals(2, empty.fieldCount)
+        assertEquals(TalkerId.ST, empty.talkerId)
+        assertEquals(SentenceId.ALK.name, empty.sentenceId)
     }
 
     @Test
-    public void testConstructorWithWrongTalkerId() {
+    fun testConstructorWithWrongTalkerId() {
         try {
-            new STALKParser(TalkerId.GP);
-            fail("STALK parser did not throw exception on invalid talker-id");
-        } catch (IllegalArgumentException iae) {
+            STALKParser(TalkerId.GP)
+            fail("STALK parser did not throw exception on invalid talker-id")
+        } catch (iae: IllegalArgumentException) {
             // pass
-        } catch (Exception e) {
-            fail(e.getMessage());
+        } catch (e: Exception) {
+            fail(e.message)
         }
     }
 
     @Test
-    public void testGetCommand() {
-        assertEquals("52", stalk.getCommand());
+    fun testGetCommand() {
+        assertEquals("52", stalk.getCommand())
     }
 
     @Test
-    public void testSetCommand() {
-        empty.setCommand("25");
-        assertEquals("25", empty.getCommand());
+    fun testSetCommand() {
+        empty.setCommand("25")
+        assertEquals("25", empty.getCommand())
     }
 
     @Test
-    public void testGetParameters() {
-        String[] params = stalk.getParameters();
-        assertEquals(3, params.length);
-        assertEquals("A1", params[0]);
-        assertEquals("00", params[1]);
-        assertEquals("00", params[2]);
+    fun testGetParameters() {
+        val params: Array<String> = stalk.getParameters()
+        assertEquals(3, params.size)
+        assertEquals("A1", params[0])
+        assertEquals("00", params[1])
+        assertEquals("00", params[2])
     }
 
     @Test
-    public void testSetParameters() {
-        empty.setParameters("A1", "A2", "A3", "A4");
-        String[] params = empty.getParameters();
-
-        assertEquals(5, empty.getFieldCount());
-        assertEquals(4, params.length);
-        assertEquals("A1", params[0]);
-        assertEquals("A2", params[1]);
-        assertEquals("A3", params[2]);
-        assertEquals("A4", params[3]);
+    fun testSetParameters() {
+        empty.setParameters("A1", "A2", "A3", "A4")
+        val params: Array<String> = empty.getParameters()
+        assertEquals(5, empty.fieldCount)
+        assertEquals(4, params.size)
+        assertEquals("A1", params[0])
+        assertEquals("A2", params[1])
+        assertEquals("A3", params[2])
+        assertEquals("A4", params[3])
     }
 
     @Test
-    public void testAddParameter() {
-        stalk.addParameter("B1");
-        String[] params = stalk.getParameters();
-        assertEquals("B1", params[params.length-1]);
+    fun testAddParameter() {
+        stalk.addParameter("B1")
+        val params: Array<String> = stalk.getParameters()
+        assertEquals("B1", params[params.size - 1])
     }
 
+    companion object {
+        const val EXAMPLE = "\$STALK,52,A1,00,00*36"
+    }
 }

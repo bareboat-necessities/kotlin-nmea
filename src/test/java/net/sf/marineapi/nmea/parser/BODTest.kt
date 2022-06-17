@@ -1,353 +1,347 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import junit.framework.TestCase;
-import net.sf.marineapi.nmea.sentence.BODSentence;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import junit.framework.TestCase
 
 /**
  * Tests the BOD sentence parser.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public class BODTest extends TestCase {
+class BODTest : TestCase() {
+    private var empty: BODSentence? = null
+    private var bod: BODSentence? = null
 
-	public static final String EXAMPLE = "$GPBOD,234.9,T,228.8,M,RUSKI,*1D";
+    /**
+     * setUp
+     */
+    @Before
+    @Throws(Exception::class)
+    fun setUp() {
+        try {
+            empty = BODParser(TalkerId.GP)
+            bod = BODParser(EXAMPLE)
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	private BODSentence empty;
-	private BODSentence bod;
+    /**
+     * tearDown
+     */
+    @After
+    @Throws(Exception::class)
+    fun tearDown() {
+    }
 
-	/**
-	 * setUp
-	 */
-	@Override
-	@Before
-	public void setUp() throws Exception {
-		try {
-			empty = new BODParser(TalkerId.GP);
-			bod = new BODParser(EXAMPLE);
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.BODParser] .
+     */
+    @Test
+    fun testConstructor() {
+        assertEquals(6, empty.fieldCount)
+    }
 
-	/**
-	 * tearDown
-	 */
-	@Override
-	@After
-	public void tearDown() throws Exception {
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.BODParser]
+     * .
+     */
+    @Test
+    fun testConstructorWithInvalidSentence() {
+        try {
+            BODParser("\$HUBBA,habba,doo,dah,doo")
+        } catch (e: IllegalArgumentException) {
+            // OK
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#BODParser()} .
-	 */
-	@Test
-	public void testConstructor() {
-		assertEquals(6, empty.getFieldCount());
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.BODParser]
+     * .
+     */
+    @Test
+    fun testConstructorWithNullString() {
+        try {
+            BODParser(null as String?)
+        } catch (e: IllegalArgumentException) {
+            // OK
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#BODParser(java.lang.String)}
-	 * .
-	 */
-	@Test
-	public void testConstructorWithInvalidSentence() {
-		try {
-			new BODParser("$HUBBA,habba,doo,dah,doo");
-		} catch (IllegalArgumentException e) {
-			// OK
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.BODParser]
+     * .
+     */
+    @Test
+    fun testConstructorWithNullTalkerId() {
+        try {
+            BODParser(null as TalkerId?)
+        } catch (e: IllegalArgumentException) {
+            // OK
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#BODParser(java.lang.String)}
-	 * .
-	 */
-	@Test
-	public void testConstructorWithNullString() {
-		try {
-			new BODParser((String) null);
-		} catch (IllegalArgumentException e) {
-			// OK
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.BODParser]
+     * .
+     */
+    @Test
+    fun testConstructorWithRandomString() {
+        try {
+            BODParser("foobar and haystack")
+        } catch (e: IllegalArgumentException) {
+            // OK
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#BODParser(java.lang.String)}
-	 * .
-	 */
-	@Test
-	public void testConstructorWithNullTalkerId() {
-		try {
-			new BODParser((TalkerId) null);
-		} catch (IllegalArgumentException e) {
-			// OK
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getDestinationWaypointId]
+     * .
+     */
+    @Test
+    fun testGetDestinationWaypointId() {
+        try {
+            val id: String = bod.destinationWaypointId
+            assertEquals("RUSKI", id)
+        } catch (e: ParseException) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#BODParser(java.lang.String)}
-	 * .
-	 */
-	@Test
-	public void testConstructorWithRandomString() {
-		try {
-			new BODParser("foobar and haystack");
-		} catch (IllegalArgumentException e) {
-			// OK
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getMagneticBearing].
+     */
+    @Test
+    fun testGetMagneticBearing() {
+        try {
+            val b: Double = bod.magneticBearing
+            assertEquals(228.8, b, 0.001)
+        } catch (e: ParseException) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getDestinationWaypointId()}
-	 * .
-	 */
-	@Test
-	public void testGetDestinationWaypointId() {
-		try {
-			String id = bod.getDestinationWaypointId();
-			assertEquals("RUSKI", id);
-		} catch (ParseException e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getOriginWaypointId].
+     */
+    @Test
+    fun testGetOriginWaypointId() {
+        try {
+            bod.originWaypointId
+        } catch (e: DataNotAvailableException) {
+            // ok, field is empty
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getMagneticBearing()}.
-	 */
-	@Test
-	public void testGetMagneticBearing() {
-		try {
-			double b = bod.getMagneticBearing();
-			assertEquals(228.8, b, 0.001);
-		} catch (ParseException e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getTrueBearing].
+     */
+    @Test
+    fun testGetTrueBearing() {
+        try {
+            val b: Double = bod.trueBearing
+            assertEquals(234.9, b, 0.001)
+        } catch (e: ParseException) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getOriginWaypointId()}.
-	 */
-	@Test
-	public void testGetOriginWaypointId() {
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getDestinationWaypointId]
+     * .
+     */
+    @Test
+    fun testSetDestinationWaypointId() {
+        try {
+            bod.destinationWaypointId = "TIISKERI"
+            assertEquals("TIISKERI", bod.destinationWaypointId)
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-		try {
-			bod.getOriginWaypointId();
-		} catch (DataNotAvailableException e) {
-			// ok, field is empty
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getDestinationWaypointId]
+     * .
+     */
+    @Test
+    fun testSetDestinationWaypointIdWithEmptyStr() {
+        try {
+            bod.destinationWaypointId = ""
+            bod.destinationWaypointId
+        } catch (e: Exception) {
+            assertTrue(e is DataNotAvailableException)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getTrueBearing()}.
-	 */
-	@Test
-	public void testGetTrueBearing() {
-		try {
-			double b = bod.getTrueBearing();
-			assertEquals(234.9, b, 0.001);
-		} catch (ParseException e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getDestinationWaypointId]
+     * .
+     */
+    @Test
+    fun testSetDestinationWaypointIdWithNull() {
+        try {
+            bod.destinationWaypointId = null
+            bod.destinationWaypointId
+        } catch (e: Exception) {
+            assertTrue(e is DataNotAvailableException)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getDestinationWaypointId()}
-	 * .
-	 */
-	@Test
-	public void testSetDestinationWaypointId() {
-		try {
-			bod.setDestinationWaypointId("TIISKERI");
-			assertEquals("TIISKERI", bod.getDestinationWaypointId());
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getMagneticBearing].
+     */
+    @Test
+    fun testSetMagneticBearing() {
+        val bearing = 180.0
+        try {
+            bod.magneticBearing = bearing
+            assertEquals(bearing, bod.magneticBearing)
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getDestinationWaypointId()}
-	 * .
-	 */
-	@Test
-	public void testSetDestinationWaypointIdWithEmptyStr() {
-		try {
-			bod.setDestinationWaypointId("");
-			bod.getDestinationWaypointId();
-		} catch (Exception e) {
-			assertTrue(e instanceof DataNotAvailableException);
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getMagneticBearing].
+     */
+    @Test
+    fun testSetMagneticBearingWithRounding() {
+        val bearing = 65.654321
+        try {
+            bod.magneticBearing = bearing
+            assertTrue(bod.toString().contains(",065.7,"))
+            assertEquals(bearing, bod.magneticBearing, 0.1)
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getDestinationWaypointId()}
-	 * .
-	 */
-	@Test
-	public void testSetDestinationWaypointIdWithNull() {
-		try {
-			bod.setDestinationWaypointId(null);
-			bod.getDestinationWaypointId();
-		} catch (Exception e) {
-			assertTrue(e instanceof DataNotAvailableException);
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getMagneticBearing].
+     */
+    @Test
+    fun testSetMagneticBearingWithGreaterThanAllowed() {
+        try {
+            bod.magneticBearing = 360.01
+            fail("Did not throw exception")
+        } catch (e: Exception) {
+            assertTrue(e is IllegalArgumentException)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getMagneticBearing()}.
-	 */
-	@Test
-	public void testSetMagneticBearing() {
-		final double bearing = 180.0;
-		try {
-			bod.setMagneticBearing(bearing);
-			assertEquals(bearing, bod.getMagneticBearing());
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getMagneticBearing].
+     */
+    @Test
+    fun testSetMagneticBearingWithNegativeValue() {
+        try {
+            bod.magneticBearing = -0.01
+            fail("Did not throw exception")
+        } catch (e: Exception) {
+            assertTrue(e is IllegalArgumentException)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getMagneticBearing()}.
-	 */
-	@Test
-	public void testSetMagneticBearingWithRounding() {
-		final double bearing = 65.654321;
-		try {
-			bod.setMagneticBearing(bearing);
-			assertTrue(bod.toString().contains(",065.7,"));
-			assertEquals(bearing, bod.getMagneticBearing(), 0.1);
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getOriginWaypointId].
+     */
+    @Test
+    fun testSetOriginWaypointId() {
+        try {
+            bod.originWaypointId = "TAINIO"
+            assertEquals("TAINIO", bod.originWaypointId)
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getMagneticBearing()}.
-	 */
-	@Test
-	public void testSetMagneticBearingWithGreaterThanAllowed() {
-		try {
-			bod.setMagneticBearing(360.01);
-			fail("Did not throw exception");
-		} catch (Exception e) {
-			assertTrue(e instanceof IllegalArgumentException);
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getTrueBearing].
+     */
+    @Test
+    fun testSetTrueBearing() {
+        val bearing = 180.0
+        try {
+            bod.trueBearing = bearing
+            assertEquals(bearing, bod.trueBearing)
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getMagneticBearing()}.
-	 */
-	@Test
-	public void testSetMagneticBearingWithNegativeValue() {
-		try {
-			bod.setMagneticBearing(-0.01);
-			fail("Did not throw exception");
-		} catch (Exception e) {
-			assertTrue(e instanceof IllegalArgumentException);
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getTrueBearing].
+     */
+    @Test
+    fun testSetTrueBearingWithRounding() {
+        val bearing = 90.654321
+        try {
+            bod.trueBearing = bearing
+            assertTrue(bod.toString().contains(",090.7,"))
+            assertEquals(bearing, bod.trueBearing, 0.1)
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getOriginWaypointId()}.
-	 */
-	@Test
-	public void testSetOriginWaypointId() {
-		try {
-			bod.setOriginWaypointId("TAINIO");
-			assertEquals("TAINIO", bod.getOriginWaypointId());
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getTrueBearing].
+     */
+    @Test
+    fun testSetTrueBearingGreaterThanAllowed() {
+        try {
+            bod.trueBearing = 360.01
+            fail("Did not throw exception")
+        } catch (e: Exception) {
+            assertTrue(e is IllegalArgumentException)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getTrueBearing()}.
-	 */
-	@Test
-	public void testSetTrueBearing() {
-		final double bearing = 180.0;
-		try {
-			bod.setTrueBearing(bearing);
-			assertEquals(bearing, bod.getTrueBearing());
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.BODParser.getTrueBearing].
+     */
+    @Test
+    fun testSetTrueBearingWithNegativeValue() {
+        try {
+            bod.trueBearing = -0.01
+            fail("Did not throw exception")
+        } catch (e: Exception) {
+            assertTrue(e is IllegalArgumentException)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getTrueBearing()}.
-	 */
-	@Test
-	public void testSetTrueBearingWithRounding() {
-		final double bearing = 90.654321;
-		try {
-			bod.setTrueBearing(bearing);
-			assertTrue(bod.toString().contains(",090.7,"));
-			assertEquals(bearing, bod.getTrueBearing(), 0.1);
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
-
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getTrueBearing()}.
-	 */
-	@Test
-	public void testSetTrueBearingGreaterThanAllowed() {
-		try {
-			bod.setTrueBearing(360.01);
-			fail("Did not throw exception");
-		} catch (Exception e) {
-			assertTrue(e instanceof IllegalArgumentException);
-		}
-	}
-
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.BODParser#getTrueBearing()}.
-	 */
-	@Test
-	public void testSetTrueBearingWithNegativeValue() {
-		try {
-			bod.setTrueBearing(-0.01);
-			fail("Did not throw exception");
-		} catch (Exception e) {
-			assertTrue(e instanceof IllegalArgumentException);
-		}
-	}
+    companion object {
+        const val EXAMPLE = "\$GPBOD,234.9,T,228.8,M,RUSKI,*1D"
+    }
 }

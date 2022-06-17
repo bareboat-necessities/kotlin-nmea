@@ -18,111 +18,105 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
-import net.sf.marineapi.nmea.sentence.HDMSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.Assert.assertEquals
 
 /**
  * HDM parser tests.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public class HDMTest {
+class HDMTest {
+    var hdm: HDMSentence? = null
 
-	public static final String EXAMPLE = "$GPHDM,90.0,M";
+    /**
+     * @throws java.lang.Exception
+     */
+    @Before
+    @Throws(Exception::class)
+    fun setUp() {
+        hdm = HDMParser(EXAMPLE)
+    }
 
-	HDMSentence hdm;
+    /**
+     * Test method for [].
+     */
+    @Test
+    fun testConstructor() {
+        val empty: HDMSentence = HDMParser(TalkerId.HC)
+        assertEquals(TalkerId.HC, empty.talkerId)
+        assertEquals(SentenceId.HDM.toString(), empty.sentenceId)
+        try {
+            empty.heading
+        } catch (e: DataNotAvailableException) {
+            // pass
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-		hdm = new HDMParser(EXAMPLE);
-	}
+    /**
+     * Test method for [net.sf.marineapi.nmea.parser.HDTParser.isTrue].
+     */
+    @Test
+    fun testIsTrue() {
+        assertFalse(hdm.isTrue)
+    }
 
-	/**
-	 * Test method for {@link net.sf.marineapi.nmea.parser.HDMParser(TalkerId)}.
-	 */
-	@Test
-	public void testConstructor() {
-		HDMSentence empty = new HDMParser(TalkerId.HC);
-		assertEquals(TalkerId.HC, empty.getTalkerId());
-		assertEquals(SentenceId.HDM.toString(), empty.getSentenceId());
-		try {
-			empty.getHeading();
-		} catch (DataNotAvailableException e) {
-			// pass
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.HDMParser.getHeading].
+     */
+    @Test
+    fun testGetHeading() {
+        val value: Double = hdm.heading
+        assertEquals(90.0, value, 0.1)
+    }
 
-	/**
-	 * Test method for {@link net.sf.marineapi.nmea.parser.HDTParser#isTrue()}.
-	 */
-	@Test
-	public void testIsTrue() {
-		assertFalse(hdm.isTrue());
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.HDMParser.setHeading].
+     */
+    @Test
+    fun testSetHeading() {
+        hdm.heading = 123.45
+        assertEquals(123.5, hdm.heading, 0.1)
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.HDMParser#getHeading()}.
-	 */
-	@Test
-	public void testGetHeading() {
-		double value = hdm.getHeading();
-		assertEquals(90.0, value, 0.1);
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.HDMParser.setHeading].
+     */
+    @Test
+    fun testSetNegativeHeading() {
+        try {
+            hdm.heading = -0.005
+            fail("Did not throw exception")
+        } catch (iae: IllegalArgumentException) {
+            // pass
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.HDMParser#setHeading(double)}.
-	 */
-	@Test
-	public void testSetHeading() {
-		hdm.setHeading(123.45);
-		assertEquals(123.5, hdm.getHeading(), 0.1);
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.HDMParser.setHeading].
+     */
+    @Test
+    fun testSetHeadingTooHigh() {
+        try {
+            hdm.heading = 360.0001
+            fail("Did not throw exception")
+        } catch (iae: IllegalArgumentException) {
+            // pass
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.HDMParser#setHeading(double)}.
-	 */
-	@Test
-	public void testSetNegativeHeading() {
-		try {
-			hdm.setHeading(-0.005);
-			fail("Did not throw exception");
-		} catch (IllegalArgumentException iae) {
-			// pass
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
-
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.HDMParser#setHeading(double)}.
-	 */
-	@Test
-	public void testSetHeadingTooHigh() {
-		try {
-			hdm.setHeading(360.0001);
-			fail("Did not throw exception");
-		} catch (IllegalArgumentException iae) {
-			// pass
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    companion object {
+        const val EXAMPLE = "\$GPHDM,90.0,M"
+    }
 }

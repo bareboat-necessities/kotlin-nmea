@@ -1,130 +1,123 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import net.sf.marineapi.nmea.sentence.APBSentence;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.DataStatus;
-import net.sf.marineapi.nmea.util.Direction;
+import net.sf.marineapi.nmea.util.Direction
+import org.junit.Assert.assertEquals
 
-import org.junit.Before;
-import org.junit.Test;
+class APBTest {
+    private var apb: APBSentence? = null
+    private var empty: APBSentence? = null
+    @Before
+    @Throws(Exception::class)
+    fun setUp() {
+        apb = APBParser(EXAMPLE)
+        empty = APBParser(TalkerId.AG)
+    }
 
-public class APBTest {
+    @Test
+    fun testAPBParserString() {
+        assertEquals(TalkerId.GP, apb.talkerId)
+        assertEquals("APB", apb.sentenceId)
+        assertEquals(14, apb.fieldCount)
+    }
 
-	public static final String EXAMPLE = "$GPAPB,A,A,0.10,R,N,V,V,011,M,DEST,011,M,011,M";
+    @Test
+    fun testAPBParserTalkerId() {
+        assertEquals(TalkerId.AG, empty.talkerId)
+        assertEquals("APB", empty.sentenceId)
+        assertEquals(14, empty.fieldCount)
+    }
 
-	private APBSentence apb;
-	private APBSentence empty;
+    @Test
+    fun testGetBearingPositionToDestination() {
+        empty.bearingPositionToDestination = 123.45
+        assertEquals(123.5, empty.bearingPositionToDestination, 0.1)
+    }
 
-	@Before
-	public void setUp() throws Exception {
-		apb = new APBParser(EXAMPLE);
-		empty = new APBParser(TalkerId.AG);
-	}
+    @Test
+    fun testGetBearingOriginToDestination() {
+        empty.bearingOriginToDestination = 234.56
+        assertEquals(234.6, empty.bearingOriginToDestination, 0.1)
+    }
 
-	@Test
-	public void testAPBParserString() {
-		assertEquals(TalkerId.GP, apb.getTalkerId());
-		assertEquals("APB", apb.getSentenceId());
-		assertEquals(14, apb.getFieldCount());
-	}
+    @Test
+    fun testGetCrossTrackError() {
+        empty.crossTrackError = 12.345
+        assertEquals(12.3, empty.crossTrackError, 0.1)
+    }
 
-	@Test
-	public void testAPBParserTalkerId() {
-		assertEquals(TalkerId.AG, empty.getTalkerId());
-		assertEquals("APB", empty.getSentenceId());
-		assertEquals(14, empty.getFieldCount());
-	}
+    @Test
+    fun testGetCrossTrackUnits() {
+        empty.crossTrackUnits = APBSentence.NM
+        assertEquals(APBSentence.NM, empty.crossTrackUnits)
+    }
 
-	@Test
-	public void testGetBearingPositionToDestination() {
-		empty.setBearingPositionToDestination(123.45);
-		assertEquals(123.5, empty.getBearingPositionToDestination(), 0.1);
-	}
+    @Test
+    fun testGetCycleLockStatus() {
+        empty.cycleLockStatus = DataStatus.ACTIVE
+        assertEquals(DataStatus.ACTIVE, empty.cycleLockStatus)
+    }
 
-	@Test
-	public void testGetBearingOriginToDestination() {
-		empty.setBearingOriginToDestination(234.56);
-		assertEquals(234.6, empty.getBearingOriginToDestination(), 0.1);
-	}
+    @Test
+    fun testGetDestionationWaypointId() {
+        empty.setDestinationWaypointId("WP001")
+        assertEquals("WP001", empty.destionationWaypointId)
+    }
 
-	@Test
-	public void testGetCrossTrackError() {
-		empty.setCrossTrackError(12.345);
-		assertEquals(12.3, empty.getCrossTrackError(), 0.1);
-	}
+    @Test
+    fun testGetHeadingToDestionation() {
+        empty.setHeadingToDestination(98.765)
+        assertEquals(98.8, empty.headingToDestionation, 0.1)
+    }
 
-	@Test
-	public void testGetCrossTrackUnits() {
-		empty.setCrossTrackUnits(APBSentence.NM);
-		assertEquals(APBSentence.NM, empty.getCrossTrackUnits());
-	}
+    @Test
+    fun testGetStatus() {
+        empty.status = DataStatus.VOID
+        assertEquals(DataStatus.VOID, empty.status)
+    }
 
-	@Test
-	public void testGetCycleLockStatus() {
-		empty.setCycleLockStatus(DataStatus.ACTIVE);
-		assertEquals(DataStatus.ACTIVE, empty.getCycleLockStatus());
-	}
+    @Test
+    fun testGetSteerTo() {
+        empty.steerTo = Direction.LEFT
+        assertEquals(Direction.LEFT, empty.steerTo)
+    }
 
-	@Test
-	public void testGetDestionationWaypointId() {
-		empty.setDestinationWaypointId("WP001");
-		assertEquals("WP001", empty.getDestionationWaypointId());
-	}
+    @Test
+    fun testIsArrivalCircleEntered() {
+        empty.isArrivalCircleEntered = true
+        assertTrue(empty.isArrivalCircleEntered)
+    }
 
-	@Test
-	public void testGetHeadingToDestionation() {
-		empty.setHeadingToDestination(98.765);
-		assertEquals(98.8, empty.getHeadingToDestionation(), 0.1);
-	}
+    @Test
+    fun testIsBearingOriginToDestionationTrue() {
+        empty.isBearingOriginToDestionationTrue = true
+        assertTrue(empty.isBearingOriginToDestionationTrue)
+    }
 
-	@Test
-	public void testGetStatus() {
-		empty.setStatus(DataStatus.VOID);
-		assertEquals(DataStatus.VOID, empty.getStatus());
-	}
+    @Test
+    fun testIsBearingPositionToDestinationTrue() {
+        empty.isBearingPositionToDestinationTrue = false
+        assertFalse(empty.isBearingPositionToDestinationTrue)
+    }
 
-	@Test
-	public void testGetSteerTo() {
-		empty.setSteerTo(Direction.LEFT);
-		assertEquals(Direction.LEFT, empty.getSteerTo());
-	}
+    @Test
+    fun testIsHeadingToDestinationTrue() {
+        empty.isHeadingToDestinationTrue = true
+        assertTrue(empty.isHeadingToDestinationTrue)
+    }
 
-	@Test
-	public void testIsArrivalCircleEntered() {
-		empty.setArrivalCircleEntered(true);
-		assertTrue(empty.isArrivalCircleEntered());
-	}
+    @Test
+    fun testIsPerpendicularPassed() {
+        empty.isPerpendicularPassed = false
+        assertFalse(empty.isPerpendicularPassed)
+    }
 
-	@Test
-	public void testIsBearingOriginToDestionationTrue() {
-		empty.setBearingOriginToDestionationTrue(true);
-		assertTrue(empty.isBearingOriginToDestionationTrue());
-	}
+    @Test
+    fun testSetArrivalCircleEntered() {
+        empty.isArrivalCircleEntered = true
+        assertTrue(empty.isArrivalCircleEntered)
+    }
 
-	@Test
-	public void testIsBearingPositionToDestinationTrue() {
-		empty.setBearingPositionToDestinationTrue(false);
-		assertFalse(empty.isBearingPositionToDestinationTrue());
-	}
-
-	@Test
-	public void testIsHeadingToDestinationTrue() {
-		empty.setHeadingToDestinationTrue(true);
-		assertTrue(empty.isHeadingToDestinationTrue());
-	}
-
-	@Test
-	public void testIsPerpendicularPassed() {
-		empty.setPerpendicularPassed(false);
-		assertFalse(empty.isPerpendicularPassed());
-	}
-
-	@Test
-	public void testSetArrivalCircleEntered() {
-		empty.setArrivalCircleEntered(true);
-		assertTrue(empty.isArrivalCircleEntered());
-	}
+    companion object {
+        const val EXAMPLE = "\$GPAPB,A,A,0.10,R,N,V,V,011,M,DEST,011,M,011,M"
+    }
 }

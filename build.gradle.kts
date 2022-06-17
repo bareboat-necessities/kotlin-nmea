@@ -17,6 +17,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib")
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
 	implementation("com.neuronrobotics:nrjavaserial:5.2.1")
+
+	testImplementation("junit:junit:4.13.1")
 }
 
 tasks.withType<KotlinCompile> {
@@ -26,7 +28,10 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
-tasks.withType<Test> {
+tasks.test {
 	useJUnitPlatform()
+	testLogging {
+		events("passed", "skipped", "failed")
+	}
 }
 

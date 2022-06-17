@@ -18,23 +18,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.test.util;
+package net.sf.marineapi.test.util
 
-import net.sf.marineapi.nmea.parser.SentenceParser;
-import net.sf.marineapi.nmea.sentence.TalkerId;
+import net.sf.marineapi.nmea.parser.SentenceParser
+import net.sf.marineapi.nmea.sentence.TalkerId
 
 /**
  * Invalid parser implementation, no constructor with String param.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public class BARParser extends SentenceParser {
-
-	/**
-	 * Constructor
-	 */
-	public BARParser() {
-		super(TalkerId.GP, "BAR", 5);
-	}
-
-}
+class BARParser
+/**
+ * Constructor
+ */
+    : SentenceParser(TalkerId.GP, "BAR", 5)

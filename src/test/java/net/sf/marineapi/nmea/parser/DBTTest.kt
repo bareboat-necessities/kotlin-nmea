@@ -1,62 +1,58 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import static org.junit.Assert.assertEquals;
-import net.sf.marineapi.nmea.sentence.DBTSentence;
-import net.sf.marineapi.nmea.sentence.TalkerId;
+import org.junit.Assert.assertEquals
 
-import org.junit.Before;
-import org.junit.Test;
+class DBTTest {
+    private var dbt: DBTSentence? = null
+    private var empty: DBTSentence? = null
+    @Before
+    @Throws(Exception::class)
+    fun setUp() {
+        empty = DBTParser(TalkerId.II)
+        dbt = DBTParser(EXAMPLE)
+    }
 
-public class DBTTest {
+    @Test
+    fun testConstructor() {
+        assertEquals("DBT", empty.sentenceId)
+        assertEquals(TalkerId.II, empty.talkerId)
+        assertEquals(6, empty.fieldCount)
+    }
 
-	public static final String EXAMPLE = "$IIDBT,013.4,f,04.1,M,02.2,F*12";
-	private DBTSentence dbt;
-	private DBTSentence empty;
+    @Test
+    fun testGetFathoms() {
+        assertEquals(2.2, dbt.fathoms, 0.01)
+    }
 
-	@Before
-	public void setUp() throws Exception {
-		empty = new DBTParser(TalkerId.II);
-		dbt = new DBTParser(EXAMPLE);
-	}
+    @Test
+    fun testGetFeet() {
+        assertEquals(13.4, dbt.feet, 0.01)
+    }
 
-	@Test
-	public void testConstructor() {
-		assertEquals("DBT", empty.getSentenceId());
-		assertEquals(TalkerId.II, empty.getTalkerId());
-		assertEquals(6, empty.getFieldCount());
-	}
+    @Test
+    fun testGetMeters() {
+        assertEquals(4.1, dbt.depth, 0.01)
+    }
 
-	@Test
-	public void testGetFathoms() {
-		assertEquals(2.2, dbt.getFathoms(), 0.01);
-	}
+    @Test
+    fun testSetFathoms() {
+        empty.fathoms = 7.33333
+        assertEquals(7.3, empty.fathoms, 0.1)
+    }
 
-	@Test
-	public void testGetFeet() {
-		assertEquals(13.4, dbt.getFeet(), 0.01);
-	}
+    @Test
+    fun testSetFeet() {
+        empty.feet = 12.33333
+        assertEquals(12.3, empty.feet, 0.1)
+    }
 
-	@Test
-	public void testGetMeters() {
-		assertEquals(4.1, dbt.getDepth(), 0.01);
-	}
+    @Test
+    fun testSetMeters() {
+        empty.depth = 23.654321
+        assertEquals(23.7, empty.depth, 0.1)
+    }
 
-	@Test
-	public void testSetFathoms() {
-		empty.setFathoms(7.33333);
-		assertEquals(7.3, empty.getFathoms(), 0.1);
-	}
-
-	@Test
-	public void testSetFeet() {
-		empty.setFeet(12.33333);
-		assertEquals(12.3, empty.getFeet(), 0.1);
-	}
-
-	@Test
-	public void testSetMeters() {
-		empty.setDepth(23.654321);
-		assertEquals(23.7, empty.getDepth(), 0.1);
-	}
-
+    companion object {
+        const val EXAMPLE = "\$IIDBT,013.4,f,04.1,M,02.2,F*12"
+    }
 }

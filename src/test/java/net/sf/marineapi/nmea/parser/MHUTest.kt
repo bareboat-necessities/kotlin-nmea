@@ -18,84 +18,86 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.MHUSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Before
 
 /**
  * MHU parser tests.
  *
  * @author Kimmo Tuukkanen
  */
-public class MHUTest {
-
-    public static final String EXAMPLE = "$IIMHU,66.0,5.0,3.0,C";
-
-    private MHUSentence mhu;
-    private MHUSentence empty;
-
+class MHUTest {
+    private var mhu: MHUSentence? = null
+    private var empty: MHUSentence? = null
     @Before
-    public void setUp() {
-        mhu = new MHUParser(EXAMPLE);
-        empty = new MHUParser(TalkerId.II);
-        assertEquals(4, mhu.getFieldCount(), 1);
+    fun setUp() {
+        mhu = MHUParser(EXAMPLE)
+        empty = MHUParser(TalkerId.II)
+        assertEquals(4, mhu.fieldCount, 1)
     }
 
     @Test
-    public void testEmptySentenceConstructor() {
-        assertEquals(TalkerId.II, empty.getTalkerId());
-        assertEquals(SentenceId.MHU.toString(), empty.getSentenceId());
-        assertEquals(4, empty.getFieldCount());
-        assertEquals('C', empty.getDewPointUnit());
+    fun testEmptySentenceConstructor() {
+        assertEquals(TalkerId.II, empty.talkerId)
+        assertEquals(SentenceId.MHU.toString(), empty.sentenceId)
+        assertEquals(4, empty.fieldCount)
+        assertEquals('C', empty.dewPointUnit)
     }
 
     @Test
-    public void testGetRelativeHumidity() throws Exception {
-        assertEquals(66.0, mhu.getRelativeHumidity(), 0.1);
+    @Throws(Exception::class)
+    fun testGetRelativeHumidity() {
+        assertEquals(66.0, mhu.relativeHumidity, 0.1)
     }
 
     @Test
-    public void testGetAbsoluteHumidity() throws Exception {
-        assertEquals(5.0, mhu.getAbsoluteHumidity(), 0.1);
+    @Throws(Exception::class)
+    fun testGetAbsoluteHumidity() {
+        assertEquals(5.0, mhu.absoluteHumidity, 0.1)
     }
 
     @Test
-    public void testGetDewPoint() throws Exception {
-        assertEquals(3.0, mhu.getDewPoint(), 0.1);
+    @Throws(Exception::class)
+    fun testGetDewPoint() {
+        assertEquals(3.0, mhu.dewPoint, 0.1)
     }
 
     @Test
-    public void testGetDewPointUnit() throws Exception {
-        assertEquals('C', mhu.getDewPointUnit());
+    @Throws(Exception::class)
+    fun testGetDewPointUnit() {
+        assertEquals('C', mhu.dewPointUnit)
     }
 
     @Test
-    public void testSetRelativeHumidity() throws Exception {
-        mhu.setRelativeHumidity(55.55555);
-        assertEquals(55.6, mhu.getRelativeHumidity(), 0.1);
+    @Throws(Exception::class)
+    fun testSetRelativeHumidity() {
+        mhu.relativeHumidity = 55.55555
+        assertEquals(55.6, mhu.relativeHumidity, 0.1)
     }
 
     @Test
-    public void testSetAbsoluteHumidity() throws Exception {
-        mhu.setAbsoluteHumidity(6.1234);
-        assertEquals(6.1, mhu.getAbsoluteHumidity(), 0.1);
+    @Throws(Exception::class)
+    fun testSetAbsoluteHumidity() {
+        mhu.absoluteHumidity = 6.1234
+        assertEquals(6.1, mhu.absoluteHumidity, 0.1)
     }
 
     @Test
-    public void testSetDewPoint() throws Exception {
-        mhu.setDewPoint(1.2356);
-        assertEquals(1.2, mhu.getDewPoint(), 0.1);
+    @Throws(Exception::class)
+    fun testSetDewPoint() {
+        mhu.dewPoint = 1.2356
+        assertEquals(1.2, mhu.dewPoint, 0.1)
     }
 
     @Test
-    public void testSetDewPointUnit() throws Exception {
-        mhu.setDewPointUnit('F');
-        assertEquals('F', mhu.getDewPointUnit());
+    @Throws(Exception::class)
+    fun testSetDewPointUnit() {
+        mhu.dewPointUnit = 'F'
+        assertEquals('F', mhu.dewPointUnit)
+    }
+
+    companion object {
+        const val EXAMPLE = "\$IIMHU,66.0,5.0,3.0,C"
     }
 }

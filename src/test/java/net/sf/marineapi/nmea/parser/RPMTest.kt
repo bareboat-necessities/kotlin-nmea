@@ -1,117 +1,108 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import net.sf.marineapi.nmea.sentence.RPMSentence;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.DataStatus;
+import org.junit.Assert.assertEquals
 
-import org.junit.Before;
-import org.junit.Test;
+class RPMTest {
+    var rpm: RPMSentence? = null
+    var empty: RPMSentence? = null
+    @Before
+    @Throws(Exception::class)
+    fun setUp() {
+        rpm = RPMParser(EXAMPLE)
+        empty = RPMParser(TalkerId.II)
+    }
 
-public class RPMTest {
+    @Test
+    fun testRPMParserString() {
+        assertEquals(TalkerId.II, rpm.talkerId)
+        assertEquals("RPM", rpm.sentenceId)
+        assertEquals(5, rpm.fieldCount)
+    }
 
-	public static final String EXAMPLE = "$IIRPM,E,1,2418.2,10.5,A";
+    @Test
+    fun testRPMParserTalkerId() {
+        assertEquals(TalkerId.II, empty.talkerId)
+        assertEquals("RPM", empty.sentenceId)
+        assertEquals(5, empty.fieldCount)
+    }
 
-	RPMSentence rpm;
-	RPMSentence empty;
+    @Test
+    fun testGetId() {
+        assertEquals(1, rpm.id)
+    }
 
-	@Before
-	public void setUp() throws Exception {
-		rpm = new RPMParser(EXAMPLE);
-		empty = new RPMParser(TalkerId.II);
-	}
+    @Test
+    fun testGetPitch() {
+        assertEquals(10.5, rpm.pitch, 0.1)
+    }
 
-	@Test
-	public void testRPMParserString() {
-		assertEquals(TalkerId.II, rpm.getTalkerId());
-		assertEquals("RPM", rpm.getSentenceId());
-		assertEquals(5, rpm.getFieldCount());
-	}
+    @Test
+    fun testGetRPM() {
+        assertEquals(2418.2, rpm.rPM, 0.1)
+    }
 
-	@Test
-	public void testRPMParserTalkerId() {
-		assertEquals(TalkerId.II, empty.getTalkerId());
-		assertEquals("RPM", empty.getSentenceId());
-		assertEquals(5, empty.getFieldCount());
-	}
+    @Test
+    fun testGetSource() {
+        assertEquals('E', rpm.source)
+    }
 
-	@Test
-	public void testGetId() {
-		assertEquals(1, rpm.getId());
-	}
+    @Test
+    fun testGetStatus() {
+        assertEquals(DataStatus.ACTIVE, rpm.status)
+    }
 
-	@Test
-	public void testGetPitch() {
-		assertEquals(10.5, rpm.getPitch(), 0.1);
-	}
+    @Test
+    fun testIsEngine() {
+        assertTrue(rpm.isEngine)
+    }
 
-	@Test
-	public void testGetRPM() {
-		assertEquals(2418.2, rpm.getRPM(), 0.1);
-	}
+    @Test
+    fun testIsShaft() {
+        assertFalse(rpm.isShaft)
+    }
 
-	@Test
-	public void testGetSource() {
-		assertEquals('E', rpm.getSource());
-	}
+    @Test
+    fun testSetId() {
+        empty.id = 2
+        assertEquals(2, empty.id)
+    }
 
-	@Test
-	public void testGetStatus() {
-		assertEquals(DataStatus.ACTIVE, rpm.getStatus());
-	}
+    @Test
+    fun testSetPitch() {
+        empty.pitch = 3.14
+        assertEquals(3.1, empty.pitch, 0.1)
+    }
 
-	@Test
-	public void testIsEngine() {
-		assertTrue(rpm.isEngine());
-	}
+    @Test
+    fun testSetRPM() {
+        empty.rPM = 1234.56
+        assertEquals(1234.56, empty.rPM, 0.01)
+    }
 
-	@Test
-	public void testIsShaft() {
-		assertFalse(rpm.isShaft());
-	}
+    @Test
+    fun testSetSource() {
+        empty.source = RPMSentence.SHAFT
+        assertTrue(empty.isShaft)
+        assertEquals(RPMSentence.SHAFT, empty.source)
+    }
 
-	@Test
-	public void testSetId() {
-		empty.setId(2);
-		assertEquals(2, empty.getId());
-	}
+    @Test
+    fun testSetInvalidSource() {
+        try {
+            empty.source = 'A'
+            fail("Didn't throw exception")
+        } catch (e: Exception) {
+            // pass
+        }
+    }
 
-	@Test
-	public void testSetPitch() {
-		empty.setPitch(3.14);
-		assertEquals(3.1, empty.getPitch(), 0.1);
-	}
+    @Test
+    fun testSetStatus() {
+        empty.status = DataStatus.VOID
+        assertEquals(DataStatus.VOID, empty.status)
+    }
 
-	@Test
-	public void testSetRPM() {
-		empty.setRPM(1234.56);
-		assertEquals(1234.56, empty.getRPM(), 0.01);
-	}
-
-	@Test
-	public void testSetSource() {
-		empty.setSource(RPMSentence.SHAFT);
-		assertTrue(empty.isShaft());
-		assertEquals(RPMSentence.SHAFT, empty.getSource());
-	}
-
-	@Test
-	public void testSetInvalidSource() {
-		try {
-			empty.setSource('A');
-			fail("Didn't throw exception");
-		} catch (Exception e) {
-			// pass
-		}
-	}
-
-	@Test
-	public void testSetStatus() {
-		empty.setStatus(DataStatus.VOID);
-		assertEquals(DataStatus.VOID, empty.getStatus());
-	}
-
+    companion object {
+        const val EXAMPLE = "\$IIRPM,E,1,2418.2,10.5,A"
+    }
 }

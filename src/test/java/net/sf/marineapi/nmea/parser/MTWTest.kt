@@ -1,73 +1,69 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import static org.junit.Assert.assertEquals;
-import net.sf.marineapi.nmea.sentence.MTWSentence;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.Assert.assertEquals
 
 /**
  * MTW parser tests.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public class MTWTest {
+class MTWTest {
+    private var mtw: MTWSentence? = null
 
-	public static final String EXAMPLE = "$IIMTW,17.75,C";
+    /**
+     * @throws java.lang.Exception
+     */
+    @Before
+    @Throws(Exception::class)
+    fun setUp() {
+        mtw = MTWParser(EXAMPLE)
+    }
 
-	private MTWSentence mtw;
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.MTWParser.MTWParser]
+     * .
+     */
+    @Test
+    fun testMTWParserString() {
+        assertEquals("MTW", mtw.sentenceId)
+        assertEquals(TalkerId.II, mtw.talkerId)
+    }
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-		mtw = new MTWParser(EXAMPLE);
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.MTWParser.MTWParser]
+     * .
+     */
+    @Test
+    fun testMTWParserTalkerId() {
+        val empty = MTWParser(TalkerId.II)
+        assertEquals("MTW", empty.sentenceId)
+        assertEquals(TalkerId.II, empty.talkerId)
+        assertEquals(2, empty.fieldCount)
+        assertEquals('C', empty.getCharValue(1))
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.MTWParser#MTWParser(java.lang.String)}
-	 * .
-	 */
-	@Test
-	public void testMTWParserString() {
-		assertEquals("MTW", mtw.getSentenceId());
-		assertEquals(TalkerId.II, mtw.getTalkerId());
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.MTWParser.getTemperature].
+     */
+    @Test
+    fun testGetTemperature() {
+        assertEquals(17.75, mtw.temperature, 0.01)
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.MTWParser#MTWParser(net.sf.marineapi.nmea.sentence.TalkerId)}
-	 * .
-	 */
-	@Test
-	public void testMTWParserTalkerId() {
-		MTWParser empty = new MTWParser(TalkerId.II);
-		assertEquals("MTW", empty.getSentenceId());
-		assertEquals(TalkerId.II, empty.getTalkerId());
-		assertEquals(2, empty.getFieldCount());
-		assertEquals('C', empty.getCharValue(1));
-	}
+    /**
+     * Test method for
+     * [net.sf.marineapi.nmea.parser.MTWParser.setTemperature].
+     */
+    @Test
+    fun testSetTemperature() {
+        mtw.temperature = 12.345
+        assertEquals(12.345, mtw.temperature, 0.01)
+    }
 
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.MTWParser#getTemperature()}.
-	 */
-	@Test
-	public void testGetTemperature() {
-		assertEquals(17.75, mtw.getTemperature(), 0.01);
-	}
-
-	/**
-	 * Test method for
-	 * {@link net.sf.marineapi.nmea.parser.MTWParser#setTemperature(double)}.
-	 */
-	@Test
-	public void testSetTemperature() {
-		mtw.setTemperature(12.345);
-		assertEquals(12.345, mtw.getTemperature(), 0.01);
-	}
-
+    companion object {
+        const val EXAMPLE = "\$IIMTW,17.75,C"
+    }
 }

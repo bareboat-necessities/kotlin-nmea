@@ -1,84 +1,103 @@
-package net.sf.marineapi.ais.parser;
+package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage24;
-import net.sf.marineapi.ais.util.Sixbit;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.Test
 
 /**
  * AIS message 24 parser tests (parts A & B)
  *
  * Expected values according to http://www.maritec.co.za/tools/aisvdmvdodecoding/
  */
-public class AISMessage24ParserTest {
-
+class AISMessage24ParserTest {
     // !AIVDO,1,1,,B,H1c2;qA@PU>0U>060<h5=>0:1Dp,2*7D (part A)
     // !AIVDO,1,1,,B,H1c2;qDTijklmno31<<C970`43<1,0*28 (part B)
-    private final String payloadA = "H1c2;qA@PU>0U>060<h5=>0:1Dp";
-    private final String payloadB = "H1c2;qDTijklmno31<<C970`43<1";
-    private final Sixbit sixbitA = new Sixbit(payloadA, 2);
-    private final Sixbit sixbitB = new Sixbit(payloadB, 0);
-    private final AISMessage24 partA = new AISMessage24Parser(sixbitA);
-    private final AISMessage24 partB = new AISMessage24Parser(sixbitB);
+    private val payloadA = "H1c2;qA@PU>0U>060<h5=>0:1Dp"
+    private val payloadB = "H1c2;qDTijklmno31<<C970`43<1"
+    private val sixbitA: Sixbit = Sixbit(payloadA, 2)
+    private val sixbitB: Sixbit = Sixbit(payloadB, 0)
+    private val partA: AISMessage24 = AISMessage24Parser(sixbitA)
+    private val partB: AISMessage24 = AISMessage24Parser(sixbitB)
 
-    @Test
-    public void getPartNumber() throws Exception {
-        assertEquals(0, partA.getPartNumber());
-        assertEquals(1, partB.getPartNumber());
-    }
+    @get:Throws(Exception::class)
+    @get:Test
+    val partNumber: Unit
+        get() {
+            assertEquals(0, partA.partNumber)
+            assertEquals(1, partB.partNumber)
+        }
 
-    @Test
-    public void getName() throws Exception {
-        assertEquals("THIS IS A CLASS B UN", partA.getName());
-    }
+    @get:Throws(Exception::class)
+    @get:Test
+    val name: Unit
+        get() {
+            assertEquals("THIS IS A CLASS B UN", partA.name)
+        }
 
-    @Test
-    public void getTypeOfShipAndCargoType() throws Exception {
-        assertEquals(36, partB.getTypeOfShipAndCargoType());
-    }
+    @get:Throws(Exception::class)
+    @get:Test
+    val typeOfShipAndCargoType: Unit
+        get() {
+            assertEquals(36, partB.typeOfShipAndCargoType)
+        }
 
-    @Test
-    public void getVendorId() throws Exception {
-        // TODO correct? should be "1234567" according to http://www.maritec.co.za/tools/aisvdmvdodecoding/
-        assertEquals("123", partB.getVendorId());
-    }
+    // TODO correct? should be "1234567" according to http://www.maritec.co.za/tools/aisvdmvdodecoding/
+    @get:Throws(Exception::class)
+    @get:Test
+    val vendorId: Unit
+        get() {
+            // TODO correct? should be "1234567" according to http://www.maritec.co.za/tools/aisvdmvdodecoding/
+            assertEquals("123", partB.vendorId)
+        }
 
-    @Test
-    public void getUnitModelCode() throws Exception {
-        // TODO correct?
-        assertEquals(13, partB.getUnitModelCode());
-    }
+    // TODO correct?
+    @get:Throws(Exception::class)
+    @get:Test
+    val unitModelCode: Unit
+        get() {
+            // TODO correct?
+            assertEquals(13, partB.unitModelCode)
+        }
 
-    @Test
-    public void getSerialNumber() throws Exception {
-        // TODO correct?
-        assertEquals(220599, partB.getSerialNumber());
-    }
+    // TODO correct?
+    @get:Throws(Exception::class)
+    @get:Test
+    val serialNumber: Unit
+        get() {
+            // TODO correct?
+            assertEquals(220599, partB.serialNumber)
+        }
 
-    @Test
-    public void getCallSign() throws Exception {
-        assertEquals("CALLSIG", partB.getCallSign());
-    }
+    @get:Throws(Exception::class)
+    @get:Test
+    val callSign: Unit
+        get() {
+            assertEquals("CALLSIG", partB.callSign)
+        }
 
-    @Test
-    public void getBow() throws Exception {
-        assertEquals(5, partB.getBow());
-    }
+    @get:Throws(Exception::class)
+    @get:Test
+    val bow: Unit
+        get() {
+            assertEquals(5, partB.bow)
+        }
 
-    @Test
-    public void getStern() throws Exception {
-        assertEquals(4, partB.getStern());
-    }
+    @get:Throws(Exception::class)
+    @get:Test
+    val stern: Unit
+        get() {
+            assertEquals(4, partB.stern)
+        }
 
-    @Test
-    public void getPort() throws Exception {
-        assertEquals(3, partB.getPort());
-    }
+    @get:Throws(Exception::class)
+    @get:Test
+    val port: Unit
+        get() {
+            assertEquals(3, partB.port)
+        }
 
-    @Test
-    public void getStarboard() throws Exception {
-        assertEquals(12, partB.getStarboard());
-    }
-
+    @get:Throws(Exception::class)
+    @get:Test
+    val starboard: Unit
+        get() {
+            assertEquals(12, partB.starboard)
+        }
 }

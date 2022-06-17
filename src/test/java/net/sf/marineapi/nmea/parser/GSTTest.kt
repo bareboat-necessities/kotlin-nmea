@@ -1,145 +1,135 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.Time;
-
-import org.junit.Before;
-import org.junit.Test;
+import net.sf.marineapi.nmea.util.Time
+import org.junit.Assert.assertEquals
 
 /**
  * Test the GST sentence parser.
  *
  * @author Tero Laitinen
  */
-public class GSTTest {
+class GSTTest {
+    private var gst: GSTParser? = null
+    private var empty: GSTParser? = null
+    @Before
+    fun setUp() {
+        try {
+            empty = GSTParser(TalkerId.GP)
+            gst = GSTParser(EXAMPLE)
+        } catch (e: Exception) {
+            fail(e.message)
+        }
+    }
 
-	public static final String EXAMPLE = "$GPGST,172814.0,0.006,0.023,0.020,273.6,0.023,0.020,0.031*6A";
+    @Test
+    fun testConstructor() {
+        assertEquals(8, empty!!.fieldCount)
+    }
 
-	private GSTParser gst;
-	private GSTParser empty;
+    @Test
+    fun testGetPseudoRangeResidualsRMS() {
+        assertEquals(0.006, gst!!.pseudoRangeResidualsRMS, 0.001)
+    }
 
-	@Before
-	public void setUp() {
-		try {
-			empty = new GSTParser(TalkerId.GP);
-			gst = new GSTParser(EXAMPLE);
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
+    @Test
+    fun testGetSemiMajorError() {
+        assertEquals(0.023, gst!!.semiMajorError, 0.001)
+    }
 
-	@Test
-	public void testConstructor() {
-		assertEquals(8, empty.getFieldCount());
-	}
+    @Test
+    fun testGetSemiMinorError() {
+        assertEquals(0.020, gst!!.semiMinorError, 0.001)
+    }
 
-	@Test
-	public void testGetPseudoRangeResidualsRMS() {
-		assertEquals(0.006, gst.getPseudoRangeResidualsRMS(), 0.001);
-	}
+    @Test
+    fun testGetErrorEllipseOrientation() {
+        assertEquals(273.6, gst!!.errorEllipseOrientation, 0.001)
+    }
 
-	@Test
-	public void testGetSemiMajorError() {
-		assertEquals(0.023, gst.getSemiMajorError(), 0.001);
-	}
+    @Test
+    fun testGetLatitudeError() {
+        assertEquals(0.023, gst!!.latitudeError, 0.001)
+    }
 
-	@Test
-	public void testGetSemiMinorError() {
-		assertEquals(0.020, gst.getSemiMinorError(), 0.001);
-	}
+    @Test
+    fun testGetLongitudeError() {
+        assertEquals(0.020, gst!!.longitudeError, 0.001)
+    }
 
-	@Test
-	public void testGetErrorEllipseOrientation() {
-		assertEquals(273.6, gst.getErrorEllipseOrientation(), 0.001);
-	}
+    @Test
+    fun testGetAltitudeError() {
+        assertEquals(0.031, gst!!.altitudeError, 0.001)
+    }
 
-	@Test
-	public void testGetLatitudeError() {
-		assertEquals(0.023, gst.getLatitudeError(), 0.001);
-	}
+    @Test
+    fun testGetTime() {
+        val t: Time = gst!!.time
+        assertNotNull(t)
+        assertEquals(17, t.getHour())
+        assertEquals(28, t.getMinutes())
+        assertEquals(14.0, t.getSeconds(), 0.001)
+    }
 
-	@Test
-	public void testGetLongitudeError() {
-		assertEquals(0.020, gst.getLongitudeError(), 0.001);
-	}
+    @Test
+    fun testGSTParser() {
+        val instance = GSTParser(EXAMPLE)
+        val sid: SentenceId = SentenceId.valueOf(instance.sentenceId)
+        assertEquals(SentenceId.GST, sid)
+    }
 
+    @Test
+    fun testSetPseudoRangeResidualsRMS() {
+        gst!!.pseudoRangeResidualsRMS = 0.012
+        assertEquals(0.012, gst!!.pseudoRangeResidualsRMS, 0.001)
+    }
 
-	@Test
-	public void testGetAltitudeError() {
-		assertEquals(0.031, gst.getAltitudeError(), 0.001);
-	}
+    @Test
+    fun testSetSemiMajorError() {
+        gst!!.semiMajorError = 0.015
+        assertEquals(0.015, gst!!.semiMajorError, 0.001)
+    }
 
-	@Test
-	public void testGetTime() {
-		Time t = gst.getTime();
-		assertNotNull(t);
-		assertEquals(17, t.getHour());
-		assertEquals(28, t.getMinutes());
-		assertEquals(14.0, t.getSeconds(), 0.001);
-	}
+    @Test
+    fun testSetSemiMinorError() {
+        gst!!.semiMinorError = 0.032
+        assertEquals(0.032, gst!!.semiMinorError, 0.001)
+    }
 
-	@Test
-	public void testGSTParser() {
-		GSTParser instance = new GSTParser(EXAMPLE);
-		SentenceId sid = SentenceId.valueOf(instance.getSentenceId());
-		assertEquals(SentenceId.GST, sid);
-	}
-	@Test
-	public void testSetPseudoRangeResidualsRMS() {
-		gst.setPseudoRangeResidualsRMS(0.012);
-		assertEquals(0.012, gst.getPseudoRangeResidualsRMS(), 0.001);
-	}
+    @Test
+    fun testSetErrorEllipseOrientation() {
+        gst!!.errorEllipseOrientation = 121.3
+        assertEquals(121.3, gst!!.errorEllipseOrientation, 0.001)
+    }
 
-	@Test
-	public void testSetSemiMajorError() {
-		gst.setSemiMajorError(0.015);
-		assertEquals(0.015, gst.getSemiMajorError(), 0.001);
-	}
+    @Test
+    fun testSetLatitudeError() {
+        gst!!.latitudeError = 0.068
+        assertEquals(0.068, gst!!.latitudeError, 0.001)
+    }
 
-	@Test
-	public void testSetSemiMinorError() {
-		gst.setSemiMinorError(0.032);
-		assertEquals(0.032, gst.getSemiMinorError(), 0.001);
-	}
+    @Test
+    fun testSetLongitudeError() {
+        gst!!.longitudeError = 0.011
+        assertEquals(0.011, gst!!.longitudeError, 0.001)
+    }
 
-	@Test
-	public void testSetErrorEllipseOrientation() {
-		gst.setErrorEllipseOrientation(121.3);
-		assertEquals(121.3, gst.getErrorEllipseOrientation(), 0.001);
-	}
+    @Test
+    fun testSetAltitudeError() {
+        gst!!.altitudeError = 0.013
+        assertEquals(0.013, gst!!.altitudeError, 0.001)
+    }
 
-	@Test
-	public void testSetLatitudeError() {
-		gst.setLatitudeError(0.068);
-		assertEquals(0.068, gst.getLatitudeError(), 0.001);
-	}
+    @Test
+    fun testSetTime() {
+        gst!!.time = Time(1, 2, 3.456)
+        val t: Time = gst!!.time
+        assertNotNull(t)
+        assertEquals(1, t.getHour())
+        assertEquals(2, t.getMinutes())
+        assertEquals(3.456, t.getSeconds(), 0.001)
+    }
 
-	@Test
-	public void testSetLongitudeError() {
-		gst.setLongitudeError(0.011);
-		assertEquals(0.011, gst.getLongitudeError(), 0.001);
-	}
-
-
-	@Test
-	public void testSetAltitudeError() {
-		gst.setAltitudeError(0.013);
-		assertEquals(0.013, gst.getAltitudeError(), 0.001);
-	}
-
-	@Test
-	public void testSetTime() {
-		gst.setTime(new Time(1, 2, 3.456));
-		Time t = gst.getTime();
-		assertNotNull(t);
-		assertEquals(1, t.getHour());
-		assertEquals(2, t.getMinutes());
-		assertEquals(3.456, t.getSeconds(), 0.001);
-	}
-
-
+    companion object {
+        const val EXAMPLE = "\$GPGST,172814.0,0.006,0.023,0.020,273.6,0.023,0.020,0.031*6A"
+    }
 }

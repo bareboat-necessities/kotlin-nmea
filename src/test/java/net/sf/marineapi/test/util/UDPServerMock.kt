@@ -1,45 +1,40 @@
-package net.sf.marineapi.test.util;
+package net.sf.marineapi.test.util
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+import java.net.DatagramPacket
+import java.net.DatagramSocket
+import java.net.InetAddress
 
 /**
  * Dummy UDP server repeating single NMEA sentence.
  */
-public class UDPServerMock implements Runnable {
+class UDPServerMock : Runnable {
+    val TXT = "\$IITXT,1,1,UDP,TEST*0F"
+    private var socket: DatagramSocket? = null
+    private var running = true
 
-    public final String TXT = "$IITXT,1,1,UDP,TEST*0F";
-
-    private DatagramSocket socket;
-    private boolean running = true;
-
-    public UDPServerMock() {
-        new Thread(this).start();
+    init {
+        Thread(this).start()
     }
 
-    public void run() {
+    override fun run() {
         try {
-            int port = 3810;
-            InetAddress host = InetAddress.getLocalHost();
-            byte[] data = TXT.getBytes();
-            socket = new DatagramSocket();
-
+            val port = 3810
+            val host = InetAddress.getLocalHost()
+            val data = TXT.toByteArray()
+            socket = DatagramSocket()
             while (running) {
-                DatagramPacket packet =
-                    new DatagramPacket(data, data.length, host, port);
-                socket.send(packet);
-                Thread.sleep(10);
+                val packet = DatagramPacket(data, data.size, host, port)
+                socket!!.send(packet)
+                Thread.sleep(10)
             }
-
-        } catch (Exception e) {
-           e.printStackTrace();
+        } catch (e: Exception) {
+            e.printStackTrace()
         } finally {
-            socket.close();
+            socket!!.close()
         }
     }
 
-    public void stop() {
-        running = false;
+    fun stop() {
+        running = false
     }
 }

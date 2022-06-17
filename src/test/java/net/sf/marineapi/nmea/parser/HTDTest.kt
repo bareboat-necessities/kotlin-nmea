@@ -1,120 +1,132 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.DataStatus;
-import net.sf.marineapi.nmea.util.Direction;
-import net.sf.marineapi.nmea.util.SteeringMode;
-import org.junit.Before;
-import org.junit.Test;
+import net.sf.marineapi.nmea.util.Direction
+import org.junit.Before
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+class HTDTest {
+    private var htd: HTDParser? = null
+    @Before
+    @Throws(Exception::class)
+    fun setUp() {
+        htd = HTDParser(EXAMPLE)
+    }
 
-public class HTDTest {
+    @Test
+    @Throws(Exception::class)
+    fun testConstructor() {
+        val empty = HTDParser(TalkerId.AG)
+        assertEquals(17, empty.fieldCount)
+    }
 
-	private static final String EXAMPLE = "$AGHTD,V,0.1,R,M,,15.0,15.0,,,,,,T,A,A,A,90.3,*39";
+    @Test
+    @Throws(Exception::class)
+    fun testGetOverride() {
+        assertEquals(DataStatus.VOID, htd!!.override)
+    }
 
-	private HTDParser htd;
+    @Test
+    @Throws(Exception::class)
+    fun testGetRudderAngle() {
+        assertEquals(0.1, htd!!.rudderAngle, 0.01)
+    }
 
-	@Before
-	public void setUp() throws Exception {
-		htd = new HTDParser(EXAMPLE);
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetRudderDirection() {
+        assertEquals(Direction.RIGHT, htd!!.rudderDirection)
+    }
 
-	@Test
-	public void testConstructor() throws Exception {
-		HTDParser empty = new HTDParser(TalkerId.AG);
-		assertEquals(17, empty.getFieldCount());
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetSteeringMode() {
+        assertEquals(SteeringMode.MANUAL, htd!!.steeringMode)
+    }
 
-	@Test
-	public void testGetOverride() throws Exception {
-		assertEquals(DataStatus.VOID, htd.getOverride());
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetTurnMode() {
+        assertNull(htd!!.turnMode)
+    }
 
-	@Test
-	public void testGetRudderAngle() throws Exception {
-		assertEquals(0.1, htd.getRudderAngle(), 0.01);
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetRudderLimit() {
+        assertEquals(15, htd!!.rudderLimit, 0.1)
+    }
 
-	@Test
-	public void testGetRudderDirection() throws Exception {
-		assertEquals(Direction.RIGHT, htd.getRudderDirection());
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetOffHeadingLimit() {
+        assertEquals(15, htd!!.offHeadingLimit, 0.1)
+    }
 
-	@Test
-	public void testGetSteeringMode() throws Exception {
-		assertEquals(SteeringMode.MANUAL, htd.getSteeringMode());
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetRadiusOfTurnForHEadingChanges() {
+        assertTrue(java.lang.Double.isNaN(htd!!.radiusOfTurn))
+    }
 
-	@Test
-	public void testGetTurnMode() throws Exception {
-		assertNull(htd.getTurnMode());
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetRateOfTurn() {
+        assertTrue(java.lang.Double.isNaN(htd!!.rateOfTurn))
+    }
 
-	@Test
-	public void testGetRudderLimit() throws Exception {
-		assertEquals(15, htd.getRudderLimit(), 0.1);
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetHeadingToSteer() {
+        assertTrue(java.lang.Double.isNaN(htd!!.headingToSteer))
+    }
 
-	@Test
-	public void testGetOffHeadingLimit() throws Exception {
-		assertEquals(15, htd.getOffHeadingLimit(), 0.1);
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetOffTrackLimit() {
+        assertTrue(java.lang.Double.isNaN(htd!!.offTrackLimit))
+    }
 
-	@Test
-	public void testGetRadiusOfTurnForHEadingChanges() throws Exception {
-		assertTrue(Double.isNaN(htd.getRadiusOfTurn()));
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetTrack() {
+        assertTrue(java.lang.Double.isNaN(htd!!.track))
+    }
 
-	@Test
-	public void testGetRateOfTurn() throws Exception {
-		assertTrue(Double.isNaN(htd.getRateOfTurn()));
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testIsHeadingTrue() {
+        assertTrue(htd!!.isHeadingTrue)
+    }
 
-	@Test
-	public void testGetHeadingToSteer() throws Exception {
-		assertTrue(Double.isNaN(htd.getHeadingToSteer()));
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetRudderStatus() {
+        assertEquals(DataStatus.ACTIVE, htd!!.rudderStatus)
+    }
 
-	@Test
-	public void testGetOffTrackLimit() throws Exception {
-		assertTrue(Double.isNaN(htd.getOffTrackLimit()));
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetOffHeadinStatus() {
+        assertEquals(DataStatus.ACTIVE, htd!!.offHeadingStatus)
+    }
 
-	@Test
-	public void testGetTrack() throws Exception {
-		assertTrue(Double.isNaN(htd.getTrack()));
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetOffTrackStatus() {
+        assertEquals(DataStatus.ACTIVE, htd!!.offTrackStatus)
+    }
 
-	@Test
-	public void testIsHeadingTrue() throws Exception {
-		assertTrue(htd.isHeadingTrue());
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testGetHeading() {
+        assertEquals(90.3, htd!!.heading, 0.1)
+    }
 
-	@Test
-	public void testGetRudderStatus() throws Exception {
-		assertEquals(DataStatus.ACTIVE, htd.getRudderStatus());
-	}
+    @Test
+    @Throws(Exception::class)
+    fun testIsTrue() {
+        assertTrue(htd!!.isTrue)
+    }
 
-	@Test
-	public void testGetOffHeadinStatus() throws Exception {
-		assertEquals(DataStatus.ACTIVE, htd.getOffHeadingStatus());
-	}
-
-	@Test
-	public void testGetOffTrackStatus() throws Exception {
-		assertEquals(DataStatus.ACTIVE, htd.getOffTrackStatus());
-	}
-
-	@Test
-	public void testGetHeading() throws Exception {
-		assertEquals(90.3, htd.getHeading(), 0.1);
-	}
-
-	@Test
-	public void testIsTrue() throws Exception {
-		assertTrue(htd.isTrue());
-	}
+    companion object {
+        private const val EXAMPLE = "\$AGHTD,V,0.1,R,M,,15.0,15.0,,,,,,T,A,A,A,90.3,*39"
+    }
 }

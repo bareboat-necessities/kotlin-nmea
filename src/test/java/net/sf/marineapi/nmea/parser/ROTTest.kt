@@ -1,74 +1,68 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import net.sf.marineapi.nmea.sentence.ROTSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.DataStatus;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.Assert.assertEquals
 
 /**
  * Created by SJK on 22/01/14.
  */
-public class ROTTest {
-
-    public static final String EXAMPLE = "$HCROT,-0.3,A";
-    public static final String INVALID_EXAMPLE = "$HCROT,-0.3,V";
-    ROTSentence rot;
-    ROTSentence irot;
-
+class ROTTest {
+    var rot: ROTSentence? = null
+    var irot: ROTSentence? = null
     @Before
-    public void setUp() throws Exception {
-        rot = new ROTParser(EXAMPLE);
-        irot = new ROTParser(INVALID_EXAMPLE);
+    @Throws(Exception::class)
+    fun setUp() {
+        rot = ROTParser(EXAMPLE)
+        irot = ROTParser(INVALID_EXAMPLE)
     }
 
     @Test
-    public void testConstructor() {
-        ROTSentence empty = new ROTParser(TalkerId.HE);
-        assertEquals(TalkerId.HE, empty.getTalkerId());
-        assertEquals(SentenceId.ROT.toString(), empty.getSentenceId());
+    fun testConstructor() {
+        val empty: ROTSentence = ROTParser(TalkerId.HE)
+        assertEquals(TalkerId.HE, empty.talkerId)
+        assertEquals(SentenceId.ROT.toString(), empty.sentenceId)
         try {
-            empty.getRateOfTurn();
-        } catch (DataNotAvailableException e) {
+            empty.rateOfTurn
+        } catch (e: DataNotAvailableException) {
             // pass
-        } catch (Exception e) {
-            fail(e.getMessage());
+        } catch (e: Exception) {
+            fail(e.message)
         }
     }
 
     @Test
-    public void testGetStatus() {
-        assertEquals(DataStatus.ACTIVE, rot.getStatus());
-        assertEquals(DataStatus.VOID, irot.getStatus());
+    fun testGetStatus() {
+        assertEquals(DataStatus.ACTIVE, rot.status)
+        assertEquals(DataStatus.VOID, irot.status)
     }
 
     @Test
-    public void testSetStatus() {
-    	rot.setStatus(DataStatus.VOID);
-        assertEquals(DataStatus.VOID, rot.getStatus());
+    fun testSetStatus() {
+        rot.status = DataStatus.VOID
+        assertEquals(DataStatus.VOID, rot.status)
     }
 
     @Test
-    public void testGetRateOfTurn() {
-        double value = rot.getRateOfTurn();
-        assertEquals(-0.3, value, 0.1);
+    fun testGetRateOfTurn() {
+        val value: Double = rot.rateOfTurn
+        assertEquals(-0.3, value, 0.1)
     }
 
     @Test
-    public void testSetRateOfTurn() {
-    	final double newValue = 0.5;
-    	rot.setRateOfTurn(newValue);
-    	assertEquals(newValue, rot.getRateOfTurn(), 0.1);
+    fun testSetRateOfTurn() {
+        val newValue = 0.5
+        rot.rateOfTurn = newValue
+        assertEquals(newValue, rot.rateOfTurn, 0.1)
     }
 
     @Test
-    public void testSetRateOfTurnNegative() {
-      final double newValue = -12.3;
-      rot.setRateOfTurn(newValue);
-      assertEquals(newValue, rot.getRateOfTurn(), 0.1);
+    fun testSetRateOfTurnNegative() {
+        val newValue = -12.3
+        rot.rateOfTurn = newValue
+        assertEquals(newValue, rot.rateOfTurn, 0.1)
+    }
+
+    companion object {
+        const val EXAMPLE = "\$HCROT,-0.3,A"
+        const val INVALID_EXAMPLE = "\$HCROT,-0.3,V"
     }
 }
