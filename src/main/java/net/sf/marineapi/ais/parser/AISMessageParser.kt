@@ -20,9 +20,11 @@
  */
 package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessageimport
+import net.sf.marineapi.ais.message.AISMessage
+import net.sf.marineapi.ais.util.Sixbit
+import net.sf.marineapi.ais.util.Violation
+import net.sf.marineapi.nmea.sentence.AISSentence
 
-net.sf.marineapi.ais.util.Sixbitimport net.sf.marineapi.ais.util.Violationimport net.sf.marineapi.nmea.sentence.AISSentence java.util.ArrayList
 /**
  * Base class for all AIS messages.
  *
