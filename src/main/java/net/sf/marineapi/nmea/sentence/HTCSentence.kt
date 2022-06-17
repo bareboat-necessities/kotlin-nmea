@@ -25,6 +25,7 @@ import net.sf.marineapi.nmea.util.Direction
 import net.sf.marineapi.nmea.util.SteeringMode
 import net.sf.marineapi.nmea.util.TurnMode
 
+
 /**
  * Heading/Track control systems data and commands. HTC provides input to a
  * heading controller to set values, modes and references, while HTD provides
@@ -47,28 +48,28 @@ interface HTCSentence : Sentence {
      * @return [DataStatus.ACTIVE] when in use, [DataStatus.VOID]
      * when not in use.
      */
-    val override: DataStatus?
+    fun getOverride(): DataStatus?
 
     /**
      * Returns the commaded rudder angle.
      *
      * @return Rudder angle, in degrees.
      */
-    val rudderAngle: Double
+    fun getRudderAngle(): Double
 
     /**
      * Returns the commanded rudder direction.
      *
      * @return [Direction.RIGHT] (starboard) or [Direction.LEFT] (port)
      */
-    val rudderDirection: Direction?
+    fun getRudderDirection(): Direction?
 
     /**
      * Returns the selected steering mode.
      *
      * @return [SteeringMode] enum.
      */
-    val steeringMode: SteeringMode?
+    fun getSteeringMode(): SteeringMode?
 
     /**
      * Returns the current turn mode. Turn mode defines how the ship changes
@@ -79,42 +80,42 @@ interface HTCSentence : Sentence {
      * @see .getRadiusOfTurn
      * @see .getRateOfTurn
      */
-    val turnMode: TurnMode?
+    fun getTurnMode(): TurnMode?
 
     /**
      * Returns the commanded rudder limit.
      *
      * @return Rudder limit, in degrees.
      */
-    val rudderLimit: Double
+    fun getRudderLimit(): Double
 
     /**
      * Returns the commanded off-heading limit.
      *
      * @return Off-heading limit, in degrees.
      */
-    val offHeadingLimit: Double
+    fun getOffHeadingLimit(): Double
 
     /**
      * Returns the commanded radius of turn for heading changes.
      *
      * @return Radius of turn, in nautical miles.
      */
-    val radiusOfTurn: Double
+    fun getRadiusOfTurn(): Double
 
     /**
      * Returns the commanded rate of turn for heading changes.
      *
      * @return Rate of turn, in degrees/min.
      */
-    val rateOfTurn: Double
+    fun getRateOfTurn(): Double
 
     /**
      * Returns the commanded heading to steer.
      *
      * @return Heading to steer, in degrees.
      */
-    val headingToSteer: Double
+    fun getHeadingToSteer(): Double
 
     /**
      * Returns the commanded off-track limit, can be generated if the selected
@@ -122,7 +123,7 @@ interface HTCSentence : Sentence {
      *
      * @return Off-track limit, in nautical miles.
      */
-    val offTrackLimit: Double
+    fun getOffTrackLimit(): Double
 
     /**
      * Returns the commanded track, which represents the course line between two
@@ -132,12 +133,12 @@ interface HTCSentence : Sentence {
      * @return Commanded track, in degrees.
      * @see .getRadiusOfTurn
      */
-    val track: Double
+    fun getTrack(): Double
 
     /**
      * Tells if the heading reference in use is true or magnetic.
      *
      * @return True if true heading, false for magnetic.
      */
-    val isHeadingTrue: Boolean
+    fun isHeadingTrue(): Boolean
 }

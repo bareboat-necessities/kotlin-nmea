@@ -34,132 +34,86 @@ interface MDASentence : Sentence {
      * @return Absolute humidity, percent, to the nearest 0,1 percent. NaN if
      * not available.
      */
-    /**
-     * Sets the absolute humidity.
-     *
-     * @param humitidy Humidity percent to set.
-     */
-    var absoluteHumidity: Double
+    fun getAbsoluteHumidity(): Double
+
     /**
      * Returns the air temperature.
      *
      * @return Air temperature, degrees C, to the nearest 0,1 degree C. NaN if
      * not available.
      */
-    /**
-     * Sets the air temperature.
-     *
-     * @param temp Temperature to set, degrees Celsius.
-     */
-    var airTemperature: Double
+    fun getAirTemperature(): Double
+
     /**
      * Returns the dew point.
      *
      * @return Dew point, degrees C, to the nearest 0,1 degree C. NaN if not
      * available.
      */
-    /**
-     * Sets the dew point temperature.
-     *
-     * @param dewPoint Dew point in degrees Celsius.
-     */
-    var dewPoint: Double
+    fun getDewPoint(): Double
+
     /**
      * Returns the magnetic wind direction.
      *
      * @return Wind direction, degrees True, to the nearest 0,1 degree. NaN if
      * not available.
      */
-    /**
-     * Sets the magnetic wind direction.
-     *
-     * @param direction Direction to set, degrees Magnetic [0..360]
-     */
-    var magneticWindDirection: Double
+    fun getMagneticWindDirection(): Double
+
     /**
      * Returns the primary barometric pressure.
      *
      * @return Barometric pressure, inches of mercury. NaN if not available.
      */
-    /**
-     * Sets the primary barometric pressure value.
-     *
-     * @param pressure Pressure value to set, usually in inches of mercury.
-     * @see .setPrimaryBarometricPressureUnit
-     */
-    var primaryBarometricPressure: Double
+    fun getPrimaryBarometricPressure(): Double
+
     /**
      * Returns the unit of primary barometric pressure.
      *
      * @return B = bar I = inches of mercury (inHg) P = pascal (1 bar = 100000
      * Pa = 29,53 inHg).
      */
-    /**
-     * Sets the barometric pressure unit.
-     *
-     * @param unit Pressure unit to set, usually in inches of mercury 'I'.
-     * @see .setSecondaryBarometricPressureUnit
-     */
-    var primaryBarometricPressureUnit: Char
+    fun getPrimaryBarometricPressureUnit(): Char
+
     /**
      * Returns the relative humidity.
      *
      * @return Relative humidity, percent, to the nearest 0,1 percent. NaN if
      * not available.
      */
-    /**
-     * Sets the relative humidity
-     *
-     * @param humidity Humidity percent to set.
-     */
-    var relativeHumidity: Double
+    fun getRelativeHumidity(): Double
+
     /**
      * Returns the secondary barometric pressure.
      *
      * @return Barometric pressure, bars, to the nearest .001 bar. NaN if not
      * available.
      */
-    /**
-     * Sets the barometric pressure value.
-     *
-     * @param pressure Pressure to set, usually in bars.
-     */
-    var secondaryBarometricPressure: Double
+    fun getSecondaryBarometricPressure(): Double
+
     /**
      * Returns the unit of secondary barometric pressure.
      *
      * @return B = bar I = inches of mercury (inHg) P = pascal (1 bar = 100000
      * Pa = 29,53 inHg). The secondary unit is almost always in bars.
      */
-    /**
-     * Sets the secondary barometric pressure unit.
-     *
-     * @param unit Pressure unit set, usually in bars 'B'.
-     */
-    var secondaryBarometricPressureUnit: Char
+    fun getSecondaryBarometricPressureUnit(): Char
+
     /**
      * Returns the wind direction.
      *
      * @return Wind direction, degrees True, to the nearest 0,1 degree. NaN if
      * not available.
      */
-    /**
-     * Sets the True wind direction.
-     *
-     * @param direction Direction to set, degrees True [0..360]
-     */
-    var trueWindDirection: Double
+    fun getTrueWindDirection(): Double
+
     /**
      * Returns the water temperature.
      *
      * @return Water temperature, degrees C. NaN if not available.
      */
-    /**
-     * Sets the Water temperature.
-     *
-     * @param temp Temperature in degrees Celsius.
-     */
-    var waterTemperature: Double
+    fun getWaterTemperature(): Double
+
     /**
      * Returns the wind speed.
      *
@@ -167,24 +121,108 @@ interface MDASentence : Sentence {
      * available.
      * @see .getWindSpeedKnots
      */
-    /**
-     * Sets the wind speed.
-     *
-     * @param speed Wind speed in meters per second.
-     * @see .setWindSpeedKnots
-     */
-    var windSpeed: Double
+    fun getWindSpeed(): Double
+
     /**
      * Returns the wind speed.
      *
      * @return Wind speed, knots. NaN if not available.
      * @see .getWindSpeed
      */
+    fun getWindSpeedKnots(): Double
+
+    /**
+     * Sets the absolute humidity.
+     *
+     * @param humitidy Humidity percent to set.
+     */
+    fun setAbsoluteHumidity(humitidy: Double)
+
+    /**
+     * Sets the air temperature.
+     *
+     * @param temp Temperature to set, degrees Celsius.
+     */
+    fun setAirTemperature(temp: Double)
+
+    /**
+     * Sets the dew point temperature.
+     *
+     * @param dewPoint Dew point in degrees Celsius.
+     */
+    fun setDewPoint(dewPoint: Double)
+
+    /**
+     * Sets the magnetic wind direction.
+     *
+     * @param direction Direction to set, degrees Magnetic [0..360]
+     */
+    fun setMagneticWindDirection(direction: Double)
+
+    /**
+     * Sets the primary barometric pressure value.
+     *
+     * @param pressure Pressure value to set, usually in inches of mercury.
+     * @see .setPrimaryBarometricPressureUnit
+     */
+    fun setPrimaryBarometricPressure(pressure: Double)
+
+    /**
+     * Sets the barometric pressure unit.
+     *
+     * @param unit Pressure unit to set, usually in inches of mercury 'I'.
+     * @see .setSecondaryBarometricPressureUnit
+     */
+    fun setPrimaryBarometricPressureUnit(unit: Char)
+
+    /**
+     * Sets the relative humidity
+     *
+     * @param humidity Humidity percent to set.
+     */
+    fun setRelativeHumidity(humidity: Double)
+
+    /**
+     * Sets the barometric pressure value.
+     *
+     * @param pressure Pressure to set, usually in bars.
+     */
+    fun setSecondaryBarometricPressure(pressure: Double)
+
+    /**
+     * Sets the secondary barometric pressure unit.
+     *
+     * @param unit Pressure unit set, usually in bars 'B'.
+     */
+    fun setSecondaryBarometricPressureUnit(unit: Char)
+
+    /**
+     * Sets the True wind direction.
+     *
+     * @param direction Direction to set, degrees True [0..360]
+     */
+    fun setTrueWindDirection(direction: Double)
+
+    /**
+     * Sets the Water temperature.
+     *
+     * @param temp Temperature in degrees Celsius.
+     */
+    fun setWaterTemperature(temp: Double)
+
+    /**
+     * Sets the wind speed.
+     *
+     * @param speed Wind speed in meters per second.
+     * @see .setWindSpeedKnots
+     */
+    fun setWindSpeed(speed: Double)
+
     /**
      * Sets the wind speed, in knots.
      *
      * @param speed Wind speed in knots.
      * @see .setWindSpeed
      */
-    var windSpeedKnots: Double
+    fun setWindSpeedKnots(speed: Double)
 }

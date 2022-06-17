@@ -32,14 +32,7 @@ interface HeadingSentence : Sentence {
      * @return Heading in degrees.
      * @see .isTrue
      */
-    /**
-     * Sets the heading value.
-     *
-     * @param hdt Heading in degrees
-     * @see .isTrue
-     * @throws IllegalArgumentException If heading value out of range [0..360]
-     */
-    var heading: Double
+    fun getHeading(): Double
 
     /**
      * Tells if the heading returned and set by [.getHeading] and
@@ -49,5 +42,14 @@ interface HeadingSentence : Sentence {
      * @return `true` if true heading, otherwise `false`
      * for magnetic heading.
      */
-    val isTrue: Boolean
+    fun isTrue(): Boolean
+
+    /**
+     * Sets the heading value.
+     *
+     * @param hdt Heading in degrees
+     * @see .isTrue
+     * @throws IllegalArgumentException If heading value out of range [0..360]
+     */
+    fun setHeading(hdt: Double)
 }

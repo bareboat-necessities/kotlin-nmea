@@ -37,44 +37,55 @@ interface MHUSentence : Sentence {
      *
      * @return Relative humitidy, percent.
      */
-    /**
-     * Returns the relative humidity.
-     *
-     * @param humidity Relative humidity, percent.
-     */
-    var relativeHumidity: Double
+    fun getRelativeHumidity(): Double
+
     /**
      * Returns the absolute humidity value.
      *
      * @return Absolute humidity, g/m³.
      */
-    /**
-     * Returns the absolute humidity value.
-     *
-     * @param humidity Absolute humidity, percent.
-     */
-    var absoluteHumidity: Double
+    fun getAbsoluteHumidity(): Double
+
     /**
      * Returns the dew point value.
      *
      * @return Dew point, degrees Celcius.
      * @see .getDewPointUnit
      */
-    /**
-     * Sets the dew point value.
-     *
-     * @param dewPoint Dew point in degrees Celcius.
-     */
-    var dewPoint: Double
+    fun getDewPoint(): Double
+
     /**
      * Returns the unit of dew point temperature, by default degrees Celsius.
      *
      * @return Temperature unit char, defaults to `'c'`.
      */
+    fun getDewPointUnit(): Char
+
+    /**
+     * Returns the relative humidity.
+     *
+     * @param humidity Relative humidity, percent.
+     */
+    fun setRelativeHumidity(humidity: Double)
+
+    /**
+     * Returns the absolute humidity value.
+     *
+     * @param humidity Absolute humidity, percent.
+     */
+    fun setAbsoluteHumidity(humidity: Double)
+
+    /**
+     * Sets the dew point value.
+     *
+     * @param dewPoint Dew point in degrees Celcius.
+     */
+    fun setDewPoint(dewPoint: Double)
+
     /**
      * Sets the unit of dew point temperature, by default degrees Celsius.
      *
      * @param unit Temperature unit char, defaults to `'c'`.
      */
-    var dewPointUnit: Char
+    fun setDewPointUnit(unit: Char)
 }

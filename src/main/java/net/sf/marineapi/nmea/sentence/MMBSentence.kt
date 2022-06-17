@@ -40,21 +40,26 @@ interface MMBSentence : Sentence {
      *
      * @return Barometric pressure, inHg.
      */
-    /**
-     * Sets the barometric pressure in inches of mercury.
-     *
-     * @param inhg Barometric pressure, inHg.
-     */
-    var inchesOfMercury: Double
+    fun getInchesOfMercury(): Double
+
     /**
      * Returns the barometric pressure in bars.
      *
      * @return Barometric pressure, bars.
      */
+    fun getBars(): Double
+
+    /**
+     * Sets the barometric pressure in inches of mercury.
+     *
+     * @param inhg Barometric pressure, inHg.
+     */
+    fun setInchesOfMercury(inhg: Double)
+
     /**
      * Sets the barometric pressure in bars.
      *
      * @param bars Barometric pressure, bars.
      */
-    var bars: Double
+    fun setBars(bars: Double)
 }

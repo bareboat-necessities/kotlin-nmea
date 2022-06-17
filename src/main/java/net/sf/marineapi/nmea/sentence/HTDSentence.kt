@@ -22,6 +22,7 @@ package net.sf.marineapi.nmea.sentence
 
 import net.sf.marineapi.nmea.util.DataStatus
 
+
 /**
  * Heading/Track control systems data and commands. HTD provides output from a
  * heading controller with information about values, modes and references in
@@ -39,7 +40,7 @@ interface HTDSentence : HTCSentence, HeadingSentence {
      * @return `DataStatus.ACTIVE` when within limits or
      * `DataStatus.VOID` when limit reached or exceeded.
      */
-    val rudderStatus: DataStatus?
+    fun getRudderStatus(): DataStatus?
 
     /**
      * Returns the off-heading status.
@@ -47,7 +48,7 @@ interface HTDSentence : HTCSentence, HeadingSentence {
      * @return `DataStatus.ACTIVE` when within limits or
      * `DataStatus.VOID` when limit reached or exceeded.
      */
-    val offHeadingStatus: DataStatus?
+    fun getOffHeadingStatus(): DataStatus?
 
     /**
      * Returns the off-track status.
@@ -55,5 +56,5 @@ interface HTDSentence : HTCSentence, HeadingSentence {
      * @return `DataStatus.ACTIVE` when within limits or
      * `DataStatus.VOID` when limit reached or exceeded.
      */
-    val offTrackStatus: DataStatus?
+    fun getOffTrackStatus(): DataStatus?
 }
