@@ -4,6 +4,7 @@ import net.sf.marineapi.nmea.parser.XDRParser
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.Measurement
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**

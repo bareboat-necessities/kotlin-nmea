@@ -12,8 +12,9 @@ import org.junit.Test
  * @author Epameinondas Pantzopoulos
  */
 class TLLTest {
-    var tll: TLLParser? = null
-    var empty: TLLParser? = null
+    private var tll: TLLParser? = null
+    private var empty: TLLParser? = null
+
     @Before
     fun setUp() {
         try {
