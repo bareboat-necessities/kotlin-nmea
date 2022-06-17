@@ -57,8 +57,8 @@ class AISListenerExample(file: File?) : AbstractAISMessageListener<AISMessage01>
 	 * net.sf.marineapi.ais.event.AbstractAISMessageListener#onMessage(net
 	 * .sf.marineapi.ais.sentence.AISMessage)
 	 */
-    override fun onMessage(msg: AISMessage01) {
-        println(msg.mmsi.toString() + ": " + msg.latitudeInDegrees)
+    override fun onMessage(msg: AISMessage01?) {
+        println(msg!!.mMSI.toString() + ": " + msg.latitudeInDegrees)
         println("onMessage: $msg")
     }
 

@@ -91,7 +91,7 @@ class FileExample(file: File?) : SentenceListener {
         val s = event.sentence as GGASentence
 
         // Do something with sentence data..
-        println(s.position)
+        println(s.getPosition())
     }
 
     companion object {

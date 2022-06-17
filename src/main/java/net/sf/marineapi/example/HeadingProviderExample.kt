@@ -24,6 +24,7 @@ import net.sf.marineapi.nmea.io.SentenceReader
 import net.sf.marineapi.provider.HeadingProvider
 import net.sf.marineapi.provider.event.HeadingEvent
 import net.sf.marineapi.provider.event.HeadingListener
+
 import java.io.*
 
 /**

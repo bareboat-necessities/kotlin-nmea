@@ -21,12 +21,18 @@
 package net.sf.marineapi.example
 
 import gnu.io.CommPortIdentifier
+import gnu.io.SerialPort
 
 import net.sf.marineapi.nmea.event.SentenceEvent
 import net.sf.marineapi.nmea.event.SentenceListener
+import net.sf.marineapi.nmea.io.SentenceReader
+import net.sf.marineapi.nmea.sentence.SentenceValidator
+import java.io.BufferedReader
+import java.io.IOException
 
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.util.*
 
 /**
  * Serial port example using GNU/RXTX libraries (see readme.txt). Scans through
@@ -80,7 +86,7 @@ class SerialPortExample : SentenceListener {
 	 */
     override fun sentenceRead(event: SentenceEvent) {
         // here we receive each sentence read from the port
-        println(event.getSentence())
+        println(event.sentence)
     }
 
     /**
