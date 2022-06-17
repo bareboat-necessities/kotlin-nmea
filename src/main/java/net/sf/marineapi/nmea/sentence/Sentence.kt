@@ -20,11 +20,6 @@
  */
 package net.sf.marineapi.nmea.sentence
 
-/**
- * Base interface and constants for NMEA 0183 sentences.
- *
- * @author Kimmo Tuukkanen
- */
 interface Sentence {
     /**
      * Get the sentence begin character. Although most of the sentences start
@@ -32,16 +27,7 @@ interface Sentence {
      *
      * @return Sentence begin char, e.g. "$" or "!".
      */
-    /**
-     * Set the sentence begin character. Although most of the sentences start
-     * with '$', some of them use '!' as begin character.
-     *
-     * @param ch Sentence begin char to set ('$' or '!')
-     * @see Sentence.BEGIN_CHAR
-     *
-     * @see Sentence.ALTERNATIVE_BEGIN_CHAR
-     */
-    var beginChar: Char
+    fun getBeginChar(): Char
 
     /**
      * Returns the current number of data fields in sentence, excluding ID field
@@ -49,7 +35,7 @@ interface Sentence {
      *
      * @return Data field count
      */
-    var fieldCount: Int
+    fun getFieldCount(): Int
 
     /**
      * Get the sentence ID that specifies the sentence type and data it holds.
@@ -59,7 +45,8 @@ interface Sentence {
      * @return Sentence id String, e.g. "GLL" or "GGA".
      * @see SentenceId
      */
-    var sentenceId: String
+    fun getSentenceId(): String?
+
     /**
      * Gets the talker ID of the sentence. Talker ID is the next two characters
      * after `$` in sentence address field. For example, in case of
@@ -67,34 +54,28 @@ interface Sentence {
      *
      * @return Talker id enum.
      */
-    /**
-     * Set the talker ID of the sentence. Typically, the ID might be changed if
-     * the sentence is to be sent from a computer to an NMEA device.
-     *
-     * @param id TalkerId to set
-     */
-    var talkerId: TalkerId
+    fun getTalkerId(): TalkerId?
 
     /**
      * Tells if this is an AIS sentence.
      *
      * @return True if AIS sentence, otherwise false.
      */
-    var isAISSentence: Boolean
+    fun isAISSentence(): Boolean
 
     /**
      * Tells if the sentence is of proprietary format.
      *
      * @return True if proprietary, otherwise false.
      */
-    var isProprietary: Boolean
+    fun isProprietary(): Boolean
 
     /**
      * Tells if the sentence formatting matches NMEA 0183 format.
      *
      * @return True if validly formatted, otherwise false.
      */
-    var isValid: Boolean
+    fun isValid(): Boolean
 
     /**
      * Resets the sentence contents, i.e. removes all existing values from data
@@ -102,6 +83,25 @@ interface Sentence {
      * calculated according to empty data fields.
      */
     fun reset()
+
+    /**
+     * Set the sentence begin character. Although most of the sentences start
+     * with '$', some of them use '!' as begin character.
+     *
+     * @param ch Sentence begin char to set ('$' or '!')
+     * @see Sentence.BEGIN_CHAR
+     *
+     * @see Sentence.ALTERNATIVE_BEGIN_CHAR
+     */
+    fun setBeginChar(ch: Char)
+
+    /**
+     * Set the talker ID of the sentence. Typically, the ID might be changed if
+     * the sentence is to be sent from a computer to an NMEA device.
+     *
+     * @param id TalkerId to set
+     */
+    fun setTalkerId(id: TalkerId?)
 
     /**
      * Formats and validates the String representation of sentence. Throws an
@@ -114,7 +114,7 @@ interface Sentence {
      * @return Sentence as String, equal to `toString()`.
      * @throws IllegalStateException If formatting results in invalid sentence.
      */
-    fun toSentence(): String
+    fun toSentence(): String?
 
     /**
      * Formats and validates the sentence like [.toSentence], but checks
@@ -127,7 +127,7 @@ interface Sentence {
      * @see .toSentence
      * @see .MAX_LENGTH
      */
-    fun toSentence(maxLength: Int): String
+    fun toSentence(maxLength: Int): String?
 
     /**
      * Returns the String representation of the sentence, without line
