@@ -35,11 +35,12 @@ import org.junit.Test
 class MHUTest {
     private var mhu: MHUSentence? = null
     private var empty: MHUSentence? = null
+
     @Before
     fun setUp() {
         mhu = MHUParser(EXAMPLE)
         empty = MHUParser(TalkerId.II)
-        Assert.assertEquals(4f, mhu.getFieldCount().toFloat(), 1f)
+        Assert.assertEquals(4f, mhu!!.getFieldCount().toFloat(), 1f)
     }
 
     @Test
