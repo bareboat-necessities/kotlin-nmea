@@ -17,116 +17,111 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ublox.event;
+package net.sf.marineapi.ublox.event
 
-import net.sf.marineapi.nmea.event.AbstractSentenceListener;
-import net.sf.marineapi.nmea.event.SentenceListener;
-import net.sf.marineapi.nmea.sentence.UBXSentence;
-import net.sf.marineapi.ublox.message.UBXMessage;
-import net.sf.marineapi.ublox.parser.UBXMessageFactory;
-import net.sf.marineapi.util.GenericTypeResolver;
+import net.sf.marineapi.nmea.event.AbstractSentenceListener
+import net.sf.marineapi.nmea.event.SentenceListener
+import net.sf.marineapi.nmea.sentence.UBXSentence
+import net.sf.marineapi.ublox.message.UBXMessage
+import net.sf.marineapi.ublox.parser.UBXMessageFactory
+import net.sf.marineapi.util.GenericTypeResolver
 
 /**
- * <p>
+ *
+ *
  * Abstract listener for UBX messages. Extend this class to create a listener
  * for a specific UBX message type and register it in a
- * {@link net.sf.marineapi.nmea.io.SentenceReader}.</p>
- * <p>
- * To listen to all incoming UBX sentences, extend the {@link
- * AbstractSentenceListener} using {@link UBXSentence} as type.</p>
- * <p>
- * This class is based on {@link AbstractSentenceListener} and thus it has the
+ * [net.sf.marineapi.nmea.io.SentenceReader].
+ *
+ *
+ * To listen to all incoming UBX sentences, extend the [ ] using [UBXSentence] as type.
+ *
+ *
+ * This class is based on [AbstractSentenceListener] and thus it has the
  * same recommendations and limitations regarding the usage of generics and
  * inheritance.
- * </p>
+ *
  *
  * @author Gunnar Hillert
  * @param <T> UBX message type to be listened.
  * @see AbstractSentenceListener
+ *
  * @see GenericTypeResolver
- */
-public abstract class AbstractUBXMessageListener<T extends UBXMessage>
-	extends AbstractSentenceListener<UBXSentence> {
+</T> */
+abstract class AbstractUBXMessageListener<T : UBXMessage?> : AbstractSentenceListener<UBXSentence> {
+    val messageType: Class<*>?
+    private val factory: UBXMessageFactory? = UBXMessageFactory.Companion.getInstance()
 
-	final Class<?> messageType;
-	private final UBXMessageFactory factory = UBXMessageFactory.getInstance();
+    /**
+     * Default constructor with automatic generic type resolving. Notice that
+     * the [GenericTypeResolver] may not always succeed.
+     *
+     * @see .AbstractUBXMessageListener
+     * @throws IllegalStateException If the generic type cannot be resolved
+     * at runtime.
+     */
+    constructor() {
+        messageType = GenericTypeResolver.resolve(
+            javaClass, AbstractUBXMessageListener::class.java
+        )
+    }
 
-	/**
-	 * Default constructor with automatic generic type resolving. Notice that
-	 * the {@link GenericTypeResolver} may not always succeed.
-	 *
-	 * @see #AbstractUBXMessageListener(Class)
-	 * @throws IllegalStateException If the generic type cannot be resolved
-	 *                               at runtime.
-	 */
-	public AbstractUBXMessageListener() {
-		this.messageType = GenericTypeResolver.resolve(
-				getClass(), AbstractUBXMessageListener.class);
-	}
+    /**
+     * Constructor with explicit generic type parameter. This constructor may
+     * be used when the default constructor fails to resolve the generic type
+     * `T` at runtime.
+     *
+     * @param c Message type `T` to be listened.
+     * @see .AbstractUBXMessageListener
+     */
+    constructor(c: Class<T>?) {
+        messageType = c
+    }
 
-	/**
-	 * Constructor with explicit generic type parameter. This constructor may
-	 * be used when the default constructor fails to resolve the generic type
-	 * {@code T} at runtime.
-	 *
-	 * @param c Message type {@code T} to be listened.
-	 * @see #AbstractUBXMessageListener()
-	 */
-	public AbstractUBXMessageListener(Class<T> c) {
-		this.messageType = c;
-	}
+    /**
+     *
+     *
+     * Invoked when [UBXSentence] of any type is received. Pre-parses
+     * the message to determine it's type and invokes the
+     * [.onMessage] method when the type matches the generic
+     * type `T`.
+     *
+     *
+     * This method has been declared `final` to ensure the correct
+     * handling of received sentences.
+     */
+    override fun sentenceRead(sentence: UBXSentence) {
+        try {
+            val message = factory!!.create(sentence)
+            if (messageType!!.isAssignableFrom(message!!.javaClass)) {
+                onMessage(message as T)
+            }
+        } catch (iae: IllegalArgumentException) {
+            // never mind incorrect order or unsupported message types
+        }
+    }
 
-	/**
-	 * <p>
-	 * Invoked when {@link UBXSentence} of any type is received. Pre-parses
-	 * the message to determine it's type and invokes the
-	 * {@link #onMessage(UBXMessage)} method when the type matches the generic
-	 * type {@code T}.</p>
-	 * <p>
-	 * This method has been declared {@code final} to ensure the correct
-	 * handling of received sentences.</p>
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public final void sentenceRead(UBXSentence sentence) {
+    /**
+     * Invoked when a UBX message has been received.
+     * @param msg UBXMessage of type `T`
+     */
+    abstract fun onMessage(msg: T?)
 
-		try {
-			UBXMessage message = factory.create(sentence);
-			if (messageType.isAssignableFrom(message.getClass())) {
-				onMessage((T) message);
-			}
-		} catch (IllegalArgumentException iae) {
-			// never mind incorrect order or unsupported message types
-		}
-	}
+    /**
+     * Empty implementation.
+     * @see SentenceListener.readingPaused
+     */
+    override fun readingPaused() {}
 
-	/**
-	 * Invoked when a UBX message has been received.
-	 * @param msg UBXMessage of type {@code T}
-	 */
-	public abstract void onMessage(T msg);
+    /**
+     * Empty implementation.
+     * @see SentenceListener.readingStarted
+     */
+    override fun readingStarted() {}
 
-	/**
-	 * Empty implementation.
-	 * @see SentenceListener#readingPaused()
-	 */
-	@Override
-	public void readingPaused() {
-	}
-
-	/**
-	 * Empty implementation.
-	 * @see SentenceListener#readingStarted()
-	 */
-	@Override
-	public void readingStarted() {
-	}
-
-	/**
-	 * Empty implementation.
-	 * @see SentenceListener#readingStopped()
-	 */
-	@Override
-	public void readingStopped() {
-	}
+    /**
+     * Empty implementation.
+     * @see SentenceListener.readingStopped
+     */
+    override fun readingStopped() {}
 }

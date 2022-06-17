@@ -18,62 +18,55 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.HDTSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
+import net.sf.marineapi.nmea.sentence.HDTSentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerId
 /**
  * HDT sentence parser.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-class HDTParser extends SentenceParser implements HDTSentence {
+internal class HDTParser : SentenceParser, HDTSentence {
+    /**
+     * Creates a new HDT parser.
+     *
+     * @param nmea HDT sentence String to parse.
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.HDT) {}
 
-	private static final int HEADING = 0;
-	private static final int TRUE_INDICATOR = 1;
+    /**
+     * Creates a new empty HDT sentence.
+     *
+     * @param talker Talker id to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.HDT, 2) {
+        setCharValue(TRUE_INDICATOR, 'T')
+    }
 
-	/**
-	 * Creates a new HDT parser.
-	 * 
-	 * @param nmea HDT sentence String to parse.
-	 */
-	public HDTParser(String nmea) {
-		super(nmea, SentenceId.HDT);
-	}
-
-	/**
-	 * Creates a new empty HDT sentence.
-	 * 
-	 * @param talker Talker id to set
-	 */
-	public HDTParser(TalkerId talker) {
-		super(talker, SentenceId.HDT, 2);
-		setCharValue(TRUE_INDICATOR, 'T');
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.parser.HeadingSentence#getHeading()
-	 */
-	public double getHeading() {
-		return getDoubleValue(HEADING);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HeadingSentence#isTrue()
-	 */
-	public boolean isTrue() {
-		return true;
-	}
-
-	/*
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.parser.HeadingSentence#setHeading(double)
 	 */
-	public void setHeading(double hdt) {
-		setDegreesValue(HEADING, hdt);
-	}
+    override var heading: Double
+        get() = getDoubleValue(HEADING)
+        set(hdt) {
+            setDegreesValue(HEADING, hdt)
+        }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.HeadingSentence#isTrue()
+	 */
+    override val isTrue: Boolean
+        get() = true
+
+    companion object {
+        private const val HEADING = 0
+        private const val TRUE_INDICATOR = 1
+    }
 }

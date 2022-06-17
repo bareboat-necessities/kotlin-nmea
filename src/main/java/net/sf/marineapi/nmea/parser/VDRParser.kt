@@ -18,107 +18,98 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.sentence.VDRSentence;
-import net.sf.marineapi.nmea.util.Units;
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.sentence.VDRSentence
+import net.sf.marineapi.nmea.util.Units
 
 /**
  * VDR sentence parser.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-class VDRParser extends SentenceParser implements VDRSentence {
+internal class VDRParser : SentenceParser, VDRSentence {
+    /**
+     * Creates a new instance of VDRParser.
+     *
+     * @param nmea VDR sentence String
+     */
+    constructor(nmea: String) : super(nmea) {}
 
-	private static final int TRUE_DIRECTION = 0;
-	private static final int TRUE_INDICATOR = 1;
-	private static final int MAGN_DIRECTION = 2;
-	private static final int MAGN_INDICATOR = 3;
-	private static final int SPEED = 4;
-	private static final int SPEED_UNITS = 5;
+    /**
+     * Creates a new empty instance of VDRParser.
+     *
+     * @param tid TalkerId to set
+     */
+    constructor(tid: TalkerId?) : super(tid, SentenceId.VDR, 6) {
+        setCharValue(TRUE_INDICATOR, 'T')
+        setCharValue(MAGN_INDICATOR, 'M')
+        setCharValue(SPEED_UNITS, Units.NAUTICAL_MILES.toChar())
+    }
 
-	/**
-	 * Creates a new instance of VDRParser.
-	 * 
-	 * @param nmea VDR sentence String
-	 */
-	public VDRParser(String nmea) {
-		super(nmea);
-	}
-
-	/**
-	 * Creates a new empty instance of VDRParser.
-	 * 
-	 * @param tid TalkerId to set
-	 */
-	public VDRParser(TalkerId tid) {
-		super(tid, SentenceId.VDR, 6);
-		setCharValue(TRUE_INDICATOR, 'T');
-		setCharValue(MAGN_INDICATOR, 'M');
-		setCharValue(SPEED_UNITS, Units.NAUTICAL_MILES.toChar());
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.VDRSentence#getMagneticDirection()
 	 */
-	@Override
-	public double getMagneticDirection() {
-		return getDoubleValue(MAGN_DIRECTION);
-	}
+    override fun getMagneticDirection(): Double {
+        return getDoubleValue(MAGN_DIRECTION)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.VDRSentence#getSpeed()
 	 */
-	@Override
-	public double getSpeed() {
-		return getDoubleValue(SPEED);
-	}
+    override fun getSpeed(): Double {
+        return getDoubleValue(SPEED)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.VDRSentence#getTrueDirection()
 	 */
-	@Override
-	public double getTrueDirection() {
-		return getDoubleValue(TRUE_DIRECTION);
-	}
+    override fun getTrueDirection(): Double {
+        return getDoubleValue(TRUE_DIRECTION)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.VDRSentence#setMagneticDirection(double)
 	 */
-	@Override
-	public void setMagneticDirection(double direction) {
-		setDegreesValue(MAGN_DIRECTION, direction);
-	}
+    override fun setMagneticDirection(direction: Double) {
+        setDegreesValue(MAGN_DIRECTION, direction)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.VDRSentence#setSpeed(double)
 	 */
-	@Override
-	public void setSpeed(double speed) {
-		setDoubleValue(SPEED, speed, 0, 1);
-	}
+    override fun setSpeed(speed: Double) {
+        setDoubleValue(SPEED, speed, 0, 1)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.VDRSentence#setTrueDirection(double)
 	 */
-	@Override
-	public void setTrueDirection(double direction) {
-		setDegreesValue(TRUE_DIRECTION, direction);
-	}
+    override fun setTrueDirection(direction: Double) {
+        setDegreesValue(TRUE_DIRECTION, direction)
+    }
 
+    companion object {
+        private const val TRUE_DIRECTION = 0
+        private const val TRUE_INDICATOR = 1
+        private const val MAGN_DIRECTION = 2
+        private const val MAGN_INDICATOR = 3
+        private const val SPEED = 4
+        private const val SPEED_UNITS = 5
+    }
 }

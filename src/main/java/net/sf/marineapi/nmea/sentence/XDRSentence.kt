@@ -18,53 +18,52 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import java.util.List;
-
-import net.sf.marineapi.nmea.util.Measurement;
+import net.sf.marineapi.nmea.util.Measurement
 
 /**
- * <p>
+ *
+ *
  * Transducer measurements. Measurements are delivered in sets containing four
  * fields; transducer type, measurement value, unit of measurement and
  * transducer name. There may be any number of sets like this, each describing a
  * sensor. Notice that inserting too many measuments in one sentence may result
  * in exceeding the maximum sentence length (82 chars).
- * 
+ *
  * @see net.sf.marineapi.nmea.util.Measurement
+ *
  * @author Robert Huitema, Kimmo Tuukkanen
  */
-public interface XDRSentence extends Sentence {
+interface XDRSentence : Sentence {
+    /**
+     * Adds specified measurement in sentence placing it last. Multiple
+     * measurements are inserted in given order.
+     *
+     * @param m Measurements to add.
+     */
+    fun addMeasurement(vararg m: Measurement?)
 
-	/**
-	 * Adds specified measurement in sentence placing it last. Multiple
-	 * measurements are inserted in given order.
-	 * 
-	 * @param m Measurements to add.
-	 */
-	void addMeasurement(Measurement... m);
+    /**
+     * Returns all measurements.
+     *
+     * @return List of measurements, ordered as they appear in sentence.
+     */
+    fun getMeasurements(): MutableList<Measurement>
 
-	/**
-	 * Returns all measurements.
-	 * 
-	 * @return List of measurements, ordered as they appear in sentence.
-	 */
-	List<Measurement> getMeasurements();
+    /**
+     * Set single measurement. Overwrites all existing values and adjusts the
+     * number of data fields to minimum required by one measurement (4).
+     *
+     * @param m Measurement to set.
+     */
+    fun setMeasurement(m: Measurement?)
 
-	/**
-	 * Set single measurement. Overwrites all existing values and adjusts the
-	 * number of data fields to minimum required by one measurement (4).
-	 * 
-	 * @param m Measurement to set.
-	 */
-	void setMeasurement(Measurement m);
-
-	/**
-	 * Set multiple measurements in given order. Overwrites all existing values
-	 * and adjusts the number of data fields as required by given measurements.
-	 * 
-	 * @param measurements List of measurements to set.
-	 */
-	void setMeasurements(List<Measurement> measurements);
+    /**
+     * Set multiple measurements in given order. Overwrites all existing values
+     * and adjusts the number of data fields as required by given measurements.
+     *
+     * @param measurements List of measurements to set.
+     */
+    fun setMeasurements(measurements: List<Measurement>)
 }

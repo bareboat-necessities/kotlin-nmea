@@ -18,63 +18,51 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.MMBSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
+import net.sf.marineapi.nmea.sentence.MMBSentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerId
 /**
  * MMBParser - Barometer.
  *
- * {@code $--MMB,x.x,I,x.x,B*hh<CR><LF>}
+ * `$--MMB,x.x,I,x.x,B*hh<CR><LF>`
  *
  * @author Kimmo Tuukkanen
  */
-class MMBParser extends SentenceParser implements MMBSentence {
-
-    private static final int PRESSURE_INHG = 0;
-    private static final int UNIT_INHG = 1;
-    private static final int PRESSURE_BARS = 2;
-    private static final int UNIT_BARS = 3;
-
+internal class MMBParser : SentenceParser, MMBSentence {
     /**
      * Constructor for parsing MMB.
      *
      * @param nmea MMB sentence String.
      */
-    public MMBParser(String nmea) {
-        super(nmea, SentenceId.MMB);
-    }
+    constructor(nmea: String) : super(nmea, SentenceId.MMB) {}
 
     /**
      * Constructs a fresh MMB parser.
      *
      * @param tid TalkerId to use in sentence.
      */
-    public MMBParser(TalkerId tid) {
-        super(tid, SentenceId.MMB, 4);
-        setCharValue(UNIT_INHG, 'I');
-        setCharValue(UNIT_BARS, 'B');
+    constructor(tid: TalkerId?) : super(tid, SentenceId.MMB, 4) {
+        setCharValue(UNIT_INHG, 'I')
+        setCharValue(UNIT_BARS, 'B')
     }
 
-    @Override
-    public double getInchesOfMercury() {
-        return getDoubleValue(PRESSURE_INHG);
-    }
+    override var inchesOfMercury: Double
+        get() = getDoubleValue(PRESSURE_INHG)
+        set(inHg) {
+            setDoubleValue(PRESSURE_INHG, inHg)
+        }
+    override var bars: Double
+        get() = getDoubleValue(PRESSURE_BARS)
+        set(bars) {
+            setDoubleValue(PRESSURE_BARS, bars)
+        }
 
-    @Override
-    public double getBars() {
-        return getDoubleValue(PRESSURE_BARS);
-    }
-
-    @Override
-    public void setInchesOfMercury(double inHg) {
-        setDoubleValue(PRESSURE_INHG, inHg);
-    }
-
-    @Override
-    public void setBars(double bars) {
-        setDoubleValue(PRESSURE_BARS, bars);
+    companion object {
+        private const val PRESSURE_INHG = 0
+        private const val UNIT_INHG = 1
+        private const val PRESSURE_BARS = 2
+        private const val UNIT_BARS = 3
     }
 }

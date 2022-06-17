@@ -18,46 +18,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.parser;
+package net.sf.marineapi.ais.parser
 
-import java.util.ArrayList;
-import java.util.List;
+import net.sf.marineapi.ais.message.AISMessageimport
 
-import net.sf.marineapi.ais.message.AISMessage;
-import net.sf.marineapi.ais.util.Sixbit;
-import net.sf.marineapi.ais.util.Violation;
-import net.sf.marineapi.nmea.sentence.AISSentence;
-
+net.sf.marineapi.ais.util.Sixbitimport net.sf.marineapi.ais.util.Violationimport net.sf.marineapi.nmea.sentence.AISSentence java.util.ArrayList
 /**
  * Base class for all AIS messages.
  *
  * @author Lázár József, Kimmo Tuukkanen
  */
-public class AISMessageParser implements AISMessage {
-
-    // Common AIS message part
-    private static final int MESSAGE_TYPE = 0;
-    private static final int REPEAT_INDICATOR = 1;
-    private static final int MMSI = 2;
-    private static final int[] FROM = { 0, 6, 8 };
-    private static final int[] TO = { 6, 8, 38 };
-
-    private Sixbit decoder;
-    private String message = "";
-    private int fillBits = 0;
-    private int lastFragmentNr = 0;
-
-    private List<Violation> fViolations = new ArrayList<>();
-
+open class AISMessageParser : AISMessage {
+    private var decoder: Sixbit? = null
+    private var message = ""
+    private var fillBits = 0
+    private var lastFragmentNr = 0
+    private val fViolations: MutableList<Violation> = ArrayList()
 
     /**
      * Default constructor. Message content musts be appended before using
      * the parser.
      *
-     * @see #append(String, int, int)
+     * @see .append
      */
-    public AISMessageParser() {
-    }
+    constructor() {}
 
     /**
      * Construct a parser with given AIS sentences. The result will parser for
@@ -66,15 +50,13 @@ public class AISMessageParser implements AISMessage {
      *
      * @param sentences Single AIS sentence or a sequence of sentences.
      */
-    public AISMessageParser(AISSentence... sentences) {
-        int index = 1;
-        for (AISSentence s : sentences) {
-            if (s.isFragmented() && s.getFragmentNumber() != index++) {
-                throw new IllegalArgumentException("Incorrect order of AIS sentences");
-            }
-            this.append(s.getPayload(), s.getFragmentNumber(), s.getFillBits());
+    constructor(vararg sentences: AISSentence) {
+        var index = 1
+        for (s in sentences) {
+            require(!(s.isFragmented && s.fragmentNumber != index++)) { "Incorrect order of AIS sentences" }
+            this.append(s.payload, s.fragmentNumber, s.fillBits)
         }
-        this.decoder = new Sixbit(this.message, this.fillBits);
+        decoder = Sixbit(message, fillBits)
     }
 
     /**
@@ -82,11 +64,9 @@ public class AISMessageParser implements AISMessage {
      *
      * @param sb A non-empty six-bit decoder.
      */
-    protected AISMessageParser(Sixbit sb) {
-        if (sb.length() <= 0) {
-            throw new IllegalArgumentException("Sixbit decoder is empty!");
-        }
-        this.decoder = sb;
+    constructor(sb: Sixbit) {
+        require(sb.length() > 0) { "Sixbit decoder is empty!" }
+        decoder = sb
     }
 
     /**
@@ -95,11 +75,13 @@ public class AISMessageParser implements AISMessage {
      * @param sb A non-empty six-bit decoder.
      * @param len Expected message length (bits)
      */
-    protected AISMessageParser(Sixbit sb, int len) {
-        this(sb);
-        if (sb.length() != len) {
-            throw new IllegalArgumentException(
-              String.format("Wrong message length: %s (expected %s)", sb.length(), len));
+    protected constructor(sb: Sixbit, len: Int) : this(sb) {
+        require(sb.length() == len) {
+            String.format(
+                "Wrong message length: %s (expected %s)",
+                sb.length(),
+                len
+            )
         }
     }
 
@@ -110,11 +92,14 @@ public class AISMessageParser implements AISMessage {
      * @param min Expected minimum length of message (bits)
      * @param max Expected maximum length of message (bits)
      */
-    protected AISMessageParser(Sixbit sb, int min, int max) {
-        this(sb);
-        if (sb.length() < min || sb.length() > max) {
-            throw new IllegalArgumentException(
-              String.format("Wrong message length: %s (expected %s - %s)", sb.length(), min, max));
+    protected constructor(sb: Sixbit, min: Int, max: Int) : this(sb) {
+        require(!(sb.length() < min || sb.length() > max)) {
+            String.format(
+                "Wrong message length: %s (expected %s - %s)",
+                sb.length(),
+                min,
+                max
+            )
         }
     }
 
@@ -122,8 +107,8 @@ public class AISMessageParser implements AISMessage {
      * Add a new rule violation to this message
      * @param v Violation to add
      */
-    protected void addViolation(Violation v) {
-        fViolations.add(v);
+    protected fun addViolation(v: Violation) {
+        fViolations.add(v)
     }
 
     /**
@@ -131,47 +116,35 @@ public class AISMessageParser implements AISMessage {
      *
      * @return Number of violations.
      */
-    public int getNrOfViolations() {
-        return fViolations.size();
-    }
+    val nrOfViolations: Int
+        get() = fViolations.size
 
     /**
      * Returns list of discoverd data violations.
      *
      * @return Number of violations.
      */
-    public List<Violation> getViolations() {
-        return fViolations;
-    }
-
-    @Override
-    public int getMessageType() {
-        return getSixbit().getInt(FROM[MESSAGE_TYPE], TO[MESSAGE_TYPE]);
-    }
-
-    @Override
-    public int getRepeatIndicator() {
-        return getSixbit().getInt(FROM[REPEAT_INDICATOR], TO[REPEAT_INDICATOR]);
-    }
-
-    @Override
-    public int getMMSI() {
-        return getSixbit().getInt(FROM[MMSI], TO[MMSI]);
-    }
+    val violations: List<Violation>
+        get() = fViolations
+    override val messageType: Int
+        get() = sixbit.getInt(FROM[MESSAGE_TYPE], TO[MESSAGE_TYPE])
+    override val repeatIndicator: Int
+        get() = sixbit.getInt(FROM[REPEAT_INDICATOR], TO[REPEAT_INDICATOR])
+    override val mMSI: Int
+        get() = sixbit.getInt(FROM[MMSI], TO[MMSI])
 
     /**
      * Returns the six-bit decoder of message.
      *
      * @return Sixbit decoder.
      * @throws IllegalStateException When message payload has not been appended
-     *     or Sixbit decoder has not been provided as constructor parameter.
+     * or Sixbit decoder has not been provided as constructor parameter.
      */
-    Sixbit getSixbit() {
-        if (decoder == null && message.isEmpty()) {
-            throw new IllegalStateException("Message is empty!");
+    val sixbit: Sixbit
+        get() {
+            check(!(decoder == null && message.isEmpty())) { "Message is empty!" }
+            return if (decoder == null) Sixbit(message, fillBits) else decoder!!
         }
-        return decoder == null ? new Sixbit(message, fillBits) : decoder;
-    }
 
     /**
      * Append a paylod fragment to combine messages devivered over multiple
@@ -181,18 +154,21 @@ public class AISMessageParser implements AISMessage {
      * @param fragmentIndex Fragment number within the fragments sequence (1-based)
      * @param fillBits Number of additional fill-bits
      */
-    void append(String fragment, int fragmentIndex, int fillBits) {
-        if (fragment == null || fragment.isEmpty()) {
-            throw new IllegalArgumentException("Message fragment cannot be null or empty");
-        }
-        if (fragmentIndex < 1 || fragmentIndex != (lastFragmentNr + 1)) {
-            throw new IllegalArgumentException("Invalid fragment index or sequence order");
-        }
-        if (fillBits < 0) {
-            throw new IllegalArgumentException("Fill bits cannot be negative");
-        }
-        this.lastFragmentNr = fragmentIndex;
-        this.message += fragment;
-        this.fillBits = fillBits; // we always use the last
+    fun append(fragment: String?, fragmentIndex: Int, fillBits: Int) {
+        require(!(fragment == null || fragment.isEmpty())) { "Message fragment cannot be null or empty" }
+        require(!(fragmentIndex < 1 || fragmentIndex != lastFragmentNr + 1)) { "Invalid fragment index or sequence order" }
+        require(fillBits >= 0) { "Fill bits cannot be negative" }
+        lastFragmentNr = fragmentIndex
+        message += fragment
+        this.fillBits = fillBits // we always use the last
+    }
+
+    companion object {
+        // Common AIS message part
+        private const val MESSAGE_TYPE = 0
+        private const val REPEAT_INDICATOR = 1
+        private const val MMSI = 2
+        private val FROM = intArrayOf(0, 6, 8)
+        private val TO = intArrayOf(6, 8, 38)
     }
 }

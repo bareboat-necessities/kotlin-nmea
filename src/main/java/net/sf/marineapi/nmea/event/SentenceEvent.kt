@@ -18,56 +18,48 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.event;
+package net.sf.marineapi.nmea.event
 
-import java.util.EventObject;
+import net.sf.marineapi.nmea.sentence.Sentenceimport
 
-import net.sf.marineapi.nmea.sentence.Sentence;
-
+java.lang.IllegalArgumentExceptionimport java.util.*
 /**
  * Sentence events occur when a valid NMEA 0183 sentence has been read from the
  * data source.
- * 
+ *
  * @author Kimmo Tuukkanen
  * @see SentenceListener
+ *
  * @see net.sf.marineapi.nmea.io.SentenceReader
  */
-public class SentenceEvent extends EventObject {
+class SentenceEvent(src: Any?, s: Sentence?) : EventObject(src) {
+    /**
+     * Get system time when this event was created.
+     *
+     * @return Milliseconds timestamp
+     */
+    val timeStamp = System.currentTimeMillis()
 
-	private static final long serialVersionUID = -2756954014186470514L;
-	private final long timestamp = System.currentTimeMillis();
-	private final Sentence sentence;
+    /**
+     * Gets the Sentence object that triggered the event.
+     *
+     * @return Sentence object
+     */
+    val sentence: Sentence
 
-	/**
-	 * Creates a new SentenceEvent object.
-	 * 
-	 * @param src Object that fired the event
-	 * @param s Sentence that triggered the event
-	 * @throws IllegalArgumentException If specified sentence is {@code null}
-	 */
-	public SentenceEvent(Object src, Sentence s) {
-		super(src);
-		if (s == null) {
-			throw new IllegalArgumentException("Sentence cannot be null");
-		}
-		this.sentence = s;
-	}
+    /**
+     * Creates a new SentenceEvent object.
+     *
+     * @param src Object that fired the event
+     * @param s Sentence that triggered the event
+     * @throws IllegalArgumentException If specified sentence is `null`
+     */
+    init {
+        requireNotNull(s) { "Sentence cannot be null" }
+        sentence = s
+    }
 
-	/**
-	 * Gets the Sentence object that triggered the event.
-	 * 
-	 * @return Sentence object
-	 */
-	public Sentence getSentence() {
-		return sentence;
-	}
-
-	/**
-	 * Get system time when this event was created.
-	 * 
-	 * @return Milliseconds timestamp
-	 */
-	public long getTimeStamp() {
-		return timestamp;
-	}
+    companion object {
+        private const val serialVersionUID = -2756954014186470514L
+    }
 }

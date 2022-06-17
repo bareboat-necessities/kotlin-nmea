@@ -18,106 +18,100 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.provider.event;
+package net.sf.marineapi.provider.event
 
-import java.util.List;
-
-import net.sf.marineapi.nmea.sentence.GSASentence;
-import net.sf.marineapi.nmea.util.FaaMode;
-import net.sf.marineapi.nmea.util.GpsFixStatus;
-import net.sf.marineapi.nmea.util.SatelliteInfo;
+import net.sf.marineapi.nmea.sentence.GSASentence
+import net.sf.marineapi.nmea.util.FaaMode
+import net.sf.marineapi.nmea.util.GpsFixStatus
+import net.sf.marineapi.nmea.util.SatelliteInfo
 
 /**
  * SatelliteInfoEvent contains the satellite information collected by
- * {@link net.sf.marineapi.provider.SatelliteInfoProvider}.
- * 
+ * [net.sf.marineapi.provider.SatelliteInfoProvider].
+ *
  * @author Kimmo Tuukkanen
  * @see net.sf.marineapi.nmea.sentence.GSASentence
+ *
  * @see net.sf.marineapi.nmea.sentence.GSVSentence
+ *
  * @see net.sf.marineapi.nmea.util.SatelliteInfo
  */
-public class SatelliteInfoEvent extends ProviderEvent {
+class SatelliteInfoEvent
+/**
+ * Creates a new satellite info event. GSA and GSV satellite info assumed
+ * to be from same NMEA update sequence/cycle.
+ *
+ * @param source The object that sends the event.
+ * @param gsa GSA sentence
+ * @param info GSV satellite info
+ */(
+    source: Any?, private val gsa: GSASentence?,
+    private val info: List<SatelliteInfo?>
+) : ProviderEvent(source) {
+    /**
+     * Returns the list of GPS satellites used for GPS fix.
+     *
+     * @return Satellite ids list as reported by GSA sentence.
+     */
+    fun getSatelliteIds(): Array<String?>? {
+        return gsa.getSatelliteIds()
+    }
 
-	private static final long serialVersionUID = -5243047395130051907L;
+    /**
+     * Returns the current detailed satellite information.
+     *
+     * @return List of SatelliteInfo objects from latest GSV sequence.
+     */
+    fun getSatelliteInfo(): List<SatelliteInfo?> {
+        return info
+    }
 
-	private GSASentence gsa;
-	private List<SatelliteInfo> info;
+    /**
+     * Returns the horizontal precision of GPS fix.
+     *
+     * @return HDOP value as reported by GSA sentence.
+     */
+    fun getHorizontalPrecision(): Double {
+        return gsa.getHorizontalDOP()
+    }
 
-	/**
-	 * Creates a new satellite info event. GSA and GSV satellite info assumed
-	 * to be from same NMEA update sequence/cycle.
-	 *
-	 * @param source The object that sends the event.
-	 * @param gsa GSA sentence
-	 * @param info GSV satellite info
-	 */
-	public SatelliteInfoEvent(Object source, GSASentence gsa,
-							  List<SatelliteInfo> info) {
-		super(source);
-		this.gsa = gsa;
-		this.info = info;
-	}
+    /**
+     * Returns the vertical precision of GPS fix.
+     *
+     * @return VDOP as reported by GSA sentence.
+     */
+    fun getVerticalPrecision(): Double {
+        return gsa.getVerticalDOP()
+    }
 
-	/**
-	 * Returns the list of GPS satellites used for GPS fix.
-	 *
-	 * @return Satellite ids list as reported by GSA sentence.
-	 */
-	public String[] getSatelliteIds() {
-		return gsa.getSatelliteIds();
-	}
+    /**
+     * Returns the overall precision of GPS fix.
+     *
+     * @return PDOP as reported by GSA sentence.
+     */
+    fun getPositionPrecision(): Double {
+        return gsa.getPositionDOP()
+    }
 
-	/**
-	 * Returns the current detailed satellite information.
-	 * 
-	 * @return List of SatelliteInfo objects from latest GSV sequence.
-	 */
-	public List<SatelliteInfo> getSatelliteInfo() {
-		return this.info;
-	}
+    /**
+     * Returns the GPS mode of operation as reported in GSA sentence.
+     *
+     * @return FaaMode enum value
+     */
+    fun getGpsMode(): FaaMode? {
+        return gsa.getMode()
+    }
 
-	/**
-	 * Returns the horizontal precision of GPS fix.
-	 *	
-	 * @return HDOP value as reported by GSA sentence.
-	 */
-	public double getHorizontalPrecision() {
-		return gsa.getHorizontalDOP();
-	}
+    /**
+     * Returns the GPS fix status as reported by GSA sentence.
+     *
+     * @return GpsFixStatus enum value
+     */
+    fun getGpsFixStatus(): GpsFixStatus? {
+        return gsa.getFixStatus()
+    }
 
-	/**
-	 * Returns the vertical precision of GPS fix.
-	 *
-	 * @return VDOP as reported by GSA sentence.
-	 */
-	public double getVerticalPrecision() {
-		return gsa.getVerticalDOP();
-	}
-
-	/**
-	 * Returns the overall precision of GPS fix.
-	 *
-	 * @return PDOP as reported by GSA sentence.
-	 */
-	public double getPositionPrecision() {
-		return gsa.getPositionDOP();
-	}
-
-	/**
-	 * Returns the GPS mode of operation as reported in GSA sentence.
-	 *
-	 * @return FaaMode enum value
-	 */
-	public FaaMode getGpsMode() {
-		return gsa.getMode();
-	}
-
-	/**
-	 * Returns the GPS fix status as reported by GSA sentence.
-	 *
-	 * @return GpsFixStatus enum value
-	 */
-	public GpsFixStatus getGpsFixStatus() {
-		return gsa.getFixStatus();
-	}
+    companion object {
+        private const val serialVersionUID = -5243047395130051907L
+    }
 }

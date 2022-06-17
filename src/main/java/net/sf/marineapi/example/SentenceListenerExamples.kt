@@ -18,110 +18,85 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.example;
+package net.sf.marineapi.example
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import net.sf.marineapi.nmea.event.AbstractSentenceListener;
-import net.sf.marineapi.nmea.event.SentenceEvent;
-import net.sf.marineapi.nmea.event.SentenceListener;
-import net.sf.marineapi.nmea.io.SentenceReader;
-import net.sf.marineapi.nmea.sentence.GGASentence;
-import net.sf.marineapi.nmea.sentence.GLLSentence;
-import net.sf.marineapi.nmea.sentence.GSASentence;
-import net.sf.marineapi.nmea.sentence.GSVSentence;
-import net.sf.marineapi.nmea.sentence.Sentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
+import net.sf.marineapi.nmea.event.AbstractSentenceListener
+import net.sf.marineapi.nmea.event.SentenceEvent
+import net.sf.marineapi.nmea.event.SentenceListener
+import net.sf.marineapi.nmea.io.SentenceReader
+import net.sf.marineapi.nmea.sentence.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
+import java.io.InputStream
 
 /**
  * Demonstrates the different ways to use SentenceListeners.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public class SentenceListenerExamples {
+class SentenceListenerExamples(file: File?) {
+    /**
+     * Constructor
+     */
+    init {
+        val stream: InputStream = FileInputStream(file)
+        val reader = SentenceReader(stream)
+        reader.addSentenceListener(GSAListener())
+        reader.addSentenceListener(MultiSentenceListener())
+        reader.addSentenceListener(SingleSentenceListener(), SentenceId.GSV)
+        reader.start()
+    }
 
-	/**
-	 * @param args File to read
-	 */
-	public static void main(String[] args) {
-		
-		if (args.length != 1) {
-			System.out.println("Example usage:\njava FileExample nmea.log");
-			System.exit(1);
-		}
-		
-		try {
-			new SentenceListenerExamples(new File(args[0]));
-			System.out.println("Running, press CTRL-C to stop..");
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
-	
-	/**
-	 * Constructor
-	 */
-	public SentenceListenerExamples(File file) throws IOException {
-		
-		InputStream stream = new FileInputStream(file);
-		SentenceReader reader = new SentenceReader(stream);
+    inner class MultiSentenceListener : SentenceListener {
+        override fun readingPaused() {}
+        override fun readingStarted() {}
+        override fun readingStopped() {}
+        override fun sentenceRead(event: SentenceEvent) {
+            val s = event.sentence
+            if ("GLL" == s.sentenceId) {
+                val gll = s as GLLSentence
+                println("GLL position: " + gll.position)
+            } else if ("GGA" == s.sentenceId) {
+                val gga = s as GGASentence
+                println("GGA position: " + gga.position)
+            }
+        }
+    }
 
-		reader.addSentenceListener(new GSAListener());
-		reader.addSentenceListener(new MultiSentenceListener());
-		reader.addSentenceListener(new SingleSentenceListener(), SentenceId.GSV);
-		
-		reader.start();
-	}
-	
-	
-	public class MultiSentenceListener implements SentenceListener {
-		@Override
-		public void readingPaused() {
-		}
-		@Override
-		public void readingStarted() {
-		}
-		@Override
-		public void readingStopped() {
-		}
-		@Override
-		public void sentenceRead(SentenceEvent event) {
-			Sentence s = event.getSentence();
-			if("GLL".equals(s.getSentenceId())) {
-				GLLSentence gll = (GLLSentence) s;
-				System.out.println("GLL position: " + gll.getPosition());
-			} else if ("GGA".equals(s.getSentenceId())) {
-				GGASentence gga = (GGASentence) s;
-				System.out.println("GGA position: " + gga.getPosition());
-			}
-		}
-	}
-	
-	public class SingleSentenceListener implements SentenceListener {
-		@Override
-		public void readingPaused() {
-		}
-		@Override
-		public void readingStarted() {
-		}
-		@Override
-		public void readingStopped() {
-		}
-		@Override
-		public void sentenceRead(SentenceEvent event) {
-			GSVSentence gsv = (GSVSentence) event.getSentence();
-			System.out.println("GSV satellites in view: " + gsv.getSatelliteCount());
-		}		
-	}
-	
-	public class GSAListener extends AbstractSentenceListener<GSASentence> {
-		@Override
-		public void sentenceRead(GSASentence gsa) {
-			System.out.println("GSA position DOP: " + gsa.getPositionDOP());
-		}
-	}
+    inner class SingleSentenceListener : SentenceListener {
+        override fun readingPaused() {}
+        override fun readingStarted() {}
+        override fun readingStopped() {}
+        override fun sentenceRead(event: SentenceEvent) {
+            val gsv = event.sentence as GSVSentence
+            println("GSV satellites in view: " + gsv.satelliteCount)
+        }
+    }
+
+    inner class GSAListener : AbstractSentenceListener<GSASentence>() {
+        override fun sentenceRead(gsa: GSASentence) {
+            println("GSA position DOP: " + gsa.positionDOP)
+        }
+    }
+
+    companion object {
+        /**
+         * @param args File to read
+         */
+        @JvmStatic
+        fun main(args: Array<String>) {
+            if (args.size != 1) {
+                println("Example usage:\njava FileExample nmea.log")
+                System.exit(1)
+            }
+            try {
+                SentenceListenerExamples(File(args[0]))
+                println("Running, press CTRL-C to stop..")
+            } catch (e: IOException) {
+                e.printStackTrace()
+                System.exit(1)
+            }
+        }
+    }
 }

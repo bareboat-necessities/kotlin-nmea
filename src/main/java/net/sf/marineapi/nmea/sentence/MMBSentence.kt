@@ -18,47 +18,43 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
 /**
- * <p>Barometer - Barometric pressure in bars and inches of mercury.</p>
  *
- * <p><em>Notice: not recommended as of Oct 2008, should use {@code XDR}
- * instead.</em></p>
+ * Barometer - Barometric pressure in bars and inches of mercury.
  *
- * <p>Example:<br>
- * {@code $IIMMB,29.9870,I,1.0154,B*75}</p>
+ *
+ * *Notice: not recommended as of Oct 2008, should use `XDR`
+ * instead.*
+ *
+ *
+ * Example:<br></br>
+ * `$IIMMB,29.9870,I,1.0154,B*75`
  *
  * @author Kimmo Tuukkanen
  */
-public interface MMBSentence extends Sentence {
-
+interface MMBSentence : Sentence {
     /**
      * Returns the barometric pressure in inches of mercury.
      *
      * @return Barometric pressure, inHg.
      */
-    double getInchesOfMercury();
-
-    /**
-     * Returns the barometric pressure in bars.
-     *
-     * @return Barometric pressure, bars.
-     */
-    double getBars();
-
     /**
      * Sets the barometric pressure in inches of mercury.
      *
      * @param inhg Barometric pressure, inHg.
      */
-    void setInchesOfMercury(double inhg);
-
+    var inchesOfMercury: Double
+    /**
+     * Returns the barometric pressure in bars.
+     *
+     * @return Barometric pressure, bars.
+     */
     /**
      * Sets the barometric pressure in bars.
      *
      * @param bars Barometric pressure, bars.
      */
-    void setBars(double bars);
-
+    var bars: Double
 }

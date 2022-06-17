@@ -18,57 +18,51 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.io;
+package net.sf.marineapi.nmea.io
 
 /**
  * Monitor for firing state change events events, i.e. reader started, paused or
  * stopped.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-class ActivityMonitor {
+internal class ActivityMonitor
+/**
+ * Creates a new instance for given [SentenceReader].
+ *
+ * @param parent Parent [SentenceReader] to monitor.
+ */(private val parent: SentenceReader?) {
+    private var lastUpdated: Long = -1
 
-	private long lastUpdated = -1;
-	private SentenceReader parent;
+    /**
+     * Resets the monitor in initial state.
+     */
+    fun reset() {
+        lastUpdated = -1
+    }
 
-	/**
-	 * Creates a new instance for given {@link SentenceReader}.
-	 *
-	 * @param parent Parent {@link SentenceReader} to monitor.
-	 */
-	public ActivityMonitor(SentenceReader parent) {
-		this.parent = parent;
-	}
+    /**
+     * Refreshes the monitor timestamp and fires reading started event if
+     * currently paused.
+     */
+    fun refresh() {
+        if (lastUpdated < 0) {
+            parent!!.fireReadingStarted()
+        }
+        lastUpdated = System.currentTimeMillis()
+    }
 
-	/**
-	 * Resets the monitor in initial state.
-	 */
-	public void reset() {
-		lastUpdated = -1;
-	}
-
-	/**
-	 * Refreshes the monitor timestamp and fires reading started event if
-	 * currently paused.
-	 */
-	public void refresh() {
-		if (lastUpdated < 0) {
-			parent.fireReadingStarted();
-		}
-		this.lastUpdated = System.currentTimeMillis();
-	}
-
-	/**
-	 * Heartbeat method, checks the time out if not paused.
-	 */
-	public void tick() {
-		if (lastUpdated > 0) {
-			long elapsed = System.currentTimeMillis() - lastUpdated;
-			int timeout = parent.getPauseTimeout();
-			if (elapsed >= timeout) {
-				parent.fireReadingPaused();
-				reset();
-			}
-		}
-	}
+    /**
+     * Heartbeat method, checks the time out if not paused.
+     */
+    fun tick() {
+        if (lastUpdated > 0) {
+            val elapsed = System.currentTimeMillis() - lastUpdated
+            val timeout = parent.getPauseTimeout()
+            if (elapsed >= timeout) {
+                parent!!.fireReadingPaused()
+                reset()
+            }
+        }
+    }
 }

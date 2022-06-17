@@ -18,21 +18,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.io;
+package net.sf.marineapi.nmea.io
 
+java.lang.Exception
 /**
  * A listener callback interface for listening to Exceptions in DataReaders.
- * 
+ *
  * @author Johan Riisberg-Jensen
  */
-public interface ExceptionListener {
-
-	/**
-	 * Invoked by {@link SentenceReader} when error has occured while reading
-	 * the data source.
-	 * 
-	 * @param e Exception that was thrown while reading data.
-	 */
-	public void onException(Exception e);
-
+interface ExceptionListener {
+    /**
+     * Invoked by [SentenceReader] when error has occured while reading
+     * the data source.
+     *
+     * @param e Exception that was thrown while reading data.
+     */
+    fun onException(e: Exception?)
 }

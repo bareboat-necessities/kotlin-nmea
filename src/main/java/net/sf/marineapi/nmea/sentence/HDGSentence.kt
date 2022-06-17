@@ -18,49 +18,45 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
 /**
- * <p>Vessel heading with magnetic deviation and variation.</p>
- * 
- * <p>Example:<br>{@code $HCHDG,205.2,,,2.7,W}</p>
- * 
+ *
+ * Vessel heading with magnetic deviation and variation.
+ *
+ *
+ * Example:<br></br>`$HCHDG,205.2,,,2.7,W`
+ *
  * @author Kimmo Tuukkanen
  */
-public interface HDGSentence extends HeadingSentence {
-
-	/**
-	 * Get magnetic deviation.
-	 * 
-	 * @return Deviation, in degrees.
-	 */
-	double getDeviation();
-
-	/**
-	 * Get magnetic variation. Returns negative values for easterly variation
-	 * and positive for westerly.
-	 * 
-	 * @return Variation, in degrees.
-	 */
-	double getVariation();
-
-	/**
-	 * Set magnetic deviation. Provide negative values to set easterly deviation
-	 * and positive to set westerly. Sets also the correct direction indicator
-	 * according to value (East/West).
-	 * 
-	 * @param deviation Deviation, in degrees.
-	 * @throws IllegalArgumentException If value is out of range [-180..180].
-	 */
-	void setDeviation(double deviation);
-
-	/**
-	 * Set magnetic variation. Provide negative values to set easterly variation
-	 * and positive to set westerly. Sets also the correct direction indicator
-	 * according to value (East/West).
-	 * 
-	 * @param variation Variation, in degrees.
-	 * @throws IllegalArgumentException If value is out of range [-180..180].
-	 */
-	void setVariation(double variation);
+interface HDGSentence : HeadingSentence {
+    /**
+     * Get magnetic deviation.
+     *
+     * @return Deviation, in degrees.
+     */
+    /**
+     * Set magnetic deviation. Provide negative values to set easterly deviation
+     * and positive to set westerly. Sets also the correct direction indicator
+     * according to value (East/West).
+     *
+     * @param deviation Deviation, in degrees.
+     * @throws IllegalArgumentException If value is out of range [-180..180].
+     */
+    var deviation: Double
+    /**
+     * Get magnetic variation. Returns negative values for easterly variation
+     * and positive for westerly.
+     *
+     * @return Variation, in degrees.
+     */
+    /**
+     * Set magnetic variation. Provide negative values to set easterly variation
+     * and positive to set westerly. Sets also the correct direction indicator
+     * according to value (East/West).
+     *
+     * @param variation Variation, in degrees.
+     * @throws IllegalArgumentException If value is out of range [-180..180].
+     */
+    var variation: Double
 }

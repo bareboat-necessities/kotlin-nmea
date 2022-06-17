@@ -18,66 +18,60 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
-
+package net.sf.marineapi.nmea.sentence
 
 /**
  * Provides Sentence checksum calculation and utilities.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public final class Checksum {
+object Checksum {
+    /**
+     * Append or replace existing checksum in specified NMEA sentence.
+     *
+     * @param nmea Sentence in String representation
+     * @return The specified String with checksum added.
+     */
+    fun add(nmea: String): String {
+        val str = nmea.substring(0, index(nmea))
+        val sum = calculate(str)
+        return String.format("%s%c%s", str, Sentence.Companion.CHECKSUM_DELIMITER, sum)
+    }
 
-	private Checksum() {
-	}
+    /**
+     * Calculates checksum for given NMEA sentence, i.e. XOR of each
+     * character between '$' and '*' characters (exclusive).
+     *
+     * @param nmea Sentence String with or without checksum.
+     * @return Hexadecimal checksum
+     */
+    fun calculate(nmea: String): String {
+        return xor(nmea.substring(1, index(nmea)))
+    }
 
-	/**
-	 * Append or replace existing checksum in specified NMEA sentence.
-	 * 
-	 * @param nmea Sentence in String representation
-	 * @return The specified String with checksum added.
-	 */
-	public static String add(String nmea) {
-		String str = nmea.substring(0, index(nmea));
-		String sum = calculate(str);
-		return String.format("%s%c%s", str, Sentence.CHECKSUM_DELIMITER, sum);
-	}
+    /**
+     * Calculates XOR checksum of given String. Resulting hex value is returned
+     * as a String in two digit format, padded with a leading zero if necessary.
+     *
+     * @param str String to calculate checksum for.
+     * @return Hexadecimal checksum
+     */
+    fun xor(str: String): String {
+        var sum = 0
+        for (i in 0 until str.length) {
+            sum = sum xor str[i].code.toByte().toInt()
+        }
+        return String.format("%02X", sum)
+    }
 
-	/**
-	 * Calculates checksum for given NMEA sentence, i.e. XOR of each
-	 * character between '$' and '*' characters (exclusive).
-	 * 
-	 * @param nmea Sentence String with or without checksum.
-	 * @return Hexadecimal checksum
-	 */
-	public static String calculate(String nmea) {
-		return xor(nmea.substring(1, index(nmea)));
-	}
-
-	/**
-	 * Calculates XOR checksum of given String. Resulting hex value is returned
-	 * as a String in two digit format, padded with a leading zero if necessary.
-	 * 
-	 * @param str String to calculate checksum for.
-	 * @return Hexadecimal checksum
-	 */
-	public static String xor(String str) {
-		int sum = 0;
-		for (int i = 0; i < str.length(); i++) {
-			sum ^= (byte) str.charAt(i);
-		}
-		return String.format("%02X", sum);
-	}
-
-	/**
-	 * Returns the index of checksum separator char in specified NMEA sentence.
-	 * If separator is not found, returns the String length.
-	 * 
-	 * @param nmea Sentence String
-	 * @return Index of checksum separator or String length.
-	 */
-	public static int index(String nmea) {
-		return nmea.indexOf(Sentence.CHECKSUM_DELIMITER) > 0 ?
-			nmea.indexOf(Sentence.CHECKSUM_DELIMITER) : nmea.length();
-	}
+    /**
+     * Returns the index of checksum separator char in specified NMEA sentence.
+     * If separator is not found, returns the String length.
+     *
+     * @param nmea Sentence String
+     * @return Index of checksum separator or String length.
+     */
+    fun index(nmea: String): Int {
+        return if (nmea.indexOf(Sentence.Companion.CHECKSUM_DELIMITER) > 0) nmea.indexOf(Sentence.Companion.CHECKSUM_DELIMITER) else nmea.length
+    }
 }

@@ -18,45 +18,41 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.DataStatus;
+import net.sf.marineapi.nmea.util.DataStatus
 
 /**
- * <p>Vessel's rate of turn given in degrees per minute. Negative values
- * indicate bow turning to port.</p>
- * 
- * <p>Example:<br>{@code $GPROT,35.6,A*4E}</p>
- * 
+ *
+ * Vessel's rate of turn given in degrees per minute. Negative values
+ * indicate bow turning to port.
+ *
+ *
+ * Example:<br></br>`$GPROT,35.6,A*4E`
+ *
  * @author Mike Tamis, Kimmo Tuukkanen
  */
-public interface ROTSentence extends Sentence {
-
-	/**
-	 * Returns the vessel's rate of turn.
-	 * 
-	 * @return Rate of Turn value (degrees per minute)
-	 */
-	double getRateOfTurn();
-
-	/**
-	 * Sets the vessel's rate of turn value.
-	 * 
-	 * @param rot Rate of Turn value to set (degrees per minute)
-	 */
-	void setRateOfTurn(double rot);
-
-	/**
-	 * Returns the data status (valid/invalid).
-	 * 
-	 * @return True means data is valid
-	 */
-	DataStatus getStatus();
-
-	/**
-	 * Sets the data status.
-	 * 
-	 * @param status DataStatus to set.
-	 */
-	void setStatus(DataStatus status);
+interface ROTSentence : Sentence {
+    /**
+     * Returns the vessel's rate of turn.
+     *
+     * @return Rate of Turn value (degrees per minute)
+     */
+    /**
+     * Sets the vessel's rate of turn value.
+     *
+     * @param rot Rate of Turn value to set (degrees per minute)
+     */
+    var rateOfTurn: Double
+    /**
+     * Returns the data status (valid/invalid).
+     *
+     * @return True means data is valid
+     */
+    /**
+     * Sets the data status.
+     *
+     * @param status DataStatus to set.
+     */
+    var status: DataStatus
 }

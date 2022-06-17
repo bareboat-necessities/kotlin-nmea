@@ -18,72 +18,65 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.util;
+package net.sf.marineapi.ais.util
 
-import java.text.DecimalFormat;
+import java.text.DecimalFormat
 
 /**
  * Checks a 12-bit signed integer angular value for validity.
- * 
+ *
  * @author Lázár József
  */
-public class Angle12 {
+object Angle12 {
+    private const val DEFAULTVALUE = 3600
+    private const val MINVALUE = 0
+    private const val MAXVALUE = 3599
 
-	private static final int DEFAULTVALUE	= 3600;
-	private static final int MINVALUE		= 0;
-	private static final int MAXVALUE		= 3599;
+    /** Valid range with default value for "no value"  */
+    const val RANGE = "[" + MINVALUE + "," + MAXVALUE + "] + {" + DEFAULTVALUE + "}"
 
-	/** Valid range with default value for "no value" */
-	public static final String	RANGE		=
-			"[" + MINVALUE + "," + MAXVALUE + "] + {" + DEFAULTVALUE + "}";
-	
-	/**
-	 * Tells if the angular value is correct, i.e. within the range 0..3599 or
-	 * the default value 3600.
-	 *
-	 * @param value Angular value to validate.
-	 * @return {@code true} if correct, otherwise {@code false}.
-	 */
-	public static boolean isCorrect(int value) {
-		return (MINVALUE <= value && value <= MAXVALUE) || (value == DEFAULTVALUE);
-	}
-	
-	/**
-	 * Checks if the angular value is available.
+    /**
+     * Tells if the angular value is correct, i.e. within the range 0..3599 or
+     * the default value 3600.
+     *
+     * @param value Angular value to validate.
+     * @return `true` if correct, otherwise `false`.
+     */
+    fun isCorrect(value: Int): Boolean {
+        return MINVALUE <= value && value <= MAXVALUE || value == DEFAULTVALUE
+    }
 
-	 * @param value Angular value to check.
-	 * @return true if the angular is not the default value (3600)
-	 */
-	public static boolean isAvailable(int value) {
-		return value != DEFAULTVALUE;
-	}
-	
-	/**
-	 * Converts the angular value to degrees.
-	 *
-	 * @param value Angular value to convert, in 1/10 degrees.
-	 * @return The angular value in degrees.
-	 */
-	public static double toDegrees(int value) {
-		return value / 10d; 
-	}
+    /**
+     * Checks if the angular value is available.
+     *
+     * @param value Angular value to check.
+     * @return true if the angular is not the default value (3600)
+     */
+    fun isAvailable(value: Int): Boolean {
+        return value != DEFAULTVALUE
+    }
 
-	/**
-	 * Returns the String representation of given angular value.
-	 *
-	 * @param value Angular value to convert to String.
-	 * @return a string representing the angular value
-	 */
-	public static String toString(int value) {
-		String msg;
-		if (isCorrect(value)) {
-			if (isAvailable(value))
-				msg = new DecimalFormat("##0.0;-##0.0").format(toDegrees(value));
-			else 
-				msg = "not available";
-		}
-		else
-			msg = "illegal value";
-		return msg;
-	}
+    /**
+     * Converts the angular value to degrees.
+     *
+     * @param value Angular value to convert, in 1/10 degrees.
+     * @return The angular value in degrees.
+     */
+    fun toDegrees(value: Int): Double {
+        return value / 10.0
+    }
+
+    /**
+     * Returns the String representation of given angular value.
+     *
+     * @param value Angular value to convert to String.
+     * @return a string representing the angular value
+     */
+    fun toString(value: Int): String {
+        val msg: String
+        msg = if (isCorrect(value)) {
+            if (isAvailable(value)) DecimalFormat("##0.0;-##0.0").format(toDegrees(value)) else "not available"
+        } else "illegal value"
+        return msg
+    }
 }

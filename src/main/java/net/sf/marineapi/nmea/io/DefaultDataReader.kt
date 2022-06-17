@@ -18,39 +18,35 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.io;
+package net.sf.marineapi.nmea.io
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+java.io.*import java.lang.Exception
 
 /**
  * The default data reader implementation using InputStream as data source.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-class DefaultDataReader extends AbstractDataReader {
+internal class DefaultDataReader(source: InputStream?, parent: SentenceReader?) : AbstractDataReader(parent) {
+    private val buffer: BufferedReader
 
-	private final BufferedReader buffer;
+    /**
+     * Creates a new instance of DefaultDataReader.
+     *
+     * @param source InputStream to be used as data source.
+     * @param parent SentenceReader dispatching events for this reader.
+     */
+    init {
+        buffer = BufferedReader(InputStreamReader(source))
+    }
 
-	/**
-	 * Creates a new instance of DefaultDataReader.
-	 * 
-	 * @param source InputStream to be used as data source.
-	 * @param parent SentenceReader dispatching events for this reader.
-	 */
-	DefaultDataReader(InputStream source, SentenceReader parent) {
-		super(parent);
-		this.buffer = new BufferedReader(new InputStreamReader(source));
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.io.AbstractDataReader#read()
 	 */
-	@Override
-	public String read() throws Exception {
-		return buffer.ready() ? buffer.readLine() : null;
-	}
+    @Throws(Exception::class)
+    override fun read(): String? {
+        return if (buffer.ready()) buffer.readLine() else null
+    }
 }

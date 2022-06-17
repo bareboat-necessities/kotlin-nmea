@@ -18,13 +18,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TXTSentence;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-
-import java.util.regex.Pattern;
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TXTSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
+import java.util.regex.Pattern
 
 /**
  * TXT sentence parser.
@@ -39,79 +38,61 @@ import java.util.regex.Pattern;
  *
  * @author Kimmo Tuukkanen
  */
-class TXTParser extends SentenceParser implements TXTSentence {
-
-    private static final Pattern ASCII = Pattern.compile("^[\\x20-\\x7F]*$");
-
-    private static final int MESSAGE_COUNT = 0;
-    private static final int MESSAGE_INDEX = 1;
-    private static final int IDENTIFIER = 2;
-    private static final int MESSAGE = 3;
-
+internal class TXTParser : SentenceParser, TXTSentence {
     /**
      * Constructor with sentence String.
      *
      * @param nmea TXT sentence String
      */
-    public TXTParser(String nmea) {
-        super(nmea, SentenceId.TXT);
-    }
+    constructor(nmea: String) : super(nmea, SentenceId.TXT) {}
 
     /**
      * Constructs an empty TXT sentence.
      *
      * @param tid TalkerId to set
      */
-    public TXTParser(TalkerId tid) {
-        super(tid, SentenceId.TXT, 4);
+    constructor(tid: TalkerId?) : super(tid, SentenceId.TXT, 4) {}
+
+    override fun getMessageCount(): Int {
+        return getIntValue(MESSAGE_COUNT)
     }
 
-    @Override
-    public int getMessageCount() {
-        return getIntValue(MESSAGE_COUNT);
+    override fun setMessageCount(count: Int) {
+        require(count >= 1) { "Message count cannot be zero or negative" }
+        setIntValue(MESSAGE_COUNT, count)
     }
 
-    @Override
-    public void setMessageCount(int count) {
-        if (count < 1) {
-            throw new IllegalArgumentException("Message count cannot be zero or negative");
-        }
-        setIntValue(MESSAGE_COUNT, count);
+    override fun getMessageIndex(): Int {
+        return getIntValue(MESSAGE_INDEX)
     }
 
-    @Override
-    public int getMessageIndex() {
-        return getIntValue(MESSAGE_INDEX);
+    override fun setMessageIndex(index: Int) {
+        require(index >= 0) { "Message index cannot be negative" }
+        setIntValue(MESSAGE_INDEX, index)
     }
 
-    @Override
-    public void setMessageIndex(int index) {
-        if (index < 0) {
-            throw new IllegalArgumentException("Message index cannot be negative");
-        }
-        setIntValue(MESSAGE_INDEX, index);
+    override fun getIdentifier(): String? {
+        return getStringValue(IDENTIFIER)
     }
 
-    @Override
-    public String getIdentifier() {
-        return getStringValue(IDENTIFIER);
+    override fun setIdentifier(id: String?) {
+        setStringValue(IDENTIFIER, id)
     }
 
-    @Override
-    public void setIdentifier(String id) {
-        setStringValue(IDENTIFIER, id);
+    override fun getMessage(): String? {
+        return getStringValue(MESSAGE)
     }
 
-    @Override
-    public String getMessage() {
-        return getStringValue(MESSAGE);
+    override fun setMessage(msg: String?) {
+        require(ASCII.matcher(msg).matches()) { "Message must be in ASCII character set" }
+        setStringValue(MESSAGE, msg)
     }
 
-    @Override
-    public void setMessage(String msg) {
-        if (!ASCII.matcher(msg).matches()) {
-            throw new IllegalArgumentException("Message must be in ASCII character set");
-        }
-        setStringValue(MESSAGE, msg);
+    companion object {
+        private val ASCII = Pattern.compile("^[\\x20-\\x7F]*$")
+        private const val MESSAGE_COUNT = 0
+        private const val MESSAGE_INDEX = 1
+        private const val IDENTIFIER = 2
+        private const val MESSAGE = 3
     }
 }

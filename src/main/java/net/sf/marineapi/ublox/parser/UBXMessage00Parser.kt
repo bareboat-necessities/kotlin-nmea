@@ -17,159 +17,143 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ublox.parser;
+package net.sf.marineapi.ublox.parser
 
-import net.sf.marineapi.nmea.parser.PositionParser;
-import net.sf.marineapi.nmea.sentence.UBXSentence;
-import net.sf.marineapi.nmea.util.Position;
-import net.sf.marineapi.nmea.util.Time;
-import net.sf.marineapi.ublox.message.UBXMessage00;
-import net.sf.marineapi.ublox.util.UbloxNavigationStatus;
+import net.sf.marineapi.nmea.parser.PositionParser
+import net.sf.marineapi.nmea.sentence.UBXSentence
+import net.sf.marineapi.nmea.util.*
+import net.sf.marineapi.ublox.message.UBXMessage00
+import net.sf.marineapi.ublox.util.UbloxNavigationStatus
 
 /**
- * Parser implementation for {@link UBXMessage00} (Lat/Long Position Data).
+ * Parser implementation for [UBXMessage00] (Lat/Long Position Data).
  *
  * @author Gunnar Hillert
  */
-class UBXMessage00Parser extends UBXMessageParser implements UBXMessage00 {
+internal class UBXMessage00Parser(sentence: UBXSentence) : UBXMessageParser(sentence), UBXMessage00 {
+    /**
+     * @see UBXMessage00.getUtcTime
+     */
+    override fun getUtcTime(): Time {
+        val str = getStringValue(UTC_TIME)
+        return Time(str)
+    }
 
-	private static final int UTC_TIME = 1;
-	private static final int LATITUDE = 2;
-	private static final int LAT_HEMISPHERE = 3;
-	private static final int LONGITUDE = 4;
-	private static final int LON_HEMISPHERE = 5;
-	private static final int ALTITUDE = 6;
+    /**
+     * @see UBXMessage00.getPosition
+     */
+    override fun getPosition(): Position {
+        val latitudeField = sentence.getUBXFieldStringValue(LATITUDE)
+        val latitudeHemisphereIndicatorField = sentence.getUBXFieldCharValue(LAT_HEMISPHERE)
+        val longitudeField = sentence.getUBXFieldStringValue(LONGITUDE)
+        val longitudeHemisphereIndicatorField = sentence.getUBXFieldCharValue(LON_HEMISPHERE)
+        val position: Position = PositionParser.Companion.parsePosition(
+            latitudeField, latitudeHemisphereIndicatorField,
+            longitudeField, longitudeHemisphereIndicatorField
+        )
+        val altitude = sentence.getUBXFieldDoubleValue(ALTITUDE)
+        position.altitude = altitude
+        return position
+    }
 
-	private static final int NAVIGATION_STATUS = 7;
-	private static final int HORIZONTAL_ACCURACY_ESTIMATE = 8;
-	private static final int VERTICAL_ACCURACY_ESTIMATE = 9;
-	private static final int SPEED_OVER_GROUND = 10;
-	private static final int COURSE_OVER_GROUND = 11;
-	private static final int VERTICA_VELOCITY = 12;
-	private static final int AGE_OF_DIFFERENTIAL_CORRECTIONS = 13;
-	private static final int HDOP = 14;
-	private static final int VDOP = 15;
-	private static final int TDOP = 16;
-	private static final int NUMBER_OF_SATELLITES_USED = 17;
+    /**
+     * @see UBXMessage00.getNavigationStatus
+     */
+    override fun getNavigationStatus(): UbloxNavigationStatus? {
+        return UbloxNavigationStatus.Companion.fromNavigationStatusCode(
+            sentence.getUBXFieldStringValue(
+                NAVIGATION_STATUS
+            )
+        )
+    }
 
-	public UBXMessage00Parser(UBXSentence sentence) {
-		super(sentence);
-	}
+    /**
+     * @see UBXMessage00.getHorizontalAccuracyEstimate
+     */
+    override fun getHorizontalAccuracyEstimate(): Double {
+        return sentence.getUBXFieldDoubleValue(HORIZONTAL_ACCURACY_ESTIMATE)
+    }
 
-	/**
-	 * @see UBXMessage00#getUtcTime()
-	 */
-	@Override
-	public Time getUtcTime() {
-		String str = getStringValue(UTC_TIME);
-		return new Time(str);
-	}
+    /**
+     * @see UBXMessage00.getVerticaAccuracyEstimate
+     */
+    override fun getVerticaAccuracyEstimate(): Double {
+        return sentence.getUBXFieldDoubleValue(VERTICAL_ACCURACY_ESTIMATE)
+    }
 
-	/**
-	 * @see UBXMessage00#getPosition()
-	 */
-	@Override
-	public Position getPosition() {
-		final String latitudeField  = this.sentence.getUBXFieldStringValue(LATITUDE);
-		final char latitudeHemisphereIndicatorField = this.sentence.getUBXFieldCharValue(LAT_HEMISPHERE);
-		final String longitudeField = this.sentence.getUBXFieldStringValue(LONGITUDE);
-		final char longitudeHemisphereIndicatorField = this.sentence.getUBXFieldCharValue(LON_HEMISPHERE);
+    /**
+     * @see UBXMessage00.getSpeedOverGround
+     */
+    override fun getSpeedOverGround(): Double {
+        return sentence.getUBXFieldDoubleValue(SPEED_OVER_GROUND)
+    }
 
-		final Position position = PositionParser.parsePosition(
-				latitudeField, latitudeHemisphereIndicatorField,
-				longitudeField, longitudeHemisphereIndicatorField);
+    /**
+     * @see UBXMessage00.getCourseOverGround
+     */
+    override fun getCourseOverGround(): Double {
+        return sentence.getUBXFieldDoubleValue(COURSE_OVER_GROUND)
+    }
 
-		final double altitude = this.sentence.getUBXFieldDoubleValue(ALTITUDE);
-		position.setAltitude(altitude);
+    /**
+     * @see UBXMessage00.getVerticaVelocity
+     */
+    override fun getVerticaVelocity(): Double {
+        return sentence.getUBXFieldDoubleValue(VERTICA_VELOCITY)
+    }
 
-		return position;
-	}
+    /**
+     * @see UBXMessage00.getAgeOfDifferentialCorrections
+     */
+    override fun getAgeOfDifferentialCorrections(): Int {
+        return sentence.getUBXFieldIntValue(AGE_OF_DIFFERENTIAL_CORRECTIONS)
+    }
 
-	/**
-	 * @see UBXMessage00#getNavigationStatus()
-	 */
-	@Override
-	public UbloxNavigationStatus getNavigationStatus() {
-		return UbloxNavigationStatus.fromNavigationStatusCode(this.sentence.getUBXFieldStringValue(NAVIGATION_STATUS));
-	}
+    /**
+     * @see UBXMessage00.getHDOP
+     */
+    override fun getHDOP(): Double {
+        return sentence.getUBXFieldDoubleValue(HDOP)
+    }
 
-	/**
-	 * @see UBXMessage00#getHorizontalAccuracyEstimate()
-	 */
-	@Override
-	public double getHorizontalAccuracyEstimate() {
-		return this.sentence.getUBXFieldDoubleValue(HORIZONTAL_ACCURACY_ESTIMATE);
-	}
+    /**
+     * @see UBXMessage00.getVDOP
+     */
+    override fun getVDOP(): Double {
+        return sentence.getUBXFieldDoubleValue(VDOP)
+    }
 
-	/**
-	 * @see UBXMessage00#getVerticaAccuracyEstimate()
-	 */
-	@Override
-	public double getVerticaAccuracyEstimate() {
-		return this.sentence.getUBXFieldDoubleValue(VERTICAL_ACCURACY_ESTIMATE);
-	}
+    /**
+     * @see UBXMessage00.getTDOP
+     */
+    override fun getTDOP(): Double {
+        return sentence.getUBXFieldDoubleValue(TDOP)
+    }
 
-	/**
-	 * @see UBXMessage00#getSpeedOverGround()
-	 */
-	@Override
-	public double getSpeedOverGround() {
-		return this.sentence.getUBXFieldDoubleValue(SPEED_OVER_GROUND);
-	}
+    /**
+     * @see UBXMessage00.getNumberOfSatellitesUsed
+     */
+    override fun getNumberOfSatellitesUsed(): Int {
+        return sentence.getUBXFieldIntValue(NUMBER_OF_SATELLITES_USED)
+    }
 
-	/**
-	 * @see UBXMessage00#getCourseOverGround()
-	 */
-	@Override
-	public double getCourseOverGround() {
-		return this.sentence.getUBXFieldDoubleValue(COURSE_OVER_GROUND);
-	}
-
-	/**
-	 * @see UBXMessage00#getVerticaVelocity()
-	 */
-	@Override
-	public double getVerticaVelocity() {
-		return this.sentence.getUBXFieldDoubleValue(VERTICA_VELOCITY);
-	}
-
-	/**
-	 * @see UBXMessage00#getAgeOfDifferentialCorrections()
-	 */
-	@Override
-	public int getAgeOfDifferentialCorrections() {
-		return this.sentence.getUBXFieldIntValue(AGE_OF_DIFFERENTIAL_CORRECTIONS);
-	}
-
-	/**
-	 * @see UBXMessage00#getHDOP()
-	 */
-	@Override
-	public double getHDOP() {
-		return this.sentence.getUBXFieldDoubleValue(HDOP);
-	}
-
-	/**
-	 * @see UBXMessage00#getVDOP()
-	 */
-	@Override
-	public double getVDOP() {
-		return this.sentence.getUBXFieldDoubleValue(VDOP);
-	}
-
-	/**
-	 * @see UBXMessage00#getTDOP()
-	 */
-	@Override
-	public double getTDOP() {
-		return this.sentence.getUBXFieldDoubleValue(TDOP);
-	}
-
-	/**
-	 * @see UBXMessage00#getNumberOfSatellitesUsed()
-	 */
-	@Override
-	public int getNumberOfSatellitesUsed() {
-		return this.sentence.getUBXFieldIntValue(NUMBER_OF_SATELLITES_USED);
-	}
+    companion object {
+        private const val UTC_TIME = 1
+        private const val LATITUDE = 2
+        private const val LAT_HEMISPHERE = 3
+        private const val LONGITUDE = 4
+        private const val LON_HEMISPHERE = 5
+        private const val ALTITUDE = 6
+        private const val NAVIGATION_STATUS = 7
+        private const val HORIZONTAL_ACCURACY_ESTIMATE = 8
+        private const val VERTICAL_ACCURACY_ESTIMATE = 9
+        private const val SPEED_OVER_GROUND = 10
+        private const val COURSE_OVER_GROUND = 11
+        private const val VERTICA_VELOCITY = 12
+        private const val AGE_OF_DIFFERENTIAL_CORRECTIONS = 13
+        private const val HDOP = 14
+        private const val VDOP = 15
+        private const val TDOP = 16
+        private const val NUMBER_OF_SATELLITES_USED = 17
+    }
 }

@@ -18,325 +18,372 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
-import net.sf.marineapi.nmea.sentence.Sentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
+import net.sf.marineapi.nmea.parser.APBParser
+import net.sf.marineapi.nmea.parser.BODParser
+import net.sf.marineapi.nmea.parser.CURParser
+import net.sf.marineapi.nmea.parser.DBTParser
+import net.sf.marineapi.nmea.parser.DPTParser
+import net.sf.marineapi.nmea.parser.DTAParser
+import net.sf.marineapi.nmea.parser.DTBParser
+import net.sf.marineapi.nmea.parser.DTMParser
+import net.sf.marineapi.nmea.parser.GBSParser
+import net.sf.marineapi.nmea.parser.GGAParser
+import net.sf.marineapi.nmea.parser.GLLParser
+import net.sf.marineapi.nmea.parser.GNSParser
+import net.sf.marineapi.nmea.parser.GSAParser
+import net.sf.marineapi.nmea.parser.GSTParser
+import net.sf.marineapi.nmea.parser.GSVParser
+import net.sf.marineapi.nmea.parser.HDGParser
+import net.sf.marineapi.nmea.parser.HDMParser
+import net.sf.marineapi.nmea.parser.HDTParser
+import net.sf.marineapi.nmea.parser.HTCParser
+import net.sf.marineapi.nmea.parser.HTDParser
+import net.sf.marineapi.nmea.parser.MDAParser
+import net.sf.marineapi.nmea.parser.MHUParser
+import net.sf.marineapi.nmea.parser.MMBParser
+import net.sf.marineapi.nmea.parser.MTAParser
+import net.sf.marineapi.nmea.parser.MTWParser
+import net.sf.marineapi.nmea.parser.MWDParser
+import net.sf.marineapi.nmea.parser.MWVParser
+import net.sf.marineapi.nmea.parser.OSDParser
+import net.sf.marineapi.nmea.parser.RMBParser
+import net.sf.marineapi.nmea.parser.RMCParser
+import net.sf.marineapi.nmea.parser.ROTParser
+import net.sf.marineapi.nmea.parser.RPMParser
+import net.sf.marineapi.nmea.parser.RSAParser
+import net.sf.marineapi.nmea.parser.RSDParser
+import net.sf.marineapi.nmea.parser.RTEParser
+import net.sf.marineapi.nmea.parser.STALKParser
+import net.sf.marineapi.nmea.parser.SentenceParser
+import net.sf.marineapi.nmea.parser.TLBParser
+import net.sf.marineapi.nmea.parser.TLLParser
+import net.sf.marineapi.nmea.parser.TTMParser
+import net.sf.marineapi.nmea.parser.TXTParser
+import net.sf.marineapi.nmea.parser.UBXParser
+import net.sf.marineapi.nmea.parser.VBWParser
+import net.sf.marineapi.nmea.parser.VDOParser
+import net.sf.marineapi.nmea.parser.VDRParser
+import net.sf.marineapi.nmea.parser.VHWParser
+import net.sf.marineapi.nmea.parser.VLWParser
+import net.sf.marineapi.nmea.parser.VTGParser
+import net.sf.marineapi.nmea.parser.VWRParser
+import net.sf.marineapi.nmea.parser.VWTParser
+import net.sf.marineapi.nmea.parser.WPLParser
+import net.sf.marineapi.nmea.parser.XDRParser
+import net.sf.marineapi.nmea.parser.XTEParser
+import net.sf.marineapi.nmea.parser.ZDAParser
+import net.sf.marineapi.nmea.sentence.Sentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import java.lang.reflect.InvocationTargetException
+import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Factory for creating sentence parsers.
- * <p>
+ *
+ *
  * Custom parsers may be implemented and registered in the factory at runtime
  * by following these steps:
- * <ol>
- * <li>Define a sentence interface by extending the {@link Sentence} interface
- * (e.g. {@code com.acme.XYZSentence}).</li>
- * <li>Implement the interface in a class that extends {@link SentenceParser},
- * (e.g. {@code com.acme.XYZParser}).</li>
- * <li>Use the protected getters and setters in {@code SentenceParser} to
- * read and write sentence data.</li>
- * <li>Add a constructor in {@code XYZParser} with {@code String}
+ *
+ *  1. Define a sentence interface by extending the [Sentence] interface
+ * (e.g. `com.acme.XYZSentence`).
+ *  1. Implement the interface in a class that extends [SentenceParser],
+ * (e.g. `com.acme.XYZParser`).
+ *  1. Use the protected getters and setters in `SentenceParser` to
+ * read and write sentence data.
+ *  1. Add a constructor in `XYZParser` with `String`
  * parameter, i.e. the sentence to be parsed. Pass this parameter to
- * {@link SentenceParser#SentenceParser(String, String)} with expected sentence
- * type (e.g. {@code "XYZ"}).</li>
- * <li>Add another constructor with {@link TalkerId} parameter. Pass this
- * parameter to {@link SentenceParser#SentenceParser(TalkerId, String, int)}
- * with sentence type and the expected number of data fields.</li>
- * <li>Register {@code XYZParser} in {@code SentenceFactory} by using
- * the {@link #registerParser(String, Class)} method.</li>
- * <li>Use {@link SentenceFactory#createParser(String)} or
- * {@link SentenceFactory#createParser(TalkerId, String)} to obtain an instance
- * of your parser. In addition, {@link net.sf.marineapi.nmea.io.SentenceReader}
- * will now dispatch instances of {@code XYZSentence} when "XYZ" sentences
- * are read from the data source.</li>
- * </ol>
- * <p>
+ * [SentenceParser.SentenceParser] with expected sentence
+ * type (e.g. `"XYZ"`).
+ *  1. Add another constructor with [TalkerId] parameter. Pass this
+ * parameter to [SentenceParser.SentenceParser]
+ * with sentence type and the expected number of data fields.
+ *  1. Register `XYZParser` in `SentenceFactory` by using
+ * the [.registerParser] method.
+ *  1. Use [SentenceFactory.createParser] or
+ * [SentenceFactory.createParser] to obtain an instance
+ * of your parser. In addition, [net.sf.marineapi.nmea.io.SentenceReader]
+ * will now dispatch instances of `XYZSentence` when "XYZ" sentences
+ * are read from the data source.
+ *
+ *
+ *
  * Notice that there is no need to compile the whole library and the added
  * parser source code may be located in your own codebase. Additionally, it is
  * also possible to override any existing parsers of the library as needed.
- * </p>
+ *
  *
  * @author Kimmo Tuukkanen
  * @author Gunnar Hillert
  */
-public class SentenceFactory {
+class SentenceFactory private constructor() {
+    /**
+     * Constructor.
+     */
+    init {
+        reset()
+    }
 
-	// map that holds registered sentence types and parser classes
-	private static Map<String, Class<? extends SentenceParser>> parsers;
+    /**
+     * Creates a parser for specified NMEA 0183 sentence String. The parser
+     * implementation is selected from registered parsers according to sentence
+     * type. The returned instance must be cast in to correct sentence
+     * interface, for which the type should first be checked by using the
+     * [Sentence.getSentenceId] method.
+     *
+     * @param nmea NMEA 0183 sentence String
+     * @return Sentence parser instance for specified sentence
+     * @throws IllegalArgumentException If there is no parser registered for the
+     * given sentence type
+     * @throws IllegalStateException If parser is found, but it does not
+     * implement expected constructors or is otherwise unusable.
+     */
+    fun createParser(nmea: String): Sentence? {
+        val sid: String = SentenceId.Companion.parseStr(nmea)
+        return createParserImpl(sid, nmea)
+    }
 
-	// singleton factory instance
-	private static final SentenceFactory INSTANCE = new SentenceFactory();
+    /**
+     * Creates a parser for specified talker and sentence type. The returned
+     * instance needs to be cast to corresponding sentence interface.
+     *
+     * @param talker Sentence talker id
+     * @param type Sentence type
+     * @return Sentence parser of requested type.
+     * @throws IllegalArgumentException If talker id is null or if there is no
+     * parser registered for given sentence type.
+     * @throws IllegalStateException If parser instantiation fails.
+     */
+    fun createParser(talker: TalkerId?, type: SentenceId): Sentence? {
+        return createParser(talker, type.toString())
+    }
 
-	/**
-	 * Constructor.
-	 */
-	private SentenceFactory() {
-		reset();
-	}
+    /**
+     * Creates a parser for specified talker and sentence type. This method is
+     * mainly intended to be used when custom parsers have been registered in
+     * the factory. The returned instance needs to be cast to corresponding
+     * sentence interface.
+     *
+     * @param talker Talker ID to use in parser
+     * @param type Type of the parser to create
+     * @return Sentence parser for requested type
+     * @throws IllegalArgumentException If talker id is null or if there is no
+     * parser registered for given sentence type.
+     * @throws IllegalStateException If parser is found, but it does not
+     * implement expected constructors or is otherwise unusable.
+     */
+    fun createParser(talker: TalkerId?, type: String): Sentence? {
+        requireNotNull(talker) { "TalkerId cannot be null" }
+        return createParserImpl(type, talker)
+    }
 
-	/**
-	 * Creates a parser for specified NMEA 0183 sentence String. The parser
-	 * implementation is selected from registered parsers according to sentence
-	 * type. The returned instance must be cast in to correct sentence
-	 * interface, for which the type should first be checked by using the
-	 * {@link Sentence#getSentenceId()} method.
-	 *
-	 * @param nmea NMEA 0183 sentence String
-	 * @return Sentence parser instance for specified sentence
-	 * @throws IllegalArgumentException If there is no parser registered for the
-	 *             given sentence type
-	 * @throws IllegalStateException If parser is found, but it does not
-	 *             implement expected constructors or is otherwise unusable.
-	 */
-	public Sentence createParser(String nmea) {
-		String sid = SentenceId.parseStr(nmea);
-		return createParserImpl(sid, nmea);
-	}
+    /**
+     * Tells if the factory is able to create parser for specified sentence
+     * type. All [SentenceId] enum values should result returning
+     * `true` at all times.
+     *
+     * @param type Sentence type id, e.g. "GLL" or "GGA".
+     * @return true if type is supported, otherwise false.
+     */
+    fun hasParser(type: String): Boolean {
+        return parsers!!.containsKey(type)
+    }
 
-	/**
- 	 * Creates a parser for specified talker and sentence type. The returned
- 	 * instance needs to be cast to corresponding sentence interface.
- 	 *
-	 * @param talker Sentence talker id
-	 * @param type Sentence type
-	 * @return Sentence parser of requested type.
-	 * @throws IllegalArgumentException If talker id is null or if there is no
-	 *             parser registered for given sentence type.
-	 * @throws IllegalStateException If parser instantiation fails.
-	 */
-	public Sentence createParser(TalkerId talker, SentenceId type) {
-		return createParser(talker, type.toString());
-	}
+    /**
+     * Returns a list of currently parseable sentence types.
+     *
+     * @return List of sentence ids
+     */
+    fun listParsers(): List<String> {
+        val keys: Set<String> = parsers!!.keys
+        return Arrays.asList(*keys.toTypedArray())
+    }
 
-	/**
-	 * Creates a parser for specified talker and sentence type. This method is
-	 * mainly intended to be used when custom parsers have been registered in
-	 * the factory. The returned instance needs to be cast to corresponding
-	 * sentence interface.
-	 *
-	 * @param talker Talker ID to use in parser
-	 * @param type Type of the parser to create
-	 * @return Sentence parser for requested type
-	 * @throws IllegalArgumentException If talker id is null or if there is no
-	 *             parser registered for given sentence type.
-	 * @throws IllegalStateException If parser is found, but it does not
-	 *             implement expected constructors or is otherwise unusable.
-	 */
-	public Sentence createParser(TalkerId talker, String type) {
+    /**
+     * Registers a sentence parser to the factory. After registration,
+     * [.createParser] method can be used to obtain instances of
+     * registered parser.
+     *
+     *
+     * Sentences supported by the library are registered automatically, but they
+     * can be overridden simply be registering a new parser implementation for
+     * chosen sentence type. That is, each sentence type can have only one
+     * parser registered at a time.
+     *
+     * @param type Sentence type id, e.g. "GGA" or "GLL".
+     * @param parser Class of parser implementation for given `type`.
+     */
+    fun registerParser(
+        type: String,
+        parser: Class<out SentenceParser>
+    ) {
+        registerParser(parsers, type, parser)
+    }
 
-		if (talker == null) {
-			throw new IllegalArgumentException("TalkerId cannot be null");
-		}
+    /**
+     * Registers a sentence parser to the given factory. After registration,
+     * [.createParser] method can be used to obtain instances of
+     * registered parser.
+     *
+     *
+     * Sentences supported by the library are registered automatically, but they
+     * can be overridden simply be registering a new parser implementation for
+     * chosen sentence type. That is, each sentence type can have only one
+     * parser registered at a time.
+     *
+     * @param parsers The provided factory to register the sentence parsers to.
+     * @param type Sentence type id, e.g. "GGA" or "GLL".
+     * @param parser Class of parser implementation for given `type`.
+     */
+    private fun registerParser(
+        parsers: MutableMap<String, Class<out SentenceParser>>?, type: String,
+        parser: Class<out SentenceParser>
+    ) {
+        try {
+            parser.getConstructor(*arrayOf<Class<*>>(String::class.java))
+            parser.getConstructor(*arrayOf<Class<*>>(TalkerId::class.java))
+            parsers!![type] = parser
+        } catch (e: SecurityException) {
+            val msg = "Unable to register parser due security violation"
+            throw IllegalArgumentException(msg, e)
+        } catch (e: NoSuchMethodException) {
+            val msg = ("Required constructors not found; SentenceParser(String),"
+                    + " SentenceParser(TalkerId)")
+            throw IllegalArgumentException(msg, e)
+        }
+    }
 
-		return createParserImpl(type, talker);
-	}
+    /**
+     * Unregisters a parser class, regardless of sentence type(s) it is
+     * registered for.
+     *
+     * @param parser Parser implementation class for `type`.
+     * @see .registerParser
+     */
+    fun unregisterParser(parser: Class<out SentenceParser?>) {
+        for (key in parsers!!.keys) {
+            if (parsers!![key] == parser) {
+                parsers!!.remove(key)
+                break
+            }
+        }
+    }
 
-	/**
-	 * Tells if the factory is able to create parser for specified sentence
-	 * type. All {@link SentenceId} enum values should result returning
-	 * {@code true} at all times.
-	 *
-	 * @param type Sentence type id, e.g. "GLL" or "GGA".
-	 * @return true if type is supported, otherwise false.
-	 */
-	public boolean hasParser(String type) {
-		return parsers.containsKey(type);
-	}
+    /**
+     * Creates a new parser instance with specified parameters.
+     *
+     * @param sid Sentence/parser type ID, e.g. "GGA" or "GLL"
+     * @param param Object to pass as parameter to parser constructor
+     * @return Sentence parser
+     */
+    private fun createParserImpl(sid: String, param: Any): Sentence? {
+        if (!hasParser(sid)) {
+            val msg = String.format("Parser for type '%s' not found", sid)
+            throw UnsupportedSentenceException(msg)
+        }
+        var parser: Sentence? = null
+        val klass: Class<*> = param.javaClass
+        parser = try {
+            val c = parsers!![sid]!!
+            val co = c.getConstructor(klass)
+            co.newInstance(param)
+        } catch (e: NoSuchMethodException) {
+            val name = klass.name
+            val msg = "Constructor with %s parameter not found"
+            throw IllegalStateException(String.format(msg, name), e)
+        } catch (e: InstantiationException) {
+            throw IllegalStateException("Unable to instantiate parser", e)
+        } catch (e: IllegalAccessException) {
+            throw IllegalStateException("Unable to access parser", e)
+        } catch (e: InvocationTargetException) {
+            throw IllegalStateException(
+                "Unable to invoke parser constructor", e
+            )
+        }
+        return parser
+    }
 
-	/**
-	 * Returns a list of currently parseable sentence types.
-	 *
-	 * @return List of sentence ids
-	 */
-	public List<String> listParsers() {
-		Set<String> keys = parsers.keySet();
-		return Arrays.asList(keys.toArray(new String[parsers.size()]));
-	}
+    /**
+     * Resets the factory in it's initial state, i.e. restores and removes all
+     * parsers the have been either removed or added.
+     *
+     */
+    fun reset() {
+        val tempParsers: MutableMap<String, Class<out SentenceParser>> = ConcurrentHashMap()
+        registerParser(tempParsers, "APB", APBParser::class.java)
+        registerParser(tempParsers, "ALK", STALKParser::class.java)
+        registerParser(tempParsers, "BOD", BODParser::class.java)
+        registerParser(tempParsers, "CUR", CURParser::class.java)
+        registerParser(tempParsers, "DBT", DBTParser::class.java)
+        registerParser(tempParsers, "DPT", DPTParser::class.java)
+        registerParser(tempParsers, "DTM", DTMParser::class.java)
+        registerParser(tempParsers, "GBS", GBSParser::class.java)
+        registerParser(tempParsers, "GGA", GGAParser::class.java)
+        registerParser(tempParsers, "GLL", GLLParser::class.java)
+        registerParser(tempParsers, "GNS", GNSParser::class.java)
+        registerParser(tempParsers, "GSA", GSAParser::class.java)
+        registerParser(tempParsers, "GST", GSTParser::class.java)
+        registerParser(tempParsers, "GSV", GSVParser::class.java)
+        registerParser(tempParsers, "HDG", HDGParser::class.java)
+        registerParser(tempParsers, "HDM", HDMParser::class.java)
+        registerParser(tempParsers, "HDT", HDTParser::class.java)
+        registerParser(tempParsers, "HTC", HTCParser::class.java)
+        registerParser(tempParsers, "HTD", HTDParser::class.java)
+        registerParser(tempParsers, "MHU", MHUParser::class.java)
+        registerParser(tempParsers, "MMB", MMBParser::class.java)
+        registerParser(tempParsers, "MTA", MTAParser::class.java)
+        registerParser(tempParsers, "MTW", MTWParser::class.java)
+        registerParser(tempParsers, "MWV", MWVParser::class.java)
+        registerParser(tempParsers, "OSD", OSDParser::class.java)
+        registerParser(tempParsers, "RMB", RMBParser::class.java)
+        registerParser(tempParsers, "RMC", RMCParser::class.java)
+        registerParser(tempParsers, "RPM", RPMParser::class.java)
+        registerParser(tempParsers, "ROT", ROTParser::class.java)
+        registerParser(tempParsers, "RTE", RTEParser::class.java)
+        registerParser(tempParsers, "RSA", RSAParser::class.java)
+        registerParser(tempParsers, "RSD", RSDParser::class.java)
+        registerParser(tempParsers, "TLB", TLBParser::class.java)
+        registerParser(tempParsers, "TLL", TLLParser::class.java)
+        registerParser(tempParsers, "TTM", TTMParser::class.java)
+        registerParser(tempParsers, "TXT", TXTParser::class.java)
+        registerParser(tempParsers, "UBX", UBXParser::class.java)
+        registerParser(tempParsers, "VBW", VBWParser::class.java)
+        registerParser(tempParsers, "VDM", VDMParser::class.java)
+        registerParser(tempParsers, "VDO", VDOParser::class.java)
+        registerParser(tempParsers, "VDR", VDRParser::class.java)
+        registerParser(tempParsers, "VHW", VHWParser::class.java)
+        registerParser(tempParsers, "VLW", VLWParser::class.java)
+        registerParser(tempParsers, "VTG", VTGParser::class.java)
+        registerParser(tempParsers, "VWR", VWRParser::class.java)
+        registerParser(tempParsers, "VWT", VWTParser::class.java)
+        registerParser(tempParsers, "WPL", WPLParser::class.java)
+        registerParser(tempParsers, "XTE", XTEParser::class.java)
+        registerParser(tempParsers, "XDR", XDRParser::class.java)
+        registerParser(tempParsers, "ZDA", ZDAParser::class.java)
+        registerParser(tempParsers, "MDA", MDAParser::class.java)
+        registerParser(tempParsers, "MWD", MWDParser::class.java)
+        registerParser(tempParsers, "DTA", DTAParser::class.java)
+        registerParser(tempParsers, "DTB", DTBParser::class.java)
+        parsers = tempParsers
+    }
 
-	/**
-	 * Registers a sentence parser to the factory. After registration,
-	 * {@link #createParser(String)} method can be used to obtain instances of
-	 * registered parser.
-	 * <p>
-	 * Sentences supported by the library are registered automatically, but they
-	 * can be overridden simply be registering a new parser implementation for
-	 * chosen sentence type. That is, each sentence type can have only one
-	 * parser registered at a time.
-	 *
-	 * @param type Sentence type id, e.g. "GGA" or "GLL".
-	 * @param parser Class of parser implementation for given {@code type}.
-	 */
-	public void registerParser(String type,
-		Class<? extends SentenceParser> parser) {
-		registerParser(parsers, type, parser);
-	}
+    companion object {
+        // map that holds registered sentence types and parser classes
+        private var parsers: MutableMap<String, Class<out SentenceParser>>? = null
 
-	/**
-	 * Registers a sentence parser to the given factory. After registration,
-	 * {@link #createParser(String)} method can be used to obtain instances of
-	 * registered parser.
-	 * <p>
-	 * Sentences supported by the library are registered automatically, but they
-	 * can be overridden simply be registering a new parser implementation for
-	 * chosen sentence type. That is, each sentence type can have only one
-	 * parser registered at a time.
-	 *
-	 * @param parsers The provided factory to register the sentence parsers to.
-	 * @param type Sentence type id, e.g. "GGA" or "GLL".
-	 * @param parser Class of parser implementation for given {@code type}.
-	 */
-	private void registerParser(
-			Map<String, Class<? extends SentenceParser>> parsers, String type,
-			Class<? extends SentenceParser> parser) {
+        // singleton factory instance
+        private val INSTANCE = SentenceFactory()
 
-		try {
-			parser.getConstructor(new Class[] { String.class });
-			parser.getConstructor(new Class[] { TalkerId.class });
-			parsers.put(type, parser);
-		} catch (SecurityException e) {
-			String msg = "Unable to register parser due security violation";
-			throw new IllegalArgumentException(msg, e);
-		} catch (NoSuchMethodException e) {
-			String msg = "Required constructors not found; SentenceParser(String),"
-					+ " SentenceParser(TalkerId)";
-			throw new IllegalArgumentException(msg, e);
-		}
-	}
-
-	/**
-	 * Unregisters a parser class, regardless of sentence type(s) it is
-	 * registered for.
-	 *
-	 * @param parser Parser implementation class for {@code type}.
-	 * @see #registerParser(String, Class)
-	 */
-	public void unregisterParser(Class<? extends SentenceParser> parser) {
-
-		for (String key : parsers.keySet()) {
-
-			if (parsers.get(key) == parser) {
-				parsers.remove(key);
-				break;
-			}
-		}
-	}
-
-	/**
-	 * Creates a new parser instance with specified parameters.
-	 *
-	 * @param sid Sentence/parser type ID, e.g. "GGA" or "GLL"
-	 * @param param Object to pass as parameter to parser constructor
-	 * @return Sentence parser
-	 */
-	private Sentence createParserImpl(String sid, Object param) {
-
-		if (!hasParser(sid)) {
-			String msg = String.format("Parser for type '%s' not found", sid);
-			throw new UnsupportedSentenceException(msg);
-		}
-
-		Sentence parser = null;
-		Class<?> klass = param.getClass();
-
-		try {
-			Class<? extends SentenceParser> c = parsers.get(sid);
-			Constructor<? extends SentenceParser> co = c.getConstructor(klass);
-			parser = co.newInstance(param);
-		} catch (NoSuchMethodException e) {
-			String name = klass.getName();
-			String msg = "Constructor with %s parameter not found";
-			throw new IllegalStateException(String.format(msg, name), e);
-		} catch (InstantiationException e) {
-			throw new IllegalStateException("Unable to instantiate parser", e);
-		} catch (IllegalAccessException e) {
-			throw new IllegalStateException("Unable to access parser", e);
-		} catch (InvocationTargetException e) {
-			throw new IllegalStateException(
-				"Unable to invoke parser constructor", e);
-		}
-
-		return parser;
-	}
-
-	/**
-	 * Returns the singleton instance of {@code SentenceFactory}.
-	 *
-	 * @return SentenceFactory instance
-	 */
-	public static SentenceFactory getInstance() {
-		return INSTANCE;
-	}
-
-	/**
-	 * Resets the factory in it's initial state, i.e. restores and removes all
-	 * parsers the have been either removed or added.
-	 *
-	 */
-	public void reset() {
-		Map<String, Class<? extends SentenceParser>> tempParsers = new ConcurrentHashMap<>();
-		registerParser(tempParsers, "APB", APBParser.class);
-		registerParser(tempParsers, "ALK", STALKParser.class);
-		registerParser(tempParsers, "BOD", BODParser.class);
-		registerParser(tempParsers, "CUR", CURParser.class);
-		registerParser(tempParsers, "DBT", DBTParser.class);
-		registerParser(tempParsers, "DPT", DPTParser.class);
-		registerParser(tempParsers, "DTM", DTMParser.class);
-		registerParser(tempParsers, "GBS", GBSParser.class);
-		registerParser(tempParsers, "GGA", GGAParser.class);
-		registerParser(tempParsers, "GLL", GLLParser.class);
-		registerParser(tempParsers, "GNS", GNSParser.class);
-		registerParser(tempParsers, "GSA", GSAParser.class);
-		registerParser(tempParsers, "GST", GSTParser.class);
-		registerParser(tempParsers, "GSV", GSVParser.class);
-		registerParser(tempParsers, "HDG", HDGParser.class);
-		registerParser(tempParsers, "HDM", HDMParser.class);
-		registerParser(tempParsers, "HDT", HDTParser.class);
-		registerParser(tempParsers, "HTC", HTCParser.class);
-		registerParser(tempParsers, "HTD", HTDParser.class);
-		registerParser(tempParsers, "MHU", MHUParser.class);
-		registerParser(tempParsers, "MMB", MMBParser.class);
-		registerParser(tempParsers, "MTA", MTAParser.class);
-		registerParser(tempParsers, "MTW", MTWParser.class);
-		registerParser(tempParsers, "MWV", MWVParser.class);
-		registerParser(tempParsers, "OSD", OSDParser.class);
-		registerParser(tempParsers, "RMB", RMBParser.class);
-		registerParser(tempParsers, "RMC", RMCParser.class);
-		registerParser(tempParsers, "RPM", RPMParser.class);
-		registerParser(tempParsers, "ROT", ROTParser.class);
-		registerParser(tempParsers, "RTE", RTEParser.class);
-		registerParser(tempParsers, "RSA", RSAParser.class);
-		registerParser(tempParsers, "RSD", RSDParser.class);
-		registerParser(tempParsers, "TLB", TLBParser.class);
-		registerParser(tempParsers, "TLL", TLLParser.class);
-		registerParser(tempParsers, "TTM", TTMParser.class);
-		registerParser(tempParsers, "TXT", TXTParser.class);
-		registerParser(tempParsers, "UBX", UBXParser.class);
-		registerParser(tempParsers, "VBW", VBWParser.class);
-		registerParser(tempParsers, "VDM", VDMParser.class);
-		registerParser(tempParsers, "VDO", VDOParser.class);
-		registerParser(tempParsers, "VDR", VDRParser.class);
-		registerParser(tempParsers, "VHW", VHWParser.class);
-		registerParser(tempParsers, "VLW", VLWParser.class);
-		registerParser(tempParsers, "VTG", VTGParser.class);
-		registerParser(tempParsers, "VWR", VWRParser.class);
-		registerParser(tempParsers, "VWT", VWTParser.class);
-		registerParser(tempParsers, "WPL", WPLParser.class);
-		registerParser(tempParsers, "XTE", XTEParser.class);
-		registerParser(tempParsers, "XDR", XDRParser.class);
-		registerParser(tempParsers, "ZDA", ZDAParser.class);
-		registerParser(tempParsers, "MDA", MDAParser.class);
-		registerParser(tempParsers, "MWD", MWDParser.class);
-		registerParser(tempParsers, "DTA", DTAParser.class);
-		registerParser(tempParsers, "DTB", DTBParser.class);
-		parsers = tempParsers;
-	}
+        /**
+         * Returns the singleton instance of `SentenceFactory`.
+         *
+         * @return SentenceFactory instance
+         */
+        fun getInstance(): SentenceFactory {
+            return INSTANCE
+        }
+    }
 }

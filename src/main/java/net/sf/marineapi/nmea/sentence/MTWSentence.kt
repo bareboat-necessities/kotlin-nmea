@@ -18,28 +18,27 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
 /**
- * <p>Water temperature in degrees Celsius.</p>
- * 
- * <p>Example:<br>{@code $YXMTW,17.75,C*5D}</p>
- * 
+ *
+ * Water temperature in degrees Celsius.
+ *
+ *
+ * Example:<br></br>`$YXMTW,17.75,C*5D`
+ *
  * @author Warren Zahra, Kimmo Tuukkanen
  */
-public interface MTWSentence extends Sentence {
-
-	/**
-	 * Get the water temperature.
-	 * 
-	 * @return Temperature in degrees Celsius.
-	 */
-	double getTemperature();
-
-	/**
-	 * Set the water temperature.
-	 * 
-	 * @param temp Water temperature in degrees Celsius.
-	 */
-	void setTemperature(double temp);
+interface MTWSentence : Sentence {
+    /**
+     * Get the water temperature.
+     *
+     * @return Temperature in degrees Celsius.
+     */
+    /**
+     * Set the water temperature.
+     *
+     * @param temp Water temperature in degrees Celsius.
+     */
+    var temperature: Double
 }

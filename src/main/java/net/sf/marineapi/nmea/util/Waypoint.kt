@@ -18,117 +18,92 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
-import java.util.Date;
-
+java.util.Date
 /**
  * Waypoint represents a named geographic location.
- * 
+ *
  * @author Kimmo Tuukkanen
  * @see net.sf.marineapi.nmea.util.Position
  */
-public class Waypoint extends Position {
+class Waypoint : Position {
+    /**
+     * Get id of Waypoint
+     *
+     * @return id
+     */
+    /**
+     * Set the id of Waypoint
+     *
+     * @param id the id to set
+     */
+    var id: String?
+    /**
+     * Gets the waypoint description/comment.
+     *
+     * @return the description
+     */
+    /**
+     * Sets the waypoint description.
+     *
+     * @param description the description to set
+     */
+    var description = ""
 
-	private String id;
-	private String description = "";
-	private final Date timeStamp = new Date();
+    /**
+     * Returns the time stamp when `Waypoint` was created.
+     *
+     * @return Date
+     */
+    val timeStamp = Date()
 
-	/**
-	 * Creates a new instance of {@code Waypoint} with default WGS84 datum.
-	 * 
-	 * @param id Waypoint identifier
-	 * @param lat Latitude degrees of the waypoint location
-	 * @param lon Longitude degrees of waypoint location
-	 */
-	public Waypoint(String id, double lat, double lon) {
-		super(lat, lon);
-		this.id = id;
-	}
+    /**
+     * Creates a new instance of `Waypoint` with default WGS84 datum.
+     *
+     * @param id Waypoint identifier
+     * @param lat Latitude degrees of the waypoint location
+     * @param lon Longitude degrees of waypoint location
+     */
+    constructor(id: String?, lat: Double, lon: Double) : super(lat, lon) {
+        this.id = id
+    }
 
-	/**
-	 * Creates a new instance of {@code Waypoint} with default WGS84 datum.
-	 * 
-	 * @param id Waypoint identifier
-	 * @param lat Latitude degrees of the waypoint location
-	 * @param lon Longitude degrees of waypoint location
-	 * @param alt Altitude value, in meters above/below mean sea level
-	 */
-	public Waypoint(String id, double lat, double lon, double alt) {
-		super(lat, lon, alt);
-		this.id = id;
-	}
+    /**
+     * Creates a new instance of `Waypoint` with default WGS84 datum.
+     *
+     * @param id Waypoint identifier
+     * @param lat Latitude degrees of the waypoint location
+     * @param lon Longitude degrees of waypoint location
+     * @param alt Altitude value, in meters above/below mean sea level
+     */
+    constructor(id: String?, lat: Double, lon: Double, alt: Double) : super(lat, lon, alt) {
+        this.id = id
+    }
 
-	/**
-	 * Creates a new instance of Waypoint with explicitly specified datum.
-	 * 
-	 * @param id Waypoint identifier
-	 * @param lat Latitude degrees of the waypoint location
-	 * @param lon Longitude degrees of waypoint location
-	 * @param datum Position datum, i.e. the coordinate system.
-	 */
-	public Waypoint(String id, double lat, double lon, Datum datum) {
-		super(lat, lon, datum);
-		this.id = id;
-	}
+    /**
+     * Creates a new instance of Waypoint with explicitly specified datum.
+     *
+     * @param id Waypoint identifier
+     * @param lat Latitude degrees of the waypoint location
+     * @param lon Longitude degrees of waypoint location
+     * @param datum Position datum, i.e. the coordinate system.
+     */
+    constructor(id: String?, lat: Double, lon: Double, datum: Datum) : super(lat, lon, datum) {
+        this.id = id
+    }
 
-	/**
-	 * Creates a new instance of {@code Waypoint} with explicitly specified
-	 * datum.
-	 * 
-	 * @param id Waypoint identifier/name
-	 * @param lat Latitude degrees of the waypoint location
-	 * @param lon Longitude degrees of waypoint location
-	 * @param alt Altitude value, in meters above/below mean sea level
-	 * @param datum Position datum, i.e. the coordinate system.
-	 */
-	public Waypoint(String id, double lat, double lon, double alt, Datum datum) {
-		super(lat, lon, alt, datum);
-		this.id = id;
-	}
-
-	/**
-	 * Gets the waypoint description/comment.
-	 * 
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * Get id of Waypoint
-	 * 
-	 * @return id
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-	/**
-	 * Returns the time stamp when {@code Waypoint} was created.
-	 * 
-	 * @return Date
-	 */
-	public Date getTimeStamp() {
-		return timeStamp;
-	}
-
-	/**
-	 * Sets the waypoint description.
-	 * 
-	 * @param description the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	/**
-	 * Set the id of Waypoint
-	 * 
-	 * @param id the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
+    /**
+     * Creates a new instance of `Waypoint` with explicitly specified
+     * datum.
+     *
+     * @param id Waypoint identifier/name
+     * @param lat Latitude degrees of the waypoint location
+     * @param lon Longitude degrees of waypoint location
+     * @param alt Altitude value, in meters above/below mean sea level
+     * @param datum Position datum, i.e. the coordinate system.
+     */
+    constructor(id: String?, lat: Double, lon: Double, alt: Double, datum: Datum) : super(lat, lon, alt, datum) {
+        this.id = id
+    }
 }

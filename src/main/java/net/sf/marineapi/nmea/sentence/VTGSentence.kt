@@ -18,128 +18,134 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.FaaMode;
+import net.sf.marineapi.nmea.util.FaaMode
 
 /**
  * Course and speed over the ground. True and magnetic COG, speed provided in
  * km/h and knots. Mode (the last "A" in example sentence) was added in NMEA 2.3
  * and may not always be available.
- * <p>
- * Example: <br>
- * {@code $GPVTG,46.96,T,,,16.89,N,31.28,K,A*43}
- * 
+ *
+ *
+ * Example: <br></br>
+ * `$GPVTG,46.96,T,,,16.89,N,31.28,K,A*43`
+ *
  * @author Kimmo Tuukkanen
  */
-public interface VTGSentence extends Sentence {
+interface VTGSentence : Sentence {
+    /**
+     * Get the magnetic course over ground.
+     *
+     * @return Magnetic course
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    fun getMagneticCourse(): Double
 
-	/** Char indicator for "true" */
-	char TRUE = 'T';
-	/** Char indicator for "magnetic" */
-	char MAGNETIC = 'M';
-	/** Units indicator for kilometers per hour */
-	char KMPH = 'K';
-	/** Units indicator for knots (nautical miles per hour) */
-	char KNOT = 'N';
-	/** Operating in manual mode (forced 2D or 3D). */
-	char MODE_MANUAL = 'M';
-	/** Operating in automatic mode (2D/3D). */
-	char MODE_AUTOMATIC = 'A';
+    /**
+     * Get the FAA operating mode of GPS receiver. The field may not be
+     * available, depending on the NMEA version.
+     *
+     * @since NMEA 2.3
+     * @return [FaaMode] enum
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    fun getMode(): FaaMode
 
-	/**
-	 * Get the magnetic course over ground.
-	 * 
-	 * @return Magnetic course
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-	double getMagneticCourse();
+    /**
+     * Get current speed over ground, in kilometers per hour.
+     *
+     * @return Speed in km/h
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    fun getSpeedKmh(): Double
 
-	/**
-	 * Get the FAA operating mode of GPS receiver. The field may not be
-	 * available, depending on the NMEA version.
-	 * 
-	 * @since NMEA 2.3
-	 * @return {@link FaaMode} enum
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-	FaaMode getMode();
+    /**
+     * Get speed over ground in knots.
+     *
+     * @return Speed in knots (nautical miles per hour)
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    fun getSpeedKnots(): Double
 
-	/**
-	 * Get current speed over ground, in kilometers per hour.
-	 * 
-	 * @return Speed in km/h
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-	double getSpeedKmh();
+    /**
+     * Get the true course over ground.
+     *
+     * @return True course, in degrees
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    fun getTrueCourse(): Double
 
-	/**
-	 * Get speed over ground in knots.
-	 * 
-	 * @return Speed in knots (nautical miles per hour)
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-	double getSpeedKnots();
+    /**
+     * Set the magnetic course over ground.
+     *
+     * @param mcog Course in degrees.
+     */
+    fun setMagneticCourse(mcog: Double)
 
-	/**
-	 * Get the true course over ground.
-	 * 
-	 * @return True course, in degrees
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-	double getTrueCourse();
+    /**
+     * Set the FAA operating mode of GPS receiver.
+     *
+     * @param mode Mode to set
+     * @since NMEA 2.3
+     */
+    fun setMode(mode: FaaMode)
 
-	/**
-	 * Set the magnetic course over ground.
-	 * 
-	 * @param mcog Course in degrees.
-	 */
-	void setMagneticCourse(double mcog);
+    /**
+     * Set the current speed over ground.
+     *
+     * @param kmh Speed in kilometers per hour (km/h).
+     */
+    fun setSpeedKmh(kmh: Double)
 
-	/**
-	 * Set the FAA operating mode of GPS receiver.
-	 * 
-	 * @param mode Mode to set
-	 * @since NMEA 2.3
-	 */
-	void setMode(FaaMode mode);
+    /**
+     * Set the speed over ground, in knots.
+     *
+     * @param knots Speed in knots (nautical miles per hour)
+     */
+    fun setSpeedKnots(knots: Double)
 
-	/**
-	 * Set the current speed over ground.
-	 * 
-	 * @param kmh Speed in kilometers per hour (km/h).
-	 */
-	void setSpeedKmh(double kmh);
+    /**
+     * Set the true course over ground.
+     *
+     * @param tcog True course, in degrees
+     * @throws IllegalArgumentException If specified course is out of bounds
+     * 0..360 degrees.
+     */
+    fun setTrueCourse(tcog: Double)
 
-	/**
-	 * Set the speed over ground, in knots.
-	 * 
-	 * @param knots Speed in knots (nautical miles per hour)
-	 */
-	void setSpeedKnots(double knots);
+    companion object {
+        /** Char indicator for "true"  */
+        const val TRUE = 'T'
 
-	/**
-	 * Set the true course over ground.
-	 * 
-	 * @param tcog True course, in degrees
-	 * @throws IllegalArgumentException If specified course is out of bounds
-	 *             0..360 degrees.
-	 */
-	void setTrueCourse(double tcog);
+        /** Char indicator for "magnetic"  */
+        const val MAGNETIC = 'M'
 
+        /** Units indicator for kilometers per hour  */
+        const val KMPH = 'K'
+
+        /** Units indicator for knots (nautical miles per hour)  */
+        const val KNOT = 'N'
+
+        /** Operating in manual mode (forced 2D or 3D).  */
+        const val MODE_MANUAL = 'M'
+
+        /** Operating in automatic mode (2D/3D).  */
+        const val MODE_AUTOMATIC = 'A'
+    }
 }

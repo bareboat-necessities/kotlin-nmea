@@ -18,58 +18,56 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
 /**
  * Set and drift, true/magnetic direction and speed of current.
  *
  * @author Kimmo Tuukkanen
  */
-public interface VDRSentence extends Sentence {
+interface VDRSentence : Sentence {
+    /**
+     * Returns the magnetic current direction.
+     *
+     * @return Direction in degrees
+     * @see .getTrueDirection
+     */
+    fun getMagneticDirection(): Double
 
-	/**
-	 * Returns the magnetic current direction.
-	 * 
-	 * @return Direction in degrees
-	 * @see #getTrueDirection()
-	 */
-	double getMagneticDirection();
+    /**
+     * Returns the current flow speed.
+     *
+     * @return Speed in knots
+     */
+    fun getSpeed(): Double
 
-	/**
-	 * Returns the current flow speed.
-	 * 
-	 * @return Speed in knots
-	 */
-	double getSpeed();
+    /**
+     * Returns the true direction of current.
+     *
+     * @return Direction in degrees
+     * @see .getMagneticDirection
+     */
+    fun getTrueDirection(): Double
 
-	/**
-	 * Returns the true direction of current.
-	 * 
-	 * @return Direction in degrees
-	 * @see #getMagneticDirection()
-	 */
-	double getTrueDirection();
+    /**
+     * Sets the magnetic direction of current.
+     *
+     * @param direction Direction to set, in degrees.
+     */
+    fun setMagneticDirection(direction: Double)
 
-	/**
-	 * Sets the magnetic direction of current.
-	 * 
-	 * @param direction Direction to set, in degrees.
-	 */
-	void setMagneticDirection(double direction);
+    /**
+     * Sets the current flow speed.
+     *
+     * @param speed Speed in knots
+     */
+    fun setSpeed(speed: Double)
 
-	/**
-	 * Sets the current flow speed.
-	 * 
-	 * @param speed Speed in knots
-	 */
-	void setSpeed(double speed);
-
-	/**
-	 * Sets the true direction of current.
-	 * 
-	 * @param direction Direction in degrees
-	 * @see #setMagneticDirection(double)
-	 */
-	void setTrueDirection(double direction);
-
+    /**
+     * Sets the true direction of current.
+     *
+     * @param direction Direction in degrees
+     * @see .setMagneticDirection
+     */
+    fun setTrueDirection(direction: Double)
 }

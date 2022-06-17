@@ -18,51 +18,50 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
 /**
  * Target label data in pairs of target IDs and target labels.
- * Example:<br>
- * {@code $RATLB,3,SHIPTHREE,5,SHIPFIVE,99,SHIP99*1F}
- * 
+ * Example:<br></br>
+ * `$RATLB,3,SHIPTHREE,5,SHIPFIVE,99,SHIP99*1F`
+ *
  * @author Joshua Sweaney
  */
-public interface TLBSentence extends Sentence {
+interface TLBSentence : Sentence {
+    /**
+     * Get the list of target IDs listed in this sentence.
+     *
+     * The nth array element returned by this method, corresponds
+     * to the nth array element returned by [TLBSentence.getTargetLabels].
+     *
+     * @return targets IDs as int array
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    fun getTargetIds(): IntArray
 
     /**
-	 * Get the list of target IDs listed in this sentence.
-     * 
+     * Get the list of target labels listed in this sentence.
+     *
      * The nth array element returned by this method, corresponds
-     * to the nth array element returned by {@link TLBSentence#getTargetLabels()}.
-	 * 
-	 * @return targets IDs as int array
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-    int[] getTargetIds();
-
-    /**
-	 * Get the list of target labels listed in this sentence.
-     * 
-     * The nth array element returned by this method, corresponds
-     * to the nth array element returned by {@link TLBSentence#getTargetIds()}.
-	 * 
-	 * @return target labels as String array
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-    String[] getTargetLabels();
+     * to the nth array element returned by [TLBSentence.getTargetIds].
+     *
+     * @return target labels as String array
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    fun getTargetLabels(): Array<String?>
 
     /**
      * Adds a target (id,label) pair to this sentence.
      * @param targetId int The target ID of the pair
      * @param targetLabel String The label of the pair
      */
-    void addTargetLabel(int targetId, String targetLabel);
+    fun addTargetLabel(targetId: Int, targetLabel: String?)
 
     /**
      * Sets the target (id,label) pairs in this sentence. The size of each
@@ -72,6 +71,5 @@ public interface TLBSentence extends Sentence {
      * @param targetLabels array of target labels
      * @throws java.lang.IllegalArgumentException If array sizes are not the same
      */
-    void setTargetPairs(int[] targetIds, String[] targetLabels);
-    
+    fun setTargetPairs(targetIds: IntArray, targetLabels: Array<String?>)
 }

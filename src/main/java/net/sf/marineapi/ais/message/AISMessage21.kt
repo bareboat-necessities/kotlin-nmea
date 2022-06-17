@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.message;
+package net.sf.marineapi.ais.message
 
 /**
  * Aid-to-Navigation Report
@@ -30,33 +30,32 @@ package net.sf.marineapi.ais.message;
  *
  * @author Henri Laurent
  */
-public interface AISMessage21 extends AISPositionInfo {
-
+interface AISMessage21 : AISPositionInfo {
     /**
      * Returns the Aid type for the current message.
      * @return Aid type
      */
-    int getAidType();
+    val aidType: Int
 
     /**
      * Returns the name of the transmitting ship.
      * @return maximum 20 characters, representing the name
      */
-    String getName();
+    val name: String?
 
     /**
      * Returns the distance from the reference point to the bow.
      *
      * @return Distance to bow, in meters.
      */
-    int getBow();
+    val bow: Int
 
     /**
      * Returns the distance from the reference point to the stern of the ship.
      *
      * @return Distance to stern, in meters.
      */
-    int getStern();
+    val stern: Int
 
     /**
      * Returns the distance from the reference point to the port side of the
@@ -64,7 +63,7 @@ public interface AISMessage21 extends AISPositionInfo {
      *
      * @return Distance to port side, in meters.
      */
-    int getPort();
+    val port: Int
 
     /**
      * Returns the distance from the reference point to the starboard side of
@@ -72,62 +71,62 @@ public interface AISMessage21 extends AISPositionInfo {
      *
      * @return Distance to starboard side, in meters.
      */
-    int getStarboard();
+    val starboard: Int
 
     /**
      * Returns the type of electronic position fixing device.
      *
      * @return an integer value of the position device
      */
-    int getTypeOfEPFD();
+    val typeOfEPFD: Int
 
     /**
      * Returns the UTC second.
      *
      * @return an integer value representing the UTC second (0-59)
      */
-    int getUtcSecond();
+    val utcSecond: Int
 
     /**
      * Returns the Off-position indicator: 0 means on position; 1 means off
      * position. Only valid if UTC second is equal to or below 59.
      *
-     * @return {@code true} if off-position, otherwise {@code false}.
+     * @return `true` if off-position, otherwise `false`.
      */
-    boolean getOffPositionIndicator();
+    val offPositionIndicator: Boolean
 
     /**
      * Returns a Regional integer (reserved)
      *
      * @return an integer value
      */
-    int getRegional();
+    val regional: Int
 
     /**
      * Returns the RAIM flag
      *
-     * @return {@code true} if RAIM in use, otherwise {@code false}.
+     * @return `true` if RAIM in use, otherwise `false`.
      */
-    boolean getRAIMFlag();
+    val rAIMFlag: Boolean
 
     /**
      * Returns the Virtual-aid flag
      *
-     * @return {@code true} if virtual, otherwise {@code false}
+     * @return `true` if virtual, otherwise `false`
      */
-    boolean getVirtualAidFlag();
+    val virtualAidFlag: Boolean
 
     /**
      * Returns the Assigned-mode flag
      *
-     * @return {@code true} if assigned, otherwise {@code false}.
+     * @return `true` if assigned, otherwise `false`.
      */
-    boolean getAssignedModeFlag();
+    val assignedModeFlag: Boolean
 
     /**
      * Returns the name extension.
      *
      * @return maximum 14 characters, representing the name extension
      */
-    String getNameExtension();
+    val nameExtension: String
 }

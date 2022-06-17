@@ -18,324 +18,256 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.MDASentence;
-import net.sf.marineapi.nmea.sentence.TalkerId;
+import net.sf.marineapi.nmea.sentence.MDASentenceimport
 
+net.sf.marineapi.nmea.sentence.TalkerId
 /**
  * Meteorological Composite - Barometric pressure, air and water temperature,
  * humidity, dew point and wind speed and direction relative to the surface of
  * the earth.
- * 
+ *
  * @author Richard van Nieuwenhoven
  */
-class MDAParser extends SentenceParser implements MDASentence {
-
-    public static final String MDA_SENTENCE_ID = "MDA";
-
-    /**
-     * Barometric pressure, inches of mercury, to the nearest 0,01 inch.
-     */
-    private static int PRIMARY_BAROMETRIC_PRESSURE = 0;
-
-    /**
-     * I = inches of mercury (inHg) P = pascal (1 bar = 100000 Pa = 29,53 inHg).
-     */
-    private static int PRIMARY_BAROMETRIC_PRESSURE_UNIT = 1;
-
-    /**
-     * Barometric pressure, bars, to the nearest .001 bar.
-     */
-    private static int SECONDARY_BAROMETRIC_PRESSURE = 2;
-
-    /**
-     * B = bars.
-     */
-    private static int SECONDARY_BAROMETRIC_PRESSURE_UNIT = 3;
-
-    /**
-     * Air temperature, degrees C, to the nearest 0,1 degree C.
-     */
-    private static int AIR_TEMPERATURE = 4;
-
-    /**
-     * C = degrees C.
-     */
-    private static int AIR_TEMPERATURE_UNIT = 5;
-
-    /**
-     * Water temperature, degrees C.
-     */
-    private static int WATER_TEMPERATURE = 6;
-
-    /**
-     * C = degrees C.
-     */
-    private static int WATER_TEMPERATURE_UNIT = 7;
-
-    /**
-     * Relative humidity, percent, to the nearest 0,1 percent.
-     */
-    private static int RELATIVE_HUMIDITY = 8;
-
-    /**
-     * Absolute humidity, percent .
-     */
-    private static int ABSOLUTE_HUMIDITY = 9;
-
-    /**
-     * Dew point, degrees C, to the nearest 0,1 degree C.
-     */
-    private static int DEW_POINT = 10;
-
-    /**
-     * C = degrees C.
-     */
-    private static int DEW_POINT_UNIT = 11;
-
-    /**
-     * Wind direction, degrees True, to the nearest 0,1 degree.
-     */
-    private static int WIND_DIRECTION_TRUE = 12;
-
-    /**
-     * T = true
-     */
-    private static int WIND_DIRECTION_TRUE_UNIT = 13;
-
-    /**
-     * Wind direction, degrees Magnetic, to the nearest 0,1 degree.
-     */
-    private static int WIND_DIRECTION_MAGNETIC = 14;
-
-    /**
-     * M = magnetic.
-     */
-    private static int WIND_DIRECTION_MAGNETIC_UNIT = 15;
-
-    /**
-     * Wind speed, knots, to the nearest 0,1 knot.
-     */
-    private static int WIND_SPEED_KNOTS = 16;
-
-    /**
-     * N = knots.
-     */
-    private static int WIND_SPEED_KNOTS_UNIT = 17;
-
-    /**
-     * Wind speed, meters per second, to the nearest 0,1 m/s.
-     */
-    private static int WIND_SPEED_METERS = 18;
-
-    /**
-     * M = meters per second
-     */
-    private static int WIND_SPEED_METERS_UNIT = 19;
-
+internal class MDAParser : SentenceParser, MDASentence {
     /**
      * Creates a new instance of MWVParser.
-     * 
+     *
      * @param nmea
-     *            MWV sentence String
+     * MWV sentence String
      */
-    public MDAParser(String nmea) {
-        super(nmea, MDA_SENTENCE_ID);
-    }
+    constructor(nmea: String) : super(nmea, MDA_SENTENCE_ID) {}
 
     /**
      * Creates a new empty instance of MWVParser.
-     * 
+     *
      * @param talker
-     *            Talker id to set
+     * Talker id to set
      */
-    public MDAParser(TalkerId talker) {
-        super(talker, MDA_SENTENCE_ID, 20);
-        setCharValue(AIR_TEMPERATURE_UNIT, 'C');
-        setCharValue(WATER_TEMPERATURE_UNIT, 'C');
-        setCharValue(DEW_POINT_UNIT, 'C');
-        setCharValue(WIND_DIRECTION_TRUE_UNIT, 'T');
-        setCharValue(WIND_DIRECTION_MAGNETIC_UNIT, 'M');
-        setCharValue(WIND_SPEED_KNOTS_UNIT, 'K');
-        setCharValue(WIND_SPEED_METERS_UNIT, 'M');
-        setCharValue(PRIMARY_BAROMETRIC_PRESSURE_UNIT, 'I');
-        setCharValue(SECONDARY_BAROMETRIC_PRESSURE_UNIT, 'B');
+    constructor(talker: TalkerId?) : super(talker, MDA_SENTENCE_ID, 20) {
+        setCharValue(AIR_TEMPERATURE_UNIT, 'C')
+        setCharValue(WATER_TEMPERATURE_UNIT, 'C')
+        setCharValue(DEW_POINT_UNIT, 'C')
+        setCharValue(WIND_DIRECTION_TRUE_UNIT, 'T')
+        setCharValue(WIND_DIRECTION_MAGNETIC_UNIT, 'M')
+        setCharValue(WIND_SPEED_KNOTS_UNIT, 'K')
+        setCharValue(WIND_SPEED_METERS_UNIT, 'M')
+        setCharValue(PRIMARY_BAROMETRIC_PRESSURE_UNIT, 'I')
+        setCharValue(SECONDARY_BAROMETRIC_PRESSURE_UNIT, 'B')
     }
 
-    @Override
-    public double getAbsoluteHumidity() {
-        if (hasValue(ABSOLUTE_HUMIDITY)) {
-            return getDoubleValue(ABSOLUTE_HUMIDITY);
+    override var absoluteHumidity: Double
+        get() = if (hasValue(ABSOLUTE_HUMIDITY)) {
+            getDoubleValue(ABSOLUTE_HUMIDITY)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getAirTemperature() {
-        if (hasValue(AIR_TEMPERATURE)) {
-            return getDoubleValue(AIR_TEMPERATURE);
+        set(humitidy) {
+            setDoubleValue(ABSOLUTE_HUMIDITY, humitidy)
+        }
+    override var airTemperature: Double
+        get() = if (hasValue(AIR_TEMPERATURE)) {
+            getDoubleValue(AIR_TEMPERATURE)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getDewPoint() {
-        if (hasValue(DEW_POINT)) {
-            return getDoubleValue(DEW_POINT);
+        set(temp) {
+            setDoubleValue(AIR_TEMPERATURE, temp)
+        }
+    override var dewPoint: Double
+        get() = if (hasValue(DEW_POINT)) {
+            getDoubleValue(DEW_POINT)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getMagneticWindDirection() {
-        if (hasValue(WIND_DIRECTION_MAGNETIC)) {
-            return getDoubleValue(WIND_DIRECTION_MAGNETIC);
+        set(dewPoint) {
+            setDoubleValue(DEW_POINT, dewPoint)
+        }
+    override var magneticWindDirection: Double
+        get() = if (hasValue(WIND_DIRECTION_MAGNETIC)) {
+            getDoubleValue(WIND_DIRECTION_MAGNETIC)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getPrimaryBarometricPressure() {
-        if (hasValue(PRIMARY_BAROMETRIC_PRESSURE)) {
-            return getDoubleValue(PRIMARY_BAROMETRIC_PRESSURE);
+        set(direction) {
+            setDoubleValue(WIND_DIRECTION_MAGNETIC, direction)
+        }
+    override var primaryBarometricPressure: Double
+        get() = if (hasValue(PRIMARY_BAROMETRIC_PRESSURE)) {
+            getDoubleValue(PRIMARY_BAROMETRIC_PRESSURE)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public char getPrimaryBarometricPressureUnit() {
-        return getCharValue(PRIMARY_BAROMETRIC_PRESSURE_UNIT);
-    }
-
-    @Override
-    public double getRelativeHumidity() {
-        if (hasValue(RELATIVE_HUMIDITY)) {
-            return getDoubleValue(RELATIVE_HUMIDITY);
+        set(pressure) {
+            setDoubleValue(PRIMARY_BAROMETRIC_PRESSURE, pressure)
+        }
+    override var primaryBarometricPressureUnit: Char
+        get() = getCharValue(PRIMARY_BAROMETRIC_PRESSURE_UNIT)
+        set(unit) {
+            setCharValue(PRIMARY_BAROMETRIC_PRESSURE_UNIT, unit)
+        }
+    override var relativeHumidity: Double
+        get() = if (hasValue(RELATIVE_HUMIDITY)) {
+            getDoubleValue(RELATIVE_HUMIDITY)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getSecondaryBarometricPressure() {
-        if (hasValue(SECONDARY_BAROMETRIC_PRESSURE)) {
-            return getDoubleValue(SECONDARY_BAROMETRIC_PRESSURE);
+        set(humidity) {
+            setDoubleValue(RELATIVE_HUMIDITY, humidity)
+        }
+    override var secondaryBarometricPressure: Double
+        get() = if (hasValue(SECONDARY_BAROMETRIC_PRESSURE)) {
+            getDoubleValue(SECONDARY_BAROMETRIC_PRESSURE)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public char getSecondaryBarometricPressureUnit() {
-        return getCharValue(SECONDARY_BAROMETRIC_PRESSURE_UNIT);
-    }
-
-    @Override
-    public double getTrueWindDirection() {
-        if (hasValue(WIND_DIRECTION_TRUE)) {
-            return getDoubleValue(WIND_DIRECTION_TRUE);
+        set(pressure) {
+            setDoubleValue(SECONDARY_BAROMETRIC_PRESSURE, pressure)
+        }
+    override var secondaryBarometricPressureUnit: Char
+        get() = getCharValue(SECONDARY_BAROMETRIC_PRESSURE_UNIT)
+        set(unit) {
+            setCharValue(SECONDARY_BAROMETRIC_PRESSURE_UNIT, unit)
+        }
+    override var trueWindDirection: Double
+        get() = if (hasValue(WIND_DIRECTION_TRUE)) {
+            getDoubleValue(WIND_DIRECTION_TRUE)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getWaterTemperature() {
-        if (hasValue(WATER_TEMPERATURE)) {
-            return getDoubleValue(WATER_TEMPERATURE);
+        set(direction) {
+            setDoubleValue(WIND_DIRECTION_TRUE, direction)
+        }
+    override var waterTemperature: Double
+        get() = if (hasValue(WATER_TEMPERATURE)) {
+            getDoubleValue(WATER_TEMPERATURE)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getWindSpeed() {
-        if (hasValue(WIND_SPEED_METERS)) {
-            return getDoubleValue(WIND_SPEED_METERS);
+        set(temp) {
+            setDoubleValue(WATER_TEMPERATURE, temp)
+        }
+    override var windSpeed: Double
+        get() = if (hasValue(WIND_SPEED_METERS)) {
+            getDoubleValue(WIND_SPEED_METERS)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getWindSpeedKnots() {
-        if (hasValue(WIND_SPEED_KNOTS)) {
-            return getDoubleValue(WIND_SPEED_KNOTS);
+        set(speed) {
+            setDoubleValue(WIND_SPEED_METERS, speed)
+        }
+    override var windSpeedKnots: Double
+        get() = if (hasValue(WIND_SPEED_KNOTS)) {
+            getDoubleValue(WIND_SPEED_KNOTS)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
+        set(speed) {
+            setDoubleValue(WIND_SPEED_KNOTS, speed)
+        }
 
-    @Override
-    public void setAbsoluteHumidity(double humitidy) {
-        setDoubleValue(ABSOLUTE_HUMIDITY, humitidy);
-    }
+    companion object {
+        const val MDA_SENTENCE_ID = "MDA"
 
-    @Override
-    public void setAirTemperature(double temp) {
-        setDoubleValue(AIR_TEMPERATURE, temp);
-    }
+        /**
+         * Barometric pressure, inches of mercury, to the nearest 0,01 inch.
+         */
+        private const val PRIMARY_BAROMETRIC_PRESSURE = 0
 
-    @Override
-    public void setDewPoint(double dewPoint) {
-        setDoubleValue(DEW_POINT, dewPoint);
-    }
+        /**
+         * I = inches of mercury (inHg) P = pascal (1 bar = 100000 Pa = 29,53 inHg).
+         */
+        private const val PRIMARY_BAROMETRIC_PRESSURE_UNIT = 1
 
-    @Override
-    public void setMagneticWindDirection(double direction) {
-        setDoubleValue(WIND_DIRECTION_MAGNETIC, direction);
-    }
+        /**
+         * Barometric pressure, bars, to the nearest .001 bar.
+         */
+        private const val SECONDARY_BAROMETRIC_PRESSURE = 2
 
-    @Override
-    public void setPrimaryBarometricPressure(double pressure) {
-        setDoubleValue(PRIMARY_BAROMETRIC_PRESSURE, pressure);
-    }
+        /**
+         * B = bars.
+         */
+        private const val SECONDARY_BAROMETRIC_PRESSURE_UNIT = 3
 
-    @Override
-	public void setPrimaryBarometricPressureUnit(char unit) {
-		setCharValue(PRIMARY_BAROMETRIC_PRESSURE_UNIT, unit);
-	}
+        /**
+         * Air temperature, degrees C, to the nearest 0,1 degree C.
+         */
+        private const val AIR_TEMPERATURE = 4
 
-    @Override
-    public void setRelativeHumidity(double humidity) {
-        setDoubleValue(RELATIVE_HUMIDITY, humidity);
-    }
+        /**
+         * C = degrees C.
+         */
+        private const val AIR_TEMPERATURE_UNIT = 5
 
-    @Override
-    public void setSecondaryBarometricPressure(double pressure) {
-        setDoubleValue(SECONDARY_BAROMETRIC_PRESSURE, pressure);
-    }
+        /**
+         * Water temperature, degrees C.
+         */
+        private const val WATER_TEMPERATURE = 6
 
-    @Override
-	public void setSecondaryBarometricPressureUnit(char unit) {
-		setCharValue(SECONDARY_BAROMETRIC_PRESSURE_UNIT, unit);	
-	}
+        /**
+         * C = degrees C.
+         */
+        private const val WATER_TEMPERATURE_UNIT = 7
 
-    @Override
-    public void setTrueWindDirection(double direction) {
-        setDoubleValue(WIND_DIRECTION_TRUE, direction);
+        /**
+         * Relative humidity, percent, to the nearest 0,1 percent.
+         */
+        private const val RELATIVE_HUMIDITY = 8
 
-    }
+        /**
+         * Absolute humidity, percent .
+         */
+        private const val ABSOLUTE_HUMIDITY = 9
 
-    @Override
-    public void setWaterTemperature(double temp) {
-        setDoubleValue(WATER_TEMPERATURE, temp);
+        /**
+         * Dew point, degrees C, to the nearest 0,1 degree C.
+         */
+        private const val DEW_POINT = 10
 
-    }
+        /**
+         * C = degrees C.
+         */
+        private const val DEW_POINT_UNIT = 11
 
-	@Override
-    public void setWindSpeed(double speed) {
-        setDoubleValue(WIND_SPEED_METERS, speed);
-    }
+        /**
+         * Wind direction, degrees True, to the nearest 0,1 degree.
+         */
+        private const val WIND_DIRECTION_TRUE = 12
 
-	@Override
-    public void setWindSpeedKnots(double speed) {
-        setDoubleValue(WIND_SPEED_KNOTS, speed);
+        /**
+         * T = true
+         */
+        private const val WIND_DIRECTION_TRUE_UNIT = 13
+
+        /**
+         * Wind direction, degrees Magnetic, to the nearest 0,1 degree.
+         */
+        private const val WIND_DIRECTION_MAGNETIC = 14
+
+        /**
+         * M = magnetic.
+         */
+        private const val WIND_DIRECTION_MAGNETIC_UNIT = 15
+
+        /**
+         * Wind speed, knots, to the nearest 0,1 knot.
+         */
+        private const val WIND_SPEED_KNOTS = 16
+
+        /**
+         * N = knots.
+         */
+        private const val WIND_SPEED_KNOTS_UNIT = 17
+
+        /**
+         * Wind speed, meters per second, to the nearest 0,1 m/s.
+         */
+        private const val WIND_SPEED_METERS = 18
+
+        /**
+         * M = meters per second
+         */
+        private const val WIND_SPEED_METERS_UNIT = 19
     }
 }

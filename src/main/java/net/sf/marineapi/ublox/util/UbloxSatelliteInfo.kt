@@ -17,57 +17,46 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ublox.util;
+package net.sf.marineapi.ublox.util
 
-import net.sf.marineapi.nmea.util.SatelliteInfo;
-import net.sf.marineapi.ublox.message.UBXMessage03;
+import net.sf.marineapi.nmea.util.SatelliteInfo
+import net.sf.marineapi.ublox.message.UBXMessage03
 
 /**
- * Extends {@link SatelliteInfo} to provide additional properties supported by
- * the proprietary u-blox NMEA extension {@link UBXMessage03}.
+ * Extends [SatelliteInfo] to provide additional properties supported by
+ * the proprietary u-blox NMEA extension [UBXMessage03].
  *
  * @author Gunnar Hillert
- *
  */
-public class UbloxSatelliteInfo extends SatelliteInfo {
+class UbloxSatelliteInfo(
+    id: String?, elevation: Int, azimuth: Int, noise: Int,
+    private val satelliteStatus: UbloxSatelliteStatus?, private val satelliteCarrierLockTime: Int
+) : SatelliteInfo(id, elevation, azimuth, noise) {
+    /**
+     * Satellite carrier lock time (range: 0-64)
+     *
+     *
+     *  *  0 = code lock only
+     *  * 64 = lock for 64 seconds or more
+     *
+     *
+     * @return Numeric value 0-64
+     */
+    fun getSatelliteCarrierLockTime(): Int {
+        return satelliteCarrierLockTime
+    }
 
-	private final UbloxSatelliteStatus satelliteStatus;
+    /**
+     * @return The [UbloxSatelliteStatus].
+     */
+    fun getSatelliteStatus(): UbloxSatelliteStatus? {
+        return satelliteStatus
+    }
 
-	private final int satelliteCarrierLockTime;
-
-	public UbloxSatelliteInfo(String id, int elevation, int azimuth, int noise,
-			UbloxSatelliteStatus satelliteStatus, int satelliteCarrierLockTime) {
-		super(id, elevation, azimuth, noise);
-		this.satelliteStatus = satelliteStatus;
-		this.satelliteCarrierLockTime = satelliteCarrierLockTime;
-	}
-
-	/**
-	 * Satellite carrier lock time (range: 0-64)
-	 *
-	 * <ul>
-	 *   <li> 0 = code lock only
-	 *   <li>64 = lock for 64 seconds or more
-	 * </ul>
-	 *
-	 * @return Numeric value 0-64
-	 */
-	public int getSatelliteCarrierLockTime() {
-		return satelliteCarrierLockTime;
-	}
-
-	/**
-	 * @return The {@link UbloxSatelliteStatus}.
-	 */
-	public UbloxSatelliteStatus getSatelliteStatus() {
-		return satelliteStatus;
-	}
-
-	@Override
-	public String toString() {
-		return super.toString() + " " +
-			String.format("UbloxSatelliteInfo [satelliteStatus=%s, satelliteCarrierLockTime=%s sec]", satelliteStatus,
-				satelliteCarrierLockTime);
-	}
-
+    override fun toString(): String {
+        return super.toString() + " " + String.format(
+            "UbloxSatelliteInfo [satelliteStatus=%s, satelliteCarrierLockTime=%s sec]", satelliteStatus,
+            satelliteCarrierLockTime
+        )
+    }
 }

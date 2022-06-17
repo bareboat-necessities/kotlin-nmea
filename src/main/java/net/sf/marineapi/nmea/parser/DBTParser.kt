@@ -18,95 +18,81 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.DBTSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.Units;
+import net.sf.marineapi.nmea.sentence.DBTSentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.Units
 /**
  * DBT sentence parser.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-class DBTParser extends SentenceParser implements DBTSentence {
+internal class DBTParser : SentenceParser, DBTSentence {
+    /**
+     * Creates a new instance of DBTParser.
+     *
+     * @param nmea DBT sentence String
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.DBT) {}
 
-	// TODO calculate value for all units when setting a value
+    /**
+     * Creates a new instance of DBTParser with empty data fields.
+     *
+     * @param talker TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.DBT, 6) {
+        setCharValue(FEET, Units.FEET.toChar())
+        setCharValue(METERS, Units.METER.toChar())
+        setCharValue(FATHOMS, Units.FATHOMS.toChar())
+    }
 
-	private static final int DEPTH_FEET = 0;
-	private static final int FEET = 1;
-	private static final int DEPTH_METERS = 2;
-	private static final int METERS = 3;
-	private static final int DEPTH_FATHOMS = 4;
-	private static final int FATHOMS = 5;
-
-	/**
-	 * Creates a new instance of DBTParser.
-	 * 
-	 * @param nmea DBT sentence String
-	 */
-	public DBTParser(String nmea) {
-		super(nmea, SentenceId.DBT);
-	}
-
-	/**
-	 * Creates a new instance of DBTParser with empty data fields.
-	 * 
-	 * @param talker TalkerId to set
-	 */
-	public DBTParser(TalkerId talker) {
-		super(talker, SentenceId.DBT, 6);
-		setCharValue(FEET, Units.FEET.toChar());
-		setCharValue(METERS, Units.METER.toChar());
-		setCharValue(FATHOMS, Units.FATHOMS.toChar());
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#getMeters()
-	 */
-	public double getDepth() {
-		return getDoubleValue(DEPTH_METERS);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#getFathoms()
-	 */
-	public double getFathoms() {
-		return getDoubleValue(DEPTH_FATHOMS);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#getFeet()
-	 */
-	public double getFeet() {
-		return getDoubleValue(DEPTH_FEET);
-	}
-
-	/*
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#setMeters(double)
 	 */
-	public void setDepth(double depth) {
-		setDoubleValue(DEPTH_METERS, depth, 1, 1);
-	}
+    override var depth: Double
+        get() = getDoubleValue(DEPTH_METERS)
+        set(depth) {
+            setDoubleValue(DEPTH_METERS, depth, 1, 1)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#getFathoms()
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#setFathoms(double)
 	 */
-	public void setFathoms(double depth) {
-		setDoubleValue(DEPTH_FATHOMS, depth, 1, 1);
-	}
+    override var fathoms: Double
+        get() = getDoubleValue(DEPTH_FATHOMS)
+        set(depth) {
+            setDoubleValue(DEPTH_FATHOMS, depth, 1, 1)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#getFeet()
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#setFeet(double)
 	 */
-	public void setFeet(double depth) {
-		setDoubleValue(DEPTH_FEET, depth, 1, 1);
-	}
+    override var feet: Double
+        get() = getDoubleValue(DEPTH_FEET)
+        set(depth) {
+            setDoubleValue(DEPTH_FEET, depth, 1, 1)
+        }
+
+    companion object {
+        // TODO calculate value for all units when setting a value
+        private const val DEPTH_FEET = 0
+        private const val FEET = 1
+        private const val DEPTH_METERS = 2
+        private const val METERS = 3
+        private const val DEPTH_FATHOMS = 4
+        private const val FATHOMS = 5
+    }
 }

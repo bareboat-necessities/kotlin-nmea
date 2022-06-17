@@ -18,123 +18,95 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
 /**
  * Sensor measurement data delivered by
- * {@link net.sf.marineapi.nmea.sentence.XDRSentence}. Notice that any of the
- * fields may be empty ({@code null}), depending on sentence and sensor
+ * [net.sf.marineapi.nmea.sentence.XDRSentence]. Notice that any of the
+ * fields may be empty (`null`), depending on sentence and sensor
  * that produced it.
- * 
+ *
  * @author Robert Huitema, Kimmo Tuukkanen
  */
-public class Measurement {
+class Measurement {
+    /**
+     * Returns the name of transducer.
+     *
+     * @return Sensor name String
+     */
+    /**
+     * Sets the name of transducer.
+     *
+     * @param name Transducer name to set
+     */
+    var name: String? = null
+    /**
+     * Returns the type of transducer.
+     *
+     * @return Type String
+     */
+    /**
+     * Sets the type of measurement.
+     *
+     * @param type Type to set
+     */
+    var type: String? = null
+    /**
+     * Returns the units of measurement.
+     *
+     * @return Units String
+     */
+    /**
+     * Sets the units of measurement.
+     *
+     * @param units Units to set.
+     */
+    var units: String? = null
+    private var value: Double? = null
 
-	private String name;
-	private String type;
-	private String units;
-	private Double value;
+    /**
+     * Creates a new empty instance of Measurement.
+     */
+    constructor() {}
 
-	/**
-	 * Creates a new empty instance of Measurement.
-	 */
-	public Measurement() {
-	}
+    /**
+     * Creates a new instance of Measurement with given values.
+     *
+     * @param type Type of measurement
+     * @param value The measured value
+     * @param units Unit of measurement
+     * @param name Name of measurement
+     */
+    constructor(type: String?, value: Double, units: String?, name: String?) {
+        this.type = type
+        this.value = value
+        this.units = units
+        this.name = name
+    }
 
-	/**
-	 * Creates a new instance of Measurement with given values.
-	 *
-	 * @param type Type of measurement
-	 * @param value The measured value
-	 * @param units Unit of measurement
-	 * @param name Name of measurement
-	 */
-	public Measurement(String type, double value, String units, String name) {
-		this.type = type;
-		this.value = value;
-		this.units = units;
-		this.name = name;
-	}
+    /**
+     * Returns the measurement value.
+     *
+     * @return Double value
+     */
+    fun getValue(): Double {
+        return value!!
+    }
 
-	/**
-	 * Returns the name of transducer.
-	 * 
-	 * @return Sensor name String
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * Sets the measurement value.
+     *
+     * @param value Value to set
+     */
+    fun setValue(value: Double) {
+        this.value = value
+    }
 
-	/**
-	 * Returns the type of transducer.
-	 * 
-	 * @return Type String
-	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * Returns the units of measurement.
-	 * 
-	 * @return Units String
-	 */
-	public String getUnits() {
-		return units;
-	}
-
-	/**
-	 * Returns the measurement value.
-	 * 
-	 * @return Double value
-	 */
-	public double getValue() {
-		return value;
-	}
-
-	/**
-	 * Sets the name of transducer.
-	 * 
-	 * @param name Transducer name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * Sets the type of measurement.
-	 * 
-	 * @param type Type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	/**
-	 * Sets the units of measurement.
-	 * 
-	 * @param units Units to set.
-	 */
-	public void setUnits(String units) {
-		this.units = units;
-	}
-
-	/**
-	 * Sets the measurement value.
-	 * 
-	 * @param value Value to set
-	 */
-	public void setValue(double value) {
-		this.value = value;
-	}
-
-	/**
-	 * Tells if all fields in this measurement are empty (null).
-	 * 
-	 * @return true if empty, otherwise false.
-	 */
-	public boolean isEmpty() {
-		return name == null && type == null && value == null && units == null;
-	}
-
+    /**
+     * Tells if all fields in this measurement are empty (null).
+     *
+     * @return true if empty, otherwise false.
+     */
+    val isEmpty: Boolean
+        get() = name == null && type == null && value == null && units == null
 }

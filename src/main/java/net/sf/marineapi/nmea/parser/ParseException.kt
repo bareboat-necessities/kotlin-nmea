@@ -18,36 +18,33 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
 /**
  * Thrown to indicate that parser is unable interpret the contents of requested
  * data field. For example, when a field contains invalid value that cannot be
  * parsed to expected native data type.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public class ParseException extends DataNotAvailableException {
+class ParseException : DataNotAvailableException {
+    /**
+     * Constructor with description.
+     *
+     * @param msg Description of the Exception
+     */
+    constructor(msg: String?) : super(msg) {}
 
-	/** serialVersionUID */
-	private static final long serialVersionUID = 6203761984607273569L;
+    /**
+     * Constructor with message and cause.
+     *
+     * @param msg Description of the Exception
+     * @param cause Throwable that caused this exception
+     */
+    constructor(msg: String?, cause: Throwable?) : super(msg, cause) {}
 
-	/**
-	 * Constructor with description.
-	 * 
-	 * @param msg Description of the Exception
-	 */
-	public ParseException(String msg) {
-		super(msg);
-	}
-
-	/**
-	 * Constructor with message and cause.
-	 * 
-	 * @param msg Description of the Exception
-	 * @param cause Throwable that caused this exception
-	 */
-	public ParseException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+    companion object {
+        /** serialVersionUID  */
+        private const val serialVersionUID = 6203761984607273569L
+    }
 }

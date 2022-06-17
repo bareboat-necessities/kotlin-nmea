@@ -18,237 +18,228 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.*
 
 /**
  * Represents a calendar date (day-month-year) transmitted in sentences that
- * implement {@link net.sf.marineapi.nmea.sentence.DateSentence}.
+ * implement [net.sf.marineapi.nmea.sentence.DateSentence].
  *
  * @author Kimmo Tuukkanen
  * @see net.sf.marineapi.nmea.sentence.DateSentence
+ *
  * @see net.sf.marineapi.nmea.util.Time
  */
-public class Date {
+class Date {
+    // day of month 1..31
+    private var day = 0
 
-	// ISO 8601 date format pattern
-	private static final String DATE_PATTERN = "%d-%02d-%02d";
+    // month 1..12
+    private var month = 0
 
-	/**
-	 * A pivot value that is used to determine century for two-digit year
-	 * values. Two-digit values lower than or equal to pivot are assigned to
-	 * 21th century, while greater values are assigned to 20th century.
-	 */
-	public static final int PIVOT_YEAR = 50;
+    // four-digit year
+    private var year = 0
 
-	// day of month 1..31
-	private int day;
-	// month 1..12
-	private int month;
-	// four-digit year
-	private int year;
+    /**
+     * Creates a new instance of `Date` using the current date.
+     */
+    constructor() {
+        val c = GregorianCalendar()
+        year = c[Calendar.YEAR]
+        month = c[Calendar.MONTH] + 1
+        day = c[Calendar.DAY_OF_MONTH]
+    }
 
-	/**
-	 * Creates a new instance of {@code Date} using the current date.
-	 */
-	public Date() {
-		GregorianCalendar c = new GregorianCalendar();
-		this.year = c.get(Calendar.YEAR);
-		this.month = c.get(Calendar.MONTH) + 1;
-		this.day = c.get(Calendar.DAY_OF_MONTH);
-	}
+    /**
+     * Creates a new instance of `Date`, assumes the default NMEA
+     * 0183 date formatting, `ddmmyy` or `ddmmyyyy`.
+     *
+     * @param date Date String to parse.
+     */
+    constructor(date: String?) {
+        setDay(date!!.substring(0, 2).toInt())
+        setMonth(date.substring(2, 4).toInt())
+        setYear(date.substring(4).toInt())
+    }
 
-	/**
-	 * Creates a new instance of {@code Date}, assumes the default NMEA
-	 * 0183 date formatting, {@code ddmmyy} or {@code ddmmyyyy}.
-	 *
-	 * @param date Date String to parse.
-	 */
-	public Date(String date) {
-		setDay(Integer.parseInt(date.substring(0, 2)));
-		setMonth(Integer.parseInt(date.substring(2, 4)));
-		setYear(Integer.parseInt(date.substring(4)));
-	}
+    /**
+     * Constructor with date values.
+     *
+     * @param year Year, two or four digit value [0..99] or [1000..9999]
+     * @param month Month [1..12]
+     * @param day Day [1..31]
+     * @throws IllegalArgumentException If any of the parameter is out of
+     * bounds.
+     */
+    constructor(year: Int, month: Int, day: Int) {
+        setYear(year)
+        setMonth(month)
+        setDay(day)
+    }
 
-	/**
-	 * Constructor with date values.
-	 *
-	 * @param year Year, two or four digit value [0..99] or [1000..9999]
-	 * @param month Month [1..12]
-	 * @param day Day [1..31]
-	 * @throws IllegalArgumentException If any of the parameter is out of
-	 *             bounds.
-	 */
-	public Date(int year, int month, int day) {
-		setYear(year);
-		setMonth(month);
-		setDay(day);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj == this) {
-			return true;
-		}
-		if (obj instanceof Date) {
-			Date d = (Date) obj;
-			if (d.getDay() == getDay() && d.getMonth() == getMonth()
-				&& d.getYear() == getYear()) {
-				return true;
-			}
-		}
-		return false;
-	}
+    override fun equals(obj: Any?): Boolean {
+        if (obj === this) {
+            return true
+        }
+        if (obj is Date) {
+            val d = obj
+            if (d.getDay() == getDay() && d.getMonth() == getMonth() && d.getYear() == getYear()) {
+                return true
+            }
+        }
+        return false
+    }
 
-	/**
-	 * Get day of month.
-	 *
-	 * @return the day
-	 */
-	public int getDay() {
-		return day;
-	}
+    /**
+     * Get day of month.
+     *
+     * @return the day
+     */
+    fun getDay(): Int {
+        return day
+    }
 
-	/**
-	 * Get month, valid values are 1-12 where 1 denotes January, 2 denotes
-	 * February etc.
-	 *
-	 * @return the month
-	 */
-	public int getMonth() {
-		return month;
-	}
+    /**
+     * Get month, valid values are 1-12 where 1 denotes January, 2 denotes
+     * February etc.
+     *
+     * @return the month
+     */
+    fun getMonth(): Int {
+        return month
+    }
 
-	/**
-	 * Get year. The date fields in NMEA 0183 may present year by using either
-	 * two or four digits. In case of only two digits, the century is determined
-	 * by comparing the value against {@link #PIVOT_YEAR}. Values lower than or
-	 * equal to pivot are added to 2000, while values greater than pivot are
-	 * added to 1900.
-	 *
-	 * @return The four-digit year
-	 * @see #PIVOT_YEAR
-	 */
-	public int getYear() {
-		return year;
-	}
+    /**
+     * Get year. The date fields in NMEA 0183 may present year by using either
+     * two or four digits. In case of only two digits, the century is determined
+     * by comparing the value against [.PIVOT_YEAR]. Values lower than or
+     * equal to pivot are added to 2000, while values greater than pivot are
+     * added to 1900.
+     *
+     * @return The four-digit year
+     * @see .PIVOT_YEAR
+     */
+    fun getYear(): Int {
+        return year
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
-	@Override
-	public int hashCode() {
-		return toISO8601().hashCode();
-	}
+    override fun hashCode(): Int {
+        return toISO8601().hashCode()
+    }
 
-	/**
-	 * Set day of month.
-	 *
-	 * @param day the day to set
-	 */
-	public void setDay(int day) {
-		if (day < 1 || day > 31) {
-			throw new IllegalArgumentException("Day out of bounds [1..31]");
-		}
-		this.day = day;
-	}
+    /**
+     * Set day of month.
+     *
+     * @param day the day to set
+     */
+    fun setDay(day: Int) {
+        require(!(day < 1 || day > 31)) { "Day out of bounds [1..31]" }
+        this.day = day
+    }
 
-	/**
-	 * Get month, valid values are 1-12 where 1 denotes January, 2 denotes
-	 * February etc.
-	 *
-	 * @param month the month to set
-	 * @throws IllegalArgumentException If specified value is out of bounds
-	 *             [1..12]
-	 */
-	public void setMonth(int month) {
-		if (month < 1 || month > 12) {
-			throw new IllegalArgumentException(
-				"Month value out of bounds [1..12]");
-		}
-		this.month = month;
-	}
+    /**
+     * Get month, valid values are 1-12 where 1 denotes January, 2 denotes
+     * February etc.
+     *
+     * @param month the month to set
+     * @throws IllegalArgumentException If specified value is out of bounds
+     * [1..12]
+     */
+    fun setMonth(month: Int) {
+        require(!(month < 1 || month > 12)) { "Month value out of bounds [1..12]" }
+        this.month = month
+    }
 
-	/**
-	 * Set year. The date fields in NMEA 0183 may present year by using either
-	 * two or four digits. In case of only two digits, the century is determined
-	 * by comparing the value against {@link #PIVOT_YEAR}. Values lower than or
-	 * equal to pivot are added to 2000, while values greater than pivot are
-	 * added to 1900.
-	 *
-	 * @param year Year to set, two or four digit value.
-	 * @see #PIVOT_YEAR
-	 * @throws IllegalArgumentException If specified value is negative or
-	 *             three-digit value.
-	 */
-	public void setYear(int year) {
-		if (year < 0 || (year > 99 && year < 1000) || year > 9999) {
-			throw new IllegalArgumentException(
-				"Year must be two or four digit value");
-		}
-		if (year < 100 && year > PIVOT_YEAR) {
-			this.year = 1900 + year;
-		} else if (year < 100 && year <= PIVOT_YEAR) {
-			this.year = 2000 + year;
-		} else {
-			this.year = year;
-		}
-	}
+    /**
+     * Set year. The date fields in NMEA 0183 may present year by using either
+     * two or four digits. In case of only two digits, the century is determined
+     * by comparing the value against [.PIVOT_YEAR]. Values lower than or
+     * equal to pivot are added to 2000, while values greater than pivot are
+     * added to 1900.
+     *
+     * @param year Year to set, two or four digit value.
+     * @see .PIVOT_YEAR
+     *
+     * @throws IllegalArgumentException If specified value is negative or
+     * three-digit value.
+     */
+    fun setYear(year: Int) {
+        require((year < 0 || year > 99 && year < 1000 || year) <= 9999) { "Year must be two or four digit value" }
+        if (year < 100 && year > PIVOT_YEAR) {
+            this.year = 1900 + year
+        } else if (year < 100 && year <= PIVOT_YEAR) {
+            this.year = 2000 + year
+        } else {
+            this.year = year
+        }
+    }
 
-	/**
-	 * Returns the String representation of {@code Date}. Formats the date
-	 * in {@code ddmmyy} format used in NMEA 0183 sentences.
-	 */
-	@Override
-	public String toString() {
-		int y = getYear();
-		String ystr = String.valueOf(y);
-		String year = ystr.substring(2);
-		String date = String.format("%02d%02d%s", getDay(), getMonth(), year);
-		return date;
-	}
+    /**
+     * Returns the String representation of `Date`. Formats the date
+     * in `ddmmyy` format used in NMEA 0183 sentences.
+     */
+    override fun toString(): String {
+        val y = getYear()
+        val ystr = y.toString()
+        val year = ystr.substring(2)
+        return String.format("%02d%02d%s", getDay(), getMonth(), year)
+    }
 
-	/**
-	 * Returns the date in ISO 8601 format ({@code yyyy-mm-dd}).
-	 *
-	 * @return Formatted date String
-	 */
-	public String toISO8601() {
-		return String.format(DATE_PATTERN, getYear(), getMonth(), getDay());
-	}
+    /**
+     * Returns the date in ISO 8601 format (`yyyy-mm-dd`).
+     *
+     * @return Formatted date String
+     */
+    fun toISO8601(): String {
+        return String.format(DATE_PATTERN, getYear(), getMonth(), getDay())
+    }
 
-	/**
-	 * Returns a timestamp in ISO 8601 format
-	 * ({@code yyyy-mm-ddThh:mm:ss+hh:mm}).
-	 *
-	 * @param t {@link Time} to append in the date
-	 * @return The formatted date-time String.
-	 */
-	public String toISO8601(Time t) {
-		return toISO8601().concat("T").concat(t.toISO8601());
-	}
+    /**
+     * Returns a timestamp in ISO 8601 format
+     * (`yyyy-mm-ddThh:mm:ss+hh:mm`).
+     *
+     * @param t [Time] to append in the date
+     * @return The formatted date-time String.
+     */
+    fun toISO8601(t: Time): String {
+        return toISO8601() + "T" + t.toISO8601()
+    }
 
-	/**
-	 * Converts to {@link java.util.Date}, time of day set to 00:00:00.000.
-	 *
-	 * @return java.util.Date
-	 */
-	public java.util.Date toDate() {
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.set(Calendar.YEAR, getYear());
-		cal.set(Calendar.MONTH, getMonth() - 1);
-		cal.set(Calendar.DAY_OF_MONTH, getDay());
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);
-		return cal.getTime();
-	}
+    /**
+     * Converts to [java.util.Date], time of day set to 00:00:00.000.
+     *
+     * @return java.util.Date
+     */
+    fun toDate(): java.util.Date {
+        val cal = GregorianCalendar()
+        cal[Calendar.YEAR] = getYear()
+        cal[Calendar.MONTH] = getMonth() - 1
+        cal[Calendar.DAY_OF_MONTH] = getDay()
+        cal[Calendar.HOUR_OF_DAY] = 0
+        cal[Calendar.MINUTE] = 0
+        cal[Calendar.SECOND] = 0
+        cal[Calendar.MILLISECOND] = 0
+        return cal.time
+    }
+
+    companion object {
+        // ISO 8601 date format pattern
+        private const val DATE_PATTERN = "%d-%02d-%02d"
+
+        /**
+         * A pivot value that is used to determine century for two-digit year
+         * values. Two-digit values lower than or equal to pivot are assigned to
+         * 21th century, while greater values are assigned to 20th century.
+         */
+        const val PIVOT_YEAR = 50
+    }
 }

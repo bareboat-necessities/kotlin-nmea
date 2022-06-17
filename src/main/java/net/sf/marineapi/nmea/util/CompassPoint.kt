@@ -18,51 +18,49 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
 /**
  * Defines the supported compass and relative directions.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public enum CompassPoint {
+enum class CompassPoint(private val ch: Char) {
+    /** North  */
+    NORTH('N'),
 
-	/** North */
-	NORTH('N'),
-	/** East */
-	EAST('E'),
-	/** South */
-	SOUTH('S'),
-	/** West */
-	WEST('W');
+    /** East  */
+    EAST('E'),
 
-	private char ch;
+    /** South  */
+    SOUTH('S'),
 
-	private CompassPoint(char c) {
-		this.ch = c;
-	}
+    /** West  */
+    WEST('W');
 
-	/**
-	 * Returns the corresponding char constant.
-	 * 
-	 * @return Char indicator for Direction
-	 */
-	public char toChar() {
-		return ch;
-	}
+    /**
+     * Returns the corresponding char constant.
+     *
+     * @return Char indicator for Direction
+     */
+    fun toChar(): Char {
+        return ch
+    }
 
-	/**
-	 * Get the enum corresponding to specified char.
-	 * 
-	 * @param c Char indicator for Direction
-	 * @return Direction
-	 */
-	public static CompassPoint valueOf(char c) {
-		for (CompassPoint d : values()) {
-			if (d.toChar() == c) {
-				return d;
-			}
-		}
-		return valueOf(String.valueOf(c));
-	}
+    companion object {
+        /**
+         * Get the enum corresponding to specified char.
+         *
+         * @param c Char indicator for Direction
+         * @return Direction
+         */
+        fun valueOf(c: Char): CompassPoint {
+            for (d in values()) {
+                if (d.toChar() == c) {
+                    return d
+                }
+            }
+            return valueOf(c.toString())
+        }
+    }
 }

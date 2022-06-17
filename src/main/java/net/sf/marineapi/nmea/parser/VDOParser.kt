@@ -18,37 +18,33 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.AISSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
+import net.sf.marineapi.nmea.sentence.AISSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 
 /**
  * AIS VDO sentence parser, contains only the NMEA layer. The actual payload
  * message is parsed by AIS message parsers.
- * 
+ *
  * @author Henri Laurent
  * @see AISSentence
+ *
  * @see AISParser
  */
-class VDOParser extends AISParser {
- 
-	/**
-	 * Creates a new instance of VDOParser.
-	 * 
-	 * @param nmea NMEA sentence String.
-	 */
-	public VDOParser(String nmea) {
-		super(nmea, SentenceId.VDO);
-	}
+internal class VDOParser : AISParser {
+    /**
+     * Creates a new instance of VDOParser.
+     *
+     * @param nmea NMEA sentence String.
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.VDO) {}
 
-	/**
-	 * Creates a new empty VDOParser.
-	 * 
-	 * @param talker TalkerId to set
-	 */
-	public VDOParser(TalkerId talker) {
-		super(talker, SentenceId.VDO);
-	}
+    /**
+     * Creates a new empty VDOParser.
+     *
+     * @param talker TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.VDO) {}
 }

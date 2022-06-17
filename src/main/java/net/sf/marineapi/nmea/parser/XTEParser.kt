@@ -18,153 +18,139 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.sentence.XTESentence;
-import net.sf.marineapi.nmea.util.DataStatus;
-import net.sf.marineapi.nmea.util.Direction;
-import net.sf.marineapi.nmea.util.FaaMode;
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.sentence.XTESentence
+import net.sf.marineapi.nmea.util.*
 
 /**
  * XTE sentence parser.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-class XTEParser extends SentenceParser implements XTESentence {
+internal class XTEParser : SentenceParser, XTESentence {
+    /**
+     * Creates new instance of XTEParser.
+     *
+     * @param nmea XTE sentence String
+     */
+    constructor(nmea: String) : super(nmea) {
+        fieldCount = 6
+    }
 
-	private final static int SIGNAL_STATUS = 0;
-	private final static int CYCLE_LOCK_STATUS = 1;
-	private final static int DISTANCE = 2;
-	private final static int DIRECTION = 3;
-	private final static int DISTANCE_UNIT = 4;
-	private final static int FAA_MODE = 5;
+    constructor(talker: TalkerId?) : super(talker, SentenceId.XTE, 6) {
+        mode = FaaMode.NONE
+        status = DataStatus.VOID
+        cycleLockStatus = DataStatus.VOID
+        setCharValue(DISTANCE_UNIT, 'N')
+    }
 
-	/**
-	 * Creates new instance of XTEParser.
-	 * 
-	 * @param nmea XTE sentence String
-	 */
-	public XTEParser(String nmea) {
-		super(nmea);
-		setFieldCount(6);
-	}
-
-	public XTEParser(TalkerId talker) {
-		super(talker, SentenceId.XTE, 6);
-		setMode(FaaMode.NONE);
-		setStatus(DataStatus.VOID);
-		setCycleLockStatus(DataStatus.VOID);
-		setCharValue(DISTANCE_UNIT, 'N');
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getCycleLockStatus()
 	 */
-	@Override
-	public DataStatus getCycleLockStatus() {
-		return DataStatus.valueOf(getCharValue(CYCLE_LOCK_STATUS));
-	}
+    override fun getCycleLockStatus(): DataStatus {
+        return DataStatus.Companion.valueOf(getCharValue(CYCLE_LOCK_STATUS))
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getMagnitude()
 	 */
-	@Override
-	public double getMagnitude() {
-		return getDoubleValue(DISTANCE);
-	}
+    override fun getMagnitude(): Double {
+        return getDoubleValue(DISTANCE)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getMode()
 	 */
-	@Override
-	public FaaMode getMode() {
-		return FaaMode.valueOf(getCharValue(FAA_MODE));
-	}
+    override fun getMode(): FaaMode {
+        return FaaMode.Companion.valueOf(getCharValue(FAA_MODE))
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getStatus()
 	 */
-	@Override
-	public DataStatus getStatus() {
-		return DataStatus.valueOf(getCharValue(SIGNAL_STATUS));
-	}
+    override fun getStatus(): DataStatus {
+        return DataStatus.Companion.valueOf(getCharValue(SIGNAL_STATUS))
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getSteerTo()
 	 */
-	@Override
-	public Direction getSteerTo() {
-		return Direction.valueOf(getCharValue(DIRECTION));
-	}
+    override fun getSteerTo(): Direction {
+        return Direction.Companion.valueOf(getCharValue(DIRECTION))
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.XTESentence#setCycleLockStatus(net.sf.
 	 * marineapi.nmea.util.DataStatus)
 	 */
-	@Override
-	public void setCycleLockStatus(DataStatus status) {
-		setCharValue(CYCLE_LOCK_STATUS, status.toChar());
-	}
+    override fun setCycleLockStatus(status: DataStatus) {
+        setCharValue(CYCLE_LOCK_STATUS, status.toChar())
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.XTESentence#setMagnitude(double)
 	 */
-	@Override
-	public void setMagnitude(double distance) {
-		setDoubleValue(DISTANCE, distance, 0, 2);
-	}
+    override fun setMagnitude(distance: Double) {
+        setDoubleValue(DISTANCE, distance, 0, 2)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.XTESentence#setMode(net.sf.marineapi.nmea
 	 * .util.FaaMode)
 	 */
-	@Override
-	public void setMode(FaaMode mode) {
-		setCharValue(FAA_MODE, mode.toChar());
-	}
+    override fun setMode(mode: FaaMode) {
+        setCharValue(FAA_MODE, mode.toChar())
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.XTESentence#setStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-	@Override
-	public void setStatus(DataStatus status) {
-		setCharValue(SIGNAL_STATUS, status.toChar());
-	}
+    override fun setStatus(status: DataStatus) {
+        setCharValue(SIGNAL_STATUS, status.toChar())
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.XTESentence#setSteerTo(net.sf.marineapi
 	 * .nmea.util.Direction)
 	 */
-	@Override
-	public void setSteerTo(Direction direction) {
-		setCharValue(DIRECTION, direction.toChar());
-	}
+    override fun setSteerTo(direction: Direction) {
+        setCharValue(DIRECTION, direction.toChar())
+    }
 
+    companion object {
+        private const val SIGNAL_STATUS = 0
+        private const val CYCLE_LOCK_STATUS = 1
+        private const val DISTANCE = 2
+        private const val DIRECTION = 3
+        private const val DISTANCE_UNIT = 4
+        private const val FAA_MODE = 5
+    }
 }

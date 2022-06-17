@@ -18,17 +18,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
 /**
- * <p>Boreal GasFinder data.</p>
- * 
- * <p>Example GasFinder2:<br>
- * {@code $GFDTB,7.7,98,600,5527,2011/01/27 13:29:28,HFH2O-1xxx,1*28}</p>
- * 
+ *
+ * Boreal GasFinder data.
+ *
+ *
+ * Example GasFinder2:<br></br>
+ * `$GFDTB,7.7,98,600,5527,2011/01/27 13:29:28,HFH2O-1xxx,1*28`
+ *
  * @author Bob Schwarz
  * @see DTASentence
  */
-public interface DTBSentence extends DTASentence {
-
-}
+interface DTBSentence : DTASentence

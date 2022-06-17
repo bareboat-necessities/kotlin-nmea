@@ -18,12 +18,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.message;
+package net.sf.marineapi.ais.message
 
 /**
  * Position Report Class A (Assigned schedule).
- * 
+ *
  * @author Lázár József
  */
-public interface AISMessage02 extends AISPositionReport {
-}
+interface AISMessage02 : AISPositionReport

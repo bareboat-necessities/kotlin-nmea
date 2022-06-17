@@ -18,35 +18,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.util;
+package net.sf.marineapi.ais.util
 
 /**
  * Class holding information about a violation against an AIS rule.
- * 
+ *
  * @author Lázár József
  */
-public class AISRuleViolation implements Violation {
-
-	private String	fPlaceOfViolation;
-	private Object	fCurrentValue;
-	private String	fValidRange;
-
-	/**
-	 * Creates a new Violation.
-	 *
-	 * @param where Place of violation.
-	 * @param value Current value
-	 * @param range Expected value range
-	 */
-	public AISRuleViolation(String where, Object value, String range) {
-		fPlaceOfViolation = where;
-		fCurrentValue = value;
-		fValidRange = range;
-	}
-	
-	public String toString() {
-		return "Violation: Value " + fCurrentValue.toString() +
-				" in " + fPlaceOfViolation +
-				" is outside the allowed range (" + fValidRange + ")";
-	}
+class AISRuleViolation
+/**
+ * Creates a new Violation.
+ *
+ * @param where Place of violation.
+ * @param value Current value
+ * @param range Expected value range
+ */(private val fPlaceOfViolation: String, private val fCurrentValue: Any, private val fValidRange: String?) :
+    Violation {
+    override fun toString(): String {
+        return "Violation: Value " + fCurrentValue.toString() +
+                " in " + fPlaceOfViolation +
+                " is outside the allowed range (" + fValidRange + ")"
+    }
 }

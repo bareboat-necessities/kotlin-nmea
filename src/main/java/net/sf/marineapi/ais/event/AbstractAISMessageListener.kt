@@ -18,99 +18,92 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.event;
+package net.sf.marineapi.ais.event
 
-import net.sf.marineapi.ais.parser.AISMessageFactory;
-import net.sf.marineapi.ais.message.AISMessage;
-import net.sf.marineapi.nmea.event.AbstractSentenceListener;
-import net.sf.marineapi.nmea.event.SentenceListener;
-import net.sf.marineapi.nmea.sentence.AISSentence;
-import net.sf.marineapi.util.GenericTypeResolver;
+import net.sf.marineapi.ais.message.AISMessageimport
 
-import java.util.LinkedList;
-import java.util.Queue;
-
+net.sf.marineapi.ais.parser.AISMessageFactoryimport net.sf.marineapi.nmea.event.AbstractSentenceListenerimport net.sf.marineapi.nmea.event.SentenceListenerimport net.sf.marineapi.nmea.sentence.AISSentenceimport net.sf.marineapi.util.GenericTypeResolver java.util.*
 /**
- * <p>
+ *
+ *
  * Abstract listener for AIS messages. Extend this class to create a listener
  * for a specific AIS message type and register it in a
- * {@link net.sf.marineapi.nmea.io.SentenceReader}.</p>
- * <p>
- * To listen to all incoming AIS sentences, extend the {@link
- * AbstractSentenceListener} using {@link AISSentence} as type. However, in this
+ * [net.sf.marineapi.nmea.io.SentenceReader].
+ *
+ *
+ * To listen to all incoming AIS sentences, extend the [ ] using [AISSentence] as type. However, in this
  * case you also need to implement the message concatenation to parse messages
- * being delivered over multiple sentences.</p>
- * <p>
- * This class is based on {@link AbstractSentenceListener} and thus it has the
+ * being delivered over multiple sentences.
+ *
+ *
+ * This class is based on [AbstractSentenceListener] and thus it has the
  * same recommendations and limitations regarding the usage of generics and
  * inheritance.
- * </p>
- * 
+ *
+ *
  * @author Kimmo Tuukkanen
  * @param <T> AIS message type to be listened.
  * @see AbstractSentenceListener
+ *
  * @see GenericTypeResolver
- */
-public abstract class AbstractAISMessageListener<T extends AISMessage>
-    extends AbstractSentenceListener<AISSentence> {
-
-    final Class<?> messageType;
-    private final Queue<AISSentence> queue = new LinkedList<>();
-    private final AISMessageFactory factory = AISMessageFactory.getInstance();
+</T> */
+abstract class AbstractAISMessageListener<T : AISMessage?> : AbstractSentenceListener<AISSentence> {
+    @kotlin.jvm.JvmField
+    val messageType: Class<*>?
+    private val queue: Queue<AISSentence> = LinkedList()
+    private val factory: AISMessageFactory? = AISMessageFactory.Companion.getInstance()
 
     /**
      * Default constructor with automatic generic type resolving. Notice that
-     * the {@link GenericTypeResolver} may not always succeed.
+     * the [GenericTypeResolver] may not always succeed.
      *
-     * @see #AbstractAISMessageListener(Class)
+     * @see .AbstractAISMessageListener
      * @throws IllegalStateException If the generic type cannot be resolved
-     *                               at runtime.
+     * at runtime.
      */
-    public AbstractAISMessageListener() {
-        this.messageType = GenericTypeResolver.resolve(
-                getClass(), AbstractAISMessageListener.class);
+    constructor() {
+        messageType = GenericTypeResolver.resolve(
+            javaClass, AbstractAISMessageListener::class.java
+        )
     }
 
     /**
      * Constructor with explicit generic type parameter. This constructor may
      * be used when the default constructor fails to resolve the generic type
-     * {@code T} at runtime.
+     * `T` at runtime.
      *
-     * @param c Message type {@code T} to be listened.
-     * @see #AbstractAISMessageListener()
+     * @param c Message type `T` to be listened.
+     * @see .AbstractAISMessageListener
      */
-    public AbstractAISMessageListener(Class<T> c) {
-        this.messageType = c;
+    constructor(c: Class<T>?) {
+        messageType = c
     }
 
     /**
-     * <p>
-     * Invoked when {@link AISSentence} of any type is received. Pre-parses
+     *
+     *
+     * Invoked when [AISSentence] of any type is received. Pre-parses
      * the message to determine it's type and invokes the
-     * {@link #onMessage(AISMessage)} method when the type matches the generic
-     * type {@code T}.</p>
-     * <p>
-     * This method has been declared {@code final} to ensure the correct
-     * handling of received sentences.</p>
+     * [.onMessage] method when the type matches the generic
+     * type `T`.
+     *
+     *
+     * This method has been declared `final` to ensure the correct
+     * handling of received sentences.
      */
-    @Override
-    @SuppressWarnings("unchecked")    
-    public final void sentenceRead(AISSentence sentence) {
-
-        if (sentence.isFirstFragment()) {
-            queue.clear();
+    override fun sentenceRead(sentence: AISSentence) {
+        if (sentence.isFirstFragment) {
+            queue.clear()
         }
-
-        queue.add(sentence);
-
-        if (sentence.isLastFragment()) {
-            AISSentence[] sentences = queue.toArray(new AISSentence[queue.size()]);
+        queue.add(sentence)
+        if (sentence.isLastFragment) {
+            val sentences = queue.toTypedArray()
             try {
-                AISMessage message = factory.create(sentences);
-                if (messageType.isAssignableFrom(message.getClass())) {
-                    onMessage((T) message);
+                val message = factory!!.create(*sentences)
+                if (messageType!!.isAssignableFrom(message!!.javaClass)) {
+                    onMessage(message as T)
                 }
-            } catch (IllegalArgumentException iae) {
+            } catch (iae: IllegalArgumentException) {
                 // never mind incorrect order or unsupported message types
             }
         }
@@ -118,31 +111,25 @@ public abstract class AbstractAISMessageListener<T extends AISMessage>
 
     /**
      * Invoked when AIS message has been received.
-     * @param msg AISMessage of type {@code T}
+     * @param msg AISMessage of type `T`
      */
-    public abstract void onMessage(T msg);
+    abstract fun onMessage(msg: T?)
 
     /**
      * Empty implementation.
-     * @see SentenceListener#readingPaused()
+     * @see SentenceListener.readingPaused
      */
-    @Override
-    public void readingPaused() {
-    }
+    override fun readingPaused() {}
 
     /**
      * Empty implementation.
-     * @see SentenceListener#readingStarted()
+     * @see SentenceListener.readingStarted
      */
-    @Override
-    public void readingStarted() {
-    }
+    override fun readingStarted() {}
 
     /**
      * Empty implementation.
-     * @see SentenceListener#readingStopped()
+     * @see SentenceListener.readingStopped
      */
-    @Override
-    public void readingStopped() {
-    }
+    override fun readingStopped() {}
 }

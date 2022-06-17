@@ -18,22 +18,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.provider.event;
+package net.sf.marineapi.provider.event
 
 /**
  * Listener interface for GPS time/position/velocity events.
- * 
+ *
  * @author Kimmo Tuukkanen
  * @see net.sf.marineapi.provider.PositionProvider
+ *
  * @see net.sf.marineapi.provider.event.PositionEvent
  */
-public interface PositionListener extends ProviderListener<PositionEvent> {
-
-	/**
-	 * Invoked when fresh time/position/velocity report is available, typically
-	 * once per second.
-	 * 
-	 * @param evt PositionEvent
-	 */
-	void providerUpdate(PositionEvent evt);
+interface PositionListener : ProviderListener<PositionEvent> {
+    /**
+     * Invoked when fresh time/position/velocity report is available, typically
+     * once per second.
+     *
+     * @param evt PositionEvent
+     */
+    override fun providerUpdate(evt: PositionEvent)
 }

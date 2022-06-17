@@ -17,42 +17,33 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ublox.parser;
+package net.sf.marineapi.ublox.parser
 
-import net.sf.marineapi.nmea.parser.SentenceParser;
-import net.sf.marineapi.nmea.sentence.UBXSentence;
-import net.sf.marineapi.ublox.message.UBXMessage;
+import net.sf.marineapi.nmea.parser.SentenceParser
+import net.sf.marineapi.nmea.sentence.UBXSentence
+import net.sf.marineapi.ublox.message.UBXMessage
 
 /**
  * This is the base class for all UBX message parser implementations and contains
- * common logic. In a sense it wraps the given {@link UBXSentence}. The {@link UBXMessageParser}
- * extends {@link SentenceParser} to access the fields from the NMEA message (UBXSentence).
+ * common logic. In a sense it wraps the given [UBXSentence]. The [UBXMessageParser]
+ * extends [SentenceParser] to access the fields from the NMEA message (UBXSentence).
  *
  * @author Gunnar Hillert
  *
  * @see UBXMessage00Parser
+ *
  * @see UBXMessage03Parser
  */
-public class UBXMessageParser extends SentenceParser implements UBXMessage {
-
-	protected final UBXSentence sentence;
-
-	/**
-	 * Construct a parser with the given {@link UBXSentence}.
-	 *
-	 * @param sentence UBXSentence
-	 */
-	public UBXMessageParser(UBXSentence sentence) {
-		super(sentence.toString());
-		this.sentence = sentence;
-	}
-
-	/**
-	 * @see UBXMessage#getMessageType()
-	 */
-	@Override
-	public int getMessageType() {
-		return this.sentence.getMessageId();
-	}
-
+open class UBXMessageParser
+/**
+ * Construct a parser with the given [UBXSentence].
+ *
+ * @param sentence UBXSentence
+ */(protected val sentence: UBXSentence) : SentenceParser(sentence.toString()), UBXMessage {
+    /**
+     * @see UBXMessage.getMessageType
+     */
+    override fun getMessageType(): Int {
+        return sentence.messageId
+    }
 }

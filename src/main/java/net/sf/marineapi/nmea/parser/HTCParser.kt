@@ -18,164 +18,111 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.HTCSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.DataStatus;
-import net.sf.marineapi.nmea.util.Direction;
-import net.sf.marineapi.nmea.util.SteeringMode;
-import net.sf.marineapi.nmea.util.TurnMode;
+import net.sf.marineapi.nmea.sentence.HTCSentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*
 /**
  * HTC parser.
  *
  * @author Paweł Kozioł
  */
-class HTCParser extends SentenceParser implements HTCSentence {
+internal open class HTCParser : SentenceParser, HTCSentence {
+    constructor(nmea: String) : super(nmea, SentenceId.HTC) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.HTC, 13) {}
+    constructor(nmea: String, type: SentenceId) : super(nmea, type) {}
+    constructor(tid: TalkerId?, sid: SentenceId, size: Int) : super(tid, sid, size) {}
 
-    private static final int OVERRIDE = 0;
-    private static final int COMMANDED_RUDDER_ANGLE = 1;
-    private static final int COMMANDED_RUDDER_DIRECTION = 2;
-    private static final int SELECTED_STEERING_MODE = 3;
-    private static final int TURN_MODE = 4;
-    private static final int COMMANDED_RUDDER_LIMIT = 5;
-    private static final int COMMANDED_OFF_HEADING_LIMIT = 6;
-    private static final int COMMANDED_RADIUS_OF_TURN_FOR_HEADING_CHANGES = 7;
-    private static final int COMMANDED_RATE_OF_TURN_FOR_HEADING_CHANGES = 8;
-    private static final int COMMANDED_HEADING_TO_STEER = 9;
-    private static final int COMMANDED_OFF_TRACK_LIMIT = 10;
-    private static final int COMMANDED_TRACK = 11;
-    private static final int HEADING_REFERENCE_IN_USE = 12;
-
-    public HTCParser(String nmea) {
-        super(nmea, SentenceId.HTC);
-    }
-
-    public HTCParser(TalkerId talker) {
-        super(talker, SentenceId.HTC, 13);
-    }
-
-    HTCParser(String nmea, SentenceId type) {
-        super(nmea, type);
-    }
-
-    HTCParser(TalkerId tid, SentenceId sid, int size) {
-        super(tid, sid, size);
-    }
-
-    @Override
-    public DataStatus getOverride() {
-        if (hasValue(OVERRIDE)) {
-            return DataStatus.valueOf(getCharValue(OVERRIDE));
+    override val override: DataStatus?
+        get() = if (hasValue(OVERRIDE)) {
+            DataStatus.Companion.valueOf(getCharValue(OVERRIDE))
         } else {
-            return null;
+            null
         }
-    }
-
-    @Override
-    public double getRudderAngle() {
-        if (hasValue(COMMANDED_RUDDER_ANGLE)) {
-            return getDoubleValue(COMMANDED_RUDDER_ANGLE);
+    override val rudderAngle: Double
+        get() = if (hasValue(COMMANDED_RUDDER_ANGLE)) {
+            getDoubleValue(COMMANDED_RUDDER_ANGLE)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public Direction getRudderDirection() {
-        if (hasValue(COMMANDED_RUDDER_DIRECTION)) {
-            return Direction.valueOf(getCharValue(COMMANDED_RUDDER_DIRECTION));
+    override val rudderDirection: Direction?
+        get() = if (hasValue(COMMANDED_RUDDER_DIRECTION)) {
+            Direction.Companion.valueOf(getCharValue(COMMANDED_RUDDER_DIRECTION))
         } else {
-            return null;
+            null
         }
-    }
-
-    @Override
-    public SteeringMode getSteeringMode() {
-        if (hasValue(SELECTED_STEERING_MODE)) {
-            return SteeringMode.valueOf(getCharValue(SELECTED_STEERING_MODE));
+    override val steeringMode: SteeringMode?
+        get() = if (hasValue(SELECTED_STEERING_MODE)) {
+            SteeringMode.Companion.valueOf(getCharValue(SELECTED_STEERING_MODE))
         } else {
-            return null;
+            null
         }
-    }
-
-    @Override
-    public TurnMode getTurnMode() {
-        if (hasValue(TURN_MODE)) {
-            return TurnMode.valueOf(getCharValue(TURN_MODE));
+    override val turnMode: TurnMode?
+        get() = if (hasValue(TURN_MODE)) {
+            TurnMode.Companion.valueOf(getCharValue(TURN_MODE))
         } else {
-            return null;
+            null
         }
-    }
-
-    @Override
-    public double getRudderLimit() {
-        if (hasValue(COMMANDED_RUDDER_LIMIT)) {
-            return getDoubleValue(COMMANDED_RUDDER_LIMIT);
+    override val rudderLimit: Double
+        get() = if (hasValue(COMMANDED_RUDDER_LIMIT)) {
+            getDoubleValue(COMMANDED_RUDDER_LIMIT)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getOffHeadingLimit() {
-        if (hasValue(COMMANDED_OFF_HEADING_LIMIT)) {
-            return getDoubleValue(COMMANDED_OFF_HEADING_LIMIT);
+    override val offHeadingLimit: Double
+        get() = if (hasValue(COMMANDED_OFF_HEADING_LIMIT)) {
+            getDoubleValue(COMMANDED_OFF_HEADING_LIMIT)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getRadiusOfTurn() {
-        if (hasValue(COMMANDED_RADIUS_OF_TURN_FOR_HEADING_CHANGES)) {
-            return getDoubleValue(COMMANDED_RADIUS_OF_TURN_FOR_HEADING_CHANGES);
+    override val radiusOfTurn: Double
+        get() = if (hasValue(COMMANDED_RADIUS_OF_TURN_FOR_HEADING_CHANGES)) {
+            getDoubleValue(COMMANDED_RADIUS_OF_TURN_FOR_HEADING_CHANGES)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getRateOfTurn() {
-        if (hasValue(COMMANDED_RATE_OF_TURN_FOR_HEADING_CHANGES)) {
-            return getDoubleValue(COMMANDED_RATE_OF_TURN_FOR_HEADING_CHANGES);
+    override val rateOfTurn: Double
+        get() = if (hasValue(COMMANDED_RATE_OF_TURN_FOR_HEADING_CHANGES)) {
+            getDoubleValue(COMMANDED_RATE_OF_TURN_FOR_HEADING_CHANGES)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getHeadingToSteer() {
-        if (hasValue(COMMANDED_HEADING_TO_STEER)) {
-            return getDoubleValue(COMMANDED_HEADING_TO_STEER);
+    override val headingToSteer: Double
+        get() = if (hasValue(COMMANDED_HEADING_TO_STEER)) {
+            getDoubleValue(COMMANDED_HEADING_TO_STEER)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getOffTrackLimit() {
-        if (hasValue(COMMANDED_OFF_TRACK_LIMIT)) {
-            return getDoubleValue(COMMANDED_OFF_TRACK_LIMIT);
+    override val offTrackLimit: Double
+        get() = if (hasValue(COMMANDED_OFF_TRACK_LIMIT)) {
+            getDoubleValue(COMMANDED_OFF_TRACK_LIMIT)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
-
-    @Override
-    public double getTrack() {
-        if (hasValue(COMMANDED_TRACK)) {
-            return getDoubleValue(COMMANDED_TRACK);
+    override val track: Double
+        get() = if (hasValue(COMMANDED_TRACK)) {
+            getDoubleValue(COMMANDED_TRACK)
         } else {
-            return Double.NaN;
+            Double.NaN
         }
-    }
+    override val isHeadingTrue: Boolean
+        get() = (hasValue(HEADING_REFERENCE_IN_USE)
+                && getCharValue(HEADING_REFERENCE_IN_USE) == 'T')
 
-    @Override
-    public boolean isHeadingTrue() {
-        return hasValue(HEADING_REFERENCE_IN_USE)
-                && getCharValue(HEADING_REFERENCE_IN_USE) == 'T';
+    companion object {
+        private const val OVERRIDE = 0
+        private const val COMMANDED_RUDDER_ANGLE = 1
+        private const val COMMANDED_RUDDER_DIRECTION = 2
+        private const val SELECTED_STEERING_MODE = 3
+        private const val TURN_MODE = 4
+        private const val COMMANDED_RUDDER_LIMIT = 5
+        private const val COMMANDED_OFF_HEADING_LIMIT = 6
+        private const val COMMANDED_RADIUS_OF_TURN_FOR_HEADING_CHANGES = 7
+        private const val COMMANDED_RATE_OF_TURN_FOR_HEADING_CHANGES = 8
+        private const val COMMANDED_HEADING_TO_STEER = 9
+        private const val COMMANDED_OFF_TRACK_LIMIT = 10
+        private const val COMMANDED_TRACK = 11
+        private const val HEADING_REFERENCE_IN_USE = 12
     }
 }

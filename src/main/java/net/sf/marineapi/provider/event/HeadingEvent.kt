@@ -18,58 +18,59 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.provider.event;
+package net.sf.marineapi.provider.event
 
-import net.sf.marineapi.nmea.sentence.HeadingSentence;
+import net.sf.marineapi.nmea.sentence.HeadingSentence
 
 /**
  * HeadingProvider event, reports the current magnetic/true heading of vessel in
  * degrees.
- * 
+ *
  * @author Kimmo Tuukkanen
  * @see net.sf.marineapi.provider.HeadingProvider
  */
-public class HeadingEvent extends ProviderEvent {
+class HeadingEvent(source: Any?, s: HeadingSentence) : ProviderEvent(source) {
+    private val heading: Double
+    private val isTrue: Boolean
 
-	private static final long serialVersionUID = 5706774741081575448L;
-	private double heading;
-	private boolean isTrue;
+    /**
+     * Creates a new heading event.
+     *
+     * @param source The object that sends the event.
+     * @param s HeadingSentence that triggered the event.
+     */
+    init {
+        heading = s.heading
+        isTrue = s.isTrue
+    }
 
-	/**
-	 * Creates a new heading event.
-	 *
-	 * @param source The object that sends the event.
-	 * @param s HeadingSentence that triggered the event.
-	 */
-	public HeadingEvent(Object source, HeadingSentence s) {
-		super(source);
-		heading = s.getHeading();
-		isTrue = s.isTrue();
-	}
+    /**
+     * Returns the current heading.
+     *
+     * @return Heading in degrees.
+     */
+    fun getHeading(): Double {
+        return heading
+    }
 
-	/**
-	 * Returns the current heading.
-	 * 
-	 * @return Heading in degrees.
-	 */
-	public double getHeading() {
-		return heading;
-	}
+    /**
+     * Tells if the heading is relative to true or magnetic north.
+     *
+     * @return true if true heading, otherwise false (magnetic).
+     */
+    fun isTrue(): Boolean {
+        return isTrue
+    }
 
-	/**
-	 * Tells if the heading is relative to true or magnetic north.
-	 * 
-	 * @return true if true heading, otherwise false (magnetic).
-	 */
-	public boolean isTrue() {
-		return isTrue;
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see java.util.EventObject#toString()
 	 */
-	public String toString() {
-		return "[" + getHeading() + ", " + (isTrue() ? "T" : "M") + "]";
-	}
+    override fun toString(): String {
+        return "[" + getHeading() + ", " + (if (isTrue()) "T" else "M") + "]"
+    }
+
+    companion object {
+        private const val serialVersionUID = 5706774741081575448L
+    }
 }

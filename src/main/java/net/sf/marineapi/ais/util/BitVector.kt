@@ -18,9 +18,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.util;
+package net.sf.marineapi.ais.util
 
-import java.util.BitSet;
+import java.util.*
 
 /**
  * Class holding bit values in an array and implementing put/get
@@ -28,142 +28,140 @@ import java.util.BitSet;
  *
  * @author Lázár József
  */
-public class BitVector {
+class BitVector {
+    private var fBitVector: BitSet
 
-	private BitSet		fBitVector;
+    /**
+     * Creates a new instance with given length.
+     *
+     * @param bits Vector length
+     */
+    constructor(bits: Int) {
+        fBitVector = BitSet(bits)
+    }
 
-	/**
-	 * Creates a new instance with given length.
-	 *
-	 * @param bits Vector length
-	 */
-	public BitVector(int bits) {
-		fBitVector = new BitSet(bits);
-	}
+    /**
+     * Creates a new instance with given BitSet and length.
+     *
+     * @param vector BitSet
+     */
+    constructor(vector: BitSet) {
+        fBitVector = vector
+    }
 
-	/**
-	 * Creates a new instance with given BitSet and length.
-	 *
-	 * @param vector BitSet
-	 */
-	public BitVector(BitSet vector) {
-		fBitVector = vector;
-	}
+    /**
+     * Set bit at given index.
+     *
+     * @param index Index of bit to set.
+     */
+    fun set(index: Int) {
+        fBitVector.set(index)
+    }
 
-	/**
-	 * Set bit at given index.
-	 *
-	 * @param index Index of bit to set.
-	 */
-	public void set(int index) {
-		fBitVector.set(index);
-	}
+    /**
+     * Gets a vector subset.
+     *
+     * @param from Start index
+     * @param to End index
+     * @return BitVector with specified range
+     */
+    operator fun get(from: Int, to: Int): BitVector {
+        var from = from
+        var to = to
+        to++
+        from++
+        return BitVector(fBitVector[from, to])
+    }
 
-	/**
-	 * Gets a vector subset.
-	 *
-	 * @param from Start index
-	 * @param to End index
-	 * @return BitVector with specified range
-	 */
-	public BitVector get(int from, int to) {
-		to++;
-		from++;
-		return new BitVector(fBitVector.get(from, to));
-	}
+    /**
+     * Return bit as boolean from the bit vector
+     *
+     * @param index start index of bit
+     * @return `true` if bit is set, otherwise `false`.
+     */
+    fun getBoolean(index: Int): Boolean {
+        return fBitVector[index]
+    }
 
-	/**
-	 * Return bit as boolean from the bit vector
-	 *
-	 * @param index start index of bit
-	 * @return {@code true} if bit is set, otherwise {@code false}.
-	 */
-	public boolean getBoolean(int index) {
-		return fBitVector.get(index);
-	}
+    /**
+     * Returns the requested bits interpreted as an integer (MSB first) from the message.
+     *
+     * @param from begin index (inclusive)
+     * @param to end index (inclusive)
+     * @return unsigned int value
+     */
+    fun getUInt(from: Int, to: Int): Int {
+        var value = 0
+        var i = fBitVector.previousSetBit(to)
+        while (i > from) {
+            (value += 1 shl to) - i
+            i = fBitVector.previousSetBit(i - 1)
+        }
+        return value
+    }
 
-	/**
-	 * Returns the requested bits interpreted as an integer (MSB first) from the message.
-	 *
-	 * @param from begin index (inclusive)
-	 * @param to end index (inclusive)
-	 * @return unsigned int value
-	 */
-	public int getUInt(int from, int to) {
-		int value = 0;
-		for (int i = fBitVector.previousSetBit(to); i > from; i = fBitVector.previousSetBit(i - 1)) {
-			value += (1 << (to - i));
-		}
-		return value;
-	}
+    /**
+     * Convert to 8-bit integer.
+     *
+     * @param from Start index
+     * @param to End index
+     * @return Integer value
+     */
+    fun getAs8BitInt(from: Int, to: Int): Int {
+        var retval = getUInt(from, to)
+        if (retval >= 0x80) retval -= 0x100
+        return retval
+    }
 
-	/**
-	 * Convert to 8-bit integer.
-	 *
-	 * @param from Start index
-	 * @param to End index
-	 * @return Integer value
-	 */
-	public int getAs8BitInt(int from, int to) {
-		int retval = getUInt(from, to);
-		if (retval >= 0x80)
-	        retval -= 0x100;
-		return retval;
-	}
+    /**
+     * Convert to 17-bit integer.
+     *
+     * @param from Start index
+     * @param to End index
+     * @return Integer value
+     */
+    fun getAs17BitInt(from: Int, to: Int): Int {
+        var retval = getUInt(from, to)
+        if (retval >= 0x10000) retval -= 0x20000
+        return retval
+    }
 
-	/**
-	 * Convert to 17-bit integer.
-	 *
-	 * @param from Start index
-	 * @param to End index
-	 * @return Integer value
-	 */
-	public int getAs17BitInt(int from, int to) {
-		int retval = getUInt(from, to);
-		if (retval >= 0x10000)
-	        retval -= 0x20000;
-		return retval;
-	}
+    /**
+     * Convert to 18-bit integer.
+     *
+     * @param from Start index
+     * @param to End index
+     * @return Integer value
+     */
+    fun getAs18BitInt(from: Int, to: Int): Int {
+        var retval = getUInt(from, to)
+        if (retval >= 0x20000) retval -= 0x40000
+        return retval
+    }
 
-	/**
-	 * Convert to 18-bit integer.
-	 *
-	 * @param from Start index
-	 * @param to End index
-	 * @return Integer value
-	 */
-	public int getAs18BitInt(int from, int to) {
-		int retval = getUInt(from, to);
-		if (retval >= 0x20000)
-	        retval -= 0x40000;
-		return retval;
-	}
+    /**
+     * Convert to 27-bit integer.
+     *
+     * @param from Start index
+     * @param to End index
+     * @return Integer value
+     */
+    fun getAs27BitInt(from: Int, to: Int): Int {
+        var retval = getUInt(from, to)
+        if (retval >= 0x4000000) retval -= 0x8000000
+        return retval
+    }
 
-	/**
-	 * Convert to 27-bit integer.
-	 *
-	 * @param from Start index
-	 * @param to End index
-	 * @return Integer value
-	 */
-	public int getAs27BitInt(int from, int to) {
-		int retval = getUInt(from, to);
-		if (retval >= 0x4000000)
-	        retval -= 0x8000000;
-		return retval;
-	}
-
-	/**
-	 * Convert to 28-bit integer.
-	 *
-	 * @param from Start index
-	 * @param to End index
-	 * @return Integer value
-	 */
-	public int getAs28BitInt(int from, int to) {
-		int retval = getUInt(from, to);
-		if (retval >= 0x8000000)
-	        retval -= 0x10000000;
-		return retval;
-	}
+    /**
+     * Convert to 28-bit integer.
+     *
+     * @param from Start index
+     * @param to End index
+     * @return Integer value
+     */
+    fun getAs28BitInt(from: Int, to: Int): Int {
+        var retval = getUInt(from, to)
+        if (retval >= 0x8000000) retval -= 0x10000000
+        return retval
+    }
 }

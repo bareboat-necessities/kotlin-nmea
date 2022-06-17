@@ -18,21 +18,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.io;
+package net.sf.marineapi.nmea.io
 
 /**
  * Listener for all data that is not recognized as NMEA 0183.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public interface DataListener {
-
-	/**
-	 * Invoked by {@link SentenceReader} when non-NMEA data has been read from
-	 * the device/data source.
-	 * 
-	 * @param data Data String read from the device.
-	 */
-	void dataRead(String data);
-
+interface DataListener {
+    /**
+     * Invoked by [SentenceReader] when non-NMEA data has been read from
+     * the device/data source.
+     *
+     * @param data Data String read from the device.
+     */
+    fun dataRead(data: String?)
 }

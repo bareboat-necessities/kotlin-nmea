@@ -18,196 +18,146 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.GNSSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.Position;
-import net.sf.marineapi.nmea.util.Time;
+import net.sf.marineapi.nmea.sentence.GNSSentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*
 /**
  * GNS sentence parser.
  *
  * @author Kimmo Tuukkanen
  */
-class GNSParser extends PositionParser implements GNSSentence {
-
-    // NMEA field indices
-    private static final int UTC_TIME = 0;
-    private static final int LATITUDE = 1;
-    private static final int LAT_DIRECTION = 2;
-    private static final int LONGITUDE = 3;
-    private static final int LON_DIRECTION = 4;
-    private static final int MODE = 5;
-    private static final int SATELLITE_COUNT = 6;
-    private static final int HDOP = 7;
-    private static final int ORTHOMETRIC_HEIGHT = 8;
-    private static final int GEOIDAL_SEPARATION = 9;
-    private static final int DGPS_AGE = 10;
-    private static final int DGPS_STATION = 11;
-
-    // MODE string character indices
-    private static final int GPS_MODE = 0;
-    private static final int GNS_MODE = 1;
-    private static final int VAR_MODE = 2;
-
+internal class GNSParser : PositionParser, GNSSentence {
     /**
      * Constructor for parsing GNS.
      *
      * @param nmea GNS sentence String
      */
-    public GNSParser(String nmea) {
-        super(nmea, SentenceId.GNS);
-    }
+    constructor(nmea: String) : super(nmea, SentenceId.GNS) {}
 
     /**
      * Constructor for empty GNS sentence.
      *
      * @param tid Talker ID to set
      */
-    public GNSParser(TalkerId tid) {
-        super(tid, SentenceId.GNS, 12);
-        setTime(new Time());
-        setStringValue(MODE, "NN");
+    constructor(tid: TalkerId?) : super(tid, SentenceId.GNS, 12) {
+        time = Time()
+        setStringValue(MODE, "NN")
     }
 
-    @Override
-    public Time getTime() {
-        return new Time(getStringValue(UTC_TIME));
-    }
-
-    @Override
-    public void setTime(Time t) {
-        setStringValue(UTC_TIME, t.toString());
-    }
-
-    @Override
-    public Position getPosition() {
-        return parsePosition(LATITUDE, LAT_DIRECTION, LONGITUDE, LON_DIRECTION);
-    }
-
-    @Override
-    public void setPosition(Position pos) {
-        setPositionValues(pos, LATITUDE, LAT_DIRECTION, LONGITUDE, LON_DIRECTION);
-    }
-
-    @Override
-    public Mode getGpsMode() {
-        String modes = getStringValue(MODE);
-        return Mode.valueOf(modes.charAt(GPS_MODE));
-    }
-
-    @Override
-    public void setGpsMode(Mode gps) {
-        String modes = getStringValue(MODE);
-        setStringValue(MODE, gps.toChar() + modes.substring(GNS_MODE));
-    }
-
-    @Override
-    public Mode getGlonassMode() {
-        String modes = getStringValue(MODE);
-        return Mode.valueOf(modes.charAt(GNS_MODE));
-    }
-
-    @Override
-    public void setGlonassMode(Mode gns) {
-
-        String modes = getStringValue(MODE);
-
-        StringBuffer sb = new StringBuffer(modes.length());
-        sb.append(modes.charAt(GPS_MODE));
-        sb.append(gns.toChar());
-
-        if(modes.length() > 2) {
-            sb.append(modes.substring(VAR_MODE));
+    override var time: Time
+        get() = Time(getStringValue(UTC_TIME))
+        set(t) {
+            setStringValue(UTC_TIME, t.toString())
         }
 
-        setStringValue(MODE, sb.toString());
+    override fun getPosition(): Position? {
+        return parsePosition(LATITUDE, LAT_DIRECTION, LONGITUDE, LON_DIRECTION)
     }
 
-    @Override
-    public Mode[] getAdditionalModes() {
-        String mode = getStringValue(MODE);
-        if(mode.length() == 2) {
-            return new Mode[0];
+    override fun setPosition(pos: Position) {
+        setPositionValues(pos, LATITUDE, LAT_DIRECTION, LONGITUDE, LON_DIRECTION)
+    }
+
+    override fun getGpsMode(): GNSSentence.Mode {
+        val modes = getStringValue(MODE)
+        return GNSSentence.Mode.Companion.valueOf(modes!![GPS_MODE])
+    }
+
+    override fun setGpsMode(gps: GNSSentence.Mode) {
+        val modes = getStringValue(MODE)
+        setStringValue(MODE, gps.toChar().toString() + modes!!.substring(GNS_MODE))
+    }
+
+    override fun getGlonassMode(): GNSSentence.Mode {
+        val modes = getStringValue(MODE)
+        return GNSSentence.Mode.Companion.valueOf(modes!![GNS_MODE])
+    }
+
+    override fun setGlonassMode(gns: GNSSentence.Mode) {
+        val modes = getStringValue(MODE)
+        val sb = StringBuffer(modes!!.length)
+        sb.append(modes[GPS_MODE])
+        sb.append(gns.toChar())
+        if (modes.length > 2) {
+            sb.append(modes.substring(VAR_MODE))
         }
-        String additional = mode.substring(VAR_MODE);
-        Mode[] modes = new Mode[additional.length()];
-        for (int i = 0; i < additional.length(); i++) {
-            modes[i] = Mode.valueOf(additional.charAt(i));
+        setStringValue(MODE, sb.toString())
+    }
+
+    override fun getAdditionalModes(): Array<GNSSentence.Mode?> {
+        val mode = getStringValue(MODE)
+        if (mode!!.length == 2) {
+            return arrayOfNulls(0)
         }
-        return modes;
-    }
-
-    @Override
-    public void setAdditionalModes(Mode... modes) {
-        String current = getStringValue(MODE);
-        StringBuffer sb = new StringBuffer(modes.length + 2);
-        sb.append(current.substring(0, VAR_MODE));
-        for (Mode m : modes) {
-            sb.append(m.toChar());
+        val additional = mode.substring(VAR_MODE)
+        val modes = arrayOfNulls<GNSSentence.Mode>(additional.length)
+        for (i in 0 until additional.length) {
+            modes[i] = GNSSentence.Mode.Companion.valueOf(additional[i])
         }
-        setStringValue(MODE, sb.toString());
+        return modes
     }
 
-    @Override
-    public int getSatelliteCount() {
-        return getIntValue(SATELLITE_COUNT);
+    override fun setAdditionalModes(vararg modes: GNSSentence.Mode) {
+        val current = getStringValue(MODE)
+        val sb = StringBuffer(modes.size + 2)
+        sb.append(current!!.substring(0, VAR_MODE))
+        for (m in modes) {
+            sb.append(m.toChar())
+        }
+        setStringValue(MODE, sb.toString())
     }
 
-    @Override
-    public void setSatelliteCount(int count) {
-        setIntValue(SATELLITE_COUNT, count, 2);
-    }
+    override var satelliteCount: Int
+        get() = getIntValue(SATELLITE_COUNT)
+        set(count) {
+            setIntValue(SATELLITE_COUNT, count, 2)
+        }
+    override var horizontalDOP: Double
+        get() = getDoubleValue(HDOP)
+        set(hdop) {
+            setDoubleValue(HDOP, hdop, 1, 2)
+        }
+    override var orthometricHeight: Double
+        get() = getDoubleValue(ORTHOMETRIC_HEIGHT)
+        set(height) {
+            setDoubleValue(ORTHOMETRIC_HEIGHT, height, 1, 2)
+        }
+    override var geoidalSeparation: Double
+        get() = getDoubleValue(GEOIDAL_SEPARATION)
+        set(separation) {
+            setDoubleValue(GEOIDAL_SEPARATION, separation, 1, 2)
+        }
+    override var dgpsAge: Double
+        get() = getDoubleValue(DGPS_AGE)
+        set(age) {
+            setDoubleValue(DGPS_AGE, age, 1, 1)
+        }
+    override var dgpsStationId: String?
+        get() = getStringValue(DGPS_STATION)
+        set(stationId) {
+            setStringValue(DGPS_STATION, stationId)
+        }
 
-    @Override
-    public double getHorizontalDOP() {
-        return getDoubleValue(HDOP);
-    }
+    companion object {
+        // NMEA field indices
+        private const val UTC_TIME = 0
+        private const val LATITUDE = 1
+        private const val LAT_DIRECTION = 2
+        private const val LONGITUDE = 3
+        private const val LON_DIRECTION = 4
+        private const val MODE = 5
+        private const val SATELLITE_COUNT = 6
+        private const val HDOP = 7
+        private const val ORTHOMETRIC_HEIGHT = 8
+        private const val GEOIDAL_SEPARATION = 9
+        private const val DGPS_AGE = 10
+        private const val DGPS_STATION = 11
 
-    @Override
-    public void setHorizontalDOP(double hdop) {
-        setDoubleValue(HDOP, hdop, 1, 2);
-    }
-
-    @Override
-    public double getOrthometricHeight() {
-        return getDoubleValue(ORTHOMETRIC_HEIGHT);
-    }
-
-    @Override
-    public void setOrthometricHeight(double height) {
-        setDoubleValue(ORTHOMETRIC_HEIGHT, height, 1, 2);
-    }
-
-    @Override
-    public double getGeoidalSeparation() {
-        return getDoubleValue(GEOIDAL_SEPARATION);
-    }
-
-    @Override
-    public void setGeoidalSeparation(double separation) {
-        setDoubleValue(GEOIDAL_SEPARATION, separation, 1, 2);
-    }
-
-    @Override
-    public double getDgpsAge() {
-        return getDoubleValue(DGPS_AGE);
-    }
-
-    @Override
-    public void setDgpsAge(double age) {
-        setDoubleValue(DGPS_AGE, age, 1, 1);
-    }
-
-    @Override
-    public String getDgpsStationId() {
-        return getStringValue(DGPS_STATION);
-    }
-
-    @Override
-    public void setDgpsStationId(String stationId) {
-        setStringValue(DGPS_STATION, stationId);
+        // MODE string character indices
+        private const val GPS_MODE = 0
+        private const val GNS_MODE = 1
+        private const val VAR_MODE = 2
     }
 }

@@ -18,49 +18,48 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.message;
+package net.sf.marineapi.ais.message
 
 /**
  * Interface for all position information.
- * 
+ *
  * @author Lázár József
  */
-public interface AISPositionInfo extends AISMessage {
-	
+interface AISPositionInfo : AISMessage {
     /**
-	 * Tells if the position is accurate.
-	 *
-	 * @return {@code true} if accurate (&lt; 10 meters), otherwise {@code false}.
-	 */
-	boolean isAccurate();
+     * Tells if the position is accurate.
+     *
+     * @return `true` if accurate (&lt; 10 meters), otherwise `false`.
+     */
+    val isAccurate: Boolean
 
-	/**
-	 * Returns the longitude in degrees.
-	 *
-	 * @return Longitude, in degrees.
-	 */
-	double getLongitudeInDegrees();
+    /**
+     * Returns the longitude in degrees.
+     *
+     * @return Longitude, in degrees.
+     */
+    val longitudeInDegrees: Double
 
-	/**
-	 * Returns the latitude in degrees.
-	 *
-	 * @return Latitude, in degrees.
-	 */
-	double getLatitudeInDegrees();
+    /**
+     * Returns the latitude in degrees.
+     *
+     * @return Latitude, in degrees.
+     */
+    val latitudeInDegrees: Double
 
-	/**
-	 * Tells if the longitude is available in the message. If not,
-	 * {@link #getLongitudeInDegrees} may return an out-of-range value.
-	 *
-	 * @return {@code true} if available, otherwise {@code false}.
-	 */
-	boolean hasLongitude();
+    /**
+     * Tells if the longitude is available in the message. If not,
+     * [.getLongitudeInDegrees] may return an out-of-range value.
+     *
+     * @return `true` if available, otherwise `false`.
+     */
+    fun hasLongitude(): Boolean
 
-	/**
-	 * Tells if the latitude is available in the message. If not,
-	 * {@link #getLatitudeInDegrees()} may return an out-of-range value.
-	 *
-	 * @return {@code true} if available, otherwise {@code false}.
-	 */
-	boolean hasLatitude();
+    /**
+     * Tells if the latitude is available in the message. If not,
+     * [.getLatitudeInDegrees] may return an out-of-range value.
+     *
+     * @return `true` if available, otherwise `false`.
+     */
+    fun hasLatitude(): Boolean
 }

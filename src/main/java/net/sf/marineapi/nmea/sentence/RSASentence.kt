@@ -18,54 +18,55 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.DataStatus;
-import net.sf.marineapi.nmea.util.Side;
+import net.sf.marineapi.nmea.util.DataStatus
+import net.sf.marineapi.nmea.util.Side
 
 /**
- * <p>
+ *
+ *
  * Rudder angle, measured in degrees. Negative value represents port side,
  * positive starboard side turn. May contain value for both port and starboard
- * rudder. {@link Side#PORT} is used for vessels with single rudder.
- * </p>
- * <p>
- * Example:<br>
- * {@code $IIRSA,9,A,,*38}
- * </p>
- * 
+ * rudder. [Side.PORT] is used for vessels with single rudder.
+ *
+ *
+ *
+ * Example:<br></br>
+ * `$IIRSA,9,A,,*38`
+ *
+ *
  * @author Lázár József, Kimmo Tuukkanen
  */
-public interface RSASentence extends Sentence {
+interface RSASentence : Sentence {
+    /**
+     * Returns the rudder angle for specified side.
+     *
+     * @param side Rudder side
+     * @return Rudder angle in degrees.
+     */
+    fun getRudderAngle(side: Side): Double
 
-	/**
-	 * Returns the rudder angle for specified side.
-	 *
-	 * @param side Rudder side
-	 * @return Rudder angle in degrees.
-	 */
-	double getRudderAngle(Side side);
+    /**
+     * Sets the rudder's angle for specified side.
+     *
+     * @param side Rudder side
+     * @param angle Rudder angle in degrees
+     */
+    fun setRudderAngle(side: Side, angle: Double)
 
-	/**
-	 * Sets the rudder's angle for specified side.
-	 * 
-	 * @param side Rudder side
-	 * @param angle Rudder angle in degrees
-	 */
-	void setRudderAngle(Side side, double angle);
+    /**
+     * Returns the data status (valid/invalid) for specified side.
+     *
+     * @param side Rudder side
+     * @return Data status
+     */
+    fun getStatus(side: Side): DataStatus
 
-	/**
-	 * Returns the data status (valid/invalid) for specified side.
-	 * 
-	 * @param side Rudder side
-	 * @return Data status
-	 */
-	DataStatus getStatus(Side side);
-
-	/**
-	 * Set data status for specified side.
-	 * @param side Rudder side
-	 * @param status Data status to set
-	 */
-	void setStatus(Side side, DataStatus status);
+    /**
+     * Set data status for specified side.
+     * @param side Rudder side
+     * @param status Data status to set
+     */
+    fun setStatus(side: Side, status: DataStatus)
 }

@@ -18,63 +18,62 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.message;
+package net.sf.marineapi.ais.message
 
 /**
  * Extended Class B Equipment Position Report.
- *  
+ *
  * @author Lázár József
  */
-public interface AISMessage19 extends AISPositionReportB {
+interface AISMessage19 : AISPositionReportB {
+    /**
+     * Returns the name of the transmitting ship.
+     *
+     * @return maximum 20 characters, representing the name
+     */
+    val name: String?
 
-	/**
-	 * Returns the name of the transmitting ship.
-	 * 
-	 * @return maximum 20 characters, representing the name
-	 */
-	String getName();
+    /**
+     * Returns the type of ship and cargo.
+     *
+     * @return an integer value representing the type of ship and cargo
+     */
+    val typeOfShipAndCargoType: Int
 
-	/**
-	 * Returns the type of ship and cargo.
-	 * 
-	 * @return an integer value representing the type of ship and cargo
-	 */
-	int getTypeOfShipAndCargoType();
+    /**
+     * Returns the distance from the reference point to the bow.
+     *
+     * @return Distance to bow, in meters.
+     */
+    val bow: Int
 
-	/**
-	 * Returns the distance from the reference point to the bow.
-	 *
-	 * @return Distance to bow, in meters.
-	 */
-	int getBow();
+    /**
+     * Returns the distance from the reference point to the stern of the ship.
+     *
+     * @return Distance to stern, in meters.
+     */
+    val stern: Int
 
-	/**
-	 * Returns the distance from the reference point to the stern of the ship.
-	 *
-	 * @return Distance to stern, in meters.
-	 */
-	int getStern();
+    /**
+     * Returns the distance from the reference point to the port side of the
+     * ship.
+     *
+     * @return Distance to port side, in meters.
+     */
+    val port: Int
 
-	/**
-	 * Returns the distance from the reference point to the port side of the
-	 * ship.
-	 *
-	 * @return Distance to port side, in meters.
-	 */
-	int getPort();
+    /**
+     * Returns the distance from the reference point to the starboard side of
+     * the ship.
+     *
+     * @return Distance to starboard side, in meters.
+     */
+    val starboard: Int
 
-	/**
-	 * Returns the distance from the reference point to the starboard side of
-	 * the ship.
-	 *
-	 * @return Distance to starboard side, in meters.
-	 */
-	int getStarboard();
-
-	/**
-	 * Returns the type of electronic position fixing device.
-	 * 
-	 * @return an integer value the the type of EPFD
-	 */
-	int getTypeOfEPFD();
+    /**
+     * Returns the type of electronic position fixing device.
+     *
+     * @return an integer value the the type of EPFD
+     */
+    val typeOfEPFD: Int
 }

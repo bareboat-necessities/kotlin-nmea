@@ -17,72 +17,58 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.sentence.UBXSentence;
-import net.sf.marineapi.ublox.parser.UBXMessageParser;
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.sentence.UBXSentence
+import net.sf.marineapi.ublox.parser.UBXMessageParser
 
 /**
  * Common UBX sentence parser. These messages are often referred to as PUBX messages,
- * consisting of {@link TalkerId#P } + {@link SentenceId#UBX}.
+ * consisting of [TalkerId.P] + [SentenceId.UBX].
  *
  * This parser only handles the NMEA layer. The actual payload message is parsed
- * by the {@link UBXMessageParser} and its sub-classes.
+ * by the [UBXMessageParser] and its sub-classes.
  *
  * @author Gunnar Hillert
  *
  * @see UBXSentence
+ *
  * @see UBXMessageParser
  */
-class UBXParser extends SentenceParser implements UBXSentence {
+internal class UBXParser : SentenceParser, UBXSentence {
+    constructor(nmea: String) : super(nmea, SentenceId.UBX) {}
 
-	public UBXParser(String nmea) {
-		super(nmea, SentenceId.UBX);
-	}
+    /**
+     * Creates a new empty UBX Parser.
+     *
+     * @param talker TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.UBX, 6) {}
+    constructor(nmea: String, type: String?) : super(nmea, type) {}
 
-	/**
-	 * Creates a new empty UBX Parser.
-	 *
-	 * @param talker TalkerId to set
-	 */
-	public UBXParser(TalkerId talker) {
-		super(talker, SentenceId.UBX, 6);
-	}
+    override fun getMessageId(): Int {
+        return super.getIntValue(0)
+    }
 
-	public UBXParser(String nmea, String type) {
-		super(nmea, type);
-	}
+    override fun getUBXFieldIntValue(index: Int): Int {
+        return super.getIntValue(index)
+    }
 
-	@Override
-	public Integer getMessageId() {
-		return super.getIntValue(0);
-	}
+    override fun getUBXFieldStringValue(index: Int): String? {
+        return super.getStringValue(index)
+    }
 
-	@Override
-	public Integer getUBXFieldIntValue(int index) {
-		return super.getIntValue(index);
-	}
+    override fun getUBXFieldCharValue(index: Int): Char {
+        return super.getCharValue(index)
+    }
 
-	@Override
-	public String getUBXFieldStringValue(int index) {
-		return super.getStringValue(index);
-	}
+    override fun getUBXFieldDoubleValue(index: Int): Double {
+        return super.getDoubleValue(index)
+    }
 
-	@Override
-	public char getUBXFieldCharValue(int index) {
-		return super.getCharValue(index);
-	}
-
-	@Override
-	public double getUBXFieldDoubleValue(int index) {
-		return super.getDoubleValue(index);
-	}
-
-	@Override
-	public int getUBXFieldCount() {
-		return super.getFieldCount();
-	}
-
+    override fun getUBXFieldCount(): Int {
+        return super.getFieldCount()
+    }
 }

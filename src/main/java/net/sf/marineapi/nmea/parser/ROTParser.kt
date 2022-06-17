@@ -18,76 +18,65 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.ROTSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.DataStatus;
+import net.sf.marineapi.nmea.sentence.ROTSentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.DataStatus
 /**
  * ROT sentence parser.
  *
  * @author Mike Tamis, Kimmo Tuukkanen
  */
-class ROTParser extends SentenceParser implements ROTSentence {
+internal class ROTParser : SentenceParser, ROTSentence {
+    /**
+     * Creates a new ROT parser.
+     *
+     * @param nmea ROT sentence String to parse.
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.ROT) {}
 
-	private static final int RATE_OF_TURN = 0;
-	private static final int STATUS = 1;
+    /**
+     * Creates a new empty ROT sentence.
+     *
+     * @param talker Talker id to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.ROT, 2) {}
 
-	/**
-	 * Creates a new ROT parser.
-	 *
-	 * @param nmea ROT sentence String to parse.
-	 */
-	public ROTParser(String nmea) {
-		super(nmea, SentenceId.ROT);
-	}
-
-	/**
-	 * Creates a new empty ROT sentence.
-	 *
-	 * @param talker Talker id to set
-	 */
-	public ROTParser(TalkerId talker) {
-		super(talker, SentenceId.ROT, 2);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.parser.RateOfTurnSentance#getRateOfTurn()
-	 */
-	public double getRateOfTurn() {
-		return getDoubleValue(RATE_OF_TURN);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RateOfTurnSentance#getStatus()
-	 */
-	public DataStatus getStatus() {
-		return DataStatus.valueOf(getCharValue(STATUS));
-	}
-
-	/*
+	 *//*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.ROTSentence#setRateOfTurn(double)
 	 */
-	public void setRateOfTurn(double rot) {
-		setDoubleValue(RATE_OF_TURN, rot, 3, 1);
-	}
+    override var rateOfTurn: Double
+        get() = getDoubleValue(RATE_OF_TURN)
+        set(rot) {
+            setDoubleValue(RATE_OF_TURN, rot, 3, 1)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 *
+	 * @see net.sf.marineapi.nmea.sentence.RateOfTurnSentance#getStatus()
+	 *//*
 	 * (non-Javadoc)
 	 *
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.ROTSentence#setStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-	public void setStatus(DataStatus status) {
-		setCharValue(STATUS, status.toChar());
-	}
+    override var status: DataStatus
+        get() = DataStatus.Companion.valueOf(getCharValue(STATUS))
+        set(status) {
+            setCharValue(STATUS, status.toChar())
+        }
+
+    companion object {
+        private const val RATE_OF_TURN = 0
+        private const val STATUS = 1
+    }
 }

@@ -18,30 +18,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.parser;
+package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISUTCReport;
-import net.sf.marineapi.ais.util.AISRuleViolation;
-import net.sf.marineapi.ais.util.Latitude27;
-import net.sf.marineapi.ais.util.Longitude28;
-import net.sf.marineapi.ais.util.PositioningDevice;
-import net.sf.marineapi.ais.util.Sixbit;
+import net.sf.marineapi.ais.message.AISUTCReportimport
 
+net.sf.marineapi.ais.util.*
 /**
  * AIS Base station and Mobile Station UTC reporting
- * 
+ *
  * <pre>
  * Field  Name                                          Bits    (from, to )
  * ------------------------------------------------------------------------
- *  1	  messageID                        		       	   6	(   1,   6)
- *  2	  repeatIndicator                         		   2	(   7,   8)
- *  3	  userID                                  		  30	(   9,  38)
- *  4	  utcYear                        		          14	(  39,  52)
- *  5	  utcMonth                            	    	   4	(  53,  56)
- *  6	  utcDay                                  		   5	(  57,  61)
- *  7	  utcHour                                 		   5	(  62,  66)
- *  8	  utcMinute                              		   6	(  67,  72)
- *  9	  utcSecond                          	    	   6	(  73,  78)
+ * 1	  messageID                        		       	   6	(   1,   6)
+ * 2	  repeatIndicator                         		   2	(   7,   8)
+ * 3	  userID                                  		  30	(   9,  38)
+ * 4	  utcYear                        		          14	(  39,  52)
+ * 5	  utcMonth                            	    	   4	(  53,  56)
+ * 6	  utcDay                                  		   5	(  57,  61)
+ * 7	  utcHour                                 		   5	(  62,  66)
+ * 8	  utcMinute                              		   6	(  67,  72)
+ * 9	  utcSecond                          	    	   6	(  73,  78)
  * 10	  positionAccuracy                    	    	   1	(  79,  79)
  * 11	  longitude                               		  28	(  80, 107)
  * 12	  latitude                              		  27	( 108, 134)
@@ -50,104 +46,100 @@ import net.sf.marineapi.ais.util.Sixbit;
  * 15	  spare                                   	 	   9	( 140, 148)
  * 16	  raimFlag                              		   1	( 149, 149)
  * 17	  communicationState                      		  19	( 150, 168)
- *                                                      ---- +
- *                                                  sum  168
- * </pre>
- * 
+ * ---- +
+ * sum  168
+</pre> *
+ *
  * @author Lázár József
  */
-class AISUTCParser extends AISMessageParser implements AISUTCReport {
+internal open class AISUTCParser(content: Sixbit) : AISMessageParser(content, 168), AISUTCReport {
+    override val utcYear: Int
+    override val utcMonth: Int
+    override val utcDay: Int
+    override val utcHour: Int
+    override val utcMinute: Int
+    override val utcSecond: Int
+    val isAccurate: Boolean
+    private val fLongitude: Int
+    private val fLatitude: Int
+    override val typeOfEPFD: Int
 
-	private final static String	SEPARATOR			= "\n\t";
-	private static final int	UTC_YEAR			= 0;
-	private static final int	UTC_MONTH			= 1;
-	private static final int	UTC_DAY				= 2;
-	private static final int	UTC_HOUR			= 3;
-	private static final int 	UTC_MINUTE			= 4;
-	private static final int 	UTC_SECOND			= 5;
-	private static final int 	POSITIONACCURACY	= 6;
-	private static final int	LONGITUDE			= 7;
-	private static final int 	LATITUDE			= 8;
-	private static final int 	FIXING_DEV_TYPE		= 9;
-	private final static int[]	FROM				= {
-		38, 52, 56, 61, 66, 72, 78,  79, 107, 134};
-	private final static int[]	TO   				= {
-		52, 56, 61, 66, 72, 78, 79, 107, 134, 138};
+    /**
+     * Constructor.
+     *
+     * @param content Six-bit message content.
+     */
+    init {
+        utcYear = content.getInt(FROM[UTC_YEAR], TO[UTC_YEAR])
+        utcMonth = content.getInt(FROM[UTC_MONTH], TO[UTC_MONTH])
+        utcDay = content.getInt(FROM[UTC_DAY], TO[UTC_DAY])
+        utcHour = content.getInt(FROM[UTC_HOUR], TO[UTC_HOUR])
+        utcMinute = content.getInt(FROM[UTC_MINUTE], TO[UTC_MINUTE])
+        utcSecond = content.getInt(FROM[UTC_SECOND], TO[UTC_SECOND])
+        isAccurate = content.getBoolean(FROM[POSITIONACCURACY])
+        fLongitude = content.getAs28BitInt(FROM[LONGITUDE], TO[LONGITUDE])
+        if (!Longitude28.isCorrect(fLongitude)) addViolation(
+            AISRuleViolation(
+                "LongitudeInDegrees",
+                fLongitude,
+                Longitude28.RANGE
+            )
+        )
+        fLatitude = content.getAs27BitInt(FROM[LATITUDE], TO[LATITUDE])
+        if (!Latitude27.isCorrect(fLatitude)) addViolation(
+            AISRuleViolation(
+                "LatitudeInDegrees",
+                fLatitude,
+                Latitude27.RANGE
+            )
+        )
+        typeOfEPFD = content.getInt(FROM[FIXING_DEV_TYPE], TO[FIXING_DEV_TYPE])
+    }
 
-	private int		fUTCYear;
-	private int		fUTCMonth;
-	private int		fUTCDay;
-	private int		fUTCHour;
-	private int		fUTCMinute;
-	private int		fUTCSecond;
-	private boolean	fPositionAccuracy;
-	private int		fLongitude;
-	private int		fLatitude;
-	private int		fTypeOfEPFD;
+    val longitudeInDegrees: Double
+        get() = Longitude28.toDegrees(fLongitude)
+    val latitudeInDegrees: Double
+        get() = Latitude27.toDegrees(fLatitude)
 
-	/**
-	 * Constructor.
-	 *
-	 * @param content Six-bit message content.
-	 */
-	public AISUTCParser(Sixbit content) {
-		super(content, 168);
-	    fUTCYear = content.getInt(FROM[UTC_YEAR], TO[UTC_YEAR]);
-	    fUTCMonth = content.getInt(FROM[UTC_MONTH], TO[UTC_MONTH]);
-	    fUTCDay = content.getInt(FROM[UTC_DAY], TO[UTC_DAY]);
-	    fUTCHour = content.getInt(FROM[UTC_HOUR], TO[UTC_HOUR]);
-	    fUTCMinute = content.getInt(FROM[UTC_MINUTE],TO[UTC_MINUTE]);
-	    fUTCSecond = content.getInt(FROM[UTC_SECOND], TO[UTC_SECOND]);
-	    fPositionAccuracy = content.getBoolean(FROM[POSITIONACCURACY]);
-	    fLongitude = content.getAs28BitInt(FROM[LONGITUDE], TO[LONGITUDE]);
-	    if (!Longitude28.isCorrect(fLongitude))
-	    	addViolation(new AISRuleViolation("LongitudeInDegrees", fLongitude, Longitude28.RANGE));
-	    fLatitude = content.getAs27BitInt(FROM[LATITUDE], TO[LATITUDE]);
-	    if (!Latitude27.isCorrect(fLatitude))
-	    	addViolation(new AISRuleViolation("LatitudeInDegrees", fLatitude, Latitude27.RANGE));
-	    fTypeOfEPFD = content.getInt(FROM[FIXING_DEV_TYPE], TO[FIXING_DEV_TYPE]);
-	}
+    fun hasLongitude(): Boolean {
+        return Longitude28.isAvailable(fLongitude)
+    }
 
-	public int getUtcYear() { return fUTCYear; }
+    fun hasLatitude(): Boolean {
+        return Latitude27.isAvailable(fLatitude)
+    }
 
-	public int getUtcMonth() { return fUTCMonth; }
+    override fun toString(): String {
+        var result = "\tYear:    " + utcYear
+        result += SEPARATOR + "Month:   " + utcMonth
+        result += SEPARATOR + "Day:     " + utcDay
+        result += SEPARATOR + "Hour:    " + utcHour
+        result += SEPARATOR + "Minute:  " + utcMinute
+        result += SEPARATOR + "Sec:     " + utcSecond
+        result += SEPARATOR + "Pos acc: " + (if (isAccurate) "high" else "low") + " accuracy"
+        result += SEPARATOR + "Lon:     " + Longitude28.toString(fLongitude)
+        result += SEPARATOR + "Lat:     " + Latitude27.toString(fLatitude)
+        result += SEPARATOR + "EPFD:    " + PositioningDevice.toString(typeOfEPFD)
+        return result
+    }
 
-	public int getUtcDay() { return fUTCDay; }
-
-	public int getUtcHour() { return fUTCHour; }
-
-	public int getUtcMinute() { return fUTCMinute; }
-
-	public int getUtcSecond() { return fUTCSecond; }
-
-	public boolean isAccurate() { return fPositionAccuracy; }
-
-	public double getLongitudeInDegrees() { return Longitude28.toDegrees(fLongitude); }
-
-	public double getLatitudeInDegrees() { return Latitude27.toDegrees(fLatitude); }
-
-	public int getTypeOfEPFD() { return fTypeOfEPFD; }
-
-	public boolean hasLongitude() {
-		return Longitude28.isAvailable(fLongitude);
-	}
-
-	public boolean hasLatitude() {
-		return Latitude27.isAvailable(fLatitude);
-	}
-
-	@Override
-	public String toString() {
-		String result =     "\tYear:    " + getUtcYear();
-		result += SEPARATOR + "Month:   " + getUtcMonth();
-		result += SEPARATOR + "Day:     " + getUtcDay();
-		result += SEPARATOR + "Hour:    " + getUtcHour();
-		result += SEPARATOR + "Minute:  " + getUtcMinute();
-		result += SEPARATOR + "Sec:     " + getUtcSecond();
-		result += SEPARATOR + "Pos acc: " + (fPositionAccuracy ? "high" : "low") + " accuracy";
-		result += SEPARATOR + "Lon:     " + Longitude28.toString(fLongitude);
-		result += SEPARATOR + "Lat:     " + Latitude27.toString(fLatitude);
-		result += SEPARATOR + "EPFD:    " + PositioningDevice.toString(fTypeOfEPFD);
-		return result;
-	}
+    companion object {
+        private const val SEPARATOR = "\n\t"
+        private const val UTC_YEAR = 0
+        private const val UTC_MONTH = 1
+        private const val UTC_DAY = 2
+        private const val UTC_HOUR = 3
+        private const val UTC_MINUTE = 4
+        private const val UTC_SECOND = 5
+        private const val POSITIONACCURACY = 6
+        private const val LONGITUDE = 7
+        private const val LATITUDE = 8
+        private const val FIXING_DEV_TYPE = 9
+        private val FROM = intArrayOf(
+            38, 52, 56, 61, 66, 72, 78, 79, 107, 134
+        )
+        private val TO = intArrayOf(
+            52, 56, 61, 66, 72, 78, 79, 107, 134, 138
+        )
+    }
 }

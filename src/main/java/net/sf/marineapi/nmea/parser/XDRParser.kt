@@ -18,158 +18,145 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.sentence.XDRSentence;
-import net.sf.marineapi.nmea.util.Measurement;
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.sentence.XDRSentence
+import net.sf.marineapi.nmea.util.Measurement
+import java.util.*
 
 /**
- * <p>
+ *
+ *
  * Transducer measurements.
- * <pre>{@code
- *         1 2   3 4            n
- *         | |   | |            |
- *  $--XDR,a,x.x,a,c--c, ..... *hh<CR><LF>
- * }</pre>
- * <p>
- * Where: 
- * <ol>
- * <li>Transducer Type
- * <li>Measurement Data
- * <li>Units of measurement
- * <li>Name of transducer
- * </ol>
- * <p>
+ * <pre>`1 2   3 4            n
+ * | |   | |            |
+ * $--XDR,a,x.x,a,c--c, ..... *hh<CR><LF>
+`</pre> *
+ *
+ *
+ * Where:
+ *
+ *  1. Transducer Type
+ *  1. Measurement Data
+ *  1. Units of measurement
+ *  1. Name of transducer
+ *
+ *
+ *
  * There may be any number of quadruplets like this, each describing a
  * sensor. The last field will be a checksum as usual.
- * 
+ *
  * @author Robert Huitema, Kimmo Tuukkanen
  */
-class XDRParser extends SentenceParser implements XDRSentence {
+internal class XDRParser : SentenceParser, XDRSentence {
+    /**
+     * Creates new instance of XDRParser.
+     *
+     * @param nmea XDR sentence string
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.XDR) {}
 
-	// length of each data set is 4 fields
-	private static int DATA_SET_LENGTH = 4;
-	
-	// data set field indices, relative to first field of each set
-	private static int TYPE_INDEX = 0;
-	private static int VALUE_INDEX = 1;
-	private static int UNITS_INDEX = 2;
-	private static int NAME_INDEX = 3;
-	
-	/**
-	 * Creates new instance of XDRParser.
-	 * 
-	 * @param nmea XDR sentence string
-	 */
-	public XDRParser(String nmea) {
-		super(nmea, SentenceId.XDR);
-	}
+    /**
+     * Creates XDR parser with empty sentence.
+     *
+     * @param talker TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.XDR, DATA_SET_LENGTH) {}
 
-	/**
-	 * Creates XDR parser with empty sentence.
-	 * 
-	 * @param talker TalkerId to set
-	 */
-	public XDRParser(TalkerId talker) {
-		super(talker, SentenceId.XDR, DATA_SET_LENGTH);
-	}
-
-
-
-	/* (non-Javadoc)
+    /* (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#addMeasurement(net.sf.marineapi.nmea.util.Measurement[])
 	 */
-	public void addMeasurement(Measurement... m) {
-		List<Measurement> ms = getMeasurements();
-		ms.addAll(Arrays.asList(m));
-		setMeasurements(ms);		
-	}
+    override fun addMeasurement(vararg m: Measurement?) {
+        val ms = measurements
+        ms.addAll(Arrays.asList(*m))
+        measurements = ms
+    }
 
-	/* (non-Javadoc)
+    /* (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#getMeasurements()
 	 */
-	public List<Measurement> getMeasurements() {
-		ArrayList<Measurement> result = new ArrayList<Measurement>();
-		for (int i = 0; i < getFieldCount(); i += DATA_SET_LENGTH) {
-			Measurement value = fetchValues(i);
-			if(!value.isEmpty()) {
-				result.add(value);
-			}
-		}
-		return result;
-	}
+    override fun getMeasurements(): MutableList<Measurement> {
+        val result = ArrayList<Measurement>()
+        var i = 0
+        while (i < fieldCount) {
+            val value = fetchValues(i)
+            if (!value.isEmpty) {
+                result.add(value)
+            }
+            i += DATA_SET_LENGTH
+        }
+        return result
+    }
 
-	/* (non-Javadoc)
+    /* (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#setMeasurement(net.sf.marineapi.nmea.util.Measurement)
 	 */
-	public void setMeasurement(Measurement m) {
-		setFieldCount(DATA_SET_LENGTH);
-		insertValues(TYPE_INDEX, m);
-	}
-	
-	/* (non-Javadoc)
+    override fun setMeasurement(m: Measurement?) {
+        fieldCount = DATA_SET_LENGTH
+        insertValues(TYPE_INDEX, m)
+    }
+
+    /* (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#setMeasurements(java.util.List)
 	 */
-	public void setMeasurements(List<Measurement> measurements) {
-				
-		setFieldCount(measurements.size() * DATA_SET_LENGTH);
+    override fun setMeasurements(measurements: List<Measurement>) {
+        fieldCount = measurements.size * DATA_SET_LENGTH
+        var i = 0
+        for (m in measurements) {
+            insertValues(i, m)
+            i += DATA_SET_LENGTH
+        }
+    }
 
-		int i = 0;
-		for(Measurement m : measurements) {
-			insertValues(i, m);
-			i += DATA_SET_LENGTH;
-		}
-	}
+    /**
+     * Fetch data set starting at given index.
+     *
+     * @param i Start position of data set, i.e. index of first data field.
+     * @return XDRValue object
+     */
+    private fun fetchValues(i: Int): Measurement {
+        val m = Measurement()
+        if (hasValue(i)) {
+            m.type = getStringValue(i)
+        }
+        if (hasValue(i + VALUE_INDEX)) {
+            m.value = getDoubleValue(i + VALUE_INDEX)
+        }
+        if (hasValue(i + UNITS_INDEX)) {
+            m.units = getStringValue(i + UNITS_INDEX)
+        }
+        if (hasValue(i + NAME_INDEX)) {
+            m.name = getStringValue(i + NAME_INDEX)
+        }
+        return m
+    }
 
-	/**
-	 * Fetch data set starting at given index.
-	 *  
-	 * @param i Start position of data set, i.e. index of first data field.
-	 * @return XDRValue object
-	 */
-	private Measurement fetchValues(int i) {
-		
-		Measurement m = new Measurement();
-		
-		if(hasValue(i)) {
-			m.setType(getStringValue(i));
-		}
-		
-		if(hasValue(i + VALUE_INDEX)) {
-			m.setValue(getDoubleValue(i + VALUE_INDEX));
-		}
-		
-		if(hasValue(i + UNITS_INDEX)) {
-			m.setUnits(getStringValue(i + UNITS_INDEX));
-		}
-		
-		if(hasValue(i + NAME_INDEX)) {
-			m.setName(getStringValue(i + NAME_INDEX));
-		}
+    /**
+     * Inserts the given data set beginning at given index. Before inserting,
+     * make sure the sentence has enough fields for it.
+     *
+     * @param i Start position of data set, i.e. index of first data field.
+     * @param m XDR data set to insert
+     */
+    private fun insertValues(i: Int, m: Measurement?) {
+        if (m != null) {
+            setStringValue(i, m.type)
+            setDoubleValue(i + VALUE_INDEX, m.value)
+            setStringValue(i + UNITS_INDEX, m.units)
+            setStringValue(i + NAME_INDEX, m.name)
+        }
+    }
 
-		return m;
-	}
+    companion object {
+        // length of each data set is 4 fields
+        private const val DATA_SET_LENGTH = 4
 
-	/**
-	 * Inserts the given data set beginning at given index. Before inserting,
-	 * make sure the sentence has enough fields for it.
-	 * 
-	 * @param i Start position of data set, i.e. index of first data field.
-	 * @param m XDR data set to insert
-	 */
-	private void insertValues(int i, Measurement m) {
-		
-		if(m != null) {
-			setStringValue((i), m.getType());
-			setDoubleValue((i + VALUE_INDEX), m.getValue());
-			setStringValue((i + UNITS_INDEX), m.getUnits());
-			setStringValue((i + NAME_INDEX), m.getName());
-		}
-	}
+        // data set field indices, relative to first field of each set
+        private const val TYPE_INDEX = 0
+        private const val VALUE_INDEX = 1
+        private const val UNITS_INDEX = 2
+        private const val NAME_INDEX = 3
+    }
 }

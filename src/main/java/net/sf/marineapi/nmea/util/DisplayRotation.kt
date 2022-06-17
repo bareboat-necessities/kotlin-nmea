@@ -18,55 +18,50 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
 /**
  * Defines the various display rotations a navigational display
  * (such as an ARPA) can select.
- * 
+ *
  * @see net.sf.marineapi.nmea.sentence.RSDSentence
- * 
+ *
+ *
  * @author Joshua Sweaney
  */
-public enum DisplayRotation {
-
-    /** Course up, course-over-ground up, degrees true */
+enum class DisplayRotation(private val ch: Char) {
+    /** Course up, course-over-ground up, degrees true  */
     COURSE_UP('C'),
 
-    /** Head up, ship's heading (centre line) pointing up */
+    /** Head up, ship's heading (centre line) pointing up  */
     HEAD_UP('H'),
 
-    /** North up, true north 0 degrees is up */
+    /** North up, true north 0 degrees is up  */
     NORTH_UP('N');
 
-    private char ch;
+    /**
+     * Returns the corresponding char constant.
+     *
+     * @return Char indicator of enum
+     */
+    fun toChar(): Char {
+        return ch
+    }
 
-	private DisplayRotation(char c) {
-		ch = c;
-	}
-
-	/**
-	 * Returns the corresponding char constant.
-	 * 
-	 * @return Char indicator of enum
-	 */
-	public char toChar() {
-		return ch;
-	}
-
-	/**
-	 * Get the enum corresponding to specified char.
-	 * 
-	 * @param ch Char indicator for display rotation
-	 * @return DisplayRotation enum
-	 */
-	public static DisplayRotation valueOf(char ch) {
-		for (DisplayRotation r : values()) {
-			if (r.toChar() == ch) {
-				return r;
-			}
-		}
-		return valueOf(String.valueOf(ch));
-	}
-    
+    companion object {
+        /**
+         * Get the enum corresponding to specified char.
+         *
+         * @param ch Char indicator for display rotation
+         * @return DisplayRotation enum
+         */
+        fun valueOf(ch: Char): DisplayRotation {
+            for (r in values()) {
+                if (r.toChar() == ch) {
+                    return r
+                }
+            }
+            return valueOf(ch.toString())
+        }
+    }
 }

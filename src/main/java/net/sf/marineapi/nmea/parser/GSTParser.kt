@@ -18,179 +18,150 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.GSTSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.Time;
+import net.sf.marineapi.nmea.sentence.GSTSentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.Time
 /**
  * GST sentence parser.
  *
  * @author Tero Laitinen
  */
-class GSTParser extends SentenceParser implements GSTSentence {
+internal class GSTParser : SentenceParser, GSTSentence {
+    /**
+     * Creates a new instance of GST parser.
+     *
+     * @param nmea GST sentence String.
+     * @throws IllegalArgumentException If the specified sentence is invalid or
+     * not a GST sentence.
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.GST) {}
 
-	// GST field indices
-	private static final int UTC_TIME = 0;
-	private static final int PSEUDORANGE_RESIDUALS_RMS = 1;
-	private static final int ERROR_ELLIPSE_SEMI_MAJOR = 2;
-	private static final int ERROR_ELLIPSE_SEMI_MINOR = 3;
-	private static final int ERROR_ELLIPSE_ORIENTATION = 4;
-	private static final int LATITUDE_ERROR = 5;
-	private static final int LONGITUDE_ERROR = 6;
-	private static final int ALTITUDE_ERROR = 7;
+    /**
+     * Creates GSA parser with empty sentence.
+     *
+     * @param talker TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.GST, 8) {}
 
-	/**
-	 * Creates a new instance of GST parser.
-	 *
-	 * @param nmea GST sentence String.
-	 * @throws IllegalArgumentException If the specified sentence is invalid or
-	 *						 not a GST sentence.
-	 */
-	public GSTParser(String nmea) {
-		super(nmea, SentenceId.GST);
-	}
-
-	/**
-	 * Creates GSA parser with empty sentence.
-	 *
-	 * @param talker TalkerId to set
-	 */
-	public GSTParser(TalkerId talker) {
-		super(talker, SentenceId.GST, 8);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.TimeSentence#getTime()
-	 */
-	public Time getTime() {
-		String str = getStringValue(UTC_TIME);
-		return new Time(str);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getPseudoRangeResidualsRMS
-	 */
-	public double getPseudoRangeResidualsRMS() {
-		return getDoubleValue(PSEUDORANGE_RESIDUALS_RMS);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getSemiMajorError
-	 */
-	public double getSemiMajorError() {
-		return getDoubleValue(ERROR_ELLIPSE_SEMI_MAJOR);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getSemiMinorError
-	 */
-	public double getSemiMinorError() {
-		return getDoubleValue(ERROR_ELLIPSE_SEMI_MINOR);
-	}
-
-
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getErrorEllipseOrientation
-	 */
-	public double getErrorEllipseOrientation() {
-		return getDoubleValue(ERROR_ELLIPSE_ORIENTATION);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getLatitudeError
-	 */
-	public double getLatitudeError() {
-		return getDoubleValue(LATITUDE_ERROR);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getLongitudeError
-	 */
-	public double getLongitudeError() {
-		return getDoubleValue(LONGITUDE_ERROR);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getAltitudeError
-	 */
-	public double getAltitudeError() {
-		return getDoubleValue(ALTITUDE_ERROR);
-	}
-
-	/*
+	 *//*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.nmea.util.Time)
 	 */
-	public void setTime(Time t) {
-		setStringValue(UTC_TIME, t.toString());
-	}
+    override var time: Time
+        get() {
+            val str = getStringValue(UTC_TIME)
+            return Time(str)
+        }
+        set(t) {
+            setStringValue(UTC_TIME, t.toString())
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getPseudoRangeResidualsRMS
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setPseudoRangeResidualsRMS
 	 */
-	public void setPseudoRangeResidualsRMS(double rms) {
-		setDoubleValue(PSEUDORANGE_RESIDUALS_RMS, rms);
-	}
+    override var pseudoRangeResidualsRMS: Double
+        get() = getDoubleValue(PSEUDORANGE_RESIDUALS_RMS)
+        set(rms) {
+            setDoubleValue(PSEUDORANGE_RESIDUALS_RMS, rms)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getSemiMajorError
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setSemiMajorError
 	 */
-	public void setSemiMajorError(double error) {
-		setDoubleValue(ERROR_ELLIPSE_SEMI_MAJOR, error);
-	}
+    override var semiMajorError: Double
+        get() = getDoubleValue(ERROR_ELLIPSE_SEMI_MAJOR)
+        set(error) {
+            setDoubleValue(ERROR_ELLIPSE_SEMI_MAJOR, error)
+        }
 
-/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getSemiMinorError
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setSemiMinorError
 	 */
-	public void setSemiMinorError(double error) {
-		setDoubleValue(ERROR_ELLIPSE_SEMI_MINOR, error);
-	}
+    override var semiMinorError: Double
+        get() = getDoubleValue(ERROR_ELLIPSE_SEMI_MINOR)
+        set(error) {
+            setDoubleValue(ERROR_ELLIPSE_SEMI_MINOR, error)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getErrorEllipseOrientation
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setErrorEllipseOrientation
 	 */
-	public void setErrorEllipseOrientation(double orientation) {
-		setDoubleValue(ERROR_ELLIPSE_ORIENTATION, orientation);
-	}
+    override var errorEllipseOrientation: Double
+        get() = getDoubleValue(ERROR_ELLIPSE_ORIENTATION)
+        set(orientation) {
+            setDoubleValue(ERROR_ELLIPSE_ORIENTATION, orientation)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getLatitudeError
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setLatitudeError
 	 */
-	public void setLatitudeError(double error) {
-		setDoubleValue(LATITUDE_ERROR, error);
-	}
+    override var latitudeError: Double
+        get() = getDoubleValue(LATITUDE_ERROR)
+        set(error) {
+            setDoubleValue(LATITUDE_ERROR, error)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getLongitudeError
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setLongitudeError
 	 */
-	public void setLongitudeError(double error) {
-		setDoubleValue(LONGITUDE_ERROR, error);
-	}
+    override var longitudeError: Double
+        get() = getDoubleValue(LONGITUDE_ERROR)
+        set(error) {
+            setDoubleValue(LONGITUDE_ERROR, error)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getAltitudeError
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setAltitudeError
 	 */
-	public void setAltitudeError(double error) {
-		setDoubleValue(ALTITUDE_ERROR, error);
-	}
+    override var altitudeError: Double
+        get() = getDoubleValue(ALTITUDE_ERROR)
+        set(error) {
+            setDoubleValue(ALTITUDE_ERROR, error)
+        }
+
+    companion object {
+        // GST field indices
+        private const val UTC_TIME = 0
+        private const val PSEUDORANGE_RESIDUALS_RMS = 1
+        private const val ERROR_ELLIPSE_SEMI_MAJOR = 2
+        private const val ERROR_ELLIPSE_SEMI_MINOR = 3
+        private const val ERROR_ELLIPSE_ORIENTATION = 4
+        private const val LATITUDE_ERROR = 5
+        private const val LONGITUDE_ERROR = 6
+        private const val ALTITUDE_ERROR = 7
+    }
 }

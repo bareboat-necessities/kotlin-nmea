@@ -18,133 +18,118 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.sentence.VLWSentence;
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.sentence.VLWSentence
 
 /**
  * VLW sentence parser.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-class VLWParser extends SentenceParser implements VLWSentence {
+internal class VLWParser : SentenceParser, VLWSentence {
+    /**
+     * Creates a new instance of VLWParser.
+     *
+     * @param nmea NMEA sentence STring.
+     */
+    constructor(nmea: String) : super(nmea) {}
 
-	private static final int TOTAL = 0;
-	private static final int TOTAL_UNITS = 1;
-	private static final int TRIP = 2;
-	private static final int TRIP_UNITS = 3;
+    /**
+     * Creates a new empty instance of VLWParser.
+     *
+     * @param talker TalkerId to set.
+     */
+    constructor(talker: TalkerId?) : super(talker, "VLW", 4) {}
 
-	/**
-	 * Creates a new instance of VLWParser.
-	 * 
-	 * @param nmea NMEA sentence STring.
-	 */
-	public VLWParser(String nmea) {
-		super(nmea);
-	}
-
-	/**
-	 * Creates a new empty instance of VLWParser.
-	 * 
-	 * @param talker TalkerId to set.
-	 */
-	public VLWParser(TalkerId talker) {
-		super(talker, "VLW", 4);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#getTotal()
 	 */
-	@Override
-	public double getTotal() {
-		return getDoubleValue(TOTAL);
-	}
+    override fun getTotal(): Double {
+        return getDoubleValue(TOTAL)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#getTotalUnits()
 	 */
-	@Override
-	public char getTotalUnits() {
-		return getCharValue(TOTAL_UNITS);
-	}
+    override fun getTotalUnits(): Char {
+        return getCharValue(TOTAL_UNITS)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#getTrip()
 	 */
-	@Override
-	public double getTrip() {
-		return getDoubleValue(TRIP);
-	}
+    override fun getTrip(): Double {
+        return getDoubleValue(TRIP)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#getTripUnits()
 	 */
-	@Override
-	public char getTripUnits() {
-		return getCharValue(TRIP_UNITS);
-	}
+    override fun getTripUnits(): Char {
+        return getCharValue(TRIP_UNITS)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#setTotal(double)
 	 */
-	@Override
-	public void setTotal(double distance) {
-		setDoubleValue(TOTAL, distance, 1, 1);
-	}
+    override fun setTotal(distance: Double) {
+        setDoubleValue(TOTAL, distance, 1, 1)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#setTotalUnits(char)
 	 */
-	@Override
-	public void setTotalUnits(char unit) {
-		setUnit(TOTAL_UNITS, unit);
-	}
+    override fun setTotalUnits(unit: Char) {
+        setUnit(TOTAL_UNITS, unit)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#setTrip(double)
 	 */
-	@Override
-	public void setTrip(double distance) {
-		setDoubleValue(TRIP, distance, 1, 1);
-	}
+    override fun setTrip(distance: Double) {
+        setDoubleValue(TRIP, distance, 1, 1)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#setTripUnits(char)
 	 */
-	@Override
-	public void setTripUnits(char unit) {
-		setUnit(TRIP_UNITS, unit);
-	}
+    override fun setTripUnits(unit: Char) {
+        setUnit(TRIP_UNITS, unit)
+    }
 
-	/**
-	 * Set and validate unit char.
-	 * 
-	 * @param index Field index
-	 * @param unit Unit char
-	 */
-	private void setUnit(int index, char unit) {
-		if (unit != VLWSentence.KM && unit != VLWSentence.NM) {
-			throw new IllegalArgumentException(
-				"Invalid distance unit, expected 'N' or 'K'");
-		}
-		setCharValue(index, unit);
-	}
+    /**
+     * Set and validate unit char.
+     *
+     * @param index Field index
+     * @param unit Unit char
+     */
+    private fun setUnit(index: Int, unit: Char) {
+        require(!(unit != VLWSentence.Companion.KM && unit != VLWSentence.Companion.NM)) { "Invalid distance unit, expected 'N' or 'K'" }
+        setCharValue(index, unit)
+    }
 
+    companion object {
+        private const val TOTAL = 0
+        private const val TOTAL_UNITS = 1
+        private const val TRIP = 2
+        private const val TRIP_UNITS = 3
+    }
 }

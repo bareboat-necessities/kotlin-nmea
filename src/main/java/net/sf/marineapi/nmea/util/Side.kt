@@ -18,48 +18,43 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
 /**
  * Defines the sides of a boat, i.e. "port" and "starboard".
- * 
+ *
  * @author Lázár József
  */
-public enum Side {
+enum class Side(private val ch: Char) {
+    /** Port  */
+    PORT('P'),
 
-	/** Port */
-	PORT('P'),
+    /** Right  */
+    STARBOARD('S');
 
-	/** Right */
-	STARBOARD('S');
+    /**
+     * Returns the corresponding char constant.
+     *
+     * @return Char indicator for Direction
+     */
+    fun toChar(): Char {
+        return ch
+    }
 
-	private char ch;
-
-	Side(char c) {
-		ch = c;
-	}
-
-	/**
-	 * Returns the corresponding char constant.
-	 * 
-	 * @return Char indicator for Direction
-	 */
-	public char toChar() {
-		return ch;
-	}
-
-	/**
-	 * Get the enum corresponding to specified char.
-	 * 
-	 * @param c Char indicator for Side
-	 * @return Side
-	 */
-	public static Side valueOf(char c) {
-		for (Side d : values()) {
-			if (d.toChar() == c) {
-				return d;
-			}
-		}
-		return valueOf(String.valueOf(c));
-	}
+    companion object {
+        /**
+         * Get the enum corresponding to specified char.
+         *
+         * @param c Char indicator for Side
+         * @return Side
+         */
+        fun valueOf(c: Char): Side {
+            for (d in values()) {
+                if (d.toChar() == c) {
+                    return d
+                }
+            }
+            return valueOf(c.toString())
+        }
+    }
 }

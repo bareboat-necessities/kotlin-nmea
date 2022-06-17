@@ -18,93 +18,82 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.DataStatus;
-import net.sf.marineapi.nmea.util.Units;
+import net.sf.marineapi.nmea.util.*
 
 /**
- * <p>Wind speed and angle. Speed in km/h, m/s, or knots. Wind angle is given in
- * degrees relative to bow or true north.</p>
- * 
- * <p>Example:<br>{@code $IIMWV,199,R,5.9,N,A*2E}</p>
- * 
+ *
+ * Wind speed and angle. Speed in km/h, m/s, or knots. Wind angle is given in
+ * degrees relative to bow or true north.
+ *
+ *
+ * Example:<br></br>`$IIMWV,199,R,5.9,N,A*2E`
+ *
  * @author Kimmo Tuukkanen
  */
-public interface MWVSentence extends Sentence {
+interface MWVSentence : Sentence {
+    /**
+     * Get wind angle.
+     *
+     * @return Wind angle in degrees.
+     */
+    /**
+     * Set wind angle.
+     *
+     * @param angle Wind angle in degrees.
+     * @see .setTrue
+     */
+    var angle: Double
+    /**
+     * Returns the wind speed.
+     *
+     * @return Wind speed value
+     */
+    /**
+     * Set the wind speed value.
+     *
+     * @param speed Wind speed to set.
+     */
+    var speed: Double
+    /**
+     * Returns the wind speed unit.
+     *
+     * @return [Units.METER] for meters per second, [Units.KILOMETERS] for
+     * kilometers per hour and [Units.NAUTICAL_MILES] for knots.
+     */
+    /**
+     * Set wind speed unit.
+     *
+     * @param unit [Units.METER] for meters per second, [Units.KILOMETERS]
+     * for kilometers per hour and [Units.NAUTICAL_MILES] for knots.
+     * @throws IllegalArgumentException If trying to set invalid unit
+     */
+    var speedUnit: Units
+    /**
+     * Get data validity status.
+     *
+     * @return Data status
+     */
+    /**
+     * Set data validity status.
+     *
+     * @param status Data status to set.
+     */
+    var status: DataStatus
 
-	/**
-	 * Get wind angle.
-	 * 
-	 * @return Wind angle in degrees.
-	 */
-	double getAngle();
+    /**
+     * Tells if the angle is relative or true.
+     *
+     * @return True if relative to true north, otherwise false (relative to bow)
+     */
+    val isTrue: Boolean
 
-	/**
-	 * Returns the wind speed.
-	 * 
-	 * @return Wind speed value
-	 */
-	double getSpeed();
-
-	/**
-	 * Returns the wind speed unit.
-	 * 
-	 * @return {@link Units#METER} for meters per second, {@link Units#KILOMETERS} for
-	 *         kilometers per hour and {@link Units#NAUTICAL_MILES} for knots.
-	 */
-	Units getSpeedUnit();
-
-	/**
-	 * Get data validity status.
-	 * 
-	 * @return Data status
-	 */
-	DataStatus getStatus();
-
-	/**
-	 * Tells if the angle is relative or true.
-	 * 
-	 * @return True if relative to true north, otherwise false (relative to bow)
-	 */
-	boolean isTrue();
-
-	/**
-	 * Set wind angle.
-	 * 
-	 * @param angle Wind angle in degrees.
-	 * @see #setTrue(boolean)
-	 */
-	void setAngle(double angle);
-
-	/**
-	 * Set the wind speed value.
-	 * 
-	 * @param speed Wind speed to set.
-	 */
-	void setSpeed(double speed);
-
-	/**
-	 * Set wind speed unit.
-	 * 
-	 * @param unit {@link Units#METER} for meters per second, {@link Units#KILOMETERS}
-	 *            for kilometers per hour and {@link Units#NAUTICAL_MILES} for knots.
-	 * @throws IllegalArgumentException If trying to set invalid unit
-	 */
-	void setSpeedUnit(Units unit);
-
-	/**
-	 * Set data validity status.
-	 * 
-	 * @param status Data status to set.
-	 */
-	void setStatus(DataStatus status);
-
-	/**
-	 * Set angle to relative or true.
-	 * 
-	 * @param isTrue True for true angle, false for relative to bow.
-	 * @see #setAngle(double)
-	 */
-	void setTrue(boolean isTrue);
+    /**
+     * Set angle to relative or true.
+     *
+     * @param isTrue True for true angle, false for relative to bow.
+     * @see .setAngle
+     */
+    fun setTrue(isTrue: Boolean)
 }

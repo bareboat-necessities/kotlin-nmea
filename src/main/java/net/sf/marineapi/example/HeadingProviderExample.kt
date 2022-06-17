@@ -18,76 +18,71 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.example;
+package net.sf.marineapi.example
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import net.sf.marineapi.nmea.io.SentenceReader;
-import net.sf.marineapi.provider.HeadingProvider;
-import net.sf.marineapi.provider.event.HeadingEvent;
-import net.sf.marineapi.provider.event.HeadingListener;
+import net.sf.marineapi.nmea.io.SentenceReader
+import net.sf.marineapi.provider.HeadingProvider
+import net.sf.marineapi.provider.event.HeadingEvent
+import net.sf.marineapi.provider.event.HeadingListener
+import java.io.*
 
 /**
  * Demonstrates the usage of HeadingProvider.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public class HeadingProviderExample implements HeadingListener {
+class HeadingProviderExample(file: File?) : HeadingListener {
+    private val reader: SentenceReader
+    private val provider: HeadingProvider
 
-	private SentenceReader reader;
-	private HeadingProvider provider;
+    /**
+     * Creates a new instance of FileExample
+     *
+     * @param file File from which to read Checksum data
+     */
+    init {
 
-	/**
-	 * Creates a new instance of FileExample
-	 * 
-	 * @param file File from which to read Checksum data
-	 */
-	public HeadingProviderExample(File file) throws IOException {
+        // create sentence reader and provide input stream
+        val stream: InputStream = FileInputStream(file)
+        reader = SentenceReader(stream)
 
-		// create sentence reader and provide input stream
-		InputStream stream = new FileInputStream(file);
-		reader = new SentenceReader(stream);
+        // create provider and register listener
+        provider = HeadingProvider(reader)
+        provider.addListener(this)
+        reader.start()
+    }
 
-		// create provider and register listener
-		provider = new HeadingProvider(reader);
-		provider.addListener(this);
-
-		reader.start();
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.provider.event.HeadingListener#providerUpdate(net.sf
 	 * .marineapi.provider.event.HeadingEvent)
 	 */
-	public void providerUpdate(HeadingEvent evt) {
-		System.out.println(evt.toString());
-	}
+    override fun providerUpdate(evt: HeadingEvent) {
+        println(evt.toString())
+    }
 
-	/**
-	 * Main method takes one command-line argument, the name of the file to
-	 * read.
-	 * 
-	 * @param args Command-line arguments
-	 */
-	public static void main(String[] args) {
-
-		if (args.length != 1) {
-			String msg = "Example usage:\njava HeadingProviderExample nmea.log";
-			System.out.println(msg);
-			System.exit(0);
-		}
-
-		try {
-			new HeadingProviderExample(new File(args[0]));
-			System.out.println("Running, press CTRL-C to stop..");
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
+    companion object {
+        /**
+         * Main method takes one command-line argument, the name of the file to
+         * read.
+         *
+         * @param args Command-line arguments
+         */
+        @JvmStatic
+        fun main(args: Array<String>) {
+            if (args.size != 1) {
+                val msg = "Example usage:\njava HeadingProviderExample nmea.log"
+                println(msg)
+                System.exit(0)
+            }
+            try {
+                HeadingProviderExample(File(args[0]))
+                println("Running, press CTRL-C to stop..")
+            } catch (e: IOException) {
+                e.printStackTrace()
+                System.exit(1)
+            }
+        }
+    }
 }

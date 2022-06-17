@@ -18,45 +18,46 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.message;
+package net.sf.marineapi.ais.message
 
 /**
- * <p>
- * Common interface for all messages providing position reports.</p>
- * <p>
- * See <a href="https://www.navcen.uscg.gov/?pageName=AISMessagesA">Class A AIS
- * position report</a> specification for more details on return values and
- * status codes.</p>
+ *
+ *
+ * Common interface for all messages providing position reports.
+ *
+ *
+ * See [Class A AIS
+ * position report](https://www.navcen.uscg.gov/?pageName=AISMessagesA) specification for more details on return values and
+ * status codes.
  * @author Lázár József
  */
-public interface AISPositionReport extends AISPositionReportB {
+interface AISPositionReport : AISPositionReportB {
+    /**
+     * Returns the navigational status.
+     *
+     * @return The navigational status indicator between 0 - 15
+     */
+    val navigationalStatus: Int
 
-	/**
-	 * Returns the navigational status.
-	 *
-	 * @return The navigational status indicator between 0 - 15
-	 */
-	int getNavigationalStatus();
+    /**
+     * Returns the rate of turn.
+     *
+     * @return Rate of turn, in degrees per min
+     */
+    val rateOfTurn: Double
 
-	/**
-	 * Returns the rate of turn.
-	 *
-	 * @return Rate of turn, in degrees per min
-	 */
-	double getRateOfTurn();
+    /**
+     * Returns the manouver indicator.
+     *
+     * @return 0 = not available = default, 1 = not engaged in special maneuver
+     * or 2 = engaged in special maneuver
+     */
+    val manouverIndicator: Int
 
-	/**
-	 * Returns the manouver indicator.
-	 *
-	 * @return 0 = not available = default, 1 = not engaged in special maneuver
-	 *        or 2 = engaged in special maneuver
-	 */
-	int getManouverIndicator();
-
-	/**
-	 * Returns true if rate of turn is available in the message.
-	 *
-	 * @return true if has ROT, otherwise false.
-	 */
-	boolean hasRateOfTurn();
+    /**
+     * Returns true if rate of turn is available in the message.
+     *
+     * @return true if has ROT, otherwise false.
+     */
+    fun hasRateOfTurn(): Boolean
 }

@@ -18,91 +18,81 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.CURSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
+import net.sf.marineapi.nmea.sentence.CURSentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerId
 /**
  * CUR sentence parser.
- * 
+ *
  * @author Henri Laurent
  * @see CURSentence
  */
-class CURParser extends SentenceParser implements CURSentence {
+internal class CURParser : SentenceParser, CURSentence {
+    /**
+     * Creates a new instance of CUR parser.
+     *
+     * @param nmea CUR sentence String
+     * @throws IllegalArgumentException If specified String is invalid or does
+     * not contain a CUR sentence.
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.CUR) {}
 
-	// field indices
-	private static final int DATA_STATUS = 0;
-	private static final int DATA_SET = 1;
-	private static final int LAYER = 2;
-	private static final int CURRENT_DEPTH = 3; // in meters
-	private static final int CURRENT_DIRECTION = 4; // in degrees
-	private static final int DIRECTION_REFERENCE = 5; // True/Relative T/R
-	private static final int CURRENT_SPEED = 6; // in knots
-	private static final int REFERENCE_LAYER_DEPTH = 7; // in meters
-	private static final int CURRENT_HEADING = 8;
-	private static final int HEADING_REFERENCE = 9; // True/Magentic T/M
-	private static final int SPEED_REFERENCE = 10; // Bottom/Water/Positioning system B/W/P
+    /**
+     * Creates CUR parser with empty sentence.
+     *
+     * @param talker TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.CUR, 11) {
+        setCharValue(DIRECTION_REFERENCE, 'T')
+        setCharValue(HEADING_REFERENCE, 'T')
+        setCharValue(SPEED_REFERENCE, 'B')
+    }
 
-	/**
-	 * Creates a new instance of CUR parser.
-	 *
-	 * @param nmea CUR sentence String
-	 * @throws IllegalArgumentException If specified String is invalid or does
-	 *             not contain a CUR sentence.
-	 */
-	public CURParser(String nmea) {
-		super(nmea, SentenceId.CUR);
-	}
-
-	/**
-	 * Creates CUR parser with empty sentence.
-	 *
-	 * @param talker TalkerId to set
-	 */
-	public CURParser(TalkerId talker) {
-		super(talker, SentenceId.CUR, 11);
-		setCharValue(DIRECTION_REFERENCE, 'T');
-		setCharValue(HEADING_REFERENCE, 'T');
-		setCharValue(SPEED_REFERENCE, 'B');
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.BODSentence#getCurrentDirection()
 	 */
-	public double getCurrentDirection() {
-		return getDoubleValue(CURRENT_DIRECTION);
-	}
+    override val currentDirection: Double
+        get() = getDoubleValue(CURRENT_DIRECTION)
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.BODSentence#getCurrentDirectionReference()
 	 */
-	public String getCurrentDirectionReference() {
-		return getStringValue(DIRECTION_REFERENCE);
-	}
+    override val currentDirectionReference: String?
+        get() = getStringValue(DIRECTION_REFERENCE)
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.BODSentence#getCurrentHeadingReference()
 	 */
-	public String getCurrentHeadingReference() {
-		return getStringValue(HEADING_REFERENCE);
-	}
+    override val currentHeadingReference: String?
+        get() = getStringValue(HEADING_REFERENCE)
 
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.BODSentence#getCurrentSpeed()
 	 */
-	public double getCurrentSpeed() {
-		return getDoubleValue(CURRENT_SPEED);
-	}
+    override val currentSpeed: Double
+        get() = getDoubleValue(CURRENT_SPEED)
 
-
+    companion object {
+        // field indices
+        private const val DATA_STATUS = 0
+        private const val DATA_SET = 1
+        private const val LAYER = 2
+        private const val CURRENT_DEPTH = 3 // in meters
+        private const val CURRENT_DIRECTION = 4 // in degrees
+        private const val DIRECTION_REFERENCE = 5 // True/Relative T/R
+        private const val CURRENT_SPEED = 6 // in knots
+        private const val REFERENCE_LAYER_DEPTH = 7 // in meters
+        private const val CURRENT_HEADING = 8
+        private const val HEADING_REFERENCE = 9 // True/Magentic T/M
+        private const val SPEED_REFERENCE = 10 // Bottom/Water/Positioning system B/W/P
+    }
 }

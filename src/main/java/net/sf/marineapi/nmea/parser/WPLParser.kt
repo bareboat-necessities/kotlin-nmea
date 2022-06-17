@@ -18,67 +18,63 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.sentence.WPLSentence;
-import net.sf.marineapi.nmea.util.Position;
-import net.sf.marineapi.nmea.util.Waypoint;
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.sentence.WPLSentence
+import net.sf.marineapi.nmea.util.Waypoint
 
 /**
  * WPL sentence parser.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-class WPLParser extends PositionParser implements WPLSentence {
+internal class WPLParser : PositionParser, WPLSentence {
+    /**
+     * Creates a new instance of WPLParser.
+     *
+     * @param nmea WPL sentence String.
+     * @throws IllegalArgumentException If specified sentence is invalid.
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.WPL) {}
 
-	// field ids
-	private static final int LATITUDE = 0;
-	private static final int LAT_HEMISPHERE = 1;
-	private static final int LONGITUDE = 2;
-	private static final int LON_HEMISPHERE = 3;
-	private static final int WAYPOINT_ID = 4;
+    /**
+     * Creates WPL parser with empty sentence.
+     *
+     * @param talker TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.WPL, 5) {}
 
-	/**
-	 * Creates a new instance of WPLParser.
-	 * 
-	 * @param nmea WPL sentence String.
-	 * @throws IllegalArgumentException If specified sentence is invalid.
-	 */
-	public WPLParser(String nmea) {
-		super(nmea, SentenceId.WPL);
-	}
-
-	/**
-	 * Creates WPL parser with empty sentence.
-	 * 
-	 * @param talker TalkerId to set
-	 */
-	public WPLParser(TalkerId talker) {
-		super(talker, SentenceId.WPL, 5);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.WPLSentence#getWaypoint()
 	 */
-	public Waypoint getWaypoint() {
-		String id = getStringValue(WAYPOINT_ID);
-		Position p = parsePosition(
-			LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE);
-		
-		return p.toWaypoint(id);
-	}
+    override fun getWaypoint(): Waypoint? {
+        val id = getStringValue(WAYPOINT_ID)
+        val p = parsePosition(
+            LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE
+        )
+        return p!!.toWaypoint(id)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.WPLSentence#setWaypoint(net.sf.marineapi
 	 * .nmea.util.Waypoint)
 	 */
-	public void setWaypoint(Waypoint wp) {
-		setStringValue(WAYPOINT_ID, wp.getId());
-		setPositionValues(wp, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE);
-	}
+    override fun setWaypoint(wp: Waypoint) {
+        setStringValue(WAYPOINT_ID, wp.id)
+        setPositionValues(wp, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE)
+    }
+
+    companion object {
+        // field ids
+        private const val LATITUDE = 0
+        private const val LAT_HEMISPHERE = 1
+        private const val LONGITUDE = 2
+        private const val LON_HEMISPHERE = 3
+        private const val WAYPOINT_ID = 4
+    }
 }

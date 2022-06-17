@@ -18,18 +18,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.parser;
+package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage09;
-import net.sf.marineapi.ais.util.AISRuleViolation;
-import net.sf.marineapi.ais.util.Angle12;
-import net.sf.marineapi.ais.util.Latitude27;
-import net.sf.marineapi.ais.util.Longitude28;
-import net.sf.marineapi.ais.util.Sixbit;
-import net.sf.marineapi.ais.util.SpeedOverGround;
-import net.sf.marineapi.ais.util.TimeStamp;
+import net.sf.marineapi.ais.message.AISMessage09import
 
-import java.text.DecimalFormat;
+net.sf.marineapi.ais.util.*import java.text.DecimalFormat
 
 /**
  * AIS Message 9 implementation: Standard SAR Aircraft Position Report
@@ -37,14 +30,14 @@ import java.text.DecimalFormat;
  * <pre>
  * Field  Name                                      Bits    (from, to )
  * ------------------------------------------------------------------------
- *  1	  messageID                               	   6	(   1,   6)
- *  2	  repeatIndicator                         	   2	(   7,   8)
- *  3	  userID                                  	  30	(   9,  38)
- *  4	  Altitude                               	  12	(  39,  50)
- *  5	  speedOverGround                         	  10	(  51,  60)
- *  6	  positionAccuracy                        	   1	(  61,  61)
- *  7	  longitude                               	  28	(  62,  89)
- *  8	  latitude                                	  27	(  90, 116)
+ * 1	  messageID                               	   6	(   1,   6)
+ * 2	  repeatIndicator                         	   2	(   7,   8)
+ * 3	  userID                                  	  30	(   9,  38)
+ * 4	  Altitude                               	  12	(  39,  50)
+ * 5	  speedOverGround                         	  10	(  51,  60)
+ * 6	  positionAccuracy                        	   1	(  61,  61)
+ * 7	  longitude                               	  28	(  62,  89)
+ * 8	  latitude                                	  27	(  90, 116)
  * 9	  courseOverGround                        	  12	( 117, 128)
  * 10	  timeStamp                               	   6	( 129, 134)
  * 11     regional                                     8    ( 135, 142)
@@ -53,153 +46,128 @@ import java.text.DecimalFormat;
  * 14     assigned                                     1    ( 147, 147)
  * 15     raim                                         1    ( 148, 148)
  * 16     radio                                       20    ( 149, 168)
- *                                                  ---- +
- *                                               sum 168
- * </pre>
+ * ---- +
+ * sum 168
+</pre> *
  *
  * @author Henri Laurent
  */
-class AISMessage09Parser extends AISMessageParser implements AISMessage09 {
-
-    private final static String SEPARATOR			    = "\n\t";
-    private static final int    ALTITUDE                = 0;
-    private final static int	SPEEDOVERGROUND			= 1;
-    private final static int	POSITIONACCURACY		= 2;
-    private final static int	LONGITUDE				= 3;
-    private final static int	LATITUDE				= 4;
-    private final static int	COURSEOVERGROUND		= 5;
-    private final static int	TIMESTAMP				= 6;
-    private final static int	REGIONAL				= 7; // spare 1
-    private final static int	DTE		        		= 8;
-    @SuppressWarnings("unused")
-    private static final int    SPARE	                = 9; // spare 2
-    private static final int    ASSIGNEDMODEFLAG	    = 10;
-    private static final int    RAIMFLAG	            = 11;
-    private static final int    RADIOSTATUS	            = 12;
-
-    private static final int[] FROM = new int[]{38,50,60,61,89,116,128,134,142,43,146,147,149};
-    private static final int[] TO =   new int[]{50,60,61,89,116,128,134,142,43,146,147,149,167};
-
-    private int fAltitude;
-    private int		fSOG;
-    private boolean	fPositionAccuracy;
-    private int		fLongitude;
-    private int		fLatitude;
-    private int		fCOG;
-    private int		fTimeStamp;
-    private int	    fRegional;
-    private boolean	fDTE;
-    private boolean	fAssignedModeFlag;
-    private boolean	fRAIMFlag;
-    private int	fRadioStatus;
-
-    /**
-     * Constructor.
-     *
-     * @param content Sib-bit message content
-     */
-    public AISMessage09Parser(Sixbit content) {
-        super(content, 168);
-        fAltitude = content.getInt(FROM[ALTITUDE], TO[ALTITUDE]);
-        fSOG = content.getInt(FROM[SPEEDOVERGROUND], TO[SPEEDOVERGROUND]);
-        fPositionAccuracy = content.getBoolean(TO[POSITIONACCURACY]);
-        fLongitude = content.getAs28BitInt(FROM[LONGITUDE], TO[LONGITUDE]);
-        if (!Longitude28.isCorrect(fLongitude))
-            addViolation(new AISRuleViolation("LongitudeInDegrees", fLongitude, Longitude28.RANGE));
-        fLatitude = content.getAs27BitInt(FROM[LATITUDE], TO[LATITUDE]);
-        if (!Latitude27.isCorrect(fLatitude))
-            addViolation(new AISRuleViolation("LatitudeInDegrees", fLatitude, Latitude27.RANGE));
-        fCOG = content.getInt(FROM[COURSEOVERGROUND], TO[COURSEOVERGROUND]);
-        if (!Angle12.isCorrect(fCOG))
-            addViolation(new AISRuleViolation("CourseOverGround", fCOG, Angle12.RANGE));
-        fTimeStamp = content.getInt(FROM[TIMESTAMP], TO[TIMESTAMP]);
-        fRegional = content.getInt(FROM[REGIONAL], TO[REGIONAL]);
-        fDTE = content.getBoolean(TO[DTE]);
-        fAssignedModeFlag = content.getBoolean(TO[ASSIGNEDMODEFLAG]);
-        fRAIMFlag = content.getBoolean(TO[RAIMFLAG]);
-        fRadioStatus = content.getInt(FROM[RADIOSTATUS], TO[RADIOSTATUS]);
-    }
-
-    public int getAltitude() {
-        return fAltitude;
-    }
-
-    public int getSpeedOverGround() { return fSOG; }
-
-    /**
-     * Returns the String representation of speed over ground.
-     *
-     * @return formatted value, "no SOG" or ">=1022"
-     */
-    public String getSOGString() {
-        String msg;
-        if (fSOG == 1023)
-            msg = "no SOG";
-        else if (fSOG == 1022)
-            msg = ">=1022";
-        else
-            msg = new DecimalFormat("##0.0").format(fSOG / 10.0);
-        return msg;
-    }
-
-    public boolean isAccurate() { return fPositionAccuracy; }
-
-    public double getLongitudeInDegrees() { return Longitude28.toDegrees(fLongitude); }
-
-    public double getLatitudeInDegrees() { return Latitude27.toDegrees(fLatitude); }
-
-    public double getCourseOverGround() { return Angle12.toDegrees(fCOG); }
-
-    public int getTimeStamp() { return fTimeStamp; }
+internal class AISMessage09Parser(content: Sixbit) : AISMessageParser(content, 168), AISMessage09 {
+    override val altitude: Int
+    override val speedOverGround: Int
+    override val isAccurate: Boolean
+    private val fLongitude: Int
+    private val fLatitude: Int
+    private val fCOG: Int
+    override val timeStamp: Int
 
     /**
      * Regional reserved (spare)
      *
      * @return Int value
      */
-    public int getRegional() {
-        return fRegional;
+    val regional: Int
+    override val dTEFlag: Boolean
+    override val assignedModeFlag: Boolean
+    override val rAIMFlag: Boolean
+    override val radioStatus: Int
+
+    /**
+     * Constructor.
+     *
+     * @param content Sib-bit message content
+     */
+    init {
+        altitude = content.getInt(FROM[ALTITUDE], TO[ALTITUDE])
+        speedOverGround = content.getInt(FROM[SPEEDOVERGROUND], TO[SPEEDOVERGROUND])
+        isAccurate = content.getBoolean(TO[POSITIONACCURACY])
+        fLongitude = content.getAs28BitInt(FROM[LONGITUDE], TO[LONGITUDE])
+        if (!Longitude28.isCorrect(fLongitude)) addViolation(
+            AISRuleViolation(
+                "LongitudeInDegrees",
+                fLongitude,
+                Longitude28.RANGE
+            )
+        )
+        fLatitude = content.getAs27BitInt(FROM[LATITUDE], TO[LATITUDE])
+        if (!Latitude27.isCorrect(fLatitude)) addViolation(
+            AISRuleViolation(
+                "LatitudeInDegrees",
+                fLatitude,
+                Latitude27.RANGE
+            )
+        )
+        fCOG = content.getInt(FROM[COURSEOVERGROUND], TO[COURSEOVERGROUND])
+        if (!Angle12.isCorrect(fCOG)) addViolation(AISRuleViolation("CourseOverGround", fCOG, Angle12.RANGE))
+        timeStamp = content.getInt(FROM[TIMESTAMP], TO[TIMESTAMP])
+        regional = content.getInt(FROM[REGIONAL], TO[REGIONAL])
+        dTEFlag = content.getBoolean(TO[DTE])
+        assignedModeFlag = content.getBoolean(TO[ASSIGNEDMODEFLAG])
+        rAIMFlag = content.getBoolean(TO[RAIMFLAG])
+        radioStatus = content.getInt(FROM[RADIOSTATUS], TO[RADIOSTATUS])
     }
 
-    public boolean getDTEFlag() {
-        return fDTE;
+    /**
+     * Returns the String representation of speed over ground.
+     *
+     * @return formatted value, "no SOG" or ">=1022"
+     */
+    val sOGString: String
+        get() {
+            val msg: String
+            msg =
+                if (speedOverGround == 1023) "no SOG" else if (speedOverGround == 1022) ">=1022" else DecimalFormat("##0.0").format(
+                    speedOverGround / 10.0
+                )
+            return msg
+        }
+    override val longitudeInDegrees: Double
+        get() = Longitude28.toDegrees(fLongitude)
+    override val latitudeInDegrees: Double
+        get() = Latitude27.toDegrees(fLatitude)
+    override val courseOverGround: Double
+        get() = Angle12.toDegrees(fCOG)
+
+    override fun hasLongitude(): Boolean {
+        return Longitude28.isAvailable(fLongitude)
     }
 
-    public boolean getAssignedModeFlag() {
-        return fAssignedModeFlag;
+    override fun hasLatitude(): Boolean {
+        return Latitude27.isAvailable(fLatitude)
     }
 
-    public boolean getRAIMFlag() {
-        return fRAIMFlag;
+    override fun toString(): String {
+        var result = "\tAlt:      " + altitude
+        result += SEPARATOR + "SOG:     " + SpeedOverGround.toString(speedOverGround)
+        result += SEPARATOR + "Pos acc: " + (if (isAccurate) "high" else "low") + " accuracy"
+        result += SEPARATOR + "Lon:     " + Longitude28.toString(fLongitude)
+        result += SEPARATOR + "Lat:     " + Latitude27.toString(fLatitude)
+        result += SEPARATOR + "COG:     " + Angle12.toString(fCOG)
+        result += SEPARATOR + "Time:    " + TimeStamp.toString(timeStamp)
+        result += SEPARATOR + "Regional:     " + regional
+        result += SEPARATOR + "DTE: " + if (dTEFlag) "yes" else "no"
+        result += SEPARATOR + "Assigned Mode Flag: " + if (assignedModeFlag) "yes" else "no"
+        result += SEPARATOR + "RAIM Flag: " + if (rAIMFlag) "yes" else "no"
+        result += SEPARATOR + "RadioStatus:     " + radioStatus
+        return result
     }
 
-    public int getRadioStatus() {
-        return fRadioStatus;
-    }
-
-    @Override
-    public boolean hasLongitude() {
-        return Longitude28.isAvailable(fLongitude);
-    }
-
-    @Override
-    public boolean hasLatitude() {
-        return Latitude27.isAvailable(fLatitude);
-    }
-
-    public String toString() {
-        String result = "\tAlt:      " + fAltitude;
-        result += SEPARATOR + "SOG:     " + SpeedOverGround.toString(fSOG);
-        result += SEPARATOR + "Pos acc: " + (fPositionAccuracy ? "high" : "low") + " accuracy";
-        result += SEPARATOR + "Lon:     " + Longitude28.toString(fLongitude);
-        result += SEPARATOR + "Lat:     " + Latitude27.toString(fLatitude);
-        result += SEPARATOR + "COG:     " + Angle12.toString(fCOG);
-        result += SEPARATOR + "Time:    " + TimeStamp.toString(fTimeStamp);
-        result += SEPARATOR + "Regional:     " + getRegional();
-        result += SEPARATOR + "DTE: " + (fDTE ? "yes" : "no");
-        result += SEPARATOR + "Assigned Mode Flag: " + (fAssignedModeFlag ? "yes" : "no");
-        result += SEPARATOR + "RAIM Flag: " + (fRAIMFlag ? "yes" : "no");
-        result += SEPARATOR + "RadioStatus:     " + getRadioStatus();
-        return result;
+    companion object {
+        private const val SEPARATOR = "\n\t"
+        private const val ALTITUDE = 0
+        private const val SPEEDOVERGROUND = 1
+        private const val POSITIONACCURACY = 2
+        private const val LONGITUDE = 3
+        private const val LATITUDE = 4
+        private const val COURSEOVERGROUND = 5
+        private const val TIMESTAMP = 6
+        private const val REGIONAL = 7 // spare 1
+        private const val DTE = 8
+        private const val SPARE = 9 // spare 2
+        private const val ASSIGNEDMODEFLAG = 10
+        private const val RAIMFLAG = 11
+        private const val RADIOSTATUS = 12
+        private val FROM = intArrayOf(38, 50, 60, 61, 89, 116, 128, 134, 142, 43, 146, 147, 149)
+        private val TO = intArrayOf(50, 60, 61, 89, 116, 128, 134, 142, 43, 146, 147, 149, 167)
     }
 }

@@ -18,20 +18,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.util;
+package net.sf.marineapi.ais.util
 
-import java.text.DecimalFormat;
+import java.text.DecimalFormat
 
 /**
  * Checks a speed-over-ground value for validity.
  *
  * @author Jyrki Jakobsson
  */
-public class SpeedOverGround {
-
-    private static final int MIN_VALUE = 0;
-    private static final int MAX_VALUE = 1022;
-    private static final int DEFAULT_VALUE = 1023;
+object SpeedOverGround {
+    private const val MIN_VALUE = 0
+    private const val MAX_VALUE = 1022
+    private const val DEFAULT_VALUE = 1023
 
     /**
      * Checks if the speed over ground value is available, i.e. within valid
@@ -40,8 +39,8 @@ public class SpeedOverGround {
      * @param value SOG value to check
      * @return true if the time stamp falls within a range
      */
-    public static boolean isAvailable(int value) {
-        return value >= MIN_VALUE && value <= MAX_VALUE;
+    fun isAvailable(value: Int): Boolean {
+        return value >= MIN_VALUE && value <= MAX_VALUE
     }
 
     /**
@@ -49,10 +48,10 @@ public class SpeedOverGround {
      * not the default value ("no value").
      *
      * @param value SOG value to check
-     * @return {@code true} if correct, otherwise {@code false}.
+     * @return `true` if correct, otherwise `false`.
      */
-    public static boolean isCorrect(int value) {
-        return isAvailable(value) || (value == DEFAULT_VALUE);
+    fun isCorrect(value: Int): Boolean {
+        return isAvailable(value) || value == DEFAULT_VALUE
     }
 
     /**
@@ -61,8 +60,8 @@ public class SpeedOverGround {
      * @param value SOG value
      * @return SOG value in knots
      */
-    public static double toKnots(int value) {
-        return value / 10d;
+    fun toKnots(value: Int): Double {
+        return value / 10.0
     }
 
     /**
@@ -71,12 +70,9 @@ public class SpeedOverGround {
      * @param value Value to convert
      * @return Formatted value, "no SOG" or "&gt;=102.2"
      */
-    public static String toString(int value) {
-        if (!isAvailable(value))
-            return "no SOG";
-        else if (value == 1022)
-            return ">=102.2";
-        else
-            return new DecimalFormat("##0.0").format(toKnots(value));
+    fun toString(value: Int): String {
+        return if (!isAvailable(value)) "no SOG" else if (value == 1022) ">=102.2" else DecimalFormat("##0.0").format(
+            toKnots(value)
+        )
     }
 }

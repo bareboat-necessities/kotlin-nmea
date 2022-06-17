@@ -18,23 +18,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
 /**
  * Thrown when an unsupported sentence is encountered.
  *
  * @author Michael Skogberg
  */
-public class UnsupportedSentenceException extends RuntimeException {
-
-    private static final long serialVersionUID = 7618916517933110942L;
-
-    /**
-     * Constructor
-     *
-     * @param msg Exception message
-     */
-    public UnsupportedSentenceException(String msg) {
-        super(msg);
+class UnsupportedSentenceException
+/**
+ * Constructor
+ *
+ * @param msg Exception message
+ */
+    (msg: String?) : RuntimeException(msg) {
+    companion object {
+        private const val serialVersionUID = 7618916517933110942L
     }
 }

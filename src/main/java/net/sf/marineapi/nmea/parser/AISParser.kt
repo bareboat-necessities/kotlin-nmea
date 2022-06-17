@@ -18,40 +18,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.AISSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
+import net.sf.marineapi.nmea.sentence.AISSentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerId
 /**
  * Common AIS sentence parser. Handles only the NMEA layer for VDM and VDO
  * sentences. The actual payload message is parsed by AIS message parsers.
  *
  * @author Kimmo Tuukkanen
  * @see AISSentence
+ *
  * @see VDOParser
+ *
  * @see VDMParser
  */
-abstract class AISParser extends SentenceParser implements AISSentence {
-
-    // NMEA message fields
-    private static final int NUMBER_OF_FRAGMENTS = 0;
-    private static final int FRAGMENT_NUMBER = 1;
-    private static final int MESSAGE_ID	= 2;
-    private static final int RADIO_CHANNEL = 3;
-    private static final int PAYLOAD = 4;
-    private static final int FILL_BITS = 5;
-
+internal abstract class AISParser : SentenceParser, AISSentence {
     /**
      * Creates a new instance of VDOParser.
      *
      * @param nmea NMEA sentence String.
      * @param sid Expected sentence ID
      */
-    public AISParser(String nmea, SentenceId sid) {
-        super(nmea, sid);
-    }
+    constructor(nmea: String, sid: SentenceId) : super(nmea, sid) {}
 
     /**
      * Creates a new empty VDOParser.
@@ -59,69 +49,48 @@ abstract class AISParser extends SentenceParser implements AISSentence {
      * @param tid TalkerId to set
      * @param sid SentenceId to set
      */
-    public AISParser(TalkerId tid, SentenceId sid) {
-        super('!', tid, sid, 6);
-    }
+    constructor(tid: TalkerId?, sid: SentenceId) : super('!', tid, sid, 6) {}
 
-    @Override
-    public int getNumberOfFragments() {
-        return getIntValue(NUMBER_OF_FRAGMENTS);
-    }
+    override val numberOfFragments: Int
+        get() = getIntValue(NUMBER_OF_FRAGMENTS)
+    override val fragmentNumber: Int
+        get() = getIntValue(FRAGMENT_NUMBER)
+    override val messageId: String?
+        get() = getStringValue(MESSAGE_ID)
+    override val radioChannel: String?
+        get() = getStringValue(RADIO_CHANNEL)
+    override val payload: String?
+        get() = getStringValue(PAYLOAD)
+    override val fillBits: Int
+        get() = getIntValue(FILL_BITS)
+    override val isFragmented: Boolean
+        get() = numberOfFragments > 1
+    override val isFirstFragment: Boolean
+        get() = fragmentNumber == 1
+    override val isLastFragment: Boolean
+        get() = numberOfFragments == fragmentNumber
 
-    @Override
-    public int getFragmentNumber() {
-        return getIntValue(FRAGMENT_NUMBER);
-    }
-
-    @Override
-    public String getMessageId() {
-        return getStringValue(MESSAGE_ID);
-    }
-
-    @Override
-    public String getRadioChannel() {
-        return getStringValue(RADIO_CHANNEL);
-    }
-
-    @Override
-    public String getPayload() {
-        return getStringValue(PAYLOAD);
-    }
-
-    @Override
-    public int getFillBits() {
-        return getIntValue(FILL_BITS);
-    }
-
-    @Override
-    public boolean isFragmented() {
-        return getNumberOfFragments() > 1;
-    }
-
-    @Override
-    public boolean isFirstFragment() {
-        return getFragmentNumber() == 1;
-    }
-
-    @Override
-    public boolean isLastFragment() {
-        return getNumberOfFragments() == getFragmentNumber();
-    }
-
-    @Override
-    public boolean isPartOfMessage(AISSentence line) {
-        if (getNumberOfFragments() == line.getNumberOfFragments() &&
-                getFragmentNumber() < line.getFragmentNumber()) {
-
-            if (getFragmentNumber() + 1 == line.getFragmentNumber()) {
-                return (getRadioChannel().equals(line.getRadioChannel()) ||
-                        getMessageId().equals(line.getMessageId()));
+    override fun isPartOfMessage(line: AISSentence): Boolean {
+        return if (numberOfFragments == line.numberOfFragments &&
+            fragmentNumber < line.fragmentNumber
+        ) {
+            if (fragmentNumber + 1 == line.fragmentNumber) {
+                radioChannel == line.radioChannel || messageId == line.messageId
             } else {
-                return (getRadioChannel().equals(line.getRadioChannel()) &&
-                        getMessageId().equals(line.getMessageId()));
+                radioChannel == line.radioChannel && messageId == line.messageId
             }
         } else {
-            return false;
+            false
         }
+    }
+
+    companion object {
+        // NMEA message fields
+        private const val NUMBER_OF_FRAGMENTS = 0
+        private const val FRAGMENT_NUMBER = 1
+        private const val MESSAGE_ID = 2
+        private const val RADIO_CHANNEL = 3
+        private const val PAYLOAD = 4
+        private const val FILL_BITS = 5
     }
 }

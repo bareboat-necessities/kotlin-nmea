@@ -18,87 +18,86 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.DataStatus;
-import net.sf.marineapi.nmea.util.Direction;
-import net.sf.marineapi.nmea.util.FaaMode;
+import net.sf.marineapi.nmea.util.DataStatus
+import net.sf.marineapi.nmea.util.Direction
+import net.sf.marineapi.nmea.util.FaaMode
 
 /**
  * Measured cross-track error when navigating towards waypoint.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public interface XTESentence extends Sentence {
+interface XTESentence : Sentence {
+    /**
+     * Returns the Loran-C cycle lock status, not used for GPS.
+     *
+     * @return DataStatus
+     */
+    fun getCycleLockStatus(): DataStatus
 
-	/**
-	 * Returns the Loran-C cycle lock status, not used for GPS.
-	 *
-	 * @return DataStatus
-	 */
-	DataStatus getCycleLockStatus();
+    /**
+     * Returns the cross-track error magnitude/distance.
+     *
+     * @return Cross-track error distance in nautical miles
+     */
+    fun getMagnitude(): Double
 
-	/**
-	 * Returns the cross-track error magnitude/distance.
-	 * 
-	 * @return Cross-track error distance in nautical miles
-	 */
-	double getMagnitude();
+    /**
+     * Returns the FAA mode. Optional, NMEA 2.3 and later.
+     *
+     * @return FaaMode
+     */
+    fun getMode(): FaaMode
 
-	/**
-	 * Returns the FAA mode. Optional, NMEA 2.3 and later.
-	 * 
-	 * @return FaaMode
-	 */
-	FaaMode getMode();
+    /**
+     * Returns the signal/fix status.
+     *
+     * @return DataStatus
+     */
+    fun getStatus(): DataStatus
 
-	/**
-	 * Returns the signal/fix status.
-	 * 
-	 * @return DataStatus
-	 */
-	DataStatus getStatus();
+    /**
+     * Returns the direction in which to steer in order to get back on route.
+     *
+     * @return [Direction.LEFT] or [Direction.RIGHT]
+     */
+    fun getSteerTo(): Direction
 
-	/**
-	 * Returns the direction in which to steer in order to get back on route.
-	 * 
-	 * @return {@link Direction#LEFT} or {@link Direction#RIGHT}
-	 */
-	Direction getSteerTo();
+    /**
+     * Sets the Loran-C cycle lock status. Not used for GPS, may be omitted or
+     * [DataStatus.VOID].
+     *
+     * @param status DataStatus to set
+     */
+    fun setCycleLockStatus(status: DataStatus)
 
-	/**
-	 * Sets the Loran-C cycle lock status. Not used for GPS, may be omitted or
-	 * {@link DataStatus#VOID}.
-	 * 
-	 * @param status DataStatus to set
-	 */
-	void setCycleLockStatus(DataStatus status);
+    /**
+     * Sets the cross-track error magnitude/distance.
+     *
+     * @param distance Cross-track error distance in nautical miles
+     */
+    fun setMagnitude(distance: Double)
 
-	/**
-	 * Sets the cross-track error magnitude/distance.
-	 * 
-	 * @param distance Cross-track error distance in nautical miles
-	 */
-	void setMagnitude(double distance);
+    /**
+     * Sets the FAA mode. Optional, NMEA 2.3 and later.
+     *
+     * @param mode FaaMode to set
+     */
+    fun setMode(mode: FaaMode)
 
-	/**
-	 * Sets the FAA mode. Optional, NMEA 2.3 and later.
-	 * 
-	 * @param mode FaaMode to set
-	 */
-	void setMode(FaaMode mode);
+    /**
+     * Sets the signal/fix status.
+     *
+     * @param status DataStatus to set
+     */
+    fun setStatus(status: DataStatus)
 
-	/**
-	 * Sets the signal/fix status.
-	 * 
-	 * @param status DataStatus to set
-	 */
-	void setStatus(DataStatus status);
-
-	/**
-	 * Set direction in which to steer in order to get back on route.
-	 * 
-	 * @param direction {@link Direction#RIGHT} or {@link Direction#LEFT}
-	 */
-	void setSteerTo(Direction direction);
+    /**
+     * Set direction in which to steer in order to get back on route.
+     *
+     * @param direction [Direction.RIGHT] or [Direction.LEFT]
+     */
+    fun setSteerTo(direction: Direction)
 }

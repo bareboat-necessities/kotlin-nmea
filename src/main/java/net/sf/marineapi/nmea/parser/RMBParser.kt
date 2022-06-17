@@ -18,223 +18,189 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.RMBSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.DataStatus;
-import net.sf.marineapi.nmea.util.Direction;
-import net.sf.marineapi.nmea.util.Position;
-import net.sf.marineapi.nmea.util.Waypoint;
+import net.sf.marineapi.nmea.sentence.RMBSentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*
 /**
  * RMB sentence parser.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-class RMBParser extends PositionParser implements RMBSentence {
+internal class RMBParser : PositionParser, RMBSentence {
+    /**
+     * Constructor.
+     *
+     * @param nmea RMB sentence string
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.RMB) {}
 
-	// field indexes
-	private static final int STATUS = 0;
-	private static final int CROSS_TRACK_ERROR = 1;
-	private static final int STEER_TO = 2;
-	private static final int ORIGIN_WPT = 3;
-	private static final int DEST_WPT = 4;
-	private static final int DEST_LAT = 5;
-	private static final int DEST_LAT_HEM = 6;
-	private static final int DEST_LON = 7;
-	private static final int DEST_LON_HEM = 8;
-	private static final int RANGE_TO_DEST = 9;
-	private static final int BEARING_TO_DEST = 10;
-	private static final int VELOCITY = 11;
-	private static final int ARRIVAL_STATUS = 12;
+    /**
+     * Creates RMB parser with empty sentence.
+     *
+     * @param talker TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.RMB, 13) {}
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param nmea RMB sentence string
-	 */
-	public RMBParser(String nmea) {
-		super(nmea, SentenceId.RMB);
-	}
-
-	/**
-	 * Creates RMB parser with empty sentence.
-	 * 
-	 * @param talker TalkerId to set
-	 */
-	public RMBParser(TalkerId talker) {
-		super(talker, SentenceId.RMB, 13);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getArrivalStatus()
-	 */
-	public DataStatus getArrivalStatus() {
-		return DataStatus.valueOf(getCharValue(ARRIVAL_STATUS));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getBearing()
-	 */
-	public double getBearing() {
-		return getDoubleValue(BEARING_TO_DEST);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getCrossTrackError()
-	 */
-	public double getCrossTrackError() {
-		return getDoubleValue(CROSS_TRACK_ERROR);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getDestination()
-	 */
-	public Waypoint getDestination() {
-		String id = getStringValue(DEST_WPT);
-		Position p = parsePosition(
-			DEST_LAT, DEST_LAT_HEM, DEST_LON, DEST_LON_HEM);
-		return p.toWaypoint(id);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getOriginId()
-	 */
-	public String getOriginId() {
-		return getStringValue(ORIGIN_WPT);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getRange()
-	 */
-	public double getRange() {
-		return getDoubleValue(RANGE_TO_DEST);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getStatus()
-	 */
-	public DataStatus getStatus() {
-		return DataStatus.valueOf(getCharValue(STATUS));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getSteerTo()
-	 */
-	public Direction getSteerTo() {
-		return Direction.valueOf(getCharValue(STEER_TO));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getVelocity()
-	 */
-	public double getVelocity() {
-		return getDoubleValue(VELOCITY);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#hasArrived()
-	 */
-	public boolean hasArrived() {
-		return DataStatus.ACTIVE.equals(getArrivalStatus());
-	}
-
-	/*
+	 *//*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.RMBSentence#setArrivalStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-	public void setArrivalStatus(DataStatus status) {
-		setCharValue(ARRIVAL_STATUS, status.toChar());
-	}
+    override var arrivalStatus: DataStatus
+        get() = DataStatus.Companion.valueOf(getCharValue(ARRIVAL_STATUS))
+        set(status) {
+            setCharValue(ARRIVAL_STATUS, status.toChar())
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getBearing()
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#setBearing(double)
 	 */
-	public void setBearing(double bearing) {
-		setDegreesValue(BEARING_TO_DEST, bearing);
-	}
+    override var bearing: Double
+        get() = getDoubleValue(BEARING_TO_DEST)
+        set(bearing) {
+            setDegreesValue(BEARING_TO_DEST, bearing)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getCrossTrackError()
+	 *//*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.RMBSentence#setCrossTrackError(double)
 	 */
-	public void setCrossTrackError(double xte) {
-		setDoubleValue(CROSS_TRACK_ERROR, xte, 1, 2);
-	}
+    override var crossTrackError: Double
+        get() = getDoubleValue(CROSS_TRACK_ERROR)
+        set(xte) {
+            setDoubleValue(CROSS_TRACK_ERROR, xte, 1, 2)
+        }
 
-	/*
+    /*
 	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.RMBSentence#setDestination(net.sf.marineapi
-	 * .nmea.util.Waypoint)
+	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getDestination()
 	 */
-	public void setDestination(Waypoint dest) {		
-		setStringValue(DEST_WPT, dest.getId());
-		setPositionValues(dest, DEST_LAT, DEST_LAT_HEM, DEST_LON, DEST_LON_HEM);
-	}
+    override fun getDestination(): Waypoint? {
+        val id = getStringValue(DEST_WPT)
+        val p = parsePosition(
+            DEST_LAT, DEST_LAT_HEM, DEST_LON, DEST_LON_HEM
+        )
+        return p!!.toWaypoint(id)
+    }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getOriginId()
+	 *//*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.RMBSentence#setOriginId(java.lang.String)
 	 */
-	public void setOriginId(String id) {
-		setStringValue(ORIGIN_WPT, id);
-	}
+    override var originId: String?
+        get() = getStringValue(ORIGIN_WPT)
+        set(id) {
+            setStringValue(ORIGIN_WPT, id)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getRange()
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#setRange(double)
 	 */
-	public void setRange(double range) {
-		setDoubleValue(RANGE_TO_DEST, range, 1, 1);
-	}
+    override var range: Double
+        get() = getDoubleValue(RANGE_TO_DEST)
+        set(range) {
+            setDoubleValue(RANGE_TO_DEST, range, 1, 1)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getStatus()
+	 *//*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.RMBSentence#setStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-	public void setStatus(DataStatus status) {
-		setCharValue(STATUS, status.toChar());
-	}
+    override var status: DataStatus
+        get() = DataStatus.Companion.valueOf(getCharValue(STATUS))
+        set(status) {
+            setCharValue(STATUS, status.toChar())
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getSteerTo()
+	 *//*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.RMBSentence#setSteerTo(net.sf.marineapi
 	 * .nmea.util.Direction)
 	 */
-	public void setSteerTo(Direction steer) {
-		if (steer != Direction.LEFT && steer != Direction.RIGHT) {
-			throw new IllegalArgumentException(
-					"Expected steer-to is LEFT or RIGHT.");
-		}
-		setCharValue(STEER_TO, steer.toChar());
-	}
+    override var steerTo: Direction
+        get() = Direction.Companion.valueOf(getCharValue(STEER_TO))
+        set(steer) {
+            require(!(steer != Direction.LEFT && steer != Direction.RIGHT)) { "Expected steer-to is LEFT or RIGHT." }
+            setCharValue(STEER_TO, steer.toChar())
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getVelocity()
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#setVelocity(double)
 	 */
-	public void setVelocity(double velocity) {
-		setDoubleValue(VELOCITY, velocity, 1, 1);
-	}
+    override var velocity: Double
+        get() = getDoubleValue(VELOCITY)
+        set(velocity) {
+            setDoubleValue(VELOCITY, velocity, 1, 1)
+        }
+
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#hasArrived()
+	 */
+    override fun hasArrived(): Boolean {
+        return DataStatus.ACTIVE == arrivalStatus
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.RMBSentence#setDestination(net.sf.marineapi
+	 * .nmea.util.Waypoint)
+	 */
+    override fun setDestination(dest: Waypoint) {
+        setStringValue(DEST_WPT, dest.id)
+        setPositionValues(dest, DEST_LAT, DEST_LAT_HEM, DEST_LON, DEST_LON_HEM)
+    }
+
+    companion object {
+        // field indexes
+        private const val STATUS = 0
+        private const val CROSS_TRACK_ERROR = 1
+        private const val STEER_TO = 2
+        private const val ORIGIN_WPT = 3
+        private const val DEST_WPT = 4
+        private const val DEST_LAT = 5
+        private const val DEST_LAT_HEM = 6
+        private const val DEST_LON = 7
+        private const val DEST_LON_HEM = 8
+        private const val RANGE_TO_DEST = 9
+        private const val BEARING_TO_DEST = 10
+        private const val VELOCITY = 11
+        private const val ARRIVAL_STATUS = 12
+    }
 }

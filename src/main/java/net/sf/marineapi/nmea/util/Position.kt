@@ -18,281 +18,239 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
-import java.text.DecimalFormat;
+import java.text.DecimalFormat
 
 /**
  * Represents a geographic position. Default datum is WGS84 as generally in NMEA
  * 0183. Notice that datum is only informative and it does not affect
  * calculations or handling of other values.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public class Position {
+open class Position(lat: Double, lon: Double) {
+    /**
+     * Get latitude value of Position
+     *
+     * @return latitude degrees
+     */
+    /**
+     * Set the latitude degrees of Position
+     *
+     * @param latitude the latitude to set
+     * @throws IllegalArgumentException If specified latitude value is out of
+     * range 0..90 degrees.
+     */
+    // latitude degrees
+    var latitude = 0.0
+        set(latitude) {
+            require(!(latitude < -90 || latitude > 90)) { "Latitude out of bounds -90..90 degrees" }
+            field = latitude
+        }
+    /**
+     * Get longitude value of Position
+     *
+     * @return longitude degrees
+     */
+    /**
+     * Set the longitude degrees of Position
+     *
+     * @param longitude the longitude to set
+     * @throws IllegalArgumentException If specified longitude value is out of
+     * range 0..180 degrees.
+     */
+    // longitude degrees
+    var longitude = 0.0
+        set(longitude) {
+            require(!(longitude < -180 || longitude > 180)) { "Longitude out of bounds -180..180 degrees" }
+            field = longitude
+        }
+    /**
+     * Gets the position altitude from mean sea level. Notice that most
+     * sentences with position don't provide this value. When missing, the
+     * default value in `Position` is 0.0.
+     *
+     * @return Altitude value in meters
+     */
+    /**
+     * Sets the altitude of position above or below mean sea level. Defaults to
+     * zero (-0.0).
+     *
+     * @param altitude Altitude value to set, in meters.
+     */
+    // altitude
+    var altitude = 0.0
 
-	// latitude degrees
-	private double latitude;
-	// longitude degrees
-	private double longitude;
-	// altitude
-	private double altitude = 0.0;
-	// datum/coordinate system
-	private Datum datum = Datum.WGS84;
+    /**
+     * Gets the datum, i.e. the coordinate system used to define geographic
+     * position. Default is [Datum.WGS84], unless datum is specified in
+     * the constructor. Notice also that datum cannot be set afterwards.
+     *
+     * @return Datum enum
+     */
+    // datum/coordinate system
+    var datum = Datum.WGS84
+        private set
 
-	/**
-	 * Creates a new instance of Position. Notice that altitude defaults to -0.0
-	 * and may be set later.
-	 * 
-	 * @param lat Latitude degrees
-	 * @param lon Longitude degrees
-	 * @see #setAltitude(double)
-	 */
-	public Position(double lat, double lon) {
-		setLatitude(lat);
-		setLongitude(lon);
-	}
+    /**
+     * Creates a new instance of Position. Notice that altitude defaults to -0.0
+     * and may be set later.
+     *
+     * @param lat Latitude degrees
+     * @param lon Longitude degrees
+     * @see .setAltitude
+     */
+    init {
+        latitude = lat
+        longitude = lon
+    }
 
-	/**
-	 * Creates a new instance of position with latitude, longitude and altitude.
-	 * 
-	 * @param lat Latitude degrees
-	 * @param lon Longitude degrees
-	 * @param alt Altitude value, in meters.
-	 */
-	public Position(double lat, double lon, double alt) {
-		this(lat, lon);
-		this.altitude = alt;
-	}
+    /**
+     * Creates a new instance of position with latitude, longitude and altitude.
+     *
+     * @param lat Latitude degrees
+     * @param lon Longitude degrees
+     * @param alt Altitude value, in meters.
+     */
+    constructor(lat: Double, lon: Double, alt: Double) : this(lat, lon) {
+        altitude = alt
+    }
 
-	/**
-	 * Creates new instance of Position with latitude, longitude and datum.
-	 * Notice that altitude defaults to -0.0 and may be set later.
-	 * 
-	 * @param lat Latitude degrees
-	 * @param lon Longitude degrees
-	 * @param datum Datum to set
-	 * @see #setAltitude(double)
-	 */
-	public Position(double lat, double lon, Datum datum) {
-		this(lat, lon);
-		this.datum = datum;
-	}
+    /**
+     * Creates new instance of Position with latitude, longitude and datum.
+     * Notice that altitude defaults to -0.0 and may be set later.
+     *
+     * @param lat Latitude degrees
+     * @param lon Longitude degrees
+     * @param datum Datum to set
+     * @see .setAltitude
+     */
+    constructor(lat: Double, lon: Double, datum: Datum) : this(lat, lon) {
+        this.datum = datum
+    }
 
-	/**
-	 * Creates new instance of Position with latitude, longitude, altitude and
-	 * datum.
-	 * 
-	 * @param lat Latitude degrees
-	 * @param lon Longitude degrees
-	 * @param alt Altitude in meters
-	 * @param datum Datum to set
-	 */
-	public Position(double lat, double lon, double alt, Datum datum) {
-		this(lat, lon, alt);
-		this.datum = datum;
-	}
+    /**
+     * Creates new instance of Position with latitude, longitude, altitude and
+     * datum.
+     *
+     * @param lat Latitude degrees
+     * @param lon Longitude degrees
+     * @param alt Altitude in meters
+     * @param datum Datum to set
+     */
+    constructor(lat: Double, lon: Double, alt: Double, datum: Datum) : this(lat, lon, alt) {
+        this.datum = datum
+    }
 
-	/**
-	 * Calculates distance to specified {@code Position}.
-	 * <p>
-	 * The Distance is calculated using the <a
-	 * href="http://en.wikipedia.org/wiki/Haversine_formula">Haversine
-	 * formula</a>. Implementation is based on example found at <a href=
-	 * "http://www.codecodex.com/wiki/Calculate_Distance_Between_Two_Points_on_a_Globe"
-	 * >codecodex.com</a>.
-	 * <p>
-	 * Earth radius <a
-	 * href="http://en.wikipedia.org/wiki/Earth_radius#Mean_radius">earth
-	 * radius</a> used in calculation is {@code 6366.70702} km, based on
-	 * the assumption that 1 degrees is exactly 60 NM.
-	 * 
-	 * @param pos Position to which the distance is calculated.
-	 * @return Distance to po{@code pos} in meters.
-	 */
-	public double distanceTo(Position pos) {
-		return haversine(getLatitude(), getLongitude(), pos.getLatitude(),
-			pos.getLongitude());
-	}
+    /**
+     * Calculates distance to specified `Position`.
+     *
+     *
+     * The Distance is calculated using the [Haversine
+ * formula](http://en.wikipedia.org/wiki/Haversine_formula). Implementation is based on example found at [codecodex.com](http://www.codecodex.com/wiki/Calculate_Distance_Between_Two_Points_on_a_Globe).
+     *
+     *
+     * Earth radius [earth
+ * radius](http://en.wikipedia.org/wiki/Earth_radius#Mean_radius) used in calculation is `6366.70702` km, based on
+     * the assumption that 1 degrees is exactly 60 NM.
+     *
+     * @param pos Position to which the distance is calculated.
+     * @return Distance to po`pos` in meters.
+     */
+    fun distanceTo(pos: Position): Double {
+        return haversine(
+            latitude, longitude, pos.latitude,
+            pos.longitude
+        )
+    }
 
-	/**
-	 * Gets the position altitude from mean sea level. Notice that most
-	 * sentences with position don't provide this value. When missing, the
-	 * default value in {@code Position} is 0.0.
-	 * 
-	 * @return Altitude value in meters
-	 */
-	public double getAltitude() {
-		return altitude;
-	}
+    /**
+     * Get the hemisphere of latitude, North or South.
+     *
+     * @return CompassPoint.NORTH or CompassPoint.SOUTH
+     */
+    val latitudeHemisphere: CompassPoint
+        get() = if (isLatitudeNorth) CompassPoint.NORTH else CompassPoint.SOUTH
 
-	/**
-	 * Gets the datum, i.e. the coordinate system used to define geographic
-	 * position. Default is {@link Datum#WGS84}, unless datum is specified in
-	 * the constructor. Notice also that datum cannot be set afterwards.
-	 * 
-	 * @return Datum enum
-	 */
-	public Datum getDatum() {
-		return datum;
-	}
+    /**
+     * Get the hemisphere of longitude, East or West.
+     *
+     * @return CompassPoint.EAST or CompassPoint.WEST
+     */
+    val longitudeHemisphere: CompassPoint
+        get() = if (isLongitudeEast) CompassPoint.EAST else CompassPoint.WEST
 
-	/**
-	 * Get latitude value of Position
-	 * 
-	 * @return latitude degrees
-	 */
-	public double getLatitude() {
-		return this.latitude;
-	}
+    /**
+     * Tells if the latitude is on northern hemisphere.
+     *
+     * @return true if northern, otherwise false (south).
+     */
+    val isLatitudeNorth: Boolean
+        get() = latitude >= 0.0
 
-	/**
-	 * Get the hemisphere of latitude, North or South.
-	 * 
-	 * @return CompassPoint.NORTH or CompassPoint.SOUTH
-	 */
-	public CompassPoint getLatitudeHemisphere() {
-		return isLatitudeNorth() ? CompassPoint.NORTH : CompassPoint.SOUTH;
-	}
+    /**
+     * Tells if the longitude is on eastern hemisphere.
+     *
+     * @return true if eastern, otherwise false (west).
+     */
+    val isLongitudeEast: Boolean
+        get() = longitude >= 0.0
 
-	/**
-	 * Get longitude value of Position
-	 * 
-	 * @return longitude degrees
-	 */
-	public double getLongitude() {
-		return this.longitude;
-	}
-
-	/**
-	 * Get the hemisphere of longitude, East or West.
-	 * 
-	 * @return CompassPoint.EAST or CompassPoint.WEST
-	 */
-	public CompassPoint getLongitudeHemisphere() {
-		return isLongitudeEast() ? CompassPoint.EAST : CompassPoint.WEST;
-	}
-
-	/**
-	 * Tells if the latitude is on northern hemisphere.
-	 * 
-	 * @return true if northern, otherwise false (south).
-	 */
-	public boolean isLatitudeNorth() {
-		return getLatitude() >= 0.0;
-	}
-
-	/**
-	 * Tells if the longitude is on eastern hemisphere.
-	 * 
-	 * @return true if eastern, otherwise false (west).
-	 */
-	public boolean isLongitudeEast() {
-		return getLongitude() >= 0.0;
-	}
-
-	/**
-	 * Sets the altitude of position above or below mean sea level. Defaults to
-	 * zero (-0.0).
-	 * 
-	 * @param altitude Altitude value to set, in meters.
-	 */
-	public void setAltitude(double altitude) {
-		this.altitude = altitude;
-	}
-
-	/**
-	 * Set the latitude degrees of Position
-	 * 
-	 * @param latitude the latitude to set
-	 * @throws IllegalArgumentException If specified latitude value is out of
-	 *             range 0..90 degrees.
-	 */
-	public void setLatitude(double latitude) {
-		if (latitude < -90 || latitude > 90) {
-			throw new IllegalArgumentException(
-				"Latitude out of bounds -90..90 degrees");
-		}
-		this.latitude = latitude;
-	}
-
-	/**
-	 * Set the longitude degrees of Position
-	 * 
-	 * @param longitude the longitude to set
-	 * @throws IllegalArgumentException If specified longitude value is out of
-	 *             range 0..180 degrees.
-	 */
-	public void setLongitude(double longitude) {
-		if (longitude < -180 || longitude > 180) {
-			throw new IllegalArgumentException(
-				"Longitude out of bounds -180..180 degrees");
-		}
-		this.longitude = longitude;
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	@Override
-	public String toString() {
-		DecimalFormat df = new DecimalFormat("00.0000000");
-		StringBuilder sb = new StringBuilder();
-		sb.append("[");
-		sb.append(df.format(Math.abs(getLatitude())));
-		sb.append(" ");
-		sb.append(getLatitudeHemisphere().toChar());
-		sb.append(", ");
-		df.applyPattern("000.0000000");
-		sb.append(df.format(Math.abs(getLongitude())));
-		sb.append(" ");
-		sb.append(getLongitudeHemisphere().toChar());
-		sb.append(", ");
-		sb.append(getAltitude());
-		sb.append(" m]");
-		return sb.toString();
-	}
+    override fun toString(): String {
+        val df = DecimalFormat("00.0000000")
+        val sb = StringBuilder()
+        sb.append("[")
+        sb.append(df.format(Math.abs(latitude)))
+        sb.append(" ")
+        sb.append(latitudeHemisphere.toChar())
+        sb.append(", ")
+        df.applyPattern("000.0000000")
+        sb.append(df.format(Math.abs(longitude)))
+        sb.append(" ")
+        sb.append(longitudeHemisphere.toChar())
+        sb.append(", ")
+        sb.append(altitude)
+        sb.append(" m]")
+        return sb.toString()
+    }
 
-	/**
-	 * Convenience method for creating a waypoint based in the Position.
-	 * 
-	 * @param id Waypoint ID or name
-	 * @return the created Waypoint
-	 */
-	public Waypoint toWaypoint(String id) {
-		return new Waypoint(id, getLatitude(), getLongitude());
-	}
+    /**
+     * Convenience method for creating a waypoint based in the Position.
+     *
+     * @param id Waypoint ID or name
+     * @return the created Waypoint
+     */
+    fun toWaypoint(id: String?): Waypoint {
+        return Waypoint(id, latitude, longitude)
+    }
 
-	/**
-	 * Haversine formulae, implementation based on example at <a href=
-	 * "http://www.codecodex.com/wiki/Calculate_Distance_Between_Two_Points_on_a_Globe"
-	 * >codecodex</a>.
-	 * 
-	 * @param lat1 Origin latitude
-	 * @param lon1 Origin longitude
-	 * @param lat2 Destination latitude
-	 * @param lon2 Destination longitude
-	 * @return Distance in meters
-	 */
-	private double haversine(double lat1, double lon1, double lat2, double lon2) {
+    /**
+     * Haversine formulae, implementation based on example at [codecodex](http://www.codecodex.com/wiki/Calculate_Distance_Between_Two_Points_on_a_Globe).
+     *
+     * @param lat1 Origin latitude
+     * @param lon1 Origin longitude
+     * @param lat2 Destination latitude
+     * @param lon2 Destination longitude
+     * @return Distance in meters
+     */
+    private fun haversine(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
 
-		// Mean earth radius (IUGG) = 6371.009
-		// Meridional earth radius = 6367.4491
-		// Earth radius by assumption that 1 degree equals exactly 60 NM:
-		// 1.852 * 60 * 360 / (2 * Pi) = 6366.7 km
-
-		final double earthRadius = 6366.70702;
-
-		double dLat = Math.toRadians(lat2 - lat1);
-		double dLon = Math.toRadians(lon2 - lon1);
-
-		double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-			+ Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-			* Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
-		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-		return (earthRadius * c * 1000);
-	}
+        // Mean earth radius (IUGG) = 6371.009
+        // Meridional earth radius = 6367.4491
+        // Earth radius by assumption that 1 degree equals exactly 60 NM:
+        // 1.852 * 60 * 360 / (2 * Pi) = 6366.7 km
+        val earthRadius = 6366.70702
+        val dLat = Math.toRadians(lat2 - lat1)
+        val dLon = Math.toRadians(lon2 - lon1)
+        val a = (Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + (Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(dLon / 2) * Math.sin(dLon / 2)))
+        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+        return earthRadius * c * 1000
+    }
 }

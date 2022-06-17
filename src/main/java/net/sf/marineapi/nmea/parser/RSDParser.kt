@@ -18,249 +18,201 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import java.util.Arrays;
+import net.sf.marineapi.nmea.sentence.RSDSentenceimport
 
-import net.sf.marineapi.nmea.sentence.RSDSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.DisplayRotation;
-import net.sf.marineapi.nmea.util.Units;
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*import java.util.*
 
 /**
  * RSD sentence parser
  *
  * @author Joshua Sweaney
  */
-class RSDParser extends SentenceParser implements RSDSentence {
-
-    private static final int ORIGIN_ONE_RANGE = 0;
-    private static final int ORIGIN_ONE_BEARING = 1;
-    private static final int VRM_ONE_RANGE = 2;
-    private static final int EBL_ONE_BEARING = 3;
-    private static final int ORIGIN_TWO_RANGE = 4;
-    private static final int ORIGIN_TWO_BEARING = 5;
-    private static final int VRM_TWO_RANGE = 6;
-    private static final int EBL_TWO_BEARING = 7;
-    private static final int CURSOR_RANGE = 8;
-    private static final int CURSOR_BEARING = 9;
-    private static final int RANGE_SCALE = 10;
-    private static final int RANGE_UNITS = 11;
-    private static final int DISPLAY_ROTATION = 12;
-
-    private static final Units[] VALID_RANGE_UNITS = {Units.KILOMETERS, Units.NAUTICAL_MILES, Units.STATUTE_MILES};
-
+internal class RSDParser : SentenceParser, RSDSentence {
     /**
-	 * Creates a new instance of RSD parser
-	 *
-	 * @param nmea RSD sentence string.
-	 */
-	public RSDParser(String nmea) {
-        super(nmea, SentenceId.RSD);
-    }
-
-    /**
-	 * Creates RSD parser with empty sentence.
-	 *
-	 * @param talker TalkerId to set
-	 */
-	public RSDParser(TalkerId talker) {
-		super(talker, SentenceId.RSD, 13);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#getOriginOneRange()
+     * Creates a new instance of RSD parser
+     *
+     * @param nmea RSD sentence string.
      */
-    public double getOriginOneRange() {
-        return getDoubleValue(ORIGIN_ONE_RANGE);
-    }
+    constructor(nmea: String) : super(nmea, SentenceId.RSD) {}
 
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#getOriginOneBearing()
+     * Creates RSD parser with empty sentence.
+     *
+     * @param talker TalkerId to set
      */
-    public double getOriginOneBearing() {
-        return getDoubleValue(ORIGIN_ONE_BEARING);
-    }
-
+    constructor(talker: TalkerId?) : super(talker, SentenceId.RSD, 13) {}
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#getVRMOneRange()
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getOriginOneRange
      */
-    public double getVRMOneRange() {
-        return getDoubleValue(VRM_ONE_RANGE);
-    }
-
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#getEBLOneBearing()
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setOriginOneRange
      */
-    public double getEBLOneBearing() {
-        return getDoubleValue(EBL_ONE_BEARING);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#getOriginTwoRange()
-     */
-    public double getOriginTwoRange() {
-        return getDoubleValue(ORIGIN_TWO_RANGE);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#getOriginTwoBearing()
-     */
-    public double getOriginTwoBearing() {
-        return getDoubleValue(ORIGIN_TWO_BEARING);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#getVRMTwoRange()
-     */
-    public double getVRMTwoRange() {
-        return getDoubleValue(VRM_TWO_RANGE);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#getEBLTwoBearing()
-     */
-    public double getEBLTwoBearing() {
-        return getDoubleValue(EBL_TWO_BEARING);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#getCursorRange()
-     */
-    public double getCursorRange() {
-        return getDoubleValue(CURSOR_RANGE);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#getCursorBearing()
-     */
-    public double getCursorBearing() {
-        return getDoubleValue(CURSOR_BEARING);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#getRangeScale()
-     */
-    public double getRangeScale() {
-        return getDoubleValue(RANGE_SCALE);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#getRangeUnits()
-     */
-    public Units getRangeUnits() {
-        return Units.valueOf(getCharValue(RANGE_UNITS));
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#getDisplayRotation()
-     */
-    public DisplayRotation getDisplayRotation() {
-        return DisplayRotation.valueOf(getCharValue(DISPLAY_ROTATION));
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#setOriginOneRange(double)
-     */
-    public void setOriginOneRange(double range) {
-        setDoubleValue(ORIGIN_ONE_RANGE, range);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#setOriginOneBearing(double)
-     */
-    public void setOriginOneBearing(double bearing) {
-        setDoubleValue(ORIGIN_ONE_BEARING, bearing);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#setVRMOneRange(double)
-     */
-    public void setVRMOneRange(double range) {
-        setDoubleValue(VRM_ONE_RANGE, range);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#setEBLOneBearing(double)
-     */
-    public void setEBLOneBearing(double bearing) {
-        setDoubleValue(EBL_ONE_BEARING, bearing);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#setOriginTwoRange(double)
-     */
-    public void setOriginTwoRange(double range) {
-        setDoubleValue(ORIGIN_TWO_RANGE, range);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#setOriginTwoBearing(double)
-     */
-    public void setOriginTwoBearing(double bearing) {
-        setDoubleValue(ORIGIN_TWO_BEARING, bearing);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#setVRMTwoRange(double)
-     */
-    public void setVRMTwoRange(double range) {
-        setDoubleValue(VRM_TWO_RANGE, range);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#setEBLTwoBearing(double)
-     */
-    public void setEBLTwoBearing(double bearing) {
-        setDoubleValue(EBL_TWO_BEARING, bearing);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#setCursorRange(double)
-     */
-    public void setCursorRange(double range) {
-        setDoubleValue(CURSOR_RANGE, range);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#setCursorBearing(double)
-     */
-    public void setCursorBearing(double bearing) {
-        setDoubleValue(CURSOR_BEARING, bearing);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#setRangeScale(double)
-     */
-    public void setRangeScale(double scale) {
-        setDoubleValue(RANGE_SCALE, scale);
-    }
-
-    /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#setRangeUnits(Units)
-     */
-    public void setRangeUnits(Units units) {
-        if (Arrays.asList(VALID_RANGE_UNITS).contains(units)) {
-            setCharValue(RANGE_UNITS, units.toChar());
-        } else {
-            String err = "Range units must be ";
-            for (int i = 0; i<VALID_RANGE_UNITS.length; i++) {
-                Units u = VALID_RANGE_UNITS[i];
-                err += u.name() + "(" + u.toChar() + ")";
-                if (i != VALID_RANGE_UNITS.length-1) {
-                    err += ", ";
-                }
-            }
-            throw new IllegalArgumentException(err);
+    override var originOneRange: Double
+        get() = getDoubleValue(ORIGIN_ONE_RANGE)
+        set(range) {
+            setDoubleValue(ORIGIN_ONE_RANGE, range)
         }
-    }
-
     /**
-     * @see net.sf.marineapi.nmea.sentence.RSDSentence#setDisplayRotation(DisplayRotation)
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getOriginOneBearing
      */
-    public void setDisplayRotation(DisplayRotation rotation) {
-        setCharValue(DISPLAY_ROTATION, rotation.toChar());
-    }
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setOriginOneBearing
+     */
+    override var originOneBearing: Double
+        get() = getDoubleValue(ORIGIN_ONE_BEARING)
+        set(bearing) {
+            setDoubleValue(ORIGIN_ONE_BEARING, bearing)
+        }
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getVRMOneRange
+     */
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setVRMOneRange
+     */
+    override var vRMOneRange: Double
+        get() = getDoubleValue(VRM_ONE_RANGE)
+        set(range) {
+            setDoubleValue(VRM_ONE_RANGE, range)
+        }
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getEBLOneBearing
+     */
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setEBLOneBearing
+     */
+    override var eBLOneBearing: Double
+        get() = getDoubleValue(EBL_ONE_BEARING)
+        set(bearing) {
+            setDoubleValue(EBL_ONE_BEARING, bearing)
+        }
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getOriginTwoRange
+     */
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setOriginTwoRange
+     */
+    override var originTwoRange: Double
+        get() = getDoubleValue(ORIGIN_TWO_RANGE)
+        set(range) {
+            setDoubleValue(ORIGIN_TWO_RANGE, range)
+        }
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getOriginTwoBearing
+     */
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setOriginTwoBearing
+     */
+    override var originTwoBearing: Double
+        get() = getDoubleValue(ORIGIN_TWO_BEARING)
+        set(bearing) {
+            setDoubleValue(ORIGIN_TWO_BEARING, bearing)
+        }
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getVRMTwoRange
+     */
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setVRMTwoRange
+     */
+    override var vRMTwoRange: Double
+        get() = getDoubleValue(VRM_TWO_RANGE)
+        set(range) {
+            setDoubleValue(VRM_TWO_RANGE, range)
+        }
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getEBLTwoBearing
+     */
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setEBLTwoBearing
+     */
+    override var eBLTwoBearing: Double
+        get() = getDoubleValue(EBL_TWO_BEARING)
+        set(bearing) {
+            setDoubleValue(EBL_TWO_BEARING, bearing)
+        }
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getCursorRange
+     */
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setCursorRange
+     */
+    override var cursorRange: Double
+        get() = getDoubleValue(CURSOR_RANGE)
+        set(range) {
+            setDoubleValue(CURSOR_RANGE, range)
+        }
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getCursorBearing
+     */
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setCursorBearing
+     */
+    override var cursorBearing: Double
+        get() = getDoubleValue(CURSOR_BEARING)
+        set(bearing) {
+            setDoubleValue(CURSOR_BEARING, bearing)
+        }
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getRangeScale
+     */
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setRangeScale
+     */
+    override var rangeScale: Double
+        get() = getDoubleValue(RANGE_SCALE)
+        set(scale) {
+            setDoubleValue(RANGE_SCALE, scale)
+        }
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getRangeUnits
+     */
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setRangeUnits
+     */
+    override var rangeUnits: Units
+        get() = Units.Companion.valueOf(getCharValue(RANGE_UNITS))
+        set(units) {
+            if (Arrays.asList(*VALID_RANGE_UNITS).contains(units)) {
+                setCharValue(RANGE_UNITS, units.toChar())
+            } else {
+                var err = "Range units must be "
+                for (i in VALID_RANGE_UNITS.indices) {
+                    val u = VALID_RANGE_UNITS[i]
+                    err += u.name + "(" + u.toChar() + ")"
+                    if (i != VALID_RANGE_UNITS.size - 1) {
+                        err += ", "
+                    }
+                }
+                throw IllegalArgumentException(err)
+            }
+        }
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.getDisplayRotation
+     */
+    /**
+     * @see net.sf.marineapi.nmea.sentence.RSDSentence.setDisplayRotation
+     */
+    override var displayRotation: DisplayRotation
+        get() = DisplayRotation.Companion.valueOf(getCharValue(DISPLAY_ROTATION))
+        set(rotation) {
+            setCharValue(DISPLAY_ROTATION, rotation.toChar())
+        }
 
+    companion object {
+        private const val ORIGIN_ONE_RANGE = 0
+        private const val ORIGIN_ONE_BEARING = 1
+        private const val VRM_ONE_RANGE = 2
+        private const val EBL_ONE_BEARING = 3
+        private const val ORIGIN_TWO_RANGE = 4
+        private const val ORIGIN_TWO_BEARING = 5
+        private const val VRM_TWO_RANGE = 6
+        private const val EBL_TWO_BEARING = 7
+        private const val CURSOR_RANGE = 8
+        private const val CURSOR_BEARING = 9
+        private const val RANGE_SCALE = 10
+        private const val RANGE_UNITS = 11
+        private const val DISPLAY_ROTATION = 12
+        private val VALID_RANGE_UNITS = arrayOf(Units.KILOMETERS, Units.NAUTICAL_MILES, Units.STATUTE_MILES)
+    }
 }

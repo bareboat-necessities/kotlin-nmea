@@ -18,157 +18,145 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.sentence.ZDASentence;
-import net.sf.marineapi.nmea.util.Date;
-import net.sf.marineapi.nmea.util.Time;
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.sentence.ZDASentence
+import net.sf.marineapi.nmea.util.Time
+import java.util.*
 
 /**
  * ZDA sentence parser.
  *
  * @author Kimmo Tuukkanen
  */
-class ZDAParser extends SentenceParser implements ZDASentence {
+internal class ZDAParser : SentenceParser, ZDASentence {
+    /**
+     * Creates a new instance of ZDAParser.
+     *
+     * @param nmea ZDA sentence String
+     * @throws IllegalArgumentException If specified sentence is invalid.
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.ZDA) {}
 
-	// field indices
-	private static final int UTC_TIME = 0;
-	private static final int DAY = 1;
-	private static final int MONTH = 2;
-	private static final int YEAR = 3;
-	private static final int LOCAL_ZONE_HOURS = 4;
-	private static final int LOCAL_ZONE_MINUTES = 5;
+    /**
+     * Creates WPL parser with empty sentence.
+     *
+     * @param talker TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.ZDA, 6) {}
 
-	/**
-	 * Creates a new instance of ZDAParser.
-	 *
-	 * @param nmea ZDA sentence String
-	 * @throws IllegalArgumentException If specified sentence is invalid.
-	 */
-	public ZDAParser(String nmea) {
-		super(nmea, SentenceId.ZDA);
-	}
-
-	/**
-	 * Creates WPL parser with empty sentence.
-	 *
-	 * @param talker TalkerId to set
-	 */
-	public ZDAParser(TalkerId talker) {
-		super(talker, SentenceId.ZDA, 6);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DateSentence#getDate()
 	 */
-	public Date getDate() {
-		int y = getIntValue(YEAR);
-		int m = getIntValue(MONTH);
-		int d = getIntValue(DAY);
-		return new Date(y, m, d);
-	}
+    override fun getDate(): net.sf.marineapi.nmea.util.Date {
+        val y = getIntValue(YEAR)
+        val m = getIntValue(MONTH)
+        val d = getIntValue(DAY)
+        return net.sf.marineapi.nmea.util.Date(y, m, d)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.ZDASentence#getLocalZoneHours()
 	 */
-	public int getLocalZoneHours() {
-		return getIntValue(LOCAL_ZONE_HOURS);
-	}
+    override fun getLocalZoneHours(): Int {
+        return getIntValue(LOCAL_ZONE_HOURS)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.ZDASentence#getLocalZoneMinutes()
 	 */
-	public int getLocalZoneMinutes() {
-		return getIntValue(LOCAL_ZONE_MINUTES);
-	}
+    override fun getLocalZoneMinutes(): Int {
+        return getIntValue(LOCAL_ZONE_MINUTES)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.TimeSentence#getTime()
 	 */
-	public Time getTime() {
+    override fun getTime(): Time {
+        val str = getStringValue(UTC_TIME)
+        val tzHrs = localZoneHours
+        val tzMin = localZoneMinutes
+        val t = Time(str)
+        t.offsetHours = tzHrs
+        t.offsetMinutes = tzMin
+        return t
+    }
 
-		String str = getStringValue(UTC_TIME);
-		int tzHrs = getLocalZoneHours();
-		int tzMin = getLocalZoneMinutes();
-
-		Time t = new Time(str);
-		t.setOffsetHours(tzHrs);
-		t.setOffsetMinutes(tzMin);
-
-		return t;
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.DateSentence#setDate(net.sf.marineapi.
 	 * nmea.util.Date)
 	 */
-	public void setDate(Date date) {
-		setIntValue(YEAR, date.getYear());
-		setIntValue(MONTH, date.getMonth(), 2);
-		setIntValue(DAY, date.getDay(), 2);
-	}
+    override fun setDate(date: net.sf.marineapi.nmea.util.Date) {
+        setIntValue(YEAR, date.year)
+        setIntValue(MONTH, date.month, 2)
+        setIntValue(DAY, date.day, 2)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.ZDASentence#setLocalZoneHours(int)
 	 */
-	public void setLocalZoneHours(int hours) {
-		if (hours < -13 || hours > 13) {
-			throw new IllegalArgumentException(
-				"Value must be within range -13..13");
-		}
-		setIntValue(LOCAL_ZONE_HOURS, hours, 2);
-	}
+    override fun setLocalZoneHours(hours: Int) {
+        require(!(hours < -13 || hours > 13)) { "Value must be within range -13..13" }
+        setIntValue(LOCAL_ZONE_HOURS, hours, 2)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.ZDASentence#setLocalZoneMinutes()
 	 */
-	public void setLocalZoneMinutes(int minutes) {
-		if (minutes < -59 || minutes > 59) {
-			throw new IllegalArgumentException(
-				"Value must be within range -59..59");
-		}
-		setIntValue(LOCAL_ZONE_MINUTES, minutes, 2);
-	}
+    override fun setLocalZoneMinutes(minutes: Int) {
+        require(!(minutes < -59 || minutes > 59)) { "Value must be within range -59..59" }
+        setIntValue(LOCAL_ZONE_MINUTES, minutes, 2)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.
 	 * nmea.util.Time)
 	 */
-	public void setTime(Time t) {
-		setStringValue(UTC_TIME, t.toString());
-	}
+    override fun setTime(t: Time) {
+        setStringValue(UTC_TIME, t.toString())
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTimeAndLocalZone(net.sf.marineapi.
 	 * nmea.util.Time)
 	 */
-	public void setTimeAndLocalZone(Time t) {
-		setTime(t);
-		setLocalZoneHours(t.getOffsetHours());
-		setLocalZoneMinutes(t.getOffsetMinutes());
-	}
+    override fun setTimeAndLocalZone(t: Time) {
+        time = t
+        localZoneHours = t.offsetHours
+        localZoneMinutes = t.offsetMinutes
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.ZDASentence#toDate()
 	 */
-	public java.util.Date toDate() {
-		Date d = getDate();
-		Time t = getTime();
-		return t.toDate(d.toDate());
-	}
+    override fun toDate(): Date? {
+        val d = date
+        val t = time
+        return t.toDate(d.toDate())
+    }
+
+    companion object {
+        // field indices
+        private const val UTC_TIME = 0
+        private const val DAY = 1
+        private const val MONTH = 2
+        private const val YEAR = 3
+        private const val LOCAL_ZONE_HOURS = 4
+        private const val LOCAL_ZONE_MINUTES = 5
+    }
 }

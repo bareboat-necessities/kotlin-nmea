@@ -18,20 +18,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.provider.event;
+package net.sf.marineapi.provider.event
 
 /**
- * Listener interface for {@link net.sf.marineapi.provider.HeadingProvider}.
- * 
+ * Listener interface for [net.sf.marineapi.provider.HeadingProvider].
+ *
  * @author Kimmo Tuukkanen
  */
-public interface HeadingListener extends ProviderListener<HeadingEvent> {
-
-	/*
+interface HeadingListener : ProviderListener<HeadingEvent> {
+    /*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.provider.event.ProviderListener#providerUpdate(net.sf
 	 * .marineapi.provider.event.ProviderEvent)
 	 */
-	public void providerUpdate(HeadingEvent evt);
+    override fun providerUpdate(evt: HeadingEvent)
 }

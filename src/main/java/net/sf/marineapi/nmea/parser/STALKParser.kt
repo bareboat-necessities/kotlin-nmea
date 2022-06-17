@@ -18,15 +18,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.STALKSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import net.sf.marineapi.nmea.sentence.STALKSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import java.util.*
 
 /**
  * SeaTalk $STALK sentence parser.
@@ -35,19 +32,13 @@ import java.util.List;
  *
  * @author Kimmo Tuukkanen
  */
-class STALKParser extends SentenceParser implements STALKSentence {
-
-    private static int COMMAND = 0;
-    private static int FIRST_PARAM = 1;
-
+internal class STALKParser : SentenceParser, STALKSentence {
     /**
      * Construct with sentence.
      *
-     * @param nmea {@code $STALK} sentence String.
+     * @param nmea `$STALK` sentence String.
      */
-    public STALKParser(String nmea) {
-        super(nmea, SentenceId.ALK);
-    }
+    constructor(nmea: String) : super(nmea, SentenceId.ALK) {}
 
     /**
      * Constructor with TalkerId, mostly for compatibility with SentenceFactory.
@@ -55,39 +46,36 @@ class STALKParser extends SentenceParser implements STALKSentence {
      * Creates a sentence with two fields, command and one parameter.
      *
      * @param tid Any TalkerId may given, but does not affect the resulting
-     *            "talker id" as sentence identifier is always {@code $STALK}.
+     * "talker id" as sentence identifier is always `$STALK`.
      */
-    public STALKParser(TalkerId tid) {
-        super(TalkerId.ST, SentenceId.ALK,2);
-        if (!tid.equals(TalkerId.ST)) {
-            throw new IllegalArgumentException("$STALK talker id 'ST' is mandatory (got " + tid + ")");
-        }
+    constructor(tid: TalkerId) : super(TalkerId.ST, SentenceId.ALK, 2) {
+        require(tid == TalkerId.ST) { "\$STALK talker id 'ST' is mandatory (got $tid)" }
     }
 
-    @Override
-    public String getCommand() {
-        return getStringValue(COMMAND);
+    override fun getCommand(): String? {
+        return getStringValue(COMMAND)
     }
 
-    @Override
-    public void setCommand(String cmd) {
-        setStringValue(COMMAND, cmd);
+    override fun setCommand(cmd: String?) {
+        setStringValue(COMMAND, cmd)
     }
 
-    @Override
-    public String[] getParameters() {
-        return getStringValues(FIRST_PARAM);
+    override fun getParameters(): Array<String?>? {
+        return getStringValues(FIRST_PARAM)
     }
 
-    @Override
-    public void setParameters(String... params) {
-        setStringValues(FIRST_PARAM, params);
+    override fun setParameters(vararg params: String?) {
+        setStringValues(FIRST_PARAM, params)
     }
 
-    @Override
-    public void addParameter(String param) {
-        List<String> params = new ArrayList<String>(Arrays.asList(getParameters()));
-        params.add(param);
-        setParameters(params.toArray(new String[params.size()]));
+    override fun addParameter(param: String?) {
+        val params: MutableList<String?> = ArrayList(Arrays.asList(*parameters))
+        params.add(param)
+        setParameters(*params.toTypedArray())
+    }
+
+    companion object {
+        private const val COMMAND = 0
+        private const val FIRST_PARAM = 1
     }
 }

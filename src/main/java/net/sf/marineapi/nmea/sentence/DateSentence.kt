@@ -18,37 +18,34 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.Date;
+import net.sf.marineapi.nmea.util.*
 
 /**
  * Sentences that contains date information. Notice that some sentences may
  * contain only time without the date.
- * 
+ *
  * @author Kimmo Tuukkanen
  * @see net.sf.marineapi.nmea.sentence.TimeSentence
  */
-public interface DateSentence extends Sentence {
-
-	/**
-	 * Parses the date information from sentence fields and returns a
-	 * {@link Date}.
-	 * 
-	 * @return Date object
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-	Date getDate();
-
-	/**
-	 * Set date. Depending on the sentence type, the values may be inserted to
-	 * multiple fields or combined into one. Four-digit year value may also be
-	 * reduced into two-digit format.
-	 * 
-	 * @param date {@link Date}
-	 */
-	void setDate(Date date);
+interface DateSentence : Sentence {
+    /**
+     * Parses the date information from sentence fields and returns a
+     * [Date].
+     *
+     * @return Date object
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    /**
+     * Set date. Depending on the sentence type, the values may be inserted to
+     * multiple fields or combined into one. Four-digit year value may also be
+     * reduced into two-digit format.
+     *
+     * @param date [Date]
+     */
+    var date: Date
 }

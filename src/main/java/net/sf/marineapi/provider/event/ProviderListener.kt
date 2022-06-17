@@ -18,24 +18,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.provider.event;
+package net.sf.marineapi.provider.event
 
-import java.util.EventListener;
+import java.util.*
 
 /**
  * Base interface for provider listeners.
- * 
+ *
  * @author Kimmo Tuukkanen
- * @param <T> {@link ProviderEvent} to be listened.
- */
-public abstract interface ProviderListener<T extends ProviderEvent> extends
-		EventListener {
-
-	/**
-	 * Invoked when provider has new data available.
-	 * 
-	 * @param evt ProviderEvent object
-	 */
-	void providerUpdate(T evt);
-
+ * @param <T> [ProviderEvent] to be listened.
+</T> */
+interface ProviderListener<T : ProviderEvent?> : EventListener {
+    /**
+     * Invoked when provider has new data available.
+     *
+     * @param evt ProviderEvent object
+     */
+    fun providerUpdate(evt: T)
 }

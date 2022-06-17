@@ -18,47 +18,40 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.util;
+package net.sf.marineapi.util
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
+import java.lang.reflect.TypeVariable
 
 /**
  * Utility class for resolving the generic type of a class, mainly for
- * {@link net.sf.marineapi.nmea.event.AbstractSentenceListener} and
- * {@link net.sf.marineapi.ais.event.AbstractAISMessageListener} classes where
+ * [net.sf.marineapi.nmea.event.AbstractSentenceListener] and
+ * [net.sf.marineapi.ais.event.AbstractAISMessageListener] classes where
  * the generic type needs to be resolved at runtime to filter the incoming
  * messages.
  *
  * @author Kimmo Tuukkanen, Axel Uhl
  */
-public final class GenericTypeResolver {
-
-    private GenericTypeResolver() { }
-
+object GenericTypeResolver {
     /**
      * Attempts to resolve the generic type of given class, with the assumption
      * of single generic type parameter. However, the resolving may not always
      * succeed, often due to more advanced or mixed usage of generics and
      * inheritance. For example, the generic type information may be lost
-     * at compile-time because of the Java's <a href="https://docs.oracle.com/javase/tutorial/java/generics/nonReifiableVarargsType.html" target="_blank">
-     * type erasure.</a>
+     * at compile-time because of the Java's [
+ * type erasure.](https://docs.oracle.com/javase/tutorial/java/generics/nonReifiableVarargsType.html)
      *
      * @param child The class of which parents and generic types to inspect
      * @param parent The generic class that holds the type being resolved
-     * @return The generic type of {@code parent}
+     * @return The generic type of `parent`
      * @throws IllegalStateException If the generic type cannot be resolved
-     *                               at runtime.
+     * at runtime.
      */
-    public static Class<?> resolve(Class<?> child, Class<?> parent) {
-        Type t = resolve(child, parent, new HashMap<>());
-        if (t == null || t instanceof TypeVariable) {
-            throw new IllegalStateException("Cannot resolve generic type <T>, use constructor with Class<T> param.");
-        }
-        return (Class<?>) t;
+    fun resolve(child: Class<*>, parent: Class<*>): Class<*> {
+        val t = resolve(child, parent, HashMap())
+        check(!(t == null || t is TypeVariable<*>)) { "Cannot resolve generic type <T>, use constructor with Class<T> param." }
+        return t as Class<*>
     }
 
     /**
@@ -68,34 +61,30 @@ public final class GenericTypeResolver {
      * @param parent The parent class that holds the generic type.
      * @param types Variables and types memo
      */
-    private static Type resolve(Class<?> child, final Class<?> parent,
-                                final Map<TypeVariable<?>, Type> types) {
-
-        Type superClass = child.getGenericSuperclass();
-
-        if (superClass instanceof ParameterizedType) {
-
-            ParameterizedType pt = (ParameterizedType) superClass;
-            Class<?> rawType = (Class<?>) pt.getRawType();
-            TypeVariable<?>[] typeParams = rawType.getTypeParameters();
-            Type[] typeArgs = pt.getActualTypeArguments();
-
-            for (int i = 0; i < typeParams.length; i++) {
-                if (typeArgs[i] instanceof TypeVariable) {
-                    TypeVariable<?> arg = (TypeVariable<?>) typeArgs[i];
-                    types.put(typeParams[i], types.getOrDefault(arg, arg));
+    private fun resolve(
+        child: Class<*>, parent: Class<*>,
+        types: MutableMap<TypeVariable<*>, Type>
+    ): Type {
+        val superClass = child.genericSuperclass
+        if (superClass is ParameterizedType) {
+            val pt = superClass
+            val rawType = pt.rawType as Class<*>
+            val typeParams: Array<TypeVariable<*>> = rawType.getTypeParameters()
+            val typeArgs = pt.actualTypeArguments
+            for (i in typeParams.indices) {
+                if (typeArgs[i] is TypeVariable<*>) {
+                    val arg = typeArgs[i] as TypeVariable<*>
+                    types[typeParams[i]] = types.getOrDefault(arg, arg)
                 } else {
-                    types.put(typeParams[i], typeArgs[i]);
+                    types[typeParams[i]] = typeArgs[i]
                 }
             }
-
-            if (rawType == parent) {
-                return types.getOrDefault(typeParams[0], typeParams[0]);
+            return if (rawType == parent) {
+                types.getOrDefault(typeParams[0], typeParams[0])
             } else {
-                return resolve(rawType, parent, types);
+                resolve(rawType, parent, types)
             }
         }
-
-        return resolve((Class<?>) superClass, parent, types);
+        return resolve(superClass as Class<*>, parent, types)
     }
 }

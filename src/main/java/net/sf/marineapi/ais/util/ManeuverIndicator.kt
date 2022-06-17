@@ -18,59 +18,53 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.util;
+package net.sf.marineapi.ais.util
 
 /**
  * Checks a 2-bit signed integer maneuver value for validity.
- * 
+ *
  * @author Lázár József
  */
-public class ManeuverIndicator {
+object ManeuverIndicator {
+    private const val DEFAULTVALUE = 0
+    private const val MINVALUE = 1
+    private const val MAXVALUE = 2
 
-	private static final int	DEFAULTVALUE	= 0;
-	private static final int	MINVALUE		= 1 ;
-	private static final int	MAXVALUE		= 2;
+    /** Valid range with default value for "no value"  */
+    const val RANGE = "[" + MINVALUE + "," + MAXVALUE + "] + {" + DEFAULTVALUE + "}"
 
-	/** Valid range with default value for "no value" */
-	public static final String	RANGE =
-			"[" + MINVALUE + "," + MAXVALUE + "] + {" + DEFAULTVALUE + "}";
+    /**
+     * Checks if the value is in the correct range.
+     *
+     * @param value Int value to check
+     * @return true if the value is correct
+     */
+    fun isCorrect(value: Int): Boolean {
+        return MINVALUE <= value && value <= MAXVALUE || value == DEFAULTVALUE
+    }
 
-	/**
-	 * Checks if the value is in the correct range.
-	 *
-	 * @param value Int value to check
-	 * @return true if the value is correct
-	 */
-	public static boolean isCorrect(int value) {
-		return (MINVALUE <= value && value <= MAXVALUE) || (value == DEFAULTVALUE);
-	}
-	
-	/**
-	 * Checks if the maneuver value is available.
-	 *
-	 * @param value Int value to check
-	 * @return true if the value is not the default value
-	 */
-	public static boolean isAvailable(int value) {
-		return value != DEFAULTVALUE;
-	}
-	
-	/**
-	 * Rerturns the string representation of given int value.
-	 *
-	 * @param value Value to stringify
-	 * @return a string representing the maneuvre indicator value
-	 */
-	public static String toString(int value) {
-		switch (value) {
-			case 0:
-				return "no special maneuver indicator";
-			case 1:
-				return "not in special maneuver";
-			case 2:
-				return "in special maneuver";
-			default:
-				return "invalid special maneuver indicator";
-		}
-	}
+    /**
+     * Checks if the maneuver value is available.
+     *
+     * @param value Int value to check
+     * @return true if the value is not the default value
+     */
+    fun isAvailable(value: Int): Boolean {
+        return value != DEFAULTVALUE
+    }
+
+    /**
+     * Rerturns the string representation of given int value.
+     *
+     * @param value Value to stringify
+     * @return a string representing the maneuvre indicator value
+     */
+    fun toString(value: Int): String {
+        return when (value) {
+            0 -> "no special maneuver indicator"
+            1 -> "not in special maneuver"
+            2 -> "in special maneuver"
+            else -> "invalid special maneuver indicator"
+        }
+    }
 }

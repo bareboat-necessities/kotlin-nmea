@@ -18,73 +18,70 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
 /**
  * GpsFixQuality defines the supported fix quality types.
- * 
+ *
  * @author Kimmo Tuukkanen
  * @see FaaMode
+ *
  * @see GpsFixStatus
+ *
  * @see DataStatus
  */
-public enum GpsFixQuality {
+enum class GpsFixQuality(private val value: Int) {
+    /** No GPS fix acquired.  */
+    INVALID(0),
 
-	/** No GPS fix acquired. */
-	INVALID(0),
+    /** Normal GPS fix, Standard Position Service (SPS).  */
+    NORMAL(1),
 
-	/** Normal GPS fix, Standard Position Service (SPS). */
-	NORMAL(1),
+    /** Differential GPS fix.  */
+    DGPS(2),
 
-	/** Differential GPS fix. */
-	DGPS(2),
+    /** Precise Positioning Service fix.  */
+    PPS(3),
 
-	/** Precise Positioning Service fix. */
-	PPS(3),
+    /** Real Time Kinematic  */
+    RTK(4),
 
-	/** Real Time Kinematic */
-	RTK(4),
+    /** Float RTK  */
+    FRTK(5),
 
-	/** Float RTK */
-	FRTK(5),
+    /** Estimated, dead reckoning (2.3 feature)  */
+    ESTIMATED(6),
 
-	/** Estimated, dead reckoning (2.3 feature) */
-	ESTIMATED(6),
+    /** Manual input mode  */
+    MANUAL(7),
 
-	/** Manual input mode */
-	MANUAL(7),
+    /** Simulation mode  */
+    SIMULATED(8);
 
-	/** Simulation mode */
-	SIMULATED(8);
+    /**
+     * Returns the corresponding int indicator for fix quality.
+     *
+     * @return Fix quality indicator value as indicated in sentences.
+     */
+    fun toInt(): Int {
+        return value
+    }
 
-	private final int value;
-
-	GpsFixQuality(int intValue) {
-		value = intValue;
-	}
-
-	/**
-	 * Returns the corresponding int indicator for fix quality.
-	 * 
-	 * @return Fix quality indicator value as indicated in sentences.
-	 */
-	public int toInt() {
-		return value;
-	}
-
-	/**
-	 * Get GpsFixQuality enum that corresponds the actual integer identifier
-	 * used in the sentences.
-	 * 
-	 * @param val Status identifier value
-	 * @return GpsFixQuality enum
-	 */
-	public static GpsFixQuality valueOf(int val) {
-		for (GpsFixQuality gfq : values()) {
-			if (gfq.toInt() == val) {
-				return gfq;
-			}
-		}
-		return valueOf(String.valueOf(val));
-	}
+    companion object {
+        /**
+         * Get GpsFixQuality enum that corresponds the actual integer identifier
+         * used in the sentences.
+         *
+         * @param val Status identifier value
+         * @return GpsFixQuality enum
+         */
+        fun valueOf(`val`: Int): GpsFixQuality {
+            for (gfq in values()) {
+                if (gfq.toInt() == `val`) {
+                    return gfq
+                }
+            }
+            return valueOf(`val`.toString())
+        }
+    }
 }

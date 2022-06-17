@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
 /**
  * Defines the status of a target reported in a TTM sentence.
@@ -26,42 +26,39 @@ package net.sf.marineapi.nmea.util;
  * @author Johan Bergkvist
  * @see net.sf.marineapi.nmea.sentence.TTMSentence
  */
-public enum TargetStatus {
+enum class TargetStatus(private val ch: Char) {
+    /** Query  */
+    QUERY('Q'),
 
-	/** Query */
-	QUERY('Q'),
-	/** Lost */
-	LOST('L'),
-	/** Tracking */
-	TRACKING('T');
+    /** Lost  */
+    LOST('L'),
 
-	private char ch;
+    /** Tracking  */
+    TRACKING('T');
 
-	TargetStatus(char ch) {
-		this.ch = ch;
-	}
+    /**
+     * Returns the corresponding char constant.
+     *
+     * @return Char indicator for Status
+     */
+    fun toChar(): Char {
+        return ch
+    }
 
-	/**
-	 * Returns the corresponding char constant.
-	 *
-	 * @return Char indicator for Status
-	 */
-	public char toChar() {
-		return ch;
-	}
-
-	/**
-	 * Get the enum corresponding to specified char.
-	 *
-	 * @param c Char indicator for Status
-	 * @return Status
-	 */
-	public static TargetStatus valueOf(char c) {
-		for (TargetStatus d : values()) {
-			if (d.toChar() == c) {
-				return d;
-			}
-		}
-		return valueOf(String.valueOf(c));
-	}
+    companion object {
+        /**
+         * Get the enum corresponding to specified char.
+         *
+         * @param c Char indicator for Status
+         * @return Status
+         */
+        fun valueOf(c: Char): TargetStatus {
+            for (d in values()) {
+                if (d.toChar() == c) {
+                    return d
+                }
+            }
+            return valueOf(c.toString())
+        }
+    }
 }

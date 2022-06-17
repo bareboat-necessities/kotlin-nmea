@@ -1,21 +1,16 @@
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
+import net.sf.marineapi.nmea.sentence.SentenceIdimport
 
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TLLSentence;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.Position;
-import net.sf.marineapi.nmea.util.TargetStatus;
-import net.sf.marineapi.nmea.util.Time;
+net.sf.marineapi.nmea.sentence.TLLSentenceimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*import java.text.DecimalFormatimport
 
+java.text.DecimalFormatSymbols
 /**
  * Sent by the Radar (ARPA / MARPA) and handled by the AIS Decoder in the same way as an AIS target
  *
  * TLL - Target Latitude and Longitude
- *        0  1       2 3        4 5    6         7 8 9
- *        |  |       | |        | |    |         | | |
+ * 0  1       2 3        4 5    6         7 8 9
+ * |  |       | |        | |    |         | | |
  * $--TLL,xx,llll.ll,a,yyyyy.yy,a,c--c,hhmmss.ss,a,a*hh)
  *
  * Field Number:
@@ -30,106 +25,79 @@ import net.sf.marineapi.nmea.util.Time;
  * 8-R= reference target; null (,,)= otherwise
  * 9-Checksum
  *
- * example ({@code $RATLL,01,3731.51052,N,02436.00000,E,TEST1,161617.88,T,*0C}
+ * example (`$RATLL,01,3731.51052,N,02436.00000,E,TEST1,161617.88,T,*0C`
  * @author Epameinondas Pantzopoulos
  */
-class TLLParser extends PositionParser implements TLLSentence{
+internal class TLLParser : PositionParser, TLLSentence {
+    constructor(nmea: String) : super(nmea, SentenceId.TLL) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.TLL, 9) {}
 
-	private static final int NUMBER = 0;
-	private static final int LATITUDE = 1;
-	private static final int LAT_HEMISPHERE = 2;
-	private static final int LONGITUDE = 3;
-	private static final int LON_HEMISPHERE = 4;
-	private static final int NAME = 5;
-	private static final int UTC_TIME = 6;
-	private static final int STATUS = 7;
-	private static final int REFERENCE = 8;
+    override fun getPosition(): Position? {
+        return parsePosition(LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE)
+    }
 
-	public TLLParser(String nmea) {
-		super(nmea,SentenceId.TLL);
-	}
+    override fun setPosition(pos: Position) {
+        setPositionValues(pos, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE)
+    }
 
-	public TLLParser(TalkerId talker) {
-		super(talker, SentenceId.TLL,9);
-	}
+    override fun getNumber(): Int {
+        return getIntValue(NUMBER)
+    }
 
-	@Override
-	public Position getPosition() {
-		return parsePosition(LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE);
-	}
+    override fun getName(): String? {
+        return getStringValue(NAME)
+    }
 
-	@Override
-	public void setPosition(Position pos) {
-		setPositionValues(pos, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE);
-	}
+    override fun getStatus(): TargetStatus {
+        return TargetStatus.Companion.valueOf(getCharValue(STATUS))
+    }
 
-	@Override
-	public int getNumber() {
-		return getIntValue(NUMBER);
-	}
+    override fun getReference(): Boolean {
+        return getCharValue(REFERENCE) == 'R'
+    }
 
-	@Override
-	public String getName() {
-		return getStringValue(NAME);
-	}
+    override fun getTime(): Time {
+        val str = getStringValue(UTC_TIME)
+        return Time(str)
+    }
 
-	@Override
-	public TargetStatus getStatus() {
-		return TargetStatus.valueOf(getCharValue(STATUS));
-	}
+    override fun setNumber(number: Int) {
+        setIntValue(NUMBER, number, 2)
+    }
 
-	@Override
-	public boolean getReference() {
-		return getCharValue(REFERENCE) == 'R';
-	}
+    override fun setName(name: String?) {
+        setStringValue(NAME, name)
+    }
 
-	@Override
-	public Time getTime() {
-		String str = getStringValue(UTC_TIME);
-		return new Time(str);
-	}
+    override fun setTime(t: Time) {
+        var str = String.format("%02d%02d", t.hour, t.minutes)
+        val nf = DecimalFormat("00.00")
+        val dfs = DecimalFormatSymbols()
+        dfs.decimalSeparator = '.'
+        nf.decimalFormatSymbols = dfs
+        str += nf.format(t.seconds)
+        setStringValue(UTC_TIME, str)
+    }
 
-	@Override
-	public void setNumber(int number) {
-		setIntValue(NUMBER, number, 2);
+    override fun setStatus(status: TargetStatus) {
+        setCharValue(STATUS, status.toChar())
+    }
 
-	}
+    override fun setReference(isReference: Boolean) {
+        if (isReference) {
+            setCharValue(REFERENCE, 'R')
+        }
+    }
 
-	@Override
-	public void setName(String name) {
-		setStringValue(NAME, name);
-
-	}
-
-	@Override
-	public void setTime(Time t) {
-		String str = String.format("%02d%02d", t.getHour(), t.getMinutes());
-
-		DecimalFormat nf = new DecimalFormat("00.00");
-		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
-		dfs.setDecimalSeparator('.');
-		nf.setDecimalFormatSymbols(dfs);
-
-		str += nf.format(t.getSeconds());
-		setStringValue(UTC_TIME, str);
-
-
-	}
-
-	@Override
-	public void setStatus(TargetStatus status) {
-		setCharValue(STATUS, status.toChar());
-
-	}
-
-	@Override
-	public void setReference(boolean isReference) {
-		if (isReference) {
-			setCharValue(REFERENCE, 'R');
-		}
-
-	}
-
-
-
+    companion object {
+        private const val NUMBER = 0
+        private const val LATITUDE = 1
+        private const val LAT_HEMISPHERE = 2
+        private const val LONGITUDE = 3
+        private const val LON_HEMISPHERE = 4
+        private const val NAME = 5
+        private const val UTC_TIME = 6
+        private const val STATUS = 7
+        private const val REFERENCE = 8
+    }
 }

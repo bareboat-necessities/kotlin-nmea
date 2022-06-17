@@ -18,105 +18,92 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.DataStatus;
+import net.sf.marineapi.nmea.util.DataStatus
 
 /**
  * Revolutions, measured from shaft or engine.
  *
  * @author Kimmo Tuukkanen
  */
-public interface RPMSentence extends Sentence {
+interface RPMSentence : Sentence {
+    /**
+     * Returns the engine or shaft number/id.
+     *
+     * @return Engine of shaft number
+     */
+    /**
+     * Sets the engine or shaft number/id.
+     *
+     * @param id ID to set.
+     */
+    var id: Int
+    /**
+     * Returns the propeller pitch, % of maximum.
+     *
+     * @return Pitch value, negative values denote astern.
+     */
+    /**
+     * Sets the propeller pitch, % of maximum.
+     *
+     * @param pitch Pitch value to set, negative values denote astern.
+     */
+    var pitch: Double
+    /**
+     * Returns the revolutions value.
+     *
+     * @return Speed, revolutions per minute.
+     */
+    /**
+     * Sets the revolutions value.
+     *
+     * @param rpm Revolutions per minute.
+     */
+    var rPM: Double
+    /**
+     * Returns the measurement source, engine or shaft.
+     *
+     * @return 'E' for engine, 'S' for shaft.
+     */
+    /**
+     * Sets the source indicator, engine or shaft.
+     *
+     * @param source 'E' for engine or 'S' for shaft.
+     * @throws IllegalArgumentException If specified char is not 'E' or 'S'.
+     */
+    var source: Char
+    /**
+     * Returns the data validity status.
+     *
+     * @return DataStatus
+     */
+    /**
+     * Sets the data validity status.
+     *
+     * @param status DataStatus to set.
+     */
+    var status: DataStatus
 
-	/** Source indicator for engine */
-	public static final char ENGINE = 'E';
+    /**
+     * Tells if the data source is engine.
+     *
+     * @return True if engine, otherwise false.
+     */
+    val isEngine: Boolean
 
-	/** Source indicator for shaft */
-	public static final char SHAFT = 'S';
+    /**
+     * Tells if the data source is shaft.
+     *
+     * @return True for shaft, otherwise false.
+     */
+    val isShaft: Boolean
 
-	/**
-	 * Returns the engine or shaft number/id.
-	 *
-	 * @return Engine of shaft number
-	 */
-	int getId();
+    companion object {
+        /** Source indicator for engine  */
+        const val ENGINE = 'E'
 
-	/**
-	 * Returns the propeller pitch, % of maximum.
-	 *
-	 * @return Pitch value, negative values denote astern.
-	 */
-	double getPitch();
-
-	/**
-	 * Returns the revolutions value.
-	 *
-	 * @return Speed, revolutions per minute.
-	 */
-	double getRPM();
-
-	/**
-	 * Returns the measurement source, engine or shaft.
-	 *
-	 * @return 'E' for engine, 'S' for shaft.
-	 */
-	char getSource();
-
-	/**
-	 * Returns the data validity status.
-	 *
-	 * @return DataStatus
-	 */
-	DataStatus getStatus();
-
-	/**
-	 * Tells if the data source is engine.
-	 *
-	 * @return True if engine, otherwise false.
-	 */
-	boolean isEngine();
-
-	/**
-	 * Tells if the data source is shaft.
-	 *
-	 * @return True for shaft, otherwise false.
-	 */
-	boolean isShaft();
-
-	/**
-	 * Sets the engine or shaft number/id.
-	 *
-	 * @param id ID to set.
-	 */
-	void setId(int id);
-
-	/**
-	 * Sets the propeller pitch, % of maximum.
-	 *
-	 * @param pitch Pitch value to set, negative values denote astern.
-	 */
-	void setPitch(double pitch);
-
-	/**
-	 * Sets the revolutions value.
-	 * 
-	 * @param rpm Revolutions per minute.
-	 */
-	void setRPM(double rpm);
-
-	/**
-	 * Sets the source indicator, engine or shaft.
-	 *
-	 * @param source 'E' for engine or 'S' for shaft.
-	 * @throws IllegalArgumentException If specified char is not 'E' or 'S'.
-	 */
-	void setSource(char source);
-
-	/**
-	 * Sets the data validity status.
-	 *
-	 * @param status DataStatus to set.
-	 */
-	void setStatus(DataStatus status);
+        /** Source indicator for shaft  */
+        const val SHAFT = 'S'
+    }
 }

@@ -18,127 +18,124 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.sentence.VBWSentence;
-import net.sf.marineapi.nmea.util.DataStatus;
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.sentence.VBWSentence
+import net.sf.marineapi.nmea.util.DataStatus
 
 /**
  * VBW sentence parser.
- * 
+ *
  * @author Jeremy Wilson
  */
-class VBWParser extends SentenceParser implements VBWSentence {
+internal class VBWParser : SentenceParser, VBWSentence {
+    /**
+     * Create a new instance of VBWParser.
+     *
+     * @param nmea VBW sentence String.
+     * @throws IllegalArgumentException If specified sentence is invalid.
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.VBW) {}
 
-	public static final int LONG_WATERSPEED = 0;
-	public static final int TRAV_WATERSPEED = 1;
-	public static final int WATER_SPEED_STATUS = 2;
-	public static final int LONG_GROUNDSPEED = 3;
-	public static final int TRAV_GROUNDSPEED = 4;
-	public static final int GROUND_SPEED_STATUS = 5;
-	public static final int STERN_WATERSPEED = 6;
-	public static final int STERN_SPEED_STATUS = 7;
-	public static final int STERN_GROUNDSPEED = 8;
-	public static final int STERN_GROUNDSPEED_STATUS = 9;
+    /**
+     * Create a VBW parser with an empty sentence.
+     *
+     * @param talker TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.VBW, 10) {}
 
-	/**
-	 * Create a new instance of VBWParser.
-	 * 
-	 * @param nmea VBW sentence String.
-	 * @throws IllegalArgumentException If specified sentence is invalid.
-	 */
-	public VBWParser(String nmea) {
-		super(nmea, SentenceId.VBW);
-	}
+    override fun getLongWaterSpeed(): Double {
+        return getDoubleValue(LONG_WATERSPEED)
+    }
 
-	/**
-	 * Create a VBW parser with an empty sentence.
-	 * 
-	 * @param talker TalkerId to set
-	 */
-	public VBWParser(TalkerId talker) {
-		super(talker, SentenceId.VBW, 10);
-	}
+    override fun getWaterSpeedStatus(): DataStatus {
+        return DataStatus.Companion.valueOf(getCharValue(WATER_SPEED_STATUS))
+    }
 
-	public double getLongWaterSpeed() {
-		return getDoubleValue(LONG_WATERSPEED);
-	}
+    override fun getGroundSpeedStatus(): DataStatus {
+        return DataStatus.Companion.valueOf(getCharValue(GROUND_SPEED_STATUS))
+    }
 
-	public DataStatus getWaterSpeedStatus() {
-		return DataStatus.valueOf(getCharValue(WATER_SPEED_STATUS));
-	}
+    override fun getLongGroundSpeed(): Double {
+        return getDoubleValue(LONG_GROUNDSPEED)
+    }
 
-	public DataStatus getGroundSpeedStatus() {
-		return DataStatus.valueOf(getCharValue(GROUND_SPEED_STATUS));
-	}
+    override fun getTravWaterSpeed(): Double {
+        return getDoubleValue(TRAV_WATERSPEED)
+    }
 
-	public double getLongGroundSpeed() {
-		return getDoubleValue(LONG_GROUNDSPEED);
-	}
+    override fun getTravGroundSpeed(): Double {
+        return getDoubleValue(TRAV_GROUNDSPEED)
+    }
 
-	public double getTravWaterSpeed() {
-		return getDoubleValue(TRAV_WATERSPEED);
-	}
+    override fun getSternWaterSpeed(): Double {
+        return getDoubleValue(STERN_WATERSPEED)
+    }
 
-	public double getTravGroundSpeed() {
-		return getDoubleValue(TRAV_GROUNDSPEED);
-	}
+    override fun getSternWaterSpeedStatus(): DataStatus {
+        return DataStatus.Companion.valueOf(getCharValue(STERN_SPEED_STATUS))
+    }
 
-	public double getSternWaterSpeed() {
-		return getDoubleValue(STERN_WATERSPEED);
-	}
+    override fun getSternGroundSpeed(): Double {
+        return getDoubleValue(STERN_GROUNDSPEED)
+    }
 
-	public DataStatus getSternWaterSpeedStatus() {
-		return DataStatus.valueOf(getCharValue(STERN_SPEED_STATUS));
-	}
+    override fun getSternGroundSpeedStatus(): DataStatus {
+        return DataStatus.Companion.valueOf(getCharValue(STERN_GROUNDSPEED_STATUS))
+    }
 
-	public double getSternGroundSpeed() {
-		return getDoubleValue(STERN_GROUNDSPEED);
-	}
+    override fun setLongWaterSpeed(speed: Double) {
+        setDoubleValue(LONG_WATERSPEED, speed, 2, 1)
+    }
 
-	public DataStatus getSternGroundSpeedStatus() {
-		return DataStatus.valueOf(getCharValue(STERN_GROUNDSPEED_STATUS));
-	}
+    override fun setLongGroundSpeed(speed: Double) {
+        setDoubleValue(LONG_GROUNDSPEED, speed, 2, 1)
+    }
 
-	public void setLongWaterSpeed(double speed) {
-		setDoubleValue(LONG_WATERSPEED, speed, 2, 1);
-	}
+    override fun setTravWaterSpeed(speed: Double) {
+        setDoubleValue(TRAV_WATERSPEED, speed, 2, 1)
+    }
 
-	public void setLongGroundSpeed(double speed) {
-		setDoubleValue(LONG_GROUNDSPEED, speed, 2, 1);
-	}
+    override fun setTravGroundSpeed(speed: Double) {
+        setDoubleValue(TRAV_GROUNDSPEED, speed, 2, 1)
+    }
 
-	public void setTravWaterSpeed(double speed) {
-		setDoubleValue(TRAV_WATERSPEED, speed, 2, 1);
-	}
+    override fun setWaterSpeedStatus(status: DataStatus) {
+        setCharValue(WATER_SPEED_STATUS, status.toChar())
+    }
 
-	public void setTravGroundSpeed(double speed) {
-		setDoubleValue(TRAV_GROUNDSPEED, speed, 2, 1);
-	}
+    override fun setGroundSpeedStatus(status: DataStatus) {
+        setCharValue(GROUND_SPEED_STATUS, status.toChar())
+    }
 
-	public void setWaterSpeedStatus(DataStatus status) {
-		setCharValue(WATER_SPEED_STATUS, status.toChar());
-	}
+    override fun setSternWaterSpeed(speed: Double) {
+        setDoubleValue(STERN_WATERSPEED, speed, 2, 1)
+    }
 
-	public void setGroundSpeedStatus(DataStatus status) {
-		setCharValue(GROUND_SPEED_STATUS, status.toChar());
-	}
+    override fun setSternWaterSpeedStatus(status: DataStatus) {
+        setCharValue(STERN_SPEED_STATUS, status.toChar())
+    }
 
-	public void setSternWaterSpeed(double speed) {
-		setDoubleValue(STERN_WATERSPEED, speed, 2, 1);
-	}
+    override fun setSternGroundSpeed(speed: Double) {
+        setDoubleValue(STERN_GROUNDSPEED, speed, 2, 1)
+    }
 
-	public void setSternWaterSpeedStatus(DataStatus status) {
-		setCharValue(STERN_SPEED_STATUS, status.toChar());
-	}
+    override fun setSternGroundSpeedStatus(status: DataStatus) {
+        setCharValue(STERN_GROUNDSPEED_STATUS, status.toChar())
+    }
 
-	public void setSternGroundSpeed(double speed) {
-		setDoubleValue(STERN_GROUNDSPEED, speed, 2, 1);
-	}
-
-	public void setSternGroundSpeedStatus(DataStatus status) {
-		setCharValue(STERN_GROUNDSPEED_STATUS, status.toChar());
-	}
+    companion object {
+        const val LONG_WATERSPEED = 0
+        const val TRAV_WATERSPEED = 1
+        const val WATER_SPEED_STATUS = 2
+        const val LONG_GROUNDSPEED = 3
+        const val TRAV_GROUNDSPEED = 4
+        const val GROUND_SPEED_STATUS = 5
+        const val STERN_WATERSPEED = 6
+        const val STERN_SPEED_STATUS = 7
+        const val STERN_GROUNDSPEED = 8
+        const val STERN_GROUNDSPEED_STATUS = 9
+    }
 }

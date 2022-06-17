@@ -18,13 +18,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.provider;
+package net.sf.marineapi.provider
 
-import net.sf.marineapi.nmea.io.SentenceReader;
-import net.sf.marineapi.nmea.sentence.HeadingSentence;
-import net.sf.marineapi.nmea.sentence.Sentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.provider.event.HeadingEvent;
+import net.sf.marineapi.nmea.io.SentenceReader
+import net.sf.marineapi.nmea.sentence.HeadingSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.provider.event.HeadingEvent
 
 /**
  * Heading provider reports the vessel's current heading. Data is captured from
@@ -32,49 +31,42 @@ import net.sf.marineapi.provider.event.HeadingEvent;
  *
  * @author Kimmo Tuukkanen
  * @see net.sf.marineapi.provider.event.HeadingEvent
+ *
  * @see net.sf.marineapi.provider.event.HeadingListener
  */
-public class HeadingProvider extends AbstractProvider<HeadingEvent> {
-
-	/**
-	 * Creates a new intance of HeadingProvider.
-	 *
-	 * @param reader Reader for capturing heading sentences.
-	 */
-	public HeadingProvider(SentenceReader reader) {
-		super(reader, SentenceId.HDT, SentenceId.HDM, SentenceId.HDG);
-	}
-
-	/*
+class HeadingProvider
+/**
+ * Creates a new intance of HeadingProvider.
+ *
+ * @param reader Reader for capturing heading sentences.
+ */
+    (reader: SentenceReader) : AbstractProvider<HeadingEvent?>(reader, SentenceId.HDT, SentenceId.HDM, SentenceId.HDG) {
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.provider.AbstractProvider#createEvent()
 	 */
-	@Override
-	protected HeadingEvent createProviderEvent() {
-		for (Sentence s : getSentences()) {
-			if (s instanceof HeadingSentence) {
-				return new HeadingEvent(this, (HeadingSentence) s);
-			}
-		}
-		return null;
-	}
+    override fun createProviderEvent(): HeadingEvent? {
+        for (s in sentences) {
+            if (s is HeadingSentence) {
+                return HeadingEvent(this, s as HeadingSentence)
+            }
+        }
+        return null
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.provider.AbstractProvider#isReady()
 	 */
-	@Override
-	protected boolean isReady() {
-		return hasOne("HDT", "HDM", "HDG");
-	}
+    override fun isReady(): Boolean {
+        return hasOne("HDT", "HDM", "HDG")
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.provider.AbstractProvider#isValid()
 	 */
-	@Override
-	protected boolean isValid() {
-		return true;
-	}
-
+    override fun isValid(): Boolean {
+        return true
+    }
 }

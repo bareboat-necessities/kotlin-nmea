@@ -18,77 +18,66 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.RSASentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.DataStatus;
-import net.sf.marineapi.nmea.util.Side;
+import net.sf.marineapi.nmea.sentence.RSASentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*
 /**
  * RSA sentence parser.
- * 
+ *
  * @author Lázár József, Kimmo Tuukkanen
  */
-class RSAParser extends SentenceParser implements RSASentence {
+internal class RSAParser : SentenceParser, RSASentence {
+    /**
+     * Creates a new instance of RSAParser.
+     *
+     * @param nmea RSA sentence String
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.RSA) {}
 
-	private static final int STARBOARD_SENSOR = 0;
-	private static final int STARBOARD_STATUS = 1;
-	private static final int PORT_SENSOR = 2;
-	private static final int PORT_STATUS = 3;
+    /**
+     * Creates a new instance of RSAParser with empty data fields.
+     *
+     * @param talker TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.RSA, 4) {
+        setStatus(Side.STARBOARD, DataStatus.VOID)
+        setStatus(Side.PORT, DataStatus.VOID)
+    }
 
-	/**
-	 * Creates a new instance of RSAParser.
-	 * 
-	 * @param nmea RSA sentence String
-	 */
-	public RSAParser(String nmea) {
-		super(nmea, SentenceId.RSA);
-	}
+    override fun getRudderAngle(side: Side): Double {
+        return if (Side.STARBOARD == side) {
+            getDoubleValue(STARBOARD_SENSOR)
+        } else getDoubleValue(PORT_SENSOR)
+    }
 
-	/**
-	 * Creates a new instance of RSAParser with empty data fields.
-	 * 
-	 * @param talker TalkerId to set
-	 */
-	public RSAParser(TalkerId talker) {
-		super(talker, SentenceId.RSA, 4);
-		setStatus(Side.STARBOARD, DataStatus.VOID);
-		setStatus(Side.PORT, DataStatus.VOID);
-	}
+    override fun setRudderAngle(side: Side, angle: Double) {
+        if (Side.STARBOARD == side) {
+            setDoubleValue(STARBOARD_SENSOR, angle)
+        } else {
+            setDoubleValue(PORT_SENSOR, angle)
+        }
+    }
 
-	@Override
-	public double getRudderAngle(Side side) {
-		if (Side.STARBOARD.equals(side)) {
-			return getDoubleValue(STARBOARD_SENSOR);
-		}
-		return getDoubleValue(PORT_SENSOR);
-	}
+    override fun getStatus(side: Side): DataStatus {
+        return if (Side.STARBOARD == side) {
+            DataStatus.Companion.valueOf(getCharValue(STARBOARD_STATUS))
+        } else DataStatus.Companion.valueOf(getCharValue(PORT_STATUS))
+    }
 
-	@Override
-	public void setRudderAngle(Side side, double angle) {
-		if (Side.STARBOARD.equals(side)) {
-			setDoubleValue(STARBOARD_SENSOR, angle);
-		} else {
-			setDoubleValue(PORT_SENSOR, angle);
-		}
-	}
+    override fun setStatus(side: Side, status: DataStatus) {
+        if (Side.STARBOARD == side) {
+            setCharValue(STARBOARD_STATUS, status.toChar())
+        } else {
+            setCharValue(PORT_STATUS, status.toChar())
+        }
+    }
 
-	@Override
-	public DataStatus getStatus(Side side) {
-		if (Side.STARBOARD.equals(side)) {
-			return DataStatus.valueOf(getCharValue(STARBOARD_STATUS));
-		}
-		return DataStatus.valueOf(getCharValue(PORT_STATUS));
-	}
-
-	@Override
-	public void setStatus(Side side, DataStatus status) {
-		if (Side.STARBOARD.equals(side)) {
-			setCharValue(STARBOARD_STATUS, status.toChar());
-		} else {
-			setCharValue(PORT_STATUS, status.toChar());
-		}
-	}
+    companion object {
+        private const val STARBOARD_SENSOR = 0
+        private const val STARBOARD_STATUS = 1
+        private const val PORT_SENSOR = 2
+        private const val PORT_STATUS = 3
+    }
 }

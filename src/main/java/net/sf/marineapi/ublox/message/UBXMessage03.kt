@@ -17,33 +17,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ublox.message;
+package net.sf.marineapi.ublox.message
 
-import java.util.List;
-
-import net.sf.marineapi.ublox.util.UbloxSatelliteInfo;
+import net.sf.marineapi.ublox.util.UbloxSatelliteInfo
 
 /**
  * Proprietary u-blox NMEA extension "Satellite status".
  *
  * @author Gunnar Hillert
- *
  */
-public interface UBXMessage03 extends UBXMessage {
+interface UBXMessage03 : UBXMessage {
+    /**
+     * Number of GNSS satellites tracked.
+     *
+     * @return Number of satellites tracked
+     */
+    fun getNumberOfTrackedSatellites(): Int
 
-	/**
-	 * Number of GNSS satellites tracked.
-	 *
-	 * @return Number of satellites tracked
-	 */
-	int getNumberOfTrackedSatellites();
-
-	/**
-	 * Returns a collection of satellite statuses.
-	 *
-	 * @see UbloxSatelliteInfo
-	 * @return Collection of UbloxSatelliteInfo
-	 */
-	List<UbloxSatelliteInfo> getSatellites();
-
+    /**
+     * Returns a collection of satellite statuses.
+     *
+     * @see UbloxSatelliteInfo
+     *
+     * @return Collection of UbloxSatelliteInfo
+     */
+    fun getSatellites(): List<UbloxSatelliteInfo>
 }

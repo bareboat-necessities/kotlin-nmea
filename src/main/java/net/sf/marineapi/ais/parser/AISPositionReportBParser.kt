@@ -18,157 +18,150 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.parser;
+package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISPositionReportB;
-import net.sf.marineapi.ais.util.AISRuleViolation;
-import net.sf.marineapi.ais.util.Angle12;
-import net.sf.marineapi.ais.util.Angle9;
-import net.sf.marineapi.ais.util.Latitude27;
-import net.sf.marineapi.ais.util.Longitude28;
-import net.sf.marineapi.ais.util.Sixbit;
-import net.sf.marineapi.ais.util.SpeedOverGround;
-import net.sf.marineapi.ais.util.TimeStamp;
+import net.sf.marineapi.ais.message.AISPositionReportBimport
 
+net.sf.marineapi.ais.util.*
 /**
  * Implementation for AIS Message 18 and 19:  Class B Equipment Position Report.
- * 
+ *
  * <pre>
  * Field    Name                                    Bits    (from, to )
  * ------------------------------------------------------------------------
- *  1       messageID                                  6    (   1,   6)
- *  2       repeatIndicator                            2    (   7,   8)
- *  3       userID                                    30    (   9,  38)
- *  4       spare1                                     8    (  39,  46)
- *  5       speedOverGround                           10    (  47,  56)
- *  6       positionAccuracy                           1    (  57,  57)
- *  7       longitude                                 28    (  58,  85)
- *  8       latitude                                  27    (  86, 112)
- *  9       courseOverGround                          12    ( 113, 124)
+ * 1       messageID                                  6    (   1,   6)
+ * 2       repeatIndicator                            2    (   7,   8)
+ * 3       userID                                    30    (   9,  38)
+ * 4       spare1                                     8    (  39,  46)
+ * 5       speedOverGround                           10    (  47,  56)
+ * 6       positionAccuracy                           1    (  57,  57)
+ * 7       longitude                                 28    (  58,  85)
+ * 8       latitude                                  27    (  86, 112)
+ * 9       courseOverGround                          12    ( 113, 124)
  * 10       trueHeading                                9    ( 125, 133)
  * 11       timeStamp                                  6    ( 134, 139)
- * </pre>
+</pre> *
  *
  * TODO: missing "Class B" flags 13 - 20.
  *
  * @author Lázár József
  */
-class AISPositionReportBParser extends AISMessageParser implements AISPositionReportB {
+internal open class AISPositionReportBParser : AISMessageParser, AISPositionReportB {
+    private var fSOG = 0
+    override var isAccurate = false
+        private set
+    private var fLongitude = 0
+    private var fLatitude = 0
+    private var fCOG = 0
+    override var trueHeading = 0
+        private set
+    override var timeStamp = 0
+        private set
 
-	protected final static String	SEPARATOR			= "\n\t";
+    /**
+     * Constructor.
+     *
+     * @param content Six-bit message content.
+     */
+    constructor(content: Sixbit) : super(content) {
+        parse(content)
+    }
 
-	private final static int		SPEEDOVERGROUND			= 0;
-	private final static int		POSITIONACCURACY		= 1;
-	private final static int		LONGITUDE				= 2;
-	private final static int		LATITUDE				= 3;
-	private final static int		COURSEOVERGROUND		= 4;
-	private final static int		TRUEHEADING				= 5;
-	private final static int		TIMESTAMP				= 6;
-	private final static int[]		FROM				= {
-		46, 56, 57,  85, 112, 124, 133};
-	private final static int[]		TO					= {
-		56, 57, 85, 112, 124, 133, 139};
+    /**
+     * Constructor with message length validation.
+     *
+     * @param content Six-bit message content.
+     * @param len Expected content length (bits)
+     * @throws IllegalArgumentException If content length is not as expected.
+     */
+    constructor(content: Sixbit, len: Int) : super(content, len) {
+        parse(content)
+    }
 
-	private int		fSOG;
-	private boolean	fPositionAccuracy;
-	private int		fLongitude;
-	private int		fLatitude;
-	private int		fCOG;
-	private int		fTrueHeading;
-	private int		fTimeStamp;
+    private fun parse(content: Sixbit) {
+        fSOG = content.getInt(FROM[SPEEDOVERGROUND], TO[SPEEDOVERGROUND])
+        isAccurate = content.getBoolean(FROM[POSITIONACCURACY])
+        fLongitude = content.getAs28BitInt(FROM[LONGITUDE], TO[LONGITUDE])
+        if (!Longitude28.isCorrect(fLongitude)) addViolation(
+            AISRuleViolation(
+                "LongitudeInDegrees",
+                fLongitude,
+                Longitude28.RANGE
+            )
+        )
+        fLatitude = content.getAs27BitInt(FROM[LATITUDE], TO[LATITUDE])
+        if (!Latitude27.isCorrect(fLatitude)) addViolation(
+            AISRuleViolation(
+                "LatitudeInDegrees",
+                fLatitude,
+                Latitude27.RANGE
+            )
+        )
+        fCOG = content.getInt(FROM[COURSEOVERGROUND], TO[COURSEOVERGROUND])
+        if (!Angle12.isCorrect(fCOG)) addViolation(AISRuleViolation("getCourseOverGround", fCOG, Angle12.RANGE))
+        trueHeading = content.getInt(FROM[TRUEHEADING], TO[TRUEHEADING])
+        if (!Angle9.isCorrect(trueHeading)) addViolation(AISRuleViolation("getTrueHeading", trueHeading, Angle9.RANGE))
+        timeStamp = content.getInt(FROM[TIMESTAMP], TO[TIMESTAMP])
+    }
 
-	/**
-	 * Constructor.
-	 *
-	 * @param content Six-bit message content.
-	 */
-	public AISPositionReportBParser(Sixbit content) {
-		super(content);
-		this.parse(content);
-	}
+    override val speedOverGround: Double
+        get() = SpeedOverGround.toKnots(fSOG)
+    override val longitudeInDegrees: Double
+        get() = Longitude28.toDegrees(fLongitude)
+    override val latitudeInDegrees: Double
+        get() = Latitude27.toDegrees(fLatitude)
+    override val courseOverGround: Double
+        get() = Angle12.toDegrees(fCOG)
 
-	/**
-	 * Constructor with message length validation.
-	 *
-	 * @param content Six-bit message content.
-	 * @param len Expected content length (bits)
-	 * @throws IllegalArgumentException If content length is not as expected.
-	 */
-	public AISPositionReportBParser(Sixbit content, int len) {
-		super(content, len);
-		this.parse(content);
-	}
+    override fun hasSpeedOverGround(): Boolean {
+        return SpeedOverGround.isAvailable(fSOG)
+    }
 
-	private void parse(Sixbit content) {
-		fSOG = content.getInt(FROM[SPEEDOVERGROUND], TO[SPEEDOVERGROUND]);
-		fPositionAccuracy = content.getBoolean(FROM[POSITIONACCURACY]);
-		fLongitude = content.getAs28BitInt(FROM[LONGITUDE], TO[LONGITUDE]);
-		if (!Longitude28.isCorrect(fLongitude))
-			addViolation(new AISRuleViolation("LongitudeInDegrees", fLongitude, Longitude28.RANGE));
-		fLatitude = content.getAs27BitInt(FROM[LATITUDE], TO[LATITUDE]);
-		if (!Latitude27.isCorrect(fLatitude))
-			addViolation(new AISRuleViolation("LatitudeInDegrees", fLatitude, Latitude27.RANGE));
-		fCOG = content.getInt(FROM[COURSEOVERGROUND], TO[COURSEOVERGROUND]);
-		if (!Angle12.isCorrect(fCOG))
-			addViolation(new AISRuleViolation("getCourseOverGround", fCOG, Angle12.RANGE));
-		fTrueHeading = content.getInt(FROM[TRUEHEADING], TO[TRUEHEADING]);
-		if (!Angle9.isCorrect(fTrueHeading))
-			addViolation(new AISRuleViolation("getTrueHeading",fTrueHeading, Angle9.RANGE));
-		fTimeStamp = content.getInt(FROM[TIMESTAMP], TO[TIMESTAMP]);
-	}
+    override fun hasCourseOverGround(): Boolean {
+        return Angle12.isAvailable(fCOG)
+    }
 
-	public double getSpeedOverGround() { return SpeedOverGround.toKnots(fSOG); }
+    override fun hasTrueHeading(): Boolean {
+        return Angle9.isAvailable(trueHeading)
+    }
 
-	public boolean isAccurate() { return fPositionAccuracy; }
+    override fun hasTimeStamp(): Boolean {
+        return TimeStamp.isAvailable(timeStamp)
+    }
 
-	public double getLongitudeInDegrees() { return Longitude28.toDegrees(fLongitude); }
+    override fun hasLongitude(): Boolean {
+        return Longitude28.isAvailable(fLongitude)
+    }
 
-	public double getLatitudeInDegrees() { return Latitude27.toDegrees(fLatitude); }
+    override fun hasLatitude(): Boolean {
+        return Latitude27.isAvailable(fLatitude)
+    }
 
-	public double getCourseOverGround() { return Angle12.toDegrees(fCOG); }
+    override fun toString(): String {
+        var result = "\tSOG:     " + SpeedOverGround.toString(fSOG)
+        result += SEPARATOR + "Pos acc: " + (if (isAccurate) "high" else "low") + " accuracy"
+        result += SEPARATOR + "Lon:     " + Longitude28.toString(fLongitude)
+        result += SEPARATOR + "Lat:     " + Latitude27.toString(fLatitude)
+        result += SEPARATOR + "COG:     " + Angle12.toString(fCOG)
+        result += SEPARATOR + "Heading: " + Angle9.getTrueHeadingString(trueHeading)
+        result += SEPARATOR + "Time:    " + TimeStamp.toString(timeStamp)
+        return result
+    }
 
-	@Override
-	public boolean hasSpeedOverGround() {
-		return SpeedOverGround.isAvailable(fSOG);
-	}
-
-	@Override
-	public boolean hasCourseOverGround() {
-		return Angle12.isAvailable(fCOG);
-	}
-
-	@Override
-	public boolean hasTrueHeading() {
-		return Angle9.isAvailable(fTrueHeading);
-	}
-
-	@Override
-	public boolean hasTimeStamp() {
-		return TimeStamp.isAvailable(fTimeStamp);
-	}
-
-	@Override
-	public boolean hasLongitude() {
-		return Longitude28.isAvailable(fLongitude);
-	}
-
-	@Override
-	public boolean hasLatitude() {
-		return Latitude27.isAvailable(fLatitude);
-	}
-
-	public int getTrueHeading() { return fTrueHeading; }
-
-	public int getTimeStamp() { return fTimeStamp; }
-
-	public String toString() {
-		String result =     "\tSOG:     " + SpeedOverGround.toString(fSOG);
-		result += SEPARATOR + "Pos acc: " + (fPositionAccuracy ? "high" : "low") + " accuracy";
-		result += SEPARATOR + "Lon:     " + Longitude28.toString(fLongitude);
-		result += SEPARATOR + "Lat:     " + Latitude27.toString(fLatitude);
-		result += SEPARATOR + "COG:     " + Angle12.toString(fCOG);
-		result += SEPARATOR + "Heading: " + Angle9.getTrueHeadingString(fTrueHeading);
-		result += SEPARATOR + "Time:    " + TimeStamp.toString(fTimeStamp);
-		return result;		
-	}
+    companion object {
+        protected const val SEPARATOR = "\n\t"
+        private const val SPEEDOVERGROUND = 0
+        private const val POSITIONACCURACY = 1
+        private const val LONGITUDE = 2
+        private const val LATITUDE = 3
+        private const val COURSEOVERGROUND = 4
+        private const val TRUEHEADING = 5
+        private const val TIMESTAMP = 6
+        private val FROM = intArrayOf(
+            46, 56, 57, 85, 112, 124, 133
+        )
+        private val TO = intArrayOf(
+            56, 57, 85, 112, 124, 133, 139
+        )
+    }
 }

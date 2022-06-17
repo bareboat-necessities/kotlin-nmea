@@ -18,86 +18,65 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.HTDSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.DataStatus;
+import net.sf.marineapi.nmea.sentence.HTDSentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.DataStatus
 /**
  * HTD parser.
  *
  * @author Paweł Kozioł
  */
-class HTDParser extends HTCParser implements HTDSentence {
+internal class HTDParser : HTCParser, HTDSentence {
+    /**
+     * Constructor.
+     *
+     * @param nmea HTD sentence String to parse.
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.HTD) {}
 
-	private static final int RUDDER_STATUS = 13;
-	private static final int OFF_HEADING_STATUS = 14;
-	private static final int OFF_TRACK_STATUS = 15;
-	private static final int HEADING = 16;
+    /**
+     * Constructor for empty HTD sentence.
+     *
+     * @param talker Talker ID to set.
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.HTD, 17) {}
 
-	/**
-	 * Constructor.
-	 *
-	 * @param nmea HTD sentence String to parse.
-	 */
-	public HTDParser(String nmea) {
-		super(nmea, SentenceId.HTD);
-	}
+    override val rudderStatus: DataStatus?
+        get() = if (hasValue(RUDDER_STATUS)) {
+            DataStatus.Companion.valueOf(getCharValue(RUDDER_STATUS))
+        } else {
+            null
+        }
+    override val offHeadingStatus: DataStatus?
+        get() = if (hasValue(OFF_HEADING_STATUS)) {
+            DataStatus.Companion.valueOf(getCharValue(OFF_HEADING_STATUS))
+        } else {
+            null
+        }
+    override val offTrackStatus: DataStatus?
+        get() = if (hasValue(OFF_TRACK_STATUS)) {
+            DataStatus.Companion.valueOf(getCharValue(OFF_TRACK_STATUS))
+        } else {
+            null
+        }
+    override var heading: Double
+        get() = if (hasValue(HEADING)) {
+            getDoubleValue(HEADING)
+        } else {
+            Double.NaN
+        }
+        set(hdt) {
+            setDoubleValue(HEADING, hdt)
+        }
+    override val isTrue: Boolean
+        get() = isHeadingTrue
 
-	/**
-	 * Constructor for empty HTD sentence.
-	 *
-	 * @param talker Talker ID to set.
-	 */
-	public HTDParser(TalkerId talker) {
-		super(talker, SentenceId.HTD, 17);
-	}
-
-	@Override
-	public DataStatus getRudderStatus() {
-		if (hasValue(RUDDER_STATUS)) {
-			return DataStatus.valueOf(getCharValue(RUDDER_STATUS));
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public DataStatus getOffHeadingStatus() {
-		if (hasValue(OFF_HEADING_STATUS)) {
-			return DataStatus.valueOf(getCharValue(OFF_HEADING_STATUS));
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public DataStatus getOffTrackStatus() {
-		if (hasValue(OFF_TRACK_STATUS)) {
-			return DataStatus.valueOf(getCharValue(OFF_TRACK_STATUS));
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public double getHeading() {
-		if (hasValue(HEADING)) {
-			return getDoubleValue(HEADING);
-		} else {
-			return Double.NaN;
-		}
-	}
-
-	@Override
-	public boolean isTrue() {
-		return isHeadingTrue();
-	}
-
-	@Override
-	public void setHeading(double hdt) {
-		setDoubleValue(HEADING, hdt);
-	}
+    companion object {
+        private const val RUDDER_STATUS = 13
+        private const val OFF_HEADING_STATUS = 14
+        private const val OFF_TRACK_STATUS = 15
+        private const val HEADING = 16
+    }
 }

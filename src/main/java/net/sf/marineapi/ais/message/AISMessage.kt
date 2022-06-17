@@ -18,34 +18,33 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.message;
+package net.sf.marineapi.ais.message
 
 /**
  * Common base interface of AIS messages.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public interface AISMessage {
+interface AISMessage {
+    /**
+     * Returns the message type.
+     *
+     * @return Message type in range from 1 to 27.
+     */
+    val messageType: Int
 
-	/**
-	 * Returns the message type.
-	 * 
-	 * @return Message type in range from 1 to 27.
-	 */
-	int getMessageType();
+    /**
+     * Tells how many times the message has been repeated.
+     *
+     * @return the number of repeats
+     */
+    val repeatIndicator: Int
 
-	/**
-	 * Tells how many times the message has been repeated.
-	 * 
-	 * @return the number of repeats
-	 */
-	int getRepeatIndicator();
-
-	/**
-	 * Returns the unique identifier of the transmitting ship (MMSI, Maritime
-	 * Mobile Service Identity).
-	 * 
-	 * @return MMSI identifier
-	 */
-	int getMMSI();
+    /**
+     * Returns the unique identifier of the transmitting ship (MMSI, Maritime
+     * Mobile Service Identity).
+     *
+     * @return MMSI identifier
+     */
+    val mMSI: Int
 }

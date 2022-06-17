@@ -18,14 +18,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
 /**
- * <p>Vessel heading in degrees, relative to true north.</p>
- * 
- * <p>Example:<br>{@code $HCHDT,202.5,T*26}</p>
- * 
+ *
+ * Vessel heading in degrees, relative to true north.
+ *
+ *
+ * Example:<br></br>`$HCHDT,202.5,T*26`
+ *
  * @author Kimmo Tuukkanen
  */
-public interface HDTSentence extends HeadingSentence {
-}
+interface HDTSentence : HeadingSentence

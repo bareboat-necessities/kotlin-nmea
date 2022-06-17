@@ -18,85 +18,77 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.parser;
+package net.sf.marineapi.ais.parser
 
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
+import net.sf.marineapi.ais.message.AISMessageimport
 
-import net.sf.marineapi.ais.message.AISMessage;
-import net.sf.marineapi.ais.util.Sixbit;
-import net.sf.marineapi.nmea.sentence.AISSentence;
-
+net.sf.marineapi.ais.util.Sixbitimport net.sf.marineapi.nmea.sentence.AISSentence
 /**
  * Factory for creating AIS message parsers.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public class AISMessageFactory {
-
-    private static AISMessageFactory instance;
-    private Map<Integer, Class<? extends AISMessage>> parsers;
+class AISMessageFactory private constructor() {
+    private val parsers: MutableMap<Int, Class<out AISMessage>>
 
     /**
      * Hidden constructor.
      */
-    private AISMessageFactory() {
-        parsers = new HashMap<Integer, Class<? extends AISMessage>>(7);
-        parsers.put(1, AISMessage01Parser.class);
-        parsers.put(2, AISMessage02Parser.class);
-        parsers.put(3, AISMessage03Parser.class);
-        parsers.put(4, AISMessage04Parser.class);
-        parsers.put(5, AISMessage05Parser.class);
-        parsers.put(9, AISMessage09Parser.class);
-        parsers.put(18, AISMessage18Parser.class);
-        parsers.put(19, AISMessage19Parser.class);
-        parsers.put(21, AISMessage21Parser.class);
-        parsers.put(24, AISMessage24Parser.class);
-        parsers.put(27, AisMessage27Parser.class);
+    init {
+        parsers = HashMap(7)
+        parsers[1] = AISMessage01Parser::class.java
+        parsers[2] = AISMessage02Parser::class.java
+        parsers[3] = AISMessage03Parser::class.java
+        parsers[4] = AISMessage04Parser::class.java
+        parsers[5] = AISMessage05Parser::class.java
+        parsers[9] = AISMessage09Parser::class.java
+        parsers[18] = AISMessage18Parser::class.java
+        parsers[19] = AISMessage19Parser::class.java
+        parsers[21] = AISMessage21Parser::class.java
+        parsers[24] = AISMessage24Parser::class.java
+        parsers[27] = AisMessage27Parser::class.java
     }
-
 
     /**
      * Creates a new AIS message parser based on given sentences.
      *
      * @param sentences One or more AIS sentences in correct sequence order.
      * @throws IllegalArgumentException If given message type is not supported
-     *          or sequence order is incorrect.
+     * or sequence order is incorrect.
      * @throws IllegalStateException If message parser cannot be constructed
-     *          due to illegal state, e.g. invalid or empty message.
+     * due to illegal state, e.g. invalid or empty message.
      * @return AISMessage instance
      */
-    public AISMessage create(AISSentence... sentences) {
-
-        AISMessageParser parser = new AISMessageParser(sentences);
-
-        if (!parsers.containsKey(parser.getMessageType())) {
-            String msg = String.format("no parser for message type %d", parser.getMessageType());
-            throw new IllegalArgumentException(msg);
+    fun create(vararg sentences: AISSentence?): AISMessage {
+        val parser = AISMessageParser(*sentences)
+        if (!parsers.containsKey(parser.messageType)) {
+            val msg = String.format("no parser for message type %d", parser.messageType)
+            throw IllegalArgumentException(msg)
         }
-
-        AISMessage result;
-        Class<? extends AISMessage> c = parsers.get(parser.getMessageType());
-        try {
-            Constructor<? extends AISMessage> co = c.getConstructor(Sixbit.class);
-            result = co.newInstance(parser.getSixbit());
-        } catch (Exception e) {
-            throw new IllegalStateException(e.getCause());
+        val result: AISMessage
+        val c = parsers[parser.messageType]!!
+        result = try {
+            val co = c.getConstructor(Sixbit::class.java)
+            co.newInstance(parser.sixbit)
+        } catch (e: Exception) {
+            throw IllegalStateException(e.cause)
         }
-
-        return result;
+        return result
     }
 
-    /**
-     * Returns the factory singleton.
-     *
-     * @return AISMessageFactory
-     */
-    public static AISMessageFactory getInstance() {
-        if(instance == null) {
-            instance = new AISMessageFactory();
-        }
-        return instance;
+    companion object {
+        /**
+         * Returns the factory singleton.
+         *
+         * @return AISMessageFactory
+         */
+        var instance: AISMessageFactory? = null
+            get() {
+                if (field == null) {
+                    field = AISMessageFactory()
+                }
+                return field
+            }
+            private set
     }
 }

@@ -18,39 +18,36 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
 /**
  * Interface for sentences that provide vessel's true or magnetic heading.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public interface HeadingSentence extends Sentence {
+interface HeadingSentence : Sentence {
+    /**
+     * Returns the vessel's current heading.
+     *
+     * @return Heading in degrees.
+     * @see .isTrue
+     */
+    /**
+     * Sets the heading value.
+     *
+     * @param hdt Heading in degrees
+     * @see .isTrue
+     * @throws IllegalArgumentException If heading value out of range [0..360]
+     */
+    var heading: Double
 
-	/**
-	 * Returns the vessel's current heading.
-	 * 
-	 * @return Heading in degrees.
-	 * @see #isTrue()
-	 */
-	double getHeading();
-
-	/**
-	 * Tells if the heading returned and set by {@link #getHeading()} and
-	 * {@link #setHeading(double)} methods is <em>true</em> or <em>magnetic</em>
-	 * .
-	 * 
-	 * @return {@code true} if true heading, otherwise {@code false}
-	 *         for magnetic heading.
-	 */
-	boolean isTrue();
-
-	/**
-	 * Sets the heading value.
-	 * 
-	 * @param hdt Heading in degrees
-	 * @see #isTrue()
-	 * @throws IllegalArgumentException If heading value out of range [0..360]
-	 */
-	void setHeading(double hdt);
+    /**
+     * Tells if the heading returned and set by [.getHeading] and
+     * [.setHeading] methods is *true* or *magnetic*
+     * .
+     *
+     * @return `true` if true heading, otherwise `false`
+     * for magnetic heading.
+     */
+    val isTrue: Boolean
 }

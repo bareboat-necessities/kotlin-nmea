@@ -18,24 +18,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.parser;
+package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage18;
-import net.sf.marineapi.ais.util.Sixbit;
+import net.sf.marineapi.ais.message.AISMessage18import
 
+net.sf.marineapi.ais.util.Sixbit
 /**
  * AIS message 18 parser, Standard Class B CS Position Report.
  *
  * @author Lázár József
  */
-class AISMessage18Parser extends AISPositionReportBParser implements AISMessage18 {
-
-	/**
-	 * Constructor.
-	 *
-	 * @param content Six-bit message content.
-	 */
-	public AISMessage18Parser(Sixbit content) {
-		super(content);
-	}
-}
+internal class AISMessage18Parser
+/**
+ * Constructor.
+ *
+ * @param content Six-bit message content.
+ */
+    (content: Sixbit) : AISPositionReportBParser(content), AISMessage18

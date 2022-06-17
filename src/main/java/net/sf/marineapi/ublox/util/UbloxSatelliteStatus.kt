@@ -17,9 +17,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ublox.util;
+package net.sf.marineapi.ublox.util
 
-import net.sf.marineapi.ublox.message.UBXMessage03;
+import net.sf.marineapi.ublox.message.UBXMessage03
 
 /**
  * Defines the satellite statuses defined by proprietary u-blox NMEA extension
@@ -28,42 +28,34 @@ import net.sf.marineapi.ublox.message.UBXMessage03;
  *
  * @see UBXMessage03
  */
-public enum UbloxSatelliteStatus {
+enum class UbloxSatelliteStatus(private val statusFlag: Char) {
+    /**
+     * Not used.
+     */
+    NOT_USED('-'),
 
-	/**
-	 *  Not used.
-	 */
-	NOT_USED('-'),
+    /**
+     * Used in solution.
+     */
+    USED_IN_SOLUTION('U'),
 
-	/**
-	 * Used in solution.
-	 */
-	USED_IN_SOLUTION('U'),
+    /**
+     * Ephemeris available, but not used for navigation.
+     */
+    NOT_USED_EPHEMERIS_AVAILABLE('e');
 
-	/**
-	 * Ephemeris available, but not used for navigation.
-	 */
-	NOT_USED_EPHEMERIS_AVAILABLE('e');
+    fun getStatusFlag(): Char {
+        return statusFlag
+    }
 
-
-	private char statusFlag;
-
-	private UbloxSatelliteStatus(char statusFlag) {
-		this.statusFlag = statusFlag;
-	}
-
-	public char getStatusFlag() {
-		return statusFlag;
-	}
-
-	public static UbloxSatelliteStatus fromStatusFlag(char statusFlag) {
-
-		for (UbloxSatelliteStatus ubloxSatelliteStatusType : UbloxSatelliteStatus.values()) {
-			if (ubloxSatelliteStatusType.getStatusFlag() == statusFlag) {
-				return ubloxSatelliteStatusType;
-			}
-		}
-
-		return null;
-	}
+    companion object {
+        fun fromStatusFlag(statusFlag: Char): UbloxSatelliteStatus? {
+            for (ubloxSatelliteStatusType in values()) {
+                if (ubloxSatelliteStatusType.getStatusFlag() == statusFlag) {
+                    return ubloxSatelliteStatusType
+                }
+            }
+            return null
+        }
+    }
 }

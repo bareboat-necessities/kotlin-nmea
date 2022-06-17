@@ -18,25 +18,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.provider.event;
+package net.sf.marineapi.provider.event
 
-import java.util.EventObject;
+import java.util.*
 
 /**
  * Abstract base class for provider events.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public abstract class ProviderEvent extends EventObject {
-
-	private static final long serialVersionUID = -5207967682036248721L;
-
-	/**
-	 * Creates a new provider event.
-	 * 
-	 * @param source The object that sends the event.
-	 */
-	public ProviderEvent(Object source) {
-		super(source);
-	}
+abstract class ProviderEvent
+/**
+ * Creates a new provider event.
+ *
+ * @param source The object that sends the event.
+ */
+    (source: Any?) : EventObject(source) {
+    companion object {
+        private const val serialVersionUID = -5207967682036248721L
+    }
 }

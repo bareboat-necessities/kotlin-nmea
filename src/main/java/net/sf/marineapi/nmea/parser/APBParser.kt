@@ -18,375 +18,303 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.APBSentence;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.DataStatus;
-import net.sf.marineapi.nmea.util.Direction;
+import net.sf.marineapi.nmea.sentence.APBSentenceimport
 
+net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*
 /**
  * APB parser.
  *
  * @author Kimmo Tuukkanen
  */
-class APBParser extends SentenceParser implements APBSentence {
+internal class APBParser : SentenceParser, APBSentence {
+    /**
+     * Creates a new instance of APBParser.
+     *
+     * @param nmea NMEA sentence String.
+     */
+    constructor(nmea: String) : super(nmea) {}
 
-	private static final int SIGNAL_STATUS = 0;
-	private static final int CYCLE_LOCK_STATUS = 1;
-	private static final int XTE_DISTANCE = 2;
-	private static final int XTE_STEER_TO = 3;
-	private static final int XTE_UNITS = 4;
-	private static final int CIRCLE_STATUS = 5;
-	private static final int PERPENDICULAR_STATUS = 6;
-	private static final int BEARING_ORIGIN_DEST = 7;
-	private static final int BEARING_ORIGIN_DEST_TYPE = 8;
-	private static final int DEST_WAYPOINT_ID = 9;
-	private static final int BEARING_POS_DEST = 10;
-	private static final int BEARING_POS_DEST_TYPE = 11;
-	private static final int HEADING_TO_DEST = 12;
-	private static final int HEADING_TO_DEST_TYPE = 13;
+    /**
+     * Creates a new empty APBParser.
+     *
+     * @param talker TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, "APB", 14) {}
 
-	/**
-	 * Creates a new instance of APBParser.
-	 * 
-	 * @param nmea NMEA sentence String.
-	 */
-	public APBParser(String nmea) {
-		super(nmea);
-	}
-
-	/**
-	 * Creates a new empty APBParser.
-	 * 
-	 * @param talker TalkerId to set
-	 */
-	public APBParser(TalkerId talker) {
-		super(talker, "APB", 14);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.APBSentence#getBearginPositionToDestination
 	 * ()
-	 */
-	@Override
-	public double getBearingPositionToDestination() {
-		return getDoubleValue(BEARING_POS_DEST);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.APBSentence#getBearingOriginToDestination
-	 * ()
-	 */
-	@Override
-	public double getBearingOriginToDestination() {
-		return getDoubleValue(BEARING_ORIGIN_DEST);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.APBSentence#getCrossTrackError()
-	 */
-	@Override
-	public double getCrossTrackError() {
-		return getDoubleValue(XTE_DISTANCE);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.APBSentence#getCrossTrackUnits()
-	 */
-	@Override
-	public char getCrossTrackUnits() {
-		return getCharValue(XTE_UNITS);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.APBSentence#getCycleLockStatus()
-	 */
-	@Override
-	public DataStatus getCycleLockStatus() {
-		return DataStatus.valueOf(getCharValue(CYCLE_LOCK_STATUS));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.APBSentence#getDestionationWaypointId()
-	 */
-	@Override
-	public String getDestionationWaypointId() {
-		return getStringValue(DEST_WAYPOINT_ID);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.APBSentence#getHeadingToDestionation()
-	 */
-	@Override
-	public double getHeadingToDestionation() {
-		return getDoubleValue(HEADING_TO_DEST);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.APBSentence#getStatus()
-	 */
-	@Override
-	public DataStatus getStatus() {
-		return DataStatus.valueOf(getCharValue(SIGNAL_STATUS));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.APBSentence#getSteerTo()
-	 */
-	@Override
-	public Direction getSteerTo() {
-		return Direction.valueOf(getCharValue(XTE_STEER_TO));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.APBSentence#isArrivalCircleEntered()
-	 */
-	@Override
-	public boolean isArrivalCircleEntered() {
-		return getCharValue(CIRCLE_STATUS) == 'A';
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.APBSentence#isBearingOriginToDestionationTrue
-	 * ()
-	 */
-	@Override
-	public boolean isBearingOriginToDestionationTrue() {
-		return getCharValue(BEARING_ORIGIN_DEST_TYPE) == 'T';
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.APBSentence#isBearingPositionToDestinationTrue
-	 * ()
-	 */
-	@Override
-	public boolean isBearingPositionToDestinationTrue() {
-		return getCharValue(BEARING_POS_DEST_TYPE) == 'T';
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.APBSentence#isHeadingTrue()
-	 */
-	@Override
-	public boolean isHeadingToDestinationTrue() {
-		return getCharValue(HEADING_TO_DEST_TYPE) == 'T';
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.APBSentence#isPerpendicularPassed()
-	 */
-	@Override
-	public boolean isPerpendicularPassed() {
-		return getCharValue(PERPENDICULAR_STATUS) == 'A';
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.APBSentence#setArrivalCircleEntered(boolean
-	 * )
-	 */
-	@Override
-	public void setArrivalCircleEntered(boolean isEntered) {
-		DataStatus s = isEntered ? DataStatus.ACTIVE : DataStatus.VOID;
-		setCharValue(CIRCLE_STATUS, s.toChar());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.APBSentence#setBearingOriginToDestination
-	 * (double)
-	 */
-	@Override
-	public void setBearingOriginToDestination(double bearing) {
-		setDegreesValue(BEARING_ORIGIN_DEST, bearing);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.APBSentence#setBearingOriginToDestionationTrue
-	 * (boolean)
-	 */
-	@Override
-	public void setBearingOriginToDestionationTrue(boolean isTrue) {
-		char c = isTrue ? 'T' : 'M';
-		setCharValue(BEARING_ORIGIN_DEST_TYPE, c);
-	}
-
-	/*
+	 *//*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.APBSentence#setBearingPositionToDestination
 	 * (double)
 	 */
-	@Override
-	public void setBearingPositionToDestination(double bearing) {
-		setDegreesValue(BEARING_POS_DEST, bearing);
-	}
+    override var bearingPositionToDestination: Double
+        get() = getDoubleValue(BEARING_POS_DEST)
+        set(bearing) {
+            setDegreesValue(BEARING_POS_DEST, bearing)
+        }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
-	 * @see net.sf.marineapi.nmea.sentence.APBSentence#
-	 * setBearingPositionToDestinationTrue(boolean)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.APBSentence#getBearingOriginToDestination
+	 * ()
+	 *//*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.APBSentence#setBearingOriginToDestination
+	 * (double)
 	 */
-	@Override
-	public void setBearingPositionToDestinationTrue(boolean isTrue) {
-		char c = isTrue ? 'T' : 'M';
-		setCharValue(BEARING_POS_DEST_TYPE, c);
-	}
+    override var bearingOriginToDestination: Double
+        get() = getDoubleValue(BEARING_ORIGIN_DEST)
+        set(bearing) {
+            setDegreesValue(BEARING_ORIGIN_DEST, bearing)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.sf.marineapi.nmea.sentence.APBSentence#getCrossTrackError()
+	 *//*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.APBSentence#setCrossTrackError(double)
 	 */
-	@Override
-	public void setCrossTrackError(double distance) {
-		setDoubleValue(XTE_DISTANCE, distance, 1, 1);
-	}
+    override var crossTrackError: Double
+        get() = getDoubleValue(XTE_DISTANCE)
+        set(distance) {
+            setDoubleValue(XTE_DISTANCE, distance, 1, 1)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.sf.marineapi.nmea.sentence.APBSentence#getCrossTrackUnits()
+	 *//*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.sf.marineapi.nmea.sentence.APBSentence#setCrossTrackUnits(char)
 	 */
-	@Override
-	public void setCrossTrackUnits(char unit) {
-		if (unit != APBSentence.KM && unit != APBSentence.NM) {
-			throw new IllegalAccessError(
-				"Invalid distance unit char, expected 'K' or 'N'");
-		}
-		setCharValue(XTE_UNITS, unit);
-	}
+    override var crossTrackUnits: Char
+        get() = getCharValue(XTE_UNITS)
+        set(unit) {
+            if (unit != APBSentence.Companion.KM && unit != APBSentence.Companion.NM) {
+                throw IllegalAccessError(
+                    "Invalid distance unit char, expected 'K' or 'N'"
+                )
+            }
+            setCharValue(XTE_UNITS, unit)
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.sf.marineapi.nmea.sentence.APBSentence#getCycleLockStatus()
+	 *//*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.APBSentence#setCycleLockStatus(net.sf.
 	 * marineapi.nmea.util.DataStatus)
 	 */
-	@Override
-	public void setCycleLockStatus(DataStatus status) {
-		setCharValue(CYCLE_LOCK_STATUS, status.toChar());
-	}
+    override var cycleLockStatus: DataStatus
+        get() = DataStatus.Companion.valueOf(getCharValue(CYCLE_LOCK_STATUS))
+        set(status) {
+            setCharValue(CYCLE_LOCK_STATUS, status.toChar())
+        }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * net.sf.marineapi.nmea.sentence.APBSentence#setDestinationWaypointId(java
-	 * .lang.String)
+	 * net.sf.marineapi.nmea.sentence.APBSentence#getDestionationWaypointId()
 	 */
-	@Override
-	public void setDestinationWaypointId(String id) {
-		setStringValue(DEST_WAYPOINT_ID, id);
-	}
+    override val destionationWaypointId: String?
+        get() = getStringValue(DEST_WAYPOINT_ID)
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * net.sf.marineapi.nmea.sentence.APBSentence#setHeadingToDestination(double
-	 * )
+	 * net.sf.marineapi.nmea.sentence.APBSentence#getHeadingToDestionation()
 	 */
-	@Override
-	public void setHeadingToDestination(double heading) {
-		setDoubleValue(HEADING_TO_DEST, heading);
-	}
+    override val headingToDestionation: Double
+        get() = getDoubleValue(HEADING_TO_DEST)
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.APBSentence#setHeadingToDestinationTrue
-	 * (boolean)
-	 */
-	@Override
-	public void setHeadingToDestinationTrue(boolean isTrue) {
-		char c = isTrue ? 'T' : 'M';
-		setCharValue(HEADING_TO_DEST_TYPE, c);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.APBSentence#setPerpendicularPassed(boolean
-	 * )
-	 */
-	@Override
-	public void setPerpendicularPassed(boolean isPassed) {
-		DataStatus s = isPassed ? DataStatus.ACTIVE : DataStatus.VOID;
-		setCharValue(PERPENDICULAR_STATUS, s.toChar());
-	}
-
-	/*
+	 * @see net.sf.marineapi.nmea.sentence.APBSentence#getStatus()
+	 *//*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.APBSentence#setStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-	@Override
-	public void setStatus(DataStatus status) {
-		setCharValue(SIGNAL_STATUS, status.toChar());
-	}
+    override var status: DataStatus
+        get() = DataStatus.Companion.valueOf(getCharValue(SIGNAL_STATUS))
+        set(status) {
+            setCharValue(SIGNAL_STATUS, status.toChar())
+        }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.sf.marineapi.nmea.sentence.APBSentence#getSteerTo()
+	 *//*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.APBSentence#setSteerTo(net.sf.marineapi
 	 * .nmea.util.Direction)
 	 */
-	@Override
-	public void setSteerTo(Direction direction) {
-		setCharValue(XTE_STEER_TO, direction.toChar());
-	}
+    override var steerTo: Direction
+        get() = Direction.Companion.valueOf(getCharValue(XTE_STEER_TO))
+        set(direction) {
+            setCharValue(XTE_STEER_TO, direction.toChar())
+        }
 
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.sf.marineapi.nmea.sentence.APBSentence#isArrivalCircleEntered()
+	 *//*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.APBSentence#setArrivalCircleEntered(boolean
+	 * )
+	 */
+    override var isArrivalCircleEntered: Boolean
+        get() = getCharValue(CIRCLE_STATUS) == 'A'
+        set(isEntered) {
+            val s = if (isEntered) DataStatus.ACTIVE else DataStatus.VOID
+            setCharValue(CIRCLE_STATUS, s.toChar())
+        }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.APBSentence#isBearingOriginToDestionationTrue
+	 * ()
+	 *//*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.APBSentence#setBearingOriginToDestionationTrue
+	 * (boolean)
+	 */
+    override var isBearingOriginToDestionationTrue: Boolean
+        get() = getCharValue(BEARING_ORIGIN_DEST_TYPE) == 'T'
+        set(isTrue) {
+            val c = if (isTrue) 'T' else 'M'
+            setCharValue(BEARING_ORIGIN_DEST_TYPE, c)
+        }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.APBSentence#isBearingPositionToDestinationTrue
+	 * ()
+	 *//*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.sf.marineapi.nmea.sentence.APBSentence#
+	 * setBearingPositionToDestinationTrue(boolean)
+	 */
+    override var isBearingPositionToDestinationTrue: Boolean
+        get() = getCharValue(BEARING_POS_DEST_TYPE) == 'T'
+        set(isTrue) {
+            val c = if (isTrue) 'T' else 'M'
+            setCharValue(BEARING_POS_DEST_TYPE, c)
+        }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.sf.marineapi.nmea.sentence.APBSentence#isHeadingTrue()
+	 *//*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.APBSentence#setHeadingToDestinationTrue
+	 * (boolean)
+	 */
+    override var isHeadingToDestinationTrue: Boolean
+        get() = getCharValue(HEADING_TO_DEST_TYPE) == 'T'
+        set(isTrue) {
+            val c = if (isTrue) 'T' else 'M'
+            setCharValue(HEADING_TO_DEST_TYPE, c)
+        }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.sf.marineapi.nmea.sentence.APBSentence#isPerpendicularPassed()
+	 *//*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.APBSentence#setPerpendicularPassed(boolean
+	 * )
+	 */
+    override var isPerpendicularPassed: Boolean
+        get() = getCharValue(PERPENDICULAR_STATUS) == 'A'
+        set(isPassed) {
+            val s = if (isPassed) DataStatus.ACTIVE else DataStatus.VOID
+            setCharValue(PERPENDICULAR_STATUS, s.toChar())
+        }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.APBSentence#setDestinationWaypointId(java
+	 * .lang.String)
+	 */
+    override fun setDestinationWaypointId(id: String?) {
+        setStringValue(DEST_WAYPOINT_ID, id)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.APBSentence#setHeadingToDestination(double
+	 * )
+	 */
+    override fun setHeadingToDestination(heading: Double) {
+        setDoubleValue(HEADING_TO_DEST, heading)
+    }
+
+    companion object {
+        private const val SIGNAL_STATUS = 0
+        private const val CYCLE_LOCK_STATUS = 1
+        private const val XTE_DISTANCE = 2
+        private const val XTE_STEER_TO = 3
+        private const val XTE_UNITS = 4
+        private const val CIRCLE_STATUS = 5
+        private const val PERPENDICULAR_STATUS = 6
+        private const val BEARING_ORIGIN_DEST = 7
+        private const val BEARING_ORIGIN_DEST_TYPE = 8
+        private const val DEST_WAYPOINT_ID = 9
+        private const val BEARING_POS_DEST = 10
+        private const val BEARING_POS_DEST_TYPE = 11
+        private const val HEADING_TO_DEST = 12
+        private const val HEADING_TO_DEST_TYPE = 13
+    }
 }

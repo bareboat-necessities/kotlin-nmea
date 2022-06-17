@@ -18,392 +18,349 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
+import net.sf.marineapi.nmea.sentence.SentenceIdimport
 
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TTMSentence;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.AcquisitionType;
-import net.sf.marineapi.nmea.util.TargetStatus;
-import net.sf.marineapi.nmea.util.Time;
-import net.sf.marineapi.nmea.util.Units;
+net.sf.marineapi.nmea.sentence.TTMSentenceimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*import java.text.DecimalFormatimport
 
+java.text.DecimalFormatSymbols
 /**
  * TTM sentence parser.
  *
  * @author Johan Bergkvist, Joshua Sweaney
  */
-class TTMParser extends SentenceParser implements TTMSentence {
+internal class TTMParser : SentenceParser, TTMSentence {
+    /**
+     * Create a new instance of TTMParser.
+     *
+     * @param nmea
+     * TTM sentence String.
+     * @throws IllegalArgumentException
+     * If specified sentence is invalid.
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.TTM) {}
 
-	private static final int NUMBER = 0;
-	private static final int DISTANCE = 1;
-	private static final int BEARING = 2;
-	private static final int BEARING_TRUE_REL = 3;
-	private static final int SPEED = 4;
-	private static final int COURSE = 5;
-	private static final int COURSE_TRUE_REL = 6;
-	private static final int DISTANCE_CPA = 7;
-	private static final int TIME_CPA = 8;
-	private static final int UNITS = 9;
-	private static final int NAME = 10;
-	private static final int STATUS = 11;
-	private static final int REFERENCE = 12;
-	private static final int UTC_TIME = 13;
-	private static final int ACQUISITON_TYPE = 14;
+    /**
+     * Create a TTM parser with an empty sentence.
+     *
+     * @param talker
+     * TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.TTM, 15) {}
 
-	/**
-	 * Create a new instance of TTMParser.
-	 *
-	 * @param nmea
-	 *            TTM sentence String.
-	 * @throws IllegalArgumentException
-	 *             If specified sentence is invalid.
-	 */
-	public TTMParser(String nmea) {
-		super(nmea, SentenceId.TTM);
-	}
-
-	/**
-	 * Create a TTM parser with an empty sentence.
-	 *
-	 * @param talker
-	 *            TalkerId to set
-	 */
-	public TTMParser(TalkerId talker) {
-		super(talker, SentenceId.TTM, 15);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TimeSentence#getTime()
 	 */
-	@Override
-	public Time getTime() {
-		String str = getStringValue(UTC_TIME);
-		return new Time(str);
-	}
+    override fun getTime(): Time {
+        val str = getStringValue(UTC_TIME)
+        return Time(str)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TimeSentence#setTime()
 	 */
-	@Override
-	public void setTime(Time t) {
-		/*
+    override fun setTime(t: Time) {
+        /*
 		 * The TTM specification calls for seconds with TWO decimals, not the
 		 * usual three implemented by the Time.toString(). So we create our own
 		 * string.
 		 */
-		String str = String.format("%02d%02d", t.getHour(), t.getMinutes());
+        var str = String.format("%02d%02d", t.hour, t.minutes)
+        val nf = DecimalFormat("00.00")
+        val dfs = DecimalFormatSymbols()
+        dfs.decimalSeparator = '.'
+        nf.decimalFormatSymbols = dfs
+        str += nf.format(t.seconds)
+        setStringValue(UTC_TIME, str)
+    }
 
-		DecimalFormat nf = new DecimalFormat("00.00");
-		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
-		dfs.setDecimalSeparator('.');
-		nf.setDecimalFormatSymbols(dfs);
-
-		str += nf.format(t.getSeconds());
-		setStringValue(UTC_TIME, str);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getNumber()
 	 */
-	@Override
-	public int getNumber() {
-		return getIntValue(NUMBER);
-	}
+    override fun getNumber(): Int {
+        return getIntValue(NUMBER)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getDistance()
 	 */
-	@Override
-	public double getDistance() {
-		return getDoubleValue(DISTANCE);
-	}
+    override fun getDistance(): Double {
+        return getDoubleValue(DISTANCE)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getBearing()
 	 */
-	@Override
-	public double getBearing() {
-		return getDoubleValue(BEARING);
-	}
+    override fun getBearing(): Double {
+        return getDoubleValue(BEARING)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getBearingtrueRel()
 	 */
-	@Override
-	public char getBearingTrueRel() {
-		return getCharValue(BEARING_TRUE_REL);
-	}
+    override fun getBearingTrueRel(): Char {
+        return getCharValue(BEARING_TRUE_REL)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getSpeed()
 	 */
-	@Override
-	public double getSpeed() {
-		return getDoubleValue(SPEED);
-	}
+    override fun getSpeed(): Double {
+        return getDoubleValue(SPEED)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getCourse()
 	 */
-	@Override
-	public double getCourse() {
-		return getDoubleValue(COURSE);
-	}
+    override fun getCourse(): Double {
+        return getDoubleValue(COURSE)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getCourseTrueRel()
 	 */
-	@Override
-	public char getCourseTrueRel() {
-		return getCharValue(COURSE_TRUE_REL);
-	}
+    override fun getCourseTrueRel(): Char {
+        return getCharValue(COURSE_TRUE_REL)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getDistanceOfCPA()
 	 */
-	@Override
-	public double getDistanceOfCPA() {
-		return getDoubleValue(DISTANCE_CPA);
-	}
+    override fun getDistanceOfCPA(): Double {
+        return getDoubleValue(DISTANCE_CPA)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getTimeToCPA()
 	 */
-	@Override
-	public double getTimeToCPA() {
-		return getDoubleValue(TIME_CPA);
-	}
+    override fun getTimeToCPA(): Double {
+        return getDoubleValue(TIME_CPA)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getTimeToCPA()
 	 */
-	@Override
-	public Units getUnits() {
-		return Units.valueOf(getCharValue(UNITS));
-	}
+    override fun getUnits(): Units {
+        return Units.Companion.valueOf(getCharValue(UNITS))
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getName()
 	 */
-	@Override
-	public String getName() {
-		return getStringValue(NAME);
-	}
+    override fun getName(): String? {
+        return getStringValue(NAME)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getStatus()
 	 */
-	@Override
-	public TargetStatus getStatus() {
-		return TargetStatus.valueOf(getCharValue(STATUS));
-	}
+    override fun getStatus(): TargetStatus {
+        return TargetStatus.Companion.valueOf(getCharValue(STATUS))
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getAcquisitionType()
 	 */
-	@Override
-	public AcquisitionType getAcquisitionType() {
-		return AcquisitionType.valueOf(getCharValue(ACQUISITON_TYPE));
-	}
+    override fun getAcquisitionType(): AcquisitionType {
+        return AcquisitionType.Companion.valueOf(getCharValue(ACQUISITON_TYPE))
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getReference()
 	 */
-	@Override
-	public boolean getReference() {
-		return getCharValue(REFERENCE) == 'R';
-	}
+    override fun getReference(): Boolean {
+        return getCharValue(REFERENCE) == 'R'
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setNumber()
 	 */
-	@Override
-	public void setNumber(int number) {
-		setIntValue(NUMBER, number, 2);
-	}
+    override fun setNumber(number: Int) {
+        setIntValue(NUMBER, number, 2)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setDistance()
 	 */
-	@Override
-	public void setDistance(double distance) {
-		setDoubleValue(DISTANCE, distance, 1, 1);
-		setCharValue(UNITS, 'N');
-	}
+    override fun setDistance(distance: Double) {
+        setDoubleValue(DISTANCE, distance, 1, 1)
+        setCharValue(UNITS, 'N')
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setBearing()
 	 */
-	@Override
-	public void setTrueBearing(double bearing) {
-		setDoubleValue(BEARING, bearing, 1, 1);
-		setCharValue(BEARING_TRUE_REL, 'T');
-	}
+    override fun setTrueBearing(bearing: Double) {
+        setDoubleValue(BEARING, bearing, 1, 1)
+        setCharValue(BEARING_TRUE_REL, 'T')
+    }
 
-	@Override
-	public void setRelativeBearing(double bearing) {
-		setDoubleValue(BEARING, bearing, 1, 1);
-		setCharValue(BEARING_TRUE_REL, 'R');
-	}
+    override fun setRelativeBearing(bearing: Double) {
+        setDoubleValue(BEARING, bearing, 1, 1)
+        setCharValue(BEARING_TRUE_REL, 'R')
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setBearingTrueRel()
 	 */
-	@Override
-	public boolean isTrueBearing() {
-		return getCharValue(BEARING_TRUE_REL) == 'T';
-	}
+    override fun isTrueBearing(): Boolean {
+        return getCharValue(BEARING_TRUE_REL) == 'T'
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setSpeed()
 	 */
-	@Override
-	public void setSpeed(double speed) {
-		setDoubleValue(SPEED, speed, 1, 1);
-		setCharValue(UNITS, 'N');
-	}
+    override fun setSpeed(speed: Double) {
+        setDoubleValue(SPEED, speed, 1, 1)
+        setCharValue(UNITS, 'N')
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setTrueCourse()
 	 */
-	@Override
-	public void setTrueCourse(double course) {
-		setDoubleValue(COURSE, course, 1, 1);
-		setCharValue(COURSE_TRUE_REL, 'T');
-	}
+    override fun setTrueCourse(course: Double) {
+        setDoubleValue(COURSE, course, 1, 1)
+        setCharValue(COURSE_TRUE_REL, 'T')
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setRelativeCourse()
 	 */
-	@Override
-	public void setRelativeCourse(double course) {
-		setDoubleValue(COURSE, course, 1, 1);
-		setCharValue(COURSE_TRUE_REL, 'R');
-	}
+    override fun setRelativeCourse(course: Double) {
+        setDoubleValue(COURSE, course, 1, 1)
+        setCharValue(COURSE_TRUE_REL, 'R')
+    }
 
-	@Override
-	public boolean isTrueCourse() {
-		return getCharValue(COURSE_TRUE_REL) == 'T';
-	}
+    override fun isTrueCourse(): Boolean {
+        return getCharValue(COURSE_TRUE_REL) == 'T'
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setDistanceOfCPA()
 	 */
-	@Override
-	public void setDistanceOfCPA(double distance) {
-		setDoubleValue(DISTANCE_CPA, distance, 1, 1);
-		setCharValue(UNITS, 'N');
-	}
+    override fun setDistanceOfCPA(distance: Double) {
+        setDoubleValue(DISTANCE_CPA, distance, 1, 1)
+        setCharValue(UNITS, 'N')
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setTimeToCPA()
 	 */
-	@Override
-	public void setTimeToCPA(double minutes) {
-		setDoubleValue(TIME_CPA, minutes, 1, 1);
-	}
+    override fun setTimeToCPA(minutes: Double) {
+        setDoubleValue(TIME_CPA, minutes, 1, 1)
+    }
 
-	/**
-	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setUnits(Units)
-	 */
-	@Override
-	public void setUnits(Units units) {
-		setCharValue(UNITS, units.toChar());		
-	}
+    /**
+     * @see net.sf.marineapi.nmea.sentence.TTMSentence.setUnits
+     */
+    override fun setUnits(units: Units) {
+        setCharValue(UNITS, units.toChar())
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setName()
 	 */
-	@Override
-	public void setName(String name) {
-		setStringValue(NAME, name);
-	}
+    override fun setName(name: String?) {
+        setStringValue(NAME, name)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setStatus()
 	 */
-	@Override
-	public void setStatus(TargetStatus status) {
-		setCharValue(STATUS, status.toChar());
-	}
+    override fun setStatus(status: TargetStatus) {
+        setCharValue(STATUS, status.toChar())
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setReference()
 	 */
-	@Override
-	public void setReference(boolean isReference) {
-		if (isReference) {
-			setCharValue(REFERENCE, 'R');
-		}
-	}
+    override fun setReference(isReference: Boolean) {
+        if (isReference) {
+            setCharValue(REFERENCE, 'R')
+        }
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setAcquisitionType()
 	 */
-	@Override
-	public void setAcquisitionType(AcquisitionType acquisitionType) {
-		setCharValue(ACQUISITON_TYPE, acquisitionType.toChar());
-	}
+    override fun setAcquisitionType(acquisitionType: AcquisitionType) {
+        setCharValue(ACQUISITON_TYPE, acquisitionType.toChar())
+    }
+
+    companion object {
+        private const val NUMBER = 0
+        private const val DISTANCE = 1
+        private const val BEARING = 2
+        private const val BEARING_TRUE_REL = 3
+        private const val SPEED = 4
+        private const val COURSE = 5
+        private const val COURSE_TRUE_REL = 6
+        private const val DISTANCE_CPA = 7
+        private const val TIME_CPA = 8
+        private const val UNITS = 9
+        private const val NAME = 10
+        private const val STATUS = 11
+        private const val REFERENCE = 12
+        private const val UTC_TIME = 13
+        private const val ACQUISITON_TYPE = 14
+    }
 }

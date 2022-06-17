@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
 /**
  * Multi-layer current data sentence is transmitted by navigation central
@@ -26,53 +26,53 @@ package net.sf.marineapi.nmea.sentence;
  *
  * @author Henri Laurent
  */
-public interface CURSentence extends Sentence {
+interface CURSentence : Sentence {
+    /**
+     * Get the Current Speed in knots
+     *
+     * @return current speed
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    val currentSpeed: Double
 
-	/**
-	 * Get the Current Speed in knots
-	 *
-	 * @return current speed
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-	double getCurrentSpeed();
+    /**
+     * Get the current direction.
+     *
+     *
+     *
+     * @return current direction
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    val currentDirection: Double
 
-	/**
-	 * Get the current direction.
-	 * <p>
-	 *
-	 * @return current direction
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-	double getCurrentDirection();
+    /**
+     * Get the current direction reference.
+     *
+     *
+     *
+     * @return current direction reference T/R
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    val currentDirectionReference: String?
 
-	/**
-	 * Get the current direction reference.
-	 * <p>
-	 *
-	 * @return current direction reference T/R
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-	String getCurrentDirectionReference();
-
-	/**
-	 * Get the current heading reference.
-	 *
-	 * @return current heading reference T/M
-	 * True/Magentic T/M
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-	String getCurrentHeadingReference();
-
+    /**
+     * Get the current heading reference.
+     *
+     * @return current heading reference T/M
+     * True/Magentic T/M
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    val currentHeadingReference: String?
 }

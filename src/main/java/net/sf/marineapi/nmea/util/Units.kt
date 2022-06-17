@@ -18,70 +18,64 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
 /**
  * Defines the supported units of measure.
- *  
- * @author Kimmo Tuukkanen
  *
+ * @author Kimmo Tuukkanen
  */
-public enum Units {
+enum class Units(private val ch: Char) {
+    /** Pressure in bars  */
+    BARS('B'),
 
-	/** Pressure in bars */
-	BARS('B'),
-	
-	/** Temperature in degrees Celsius (centigrade) */
-	CELSIUS('C'),
+    /** Temperature in degrees Celsius (centigrade)  */
+    CELSIUS('C'),
 
-	/** Depth in fathoms */
-	FATHOMS('F'),
+    /** Depth in fathoms  */
+    FATHOMS('F'),
 
-	/** Length in feet */
-	FEET('f'),
+    /** Length in feet  */
+    FEET('f'),
 
-	/** Distance/pressure in inches  */
-	INCHES('I'),
-	
-	/** Kilometers - used for distance, and speed (as kilometers per hour) */
-	KILOMETERS('K'),
+    /** Distance/pressure in inches   */
+    INCHES('I'),
 
-	/** Length in meter */
-	METER('M'),
-	
-	/** Nautical miles - used for distance, and for speed (nautical miles per hour, which are knots) */
-	NAUTICAL_MILES('N'),
+    /** Kilometers - used for distance, and speed (as kilometers per hour)  */
+    KILOMETERS('K'),
 
-	/** Statute miles - used for distance, and for speed (as miles per hour/mph) */
-	STATUTE_MILES('S');
+    /** Length in meter  */
+    METER('M'),
 
-	private char ch;
+    /** Nautical miles - used for distance, and for speed (nautical miles per hour, which are knots)  */
+    NAUTICAL_MILES('N'),
 
-	private Units(char c) {
-		ch = c;
-	}
+    /** Statute miles - used for distance, and for speed (as miles per hour/mph)  */
+    STATUTE_MILES('S');
 
-	/**
-	 * Returns the corresponding char constant.
-	 * 
-	 * @return Char indicator of enum
-	 */
-	public char toChar() {
-		return ch;
-	}
+    /**
+     * Returns the corresponding char constant.
+     *
+     * @return Char indicator of enum
+     */
+    fun toChar(): Char {
+        return ch
+    }
 
-	/**
-	 * Get the enum corresponding to specified char.
-	 * 
-	 * @param ch Char indicator for unit
-	 * @return Units enum
-	 */
-	public static Units valueOf(char ch) {
-		for (Units u : values()) {
-			if (u.toChar() == ch) {
-				return u;
-			}
-		}
-		return valueOf(String.valueOf(ch));
-	}
+    companion object {
+        /**
+         * Get the enum corresponding to specified char.
+         *
+         * @param ch Char indicator for unit
+         * @return Units enum
+         */
+        fun valueOf(ch: Char): Units {
+            for (u in values()) {
+                if (u.toChar() == ch) {
+                    return u
+                }
+            }
+            return valueOf(ch.toString())
+        }
+    }
 }

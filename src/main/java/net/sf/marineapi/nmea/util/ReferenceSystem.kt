@@ -18,56 +18,45 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
 /**
  * Defines the various reference systems that can be used to calculate
  * a vessel's kinematics such as speed and course.
- * 
+ *
  * @see net.sf.marineapi.nmea.sentence.OSDSentence
- * 
+ *
+ *
  * @author Joshua Sweaney
  */
-public enum ReferenceSystem {
+enum class ReferenceSystem(private val ch: Char) {
+    BOTTOM_TRACKING_LOG('B'), MANUALLY_ENTERED('M'), WATER_REFERENCED('W'), RADAR_TRACKING('R'), POSITIONING_SYSTEM_GROUND_REFERENCE(
+        'P'
+    );
 
-    BOTTOM_TRACKING_LOG('B'),
+    /**
+     * Returns the corresponding char constant.
+     *
+     * @return Char indicator of enum
+     */
+    fun toChar(): Char {
+        return ch
+    }
 
-    MANUALLY_ENTERED('M'),
-
-    WATER_REFERENCED('W'),
-
-    RADAR_TRACKING('R'),
-
-    POSITIONING_SYSTEM_GROUND_REFERENCE('P');
-
-    private char ch;
-
-	private ReferenceSystem(char c) {
-		ch = c;
-	}
-
-	/**
-	 * Returns the corresponding char constant.
-	 * 
-	 * @return Char indicator of enum
-	 */
-	public char toChar() {
-		return ch;
-	}
-
-	/**
-	 * Get the enum corresponding to specified char.
-	 * 
-	 * @param ch Char indicator for reference
-	 * @return ReferenceSystem enum
-	 */
-	public static ReferenceSystem valueOf(char ch) {
-		for (ReferenceSystem r : values()) {
-			if (r.toChar() == ch) {
-				return r;
-			}
-		}
-		return valueOf(String.valueOf(ch));
-	}
-    
+    companion object {
+        /**
+         * Get the enum corresponding to specified char.
+         *
+         * @param ch Char indicator for reference
+         * @return ReferenceSystem enum
+         */
+        fun valueOf(ch: Char): ReferenceSystem {
+            for (r in values()) {
+                if (r.toChar() == ch) {
+                    return r
+                }
+            }
+            return valueOf(ch.toString())
+        }
+    }
 }

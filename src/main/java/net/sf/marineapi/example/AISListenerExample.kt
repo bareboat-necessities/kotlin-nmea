@@ -18,75 +18,70 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.example;
+package net.sf.marineapi.example
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import net.sf.marineapi.ais.message.AISMessage01;
-import net.sf.marineapi.ais.event.AbstractAISMessageListener;
-import net.sf.marineapi.nmea.io.SentenceReader;
+import net.sf.marineapi.ais.event.AbstractAISMessageListener
+import net.sf.marineapi.ais.message.AISMessage01
+import net.sf.marineapi.nmea.io.SentenceReader
+import java.io.*
 
 /**
  * Simple example application that takes a filename as command-line argument and
  * prints position from VDM sentences.
- * 
+ *
  * @author Jozéph Lázár
  */
-public class AISListenerExample extends AbstractAISMessageListener<AISMessage01> {
+class AISListenerExample(file: File?) : AbstractAISMessageListener<AISMessage01>() {
+    private val reader: SentenceReader
 
-	private SentenceReader reader;
+    /**
+     * Creates a new instance of AISExample
+     *
+     * @param file File containing NMEA data
+     */
+    init {
 
-	/**
-	 * Creates a new instance of AISExample
-	 * 
-	 * @param file File containing NMEA data
-	 */
-	public AISListenerExample(File file) throws IOException {
+        // create sentence reader and provide input stream
+        val stream: InputStream = FileInputStream(file)
+        reader = SentenceReader(stream)
 
-		// create sentence reader and provide input stream
-		InputStream stream = new FileInputStream(file);
-		reader = new SentenceReader(stream);
+        // listen for for all AIS VDM messages
+        reader.addSentenceListener(this)
+        reader.start()
+    }
 
-		// listen for for all AIS VDM messages
-		reader.addSentenceListener(this);
-		reader.start();
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * net.sf.marineapi.ais.event.AbstractAISMessageListener#onMessage(net
 	 * .sf.marineapi.ais.sentence.AISMessage)
 	 */
-	@Override
-	public void onMessage(AISMessage01 msg) {
-		System.out.println(msg.getMMSI() + ": " + msg.getLatitudeInDegrees());
-		System.out.println("onMessage: " + msg.toString());
-	}
+    override fun onMessage(msg: AISMessage01) {
+        println(msg.mmsi.toString() + ": " + msg.latitudeInDegrees)
+        println("onMessage: $msg")
+    }
 
-	/**
-	 * Main method takes one command-line argument, the name of the file to
-	 * read.
-	 * 
-	 * @param args Command-line arguments
-	 */
-	public static void main(String[] args) {
-
-		if (args.length != 1) {
-			System.out.println("Example usage:\njava AISExample ais.log");
-			System.exit(1);
-		}
-
-		try {
-			new AISListenerExample(new File(args[0]));
-			System.out.println("Running, press CTRL-C to stop..");
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
+    companion object {
+        /**
+         * Main method takes one command-line argument, the name of the file to
+         * read.
+         *
+         * @param args Command-line arguments
+         */
+        @JvmStatic
+        fun main(args: Array<String>) {
+            if (args.size != 1) {
+                println("Example usage:\njava AISExample ais.log")
+                System.exit(1)
+            }
+            try {
+                AISListenerExample(File(args[0]))
+                println("Running, press CTRL-C to stop..")
+            } catch (e: IOException) {
+                e.printStackTrace()
+                System.exit(1)
+            }
+        }
+    }
 }

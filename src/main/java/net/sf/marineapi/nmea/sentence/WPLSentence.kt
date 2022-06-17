@@ -18,37 +18,36 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.Waypoint;
+import net.sf.marineapi.nmea.util.Waypoint
 
 /**
  * Destination waypoint location and ID. This sentence is transmitted by some
  * GPS models in GOTO mode.
- * <p>
- * Example: <br>
- * {@code $GPWPL,5536.200,N,01436.500,E,RUSKI*1F}
- * 
+ *
+ *
+ * Example: <br></br>
+ * `$GPWPL,5536.200,N,01436.500,E,RUSKI*1F`
+ *
  * @author Kimmo Tuukkanen
  */
-public interface WPLSentence extends Sentence {
+interface WPLSentence : Sentence {
+    /**
+     * Get the destination waypoint.
+     *
+     * @return Waypoint
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If any of the
+     * waypoint related data is not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If any of the waypoint
+     * related fields contain unexpected or illegal value.
+     */
+    fun getWaypoint(): Waypoint?
 
-	/**
-	 * Get the destination waypoint.
-	 * 
-	 * @return Waypoint
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If any of the
-	 *             waypoint related data is not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If any of the waypoint
-	 *             related fields contain unexpected or illegal value.
-	 */
-	Waypoint getWaypoint();
-
-	/**
-	 * Set the destination waypoint.
-	 * 
-	 * @param wp Waypoint to set
-	 */
-	void setWaypoint(Waypoint wp);
-
+    /**
+     * Set the destination waypoint.
+     *
+     * @param wp Waypoint to set
+     */
+    fun setWaypoint(wp: Waypoint)
 }

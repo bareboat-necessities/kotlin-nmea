@@ -18,29 +18,27 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
 /**
- * <p>Air temperature in degrees Celsius.</p>
- * 
- * <p>Example:<br>{@code $IIMTA,16.7,C*05}</p>
- * 
+ *
+ * Air temperature in degrees Celsius.
+ *
+ *
+ * Example:<br></br>`$IIMTA,16.7,C*05`
+ *
  * @author Kimmo Tuukkanen
  */
-public interface MTASentence extends Sentence {
-
-	/**
-	 * Returns the air temperature.
-	 * 
-	 * @return Temperature in degrees Celsius.
-	 */
-	double getTemperature();
-
-	/**
-	 * Sets the air temperature.
-	 * 
-	 * @param temp Temperature in degrees Celsius.
-	 */
-	void setTemperature(double temp);
-
+interface MTASentence : Sentence {
+    /**
+     * Returns the air temperature.
+     *
+     * @return Temperature in degrees Celsius.
+     */
+    /**
+     * Sets the air temperature.
+     *
+     * @param temp Temperature in degrees Celsius.
+     */
+    var temperature: Double
 }

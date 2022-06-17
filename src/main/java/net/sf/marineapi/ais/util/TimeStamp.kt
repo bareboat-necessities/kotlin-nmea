@@ -18,46 +18,40 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.util;
+package net.sf.marineapi.ais.util
 
 /**
  * Checks a 6-bit integer time stamp value for validity.
- * 
+ *
  * @author Lázár József
  */
-public class TimeStamp {
+object TimeStamp {
+    private const val MINVALUE = 0
+    private const val MAXVALUE = 59
 
-	private static final int MINVALUE = 0;
-	private static final int MAXVALUE = 59;
+    /**
+     * Checks if the time stamp value is available.
+     *
+     * @param value Timetamp value to check
+     * @return true if the time stamp falls within a range
+     */
+    fun isAvailable(value: Int): Boolean {
+        return value >= MINVALUE && value <= MAXVALUE
+    }
 
-	/**
-	 * Checks if the time stamp value is available.
-	 *
-	 * @param value Timetamp value to check
-	 * @return true if the time stamp falls within a range
-	 */
-	public static boolean isAvailable(int value) {
-		return (value >= MINVALUE && value <= MAXVALUE); 
-	}
-	
-	/**
-	 * Return a string representing the time stamp value.
-	 *
-	 * @param value Timetamp value to stringify
-	 * @return a string representing the time stamp
-	 */
-	public static String toString(int value) {
-		switch (value) {
-		case 60:
-			return "no time stamp";
-		case 61: 
-			return "positioning system manual";
-		case 62:
-			return "dead reckoning";
-		case 63:
-			return "positioning system inoperative";
-		default:
-			return Integer.toString(value);
-		}
-	}
+    /**
+     * Return a string representing the time stamp value.
+     *
+     * @param value Timetamp value to stringify
+     * @return a string representing the time stamp
+     */
+    fun toString(value: Int): String {
+        return when (value) {
+            60 -> "no time stamp"
+            61 -> "positioning system manual"
+            62 -> "dead reckoning"
+            63 -> "positioning system inoperative"
+            else -> Integer.toString(value)
+        }
+    }
 }

@@ -18,92 +18,98 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
-
+package net.sf.marineapi.nmea.sentence
 
 /**
- * <p>Distance traveled through water, cumulative and trip.</p>
- * 
- * <p>Example:<br>
- * {@code $VWVLW,2.8,N,2.8,N*4C}</p>
- * 
+ *
+ * Distance traveled through water, cumulative and trip.
+ *
+ *
+ * Example:<br></br>
+ * `$VWVLW,2.8,N,2.8,N*4C`
+ *
  * @author Kimmo Tuukkanen
  */
-public interface VLWSentence extends Sentence {
+interface VLWSentence : Sentence {
+    /**
+     * Returns the total cumulative distance traveled.
+     *
+     * @return Distance
+     * @see .getTotalUnits
+     */
+    fun getTotal(): Double
 
-	/** Kilometers */
-	public static final char KM = 'K';
+    /**
+     * Returns the unit of measurement for cumulative total distance.
+     *
+     * @return Char indicator for unit
+     * @see .KM
+     *
+     * @see .NM
+     */
+    fun getTotalUnits(): Char
 
-	/** Nautical miles */
-	public static final char NM = 'N';
+    /**
+     * Returns the distance traveled since last reset.
+     *
+     * @return Trip distance
+     * @see .getTripUnits
+     */
+    fun getTrip(): Double
 
-	/**
-	 * Returns the total cumulative distance traveled.
-	 * 
-	 * @return Distance
-	 * @see #getTotalUnits()
-	 */
-	double getTotal();
+    /**
+     * Returns the unit of measurement for distance since last reset.
+     *
+     * @return Char indicator for unit
+     * @see .KM
+     *
+     * @see .NM
+     */
+    fun getTripUnits(): Char
 
-	/**
-	 * Returns the unit of measurement for cumulative total distance.
-	 * 
-	 * @return Char indicator for unit
-	 * @see #KM
-	 * @see #NM
-	 */
-	char getTotalUnits();
+    /**
+     * Sets the total cumulative distance traveled.
+     *
+     * @param distance Total distance to set.
+     * @see .setTotalUnits
+     */
+    fun setTotal(distance: Double)
 
-	/**
-	 * Returns the distance traveled since last reset.
-	 * 
-	 * @return Trip distance
-	 * @see #getTripUnits()
-	 */
-	double getTrip();
+    /**
+     * Sets the units of measure for cumulative total distance.
+     *
+     * @param unit Unit to set; 'K' for kilomters, 'N' for nautical miles.
+     * @throws IllegalArgumentException If trying to set invalid units char.
+     * @see .KM
+     *
+     * @see .NM
+     */
+    fun setTotalUnits(unit: Char)
 
-	/**
-	 * Returns the unit of measurement for distance since last reset.
-	 * 
-	 * @return Char indicator for unit
-	 * @see #KM
-	 * @see #NM
-	 */
-	char getTripUnits();
+    /**
+     * Sets the distance traveled since last reset.
+     *
+     * @param distance Trip distance to set.
+     * @see .setTripUnits
+     */
+    fun setTrip(distance: Double)
 
-	/**
-	 * Sets the total cumulative distance traveled.
-	 * 
-	 * @param distance Total distance to set.
-	 * @see #setTotalUnits(char)
-	 */
-	void setTotal(double distance);
+    /**
+     * Sets the units of measure for distance since last reset.
+     *
+     * @param unit Unit to set; 'K' for kilomters, 'N' for nautical miles.
+     * @throws IllegalArgumentException If trying to set invalid units char.
+     * @see .KM
+     *
+     * @see .NM
+     */
+    fun setTripUnits(unit: Char)
 
-	/**
-	 * Sets the units of measure for cumulative total distance.
-	 * 
-	 * @param unit Unit to set; 'K' for kilomters, 'N' for nautical miles.
-	 * @throws IllegalArgumentException If trying to set invalid units char.
-	 * @see #KM
-	 * @see #NM
-	 */
-	void setTotalUnits(char unit);
+    companion object {
+        /** Kilometers  */
+        const val KM = 'K'
 
-	/**
-	 * Sets the distance traveled since last reset.
-	 * 
-	 * @param distance Trip distance to set.
-	 * @see #setTripUnits(char)
-	 */
-	void setTrip(double distance);
-
-	/**
-	 * Sets the units of measure for distance since last reset.
-	 * 
-	 * @param unit Unit to set; 'K' for kilomters, 'N' for nautical miles.
-	 * @throws IllegalArgumentException If trying to set invalid units char.
-	 * @see #KM
-	 * @see #NM
-	 */
-	void setTripUnits(char unit);
+        /** Nautical miles  */
+        const val NM = 'N'
+    }
 }

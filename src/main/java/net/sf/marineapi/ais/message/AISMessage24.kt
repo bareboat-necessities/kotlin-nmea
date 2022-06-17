@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.message;
+package net.sf.marineapi.ais.message
 
 /**
  * Static Data Report
@@ -27,66 +27,65 @@ package net.sf.marineapi.ais.message;
  *
  * @author Henri Laurent
  */
-public interface AISMessage24 extends AISMessage {
-
+interface AISMessage24 : AISMessage {
     /**
      * Returns the Part Number indicator for the current message.
      * @return Part Number indicator
      */
-    int getPartNumber();
+    val partNumber: Int
 
     /**
      * Returns the name of the transmitting ship.
      * @return maximum 20 characters, representing the name
      */
-    String getName();
+    val name: String?
 
     /**
      * Returns the type of ship and cargo.
      * @return an integer value representing the type of ship and cargo
      */
-    int getTypeOfShipAndCargoType();
+    val typeOfShipAndCargoType: Int
 
     /**
      * Returns the Vendor id
      * @return maximum 3 characters, representing the vendor id
      */
-    String getVendorId();
+    val vendorId: String?
 
     /**
      * Returns the Unit Model code
      *
      * @return model code int
      */
-    int getUnitModelCode();
+    val unitModelCode: Int
 
     /**
      * Returns the Serial Number
      *
      * @return serial number int
      */
-    int getSerialNumber();
+    val serialNumber: Int
 
     /**
      * Returns the call sign of the transmitting ship.
      *
      * @return at most 7 characters, representing the call sign
      */
-    String getCallSign();
+    val callSign: String?
 
     /**
      * Returns the distance from the reference point to the bow.
      *
      * @return Distance to bow, in meters.
      */
-    int getBow();
+    val bow: Int
 
     /**
      * Returns the distance from the reference point to the stern of the ship.
      *
      * @return Distance to stern, in meters.
      */
-    int getStern();
+    val stern: Int
 
     /**
      * Returns the distance from the reference point to the port side of the
@@ -94,7 +93,7 @@ public interface AISMessage24 extends AISMessage {
      *
      * @return Distance to port side, in meters.
      */
-    int getPort();
+    val port: Int
 
     /**
      * Returns the distance from the reference point to the starboard side of
@@ -102,6 +101,5 @@ public interface AISMessage24 extends AISMessage {
      *
      * @return Distance to starborad side, in meters.
      */
-    int getStarboard();
-
+    val starboard: Int
 }

@@ -17,88 +17,91 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.parser.SentenceParser;
-import net.sf.marineapi.ublox.message.UBXMessage;
-import net.sf.marineapi.ublox.message.UBXMessage00;
-import net.sf.marineapi.ublox.message.UBXMessage03;
-import net.sf.marineapi.ublox.parser.UBXMessageFactory;
-import net.sf.marineapi.ublox.parser.UBXMessageParser;
+import net.sf.marineapi.nmea.parser.SentenceParser
+import net.sf.marineapi.ublox.message.UBXMessage
+import net.sf.marineapi.ublox.message.UBXMessage00
+import net.sf.marineapi.ublox.message.UBXMessage03
+import net.sf.marineapi.ublox.parser.UBXMessageFactory
+import net.sf.marineapi.ublox.parser.UBXMessageParser
 
 /**
- * Base interface (Outer layer) for all UBX {@link Sentence}s. UBX sentences are
+ * Base interface (Outer layer) for all UBX [Sentence]s. UBX sentences are
  * parsed in two phases and they share the same NMEA sentence layout.
- * <p>
- * In the second phase the actual message contents is retrieved. Users should use
- * a {@link UBXMessageParser} implementation to retrieve specific {@link UBXMessage}s.
  *
- * The following {@link UBXMessageParser}s
+ *
+ * In the second phase the actual message contents is retrieved. Users should use
+ * a [UBXMessageParser] implementation to retrieve specific [UBXMessage]s.
+ *
+ * The following [UBXMessageParser]s
  * are available:
  *
- * <ul>
- *   <li> {@link UBXMessage00}
- *   <li> {@link UBXMessage03}
- * </ul>
- * <p>
+ *
+ *  *  [UBXMessage00]
+ *  *  [UBXMessage03]
+ *
+ *
+ *
  * UBX messages are proprietary NMEA messages (Vendor extensions) for u-blox
- * positioning receivers. They are also often referred to as {@code PUBX00},
- * {@code PUBX03} etc. {@code Pxxx} identifies this message as proprietary
- * followed by {@code UBX}. To be consistent, the Java Marine API uses the term
- * {@code UBX}.
- * <p>
+ * positioning receivers. They are also often referred to as `PUBX00`,
+ * `PUBX03` etc. `Pxxx` identifies this message as proprietary
+ * followed by `UBX`. To be consistent, the Java Marine API uses the term
+ * `UBX`.
+ *
+ *
  * Important: u-blox also support a binary messaging format called UBX which is not
  * supported by the Java Marine API.
  *
  * @author Gunnar Hillert
  *
  * @see UBXMessageParser
+ *
  * @see UBXMessageFactory
  */
-public interface UBXSentence extends Sentence {
+interface UBXSentence : Sentence {
+    /**
+     * @return The numeric u-blox proprietary message identifier
+     */
+    fun getMessageId(): Int
 
-	/**
-	 * @return The numeric u-blox proprietary message identifier
-	 */
-	Integer getMessageId();
+    /**
+     * Parse integer value from the specified sentence field.
+     *
+     * @param index Field index in sentence
+     * @return Field parsed by [SentenceParser]
+     */
+    fun getUBXFieldIntValue(index: Int): Int
 
-	/**
-	 * Parse integer value from the specified sentence field.
-	 *
-	 * @param index Field index in sentence
-	 * @return Field parsed by {@link SentenceParser}
-	 */
-	Integer getUBXFieldIntValue(int index);
+    /**
+     * Parse [String] value from the specified sentence field.
+     *
+     * @param index Field index in sentence
+     * @return Field parsed by [SentenceParser]
+     */
+    fun getUBXFieldStringValue(index: Int): String?
 
-	/**
-	 * Parse {@link String} value from the specified sentence field.
-	 *
-	 * @param index Field index in sentence
-	 * @return Field parsed by {@link SentenceParser}
-	 */
-	String getUBXFieldStringValue(int index);
+    /**
+     * Parse char value from the specified sentence field.
+     *
+     * @param index Field index in sentence
+     * @return Field parsed by [SentenceParser]
+     */
+    fun getUBXFieldCharValue(index: Int): Char
 
-	/**
-	 * Parse char value from the specified sentence field.
-	 *
-	 * @param index Field index in sentence
-	 * @return Field parsed by {@link SentenceParser}
-	 */
-	char getUBXFieldCharValue(int index);
+    /**
+     * Parse double value from the specified sentence field.
+     *
+     * @param index Field index in sentence
+     * @return Field parsed by [SentenceParser]
+     */
+    fun getUBXFieldDoubleValue(index: Int): Double
 
-	/**
-	 * Parse double value from the specified sentence field.
-	 *
-	 * @param index Field index in sentence
-	 * @return Field parsed by {@link SentenceParser}
-	 */
-	double getUBXFieldDoubleValue(int index);
-
-	/**
-	 * @return the number of data fields in the sentence, excluding ID field
-	 * and checksum.
-	 *
-	 * @see SentenceParser
-	 */
-	int getUBXFieldCount();
+    /**
+     * @return the number of data fields in the sentence, excluding ID field
+     * and checksum.
+     *
+     * @see SentenceParser
+     */
+    fun getUBXFieldCount(): Int
 }

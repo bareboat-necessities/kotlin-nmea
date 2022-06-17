@@ -18,160 +18,157 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
 /**
  * Base interface and constants for NMEA 0183 sentences.
  *
  * @author Kimmo Tuukkanen
  */
-public interface Sentence {
+interface Sentence {
+    /**
+     * Get the sentence begin character. Although most of the sentences start
+     * with '$', some of them use '!' as begin character.
+     *
+     * @return Sentence begin char, e.g. "$" or "!".
+     */
+    /**
+     * Set the sentence begin character. Although most of the sentences start
+     * with '$', some of them use '!' as begin character.
+     *
+     * @param ch Sentence begin char to set ('$' or '!')
+     * @see Sentence.BEGIN_CHAR
+     *
+     * @see Sentence.ALTERNATIVE_BEGIN_CHAR
+     */
+    var beginChar: Char
 
-	/**
-	 * Alternative sentence begin character used in VDO and VDM sentences.
-	 */
-	char ALTERNATIVE_BEGIN_CHAR = '!';
+    /**
+     * Returns the current number of data fields in sentence, excluding ID field
+     * and checksum.
+     *
+     * @return Data field count
+     */
+    val fieldCount: Int
 
-	/**
-	 * Sentence begin character
-	 */
-	char BEGIN_CHAR = '$';
+    /**
+     * Get the sentence ID that specifies the sentence type and data it holds.
+     * ID is the last three characters in address field. For example, in case of
+     * `$GPGGA` the method returns [SentenceId.GGA].
+     *
+     * @return Sentence id String, e.g. "GLL" or "GGA".
+     * @see SentenceId
+     */
+    val sentenceId: String
+    /**
+     * Gets the talker ID of the sentence. Talker ID is the next two characters
+     * after `$` in sentence address field. For example, in case of
+     * `$GPGGA`, the method returns [TalkerId.GP].
+     *
+     * @return Talker id enum.
+     */
+    /**
+     * Set the talker ID of the sentence. Typically, the ID might be changed if
+     * the sentence is to be sent from a computer to an NMEA device.
+     *
+     * @param id TalkerId to set
+     */
+    var talkerId: TalkerId
 
-	/**
-	 * Checksum field delimiter char
-	 */
-	char CHECKSUM_DELIMITER = '*';
+    /**
+     * Tells if this is an AIS sentence.
+     *
+     * @return True if AIS sentence, otherwise false.
+     */
+    val isAISSentence: Boolean
 
-	/**
-	 * Sentence data fields delimiter char
-	 */
-	char FIELD_DELIMITER = ',';
+    /**
+     * Tells if the sentence is of proprietary format.
+     *
+     * @return True if proprietary, otherwise false.
+     */
+    val isProprietary: Boolean
 
-	/**
-	 * Maximum length of NMEA 0183 sentences, including {@code BEGIN_CHAR}
-	 * and {@code TERMINATOR}.
-	 */
-	int MAX_LENGTH = 82;
+    /**
+     * Tells if the sentence formatting matches NMEA 0183 format.
+     *
+     * @return True if validly formatted, otherwise false.
+     */
+    val isValid: Boolean
 
-	/**
-	 * Sentence terminator {@code &lt;CR&gt;&lt;LF&gt;}.
-	 */
-	String TERMINATOR = "\r\n";
+    /**
+     * Resets the sentence contents, i.e. removes all existing values from data
+     * fields. After resetting, address field remains as is and checksum is
+     * calculated according to empty data fields.
+     */
+    fun reset()
 
-	/**
-	 * Get the sentence begin character. Although most of the sentences start
-	 * with '$', some of them use '!' as begin character.
-	 *
-	 * @return Sentence begin char, e.g. "$" or "!".
-	 */
-	char getBeginChar();
+    /**
+     * Formats and validates the String representation of sentence. Throws an
+     * exception if result is not considered a valid sentence. As validation is
+     * done by [net.sf.marineapi.nmea.sentence.SentenceValidator], notice
+     * that resulting sentence length is not checked. To also validate the
+     * length, use [.toSentence].
+     *
+     * @see .toString
+     * @return Sentence as String, equal to `toString()`.
+     * @throws IllegalStateException If formatting results in invalid sentence.
+     */
+    fun toSentence(): String
 
-	/**
-	 * Returns the current number of data fields in sentence, excluding ID field
-	 * and checksum.
-	 *
-	 * @return Data field count
-	 */
-	int getFieldCount();
+    /**
+     * Formats and validates the sentence like [.toSentence], but checks
+     * also that resulting String does not exceed specified length.
+     *
+     * @param maxLength Maximum String length
+     * @return Sentence as String, equal to `toString()`.
+     * @throws IllegalStateException If formatting results in invalid sentence
+     * or specified maximum length is exceeded.
+     * @see .toSentence
+     * @see .MAX_LENGTH
+     */
+    fun toSentence(maxLength: Int): String
 
-	/**
-	 * Get the sentence ID that specifies the sentence type and data it holds.
-	 * ID is the last three characters in address field. For example, in case of
-	 * {@code $GPGGA} the method returns {@link SentenceId#GGA}.
-	 *
-	 * @return Sentence id String, e.g. "GLL" or "GGA".
-	 * @see SentenceId
-	 */
-	String getSentenceId();
+    /**
+     * Returns the String representation of the sentence, without line
+     * terminator `CR/LR`. Checksum is calculated and appended at the
+     * end of the sentence, but no validation is done. Use [.toSentence]
+     * to also validate the result.
+     *
+     * @return String representation of sentence
+     */
+    override fun toString(): String
 
-	/**
-	 * Gets the talker ID of the sentence. Talker ID is the next two characters
-	 * after {@code $} in sentence address field. For example, in case of
-	 * {@code $GPGGA}, the method returns {@link TalkerId#GP}.
-	 *
-	 * @return Talker id enum.
-	 */
-	TalkerId getTalkerId();
+    companion object {
+        /**
+         * Alternative sentence begin character used in VDO and VDM sentences.
+         */
+        const val ALTERNATIVE_BEGIN_CHAR = '!'
 
-	/**
-	 * Tells if this is an AIS sentence.
-	 *
-	 * @return True if AIS sentence, otherwise false.
-	 */
-	public boolean isAISSentence();
+        /**
+         * Sentence begin character
+         */
+        const val BEGIN_CHAR = '$'
 
-	/**
-	 * Tells if the sentence is of proprietary format.
-	 *
-	 * @return True if proprietary, otherwise false.
-	 */
-	boolean isProprietary();
+        /**
+         * Checksum field delimiter char
+         */
+        const val CHECKSUM_DELIMITER = '*'
 
-	/**
-	 * Tells if the sentence formatting matches NMEA 0183 format.
-	 *
-	 * @return True if validly formatted, otherwise false.
-	 */
-	boolean isValid();
+        /**
+         * Sentence data fields delimiter char
+         */
+        const val FIELD_DELIMITER = ','
 
-	/**
-	 * Resets the sentence contents, i.e. removes all existing values from data
-	 * fields. After resetting, address field remains as is and checksum is
-	 * calculated according to empty data fields.
-	 */
-	void reset();
+        /**
+         * Maximum length of NMEA 0183 sentences, including `BEGIN_CHAR`
+         * and `TERMINATOR`.
+         */
+        const val MAX_LENGTH = 82
 
-	/**
-	 * Set the sentence begin character. Although most of the sentences start
-	 * with '$', some of them use '!' as begin character.
-	 *
-	 * @param ch Sentence begin char to set ('$' or '!')
-	 * @see Sentence#BEGIN_CHAR
-	 * @see Sentence#ALTERNATIVE_BEGIN_CHAR
-	 */
-	void setBeginChar(char ch);
-
-	/**
-	 * Set the talker ID of the sentence. Typically, the ID might be changed if
-	 * the sentence is to be sent from a computer to an NMEA device.
-	 *
-	 * @param id TalkerId to set
-	 */
-	void setTalkerId(TalkerId id);
-
-	/**
-	 * Formats and validates the String representation of sentence. Throws an
-	 * exception if result is not considered a valid sentence. As validation is
-	 * done by {@link net.sf.marineapi.nmea.sentence.SentenceValidator}, notice
-	 * that resulting sentence length is not checked. To also validate the
-	 * length, use {@link #toSentence(int)}.
-	 *
-	 * @see #toString()
-	 * @return Sentence as String, equal to {@code toString()}.
-	 * @throws IllegalStateException If formatting results in invalid sentence.
-	 */
-	String toSentence();
-
-	/**
-	 * Formats and validates the sentence like {@link #toSentence()}, but checks
-	 * also that resulting String does not exceed specified length.
-	 *
-	 * @param maxLength Maximum String length
-	 * @return Sentence as String, equal to {@code toString()}.
-	 * @throws IllegalStateException If formatting results in invalid sentence
-	 *           or specified maximum length is exceeded.
-	 * @see #toSentence()
-	 * @see #MAX_LENGTH
-	 */
-	String toSentence(int maxLength);
-
-	/**
-	 * Returns the String representation of the sentence, without line
-	 * terminator {@code CR/LR}. Checksum is calculated and appended at the
-	 * end of the sentence, but no validation is done. Use {@link #toSentence()}
-	 * to also validate the result.
-	 *
-	 * @return String representation of sentence
-	 */
-	String toString();
+        /**
+         * Sentence terminator `&lt;CR&gt;&lt;LF&gt;`.
+         */
+        const val TERMINATOR = "\r\n"
+    }
 }

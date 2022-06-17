@@ -18,49 +18,43 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.DTBSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
+import net.sf.marineapi.nmea.sentence.DTBSentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerId
 /**
  * DTB sentence parser.
- * 
+ *
  * @author Bob Schwarz
- * @see <a href="https://github.com/LoadBalanced/marine-api">marine-api fork</a>
+ * @see [marine-api fork](https://github.com/LoadBalanced/marine-api)
  */
-class DTBParser extends DTAParser implements DTBSentence {
+internal class DTBParser : DTAParser, DTBSentence {
+    /**
+     * Creates a new instance of DTBParser with 8 data fields.
+     *
+     * @param talker DTB talkerId
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.DTB, 8) {}
 
-	public static final String DTB_SENTENCE_ID = "DTB";
-	
-	/**
-	 * Creates a new instance of DTBParser with 8 data fields.
-	 *
-	 * @param talker DTB talkerId
-	 */
-	public DTBParser(TalkerId talker) {
-		super(talker, SentenceId.DTB, 8);
-	}
+    /**
+     * Creates a new instance of DTBParser.
+     *
+     * @param nmea DTB sentence String
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.DTB) {}
 
-	/**
-	 * Creates a new instance of DTBParser.
-	 *
-	 * @param nmea DTB sentence String
-	 */
-	public DTBParser(String nmea) {
-		super(nmea, SentenceId.DTB);
-	}
+    /**
+     * Gets the hard-coded channel for GasFinder2. Since only GasFinder2
+     * will send a DTB sentence, and since only GasFinderMC has channels,
+     * there will normally be no channel in DTB sentences.
+     *
+     * @return Channel number, always 2.
+     */
+    override val channelNumber: Int
+        get() = 2
 
-	/**
-	 * Gets the hard-coded channel for GasFinder2. Since only GasFinder2
-	 * will send a DTB sentence, and since only GasFinderMC has channels,
-	 * there will normally be no channel in DTB sentences.
-	 *
-	 * @return Channel number, always 2.
-	 */
-	@Override
-	public int getChannelNumber() {
-		return 2;
-	}
+    companion object {
+        const val DTB_SENTENCE_ID = "DTB"
+    }
 }

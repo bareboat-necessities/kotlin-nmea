@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
 /**
  * Aquisition types.
@@ -26,42 +26,39 @@ package net.sf.marineapi.nmea.util;
  * @author Johan Bergkvist
  * @see net.sf.marineapi.nmea.sentence.TTMSentence
  */
-public enum AcquisitionType {
+enum class AcquisitionType(private val ch: Char) {
+    /** Automatic  */
+    AUTO('A'),
 
-	/** Automatic */
-	AUTO('A'),
-	/** Manual */
-	MANUAL('M'),
-	/** Reported */
-	REPORTED('R');
+    /** Manual  */
+    MANUAL('M'),
 
-	private char ch;
+    /** Reported  */
+    REPORTED('R');
 
-	AcquisitionType(char ch) {
-		this.ch = ch;
-	}
+    /**
+     * Returns the corresponding char constant.
+     *
+     * @return Char indicator for AcquisitionType
+     */
+    fun toChar(): Char {
+        return ch
+    }
 
-	/**
-	 * Returns the corresponding char constant.
-	 *
-	 * @return Char indicator for AcquisitionType
-	 */
-	public char toChar() {
-		return ch;
-	}
-
-	/**
-	 * Get the enum corresponding to specified char.
-	 *
-	 * @param c Char indicator for AcquisitionType
-	 * @return AcquisitionType
-	 */
-	public static AcquisitionType valueOf(char c) {
-		for (AcquisitionType d : values()) {
-			if (d.toChar() == c) {
-				return d;
-			}
-		}
-		return valueOf(String.valueOf(c));
-	}
+    companion object {
+        /**
+         * Get the enum corresponding to specified char.
+         *
+         * @param c Char indicator for AcquisitionType
+         * @return AcquisitionType
+         */
+        fun valueOf(c: Char): AcquisitionType {
+            for (d in values()) {
+                if (d.toChar() == c) {
+                    return d
+                }
+            }
+            return valueOf(c.toString())
+        }
+    }
 }

@@ -18,51 +18,49 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
 /**
  * Defines how the ship changes heading, as returned by HTC and HTD sentences.
  *
  * @author Paweł Kozioł
  * @see net.sf.marineapi.nmea.sentence.HTCSentence
+ *
  * @see net.sf.marineapi.nmea.sentence.HTDSentence
  */
-public enum TurnMode {
+enum class TurnMode(private val character: Char) {
+    /** Radius controlled  */
+    RADIUS_CONTROLLED('R'),
 
-	/** Radius controlled */
-	RADIUS_CONTROLLED('R'),
-	/** Turn rate controlled */
-	TURN_RATE_CONTROLLED('T'),
-	/** Not controlled */
-	NOT_CONTROLLED('N');
+    /** Turn rate controlled  */
+    TURN_RATE_CONTROLLED('T'),
 
-	private final char character;
+    /** Not controlled  */
+    NOT_CONTROLLED('N');
 
-	TurnMode(char ch) {
-		character = ch;
-	}
+    /**
+     * Returns the character used in NMEA sentences to indicate the status.
+     *
+     * @return Char indicator for TurnMode
+     */
+    fun toChar(): Char {
+        return character
+    }
 
-	/**
-	 * Returns the character used in NMEA sentences to indicate the status.
-	 *
-	 * @return Char indicator for TurnMode
-	 */
-	public char toChar() {
-		return character;
-	}
-
-	/**
-	 * Returns the TurnMode enum for status char used in sentences.
-	 *
-	 * @param ch Status char
-	 * @return TurnMode
-	 */
-	public static TurnMode valueOf(char ch) {
-		for (TurnMode tm : values()) {
-			if (tm.toChar() == ch) {
-				return tm;
-			}
-		}
-		return valueOf(String.valueOf(ch));
-	}
+    companion object {
+        /**
+         * Returns the TurnMode enum for status char used in sentences.
+         *
+         * @param ch Status char
+         * @return TurnMode
+         */
+        fun valueOf(ch: Char): TurnMode {
+            for (tm in values()) {
+                if (tm.toChar() == ch) {
+                    return tm
+                }
+            }
+            return valueOf(ch.toString())
+        }
+    }
 }

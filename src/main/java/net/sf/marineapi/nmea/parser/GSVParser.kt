@@ -18,135 +18,114 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import java.util.ArrayList;
-import java.util.List;
+import net.sf.marineapi.nmea.sentence.GSVSentenceimport
 
-import net.sf.marineapi.nmea.sentence.GSVSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.SatelliteInfo;
-
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.SatelliteInfo
 /**
  * GSV sentence parser.
  *
  * @author Kimmo Tuukkanen
  */
-class GSVParser extends SentenceParser implements GSVSentence {
-
-    // field indices
-    private static final int NUMBER_OF_SENTENCES = 0;
-    private static final int SENTENCE_NUMBER = 1;
-    private static final int SATELLITES_IN_VIEW = 2;
-
-    // satellite id fields
-    private static final int[] ID_FIELDS = {3, 7, 11, 15};
-
-    // satellite data fields, relative to each id field
-    private static final int ELEVATION = 1;
-    private static final int AZIMUTH = 2;
-    private static final int NOISE = 3;
-
+internal class GSVParser : SentenceParser, GSVSentence {
     /**
      * Constructor.
      *
      * @param nmea GSV Sentence
      */
-    public GSVParser(String nmea) {
-        super(nmea, SentenceId.GSV);
-    }
+    constructor(nmea: String) : super(nmea, SentenceId.GSV) {}
 
     /**
      * Creates an GSV parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    public GSVParser(TalkerId talker) {
-        super(talker, SentenceId.GSV, 19);
-    }
+    constructor(talker: TalkerId?) : super(talker, SentenceId.GSV, 19) {}
 
     /*
      * (non-Javadoc)
      * @see net.sf.marineapi.nmea.sentence.GSVSentence#getSatelliteCount()
      */
-    public int getSatelliteCount() {
-        return getIntValue(SATELLITES_IN_VIEW);
-    }
+    override var satelliteCount: Int
+        get() = getIntValue(SATELLITES_IN_VIEW)
+        set(count) {
+            require(count >= 0) { "Satellite count cannot be negative" }
+            setIntValue(SATELLITES_IN_VIEW, count)
+        }
 
     /*
      * (non-Javadoc)
      * @see net.sf.marineapi.nmea.sentence.GSVSentence#getSatelliteInfo()
      */
-    public List<SatelliteInfo> getSatelliteInfo() {
-
-        List<SatelliteInfo> satellites = new ArrayList<SatelliteInfo>(4);
-
-        for (int idf : ID_FIELDS) {
+    override fun getSatelliteInfo(): List<SatelliteInfo> {
+        val satellites: MutableList<SatelliteInfo> = ArrayList(4)
+        for (idf in ID_FIELDS) {
             try {
-                String id = getStringValue(idf);
-                int elev = getIntValue(idf + ELEVATION);
-                int azm = getIntValue(idf + AZIMUTH);
-                int snr = 0;
+                val id = getStringValue(idf)
+                val elev = getIntValue(idf + ELEVATION)
+                val azm = getIntValue(idf + AZIMUTH)
+                var snr = 0
 
 //              In some case, the SNR field will be null
 //              Example: $GLGSV,3,1,09,67,10,065,26,68,36,015,21,69,27,315,31,77,11,035,*6C
                 try {
-                    snr = getIntValue(idf + NOISE);
-                } catch (Exception e) {
+                    snr = getIntValue(idf + NOISE)
+                } catch (e: Exception) {
                     //ignore
                 }
-                satellites.add(new SatelliteInfo(id, elev, azm, snr));
-            } catch (DataNotAvailableException e) {
+                satellites.add(SatelliteInfo(id, elev, azm, snr))
+            } catch (e: DataNotAvailableException) {
                 // nevermind missing satellite info
-            } catch (IndexOutOfBoundsException e) {
+            } catch (e: IndexOutOfBoundsException) {
                 // less than four satellites, give up
-                break;
+                break
             }
         }
-
-        return satellites;
+        return satellites
     }
 
     /*
      * (non-Javadoc)
      * @see net.sf.marineapi.nmea.sentence.GSVSentence#getSentenceCount()
+     *//*
+     * (non-Javadoc)
+     * @see net.sf.marineapi.nmea.sentence.GSVSentence#setSentenceCount(int)
      */
-    public int getSentenceCount() {
-        return getIntValue(NUMBER_OF_SENTENCES);
-    }
+    override var sentenceCount: Int
+        get() = getIntValue(NUMBER_OF_SENTENCES)
+        set(count) {
+            require(count >= 1) { "Number of sentences cannot be negative" }
+            setIntValue(NUMBER_OF_SENTENCES, count)
+        }
 
     /*
      * (non-Javadoc)
      * @see net.sf.marineapi.nmea.sentence.GSVSentence#getSentenceIndex()
+     *//*
+     * (non-Javadoc)
+     * @see net.sf.marineapi.nmea.sentence.GSVSentence#setSentenceIndex(int)
      */
-    public int getSentenceIndex() {
-        return getIntValue(SENTENCE_NUMBER);
-    }
+    override var sentenceIndex: Int
+        get() = getIntValue(SENTENCE_NUMBER)
+        set(index) {
+            require(index >= 0) { "Sentence index cannot be negative" }
+            setIntValue(SENTENCE_NUMBER, index)
+        }
 
     /*
      * (non-Javadoc)
      * @see net.sf.marineapi.nmea.sentence.GSVSentence#isFirst()
      */
-    public boolean isFirst() {
-        return (getSentenceIndex() == 1);
-    }
+    override val isFirst: Boolean
+        get() = sentenceIndex == 1
 
     /*
      * (non-Javadoc)
      * @see net.sf.marineapi.nmea.sentence.GSVSentence#isLast()
      */
-    public boolean isLast() {
-        return (getSentenceIndex() == getSentenceCount());
-    }
-
-    public void setSatelliteCount(int count) {
-        if (count < 0) {
-            throw new IllegalArgumentException(
-                    "Satellite count cannot be negative");
-        }
-        setIntValue(SATELLITES_IN_VIEW, count);
-    }
+    override val isLast: Boolean
+        get() = sentenceIndex == sentenceCount
 
     /*
      * (non-Javadoc)
@@ -154,49 +133,37 @@ class GSVParser extends SentenceParser implements GSVSentence {
      * net.sf.marineapi.nmea.sentence.GSVSentence#setSatelliteInfo(java.util
      * .List)
      */
-    public void setSatelliteInfo(List<SatelliteInfo> info) {
-        if (info.size() > 4) {
-            throw new IllegalArgumentException("Maximum list size is 4");
-        }
-        int i = 0;
-        for (int id : ID_FIELDS) {
-            if (i < info.size()) {
-                SatelliteInfo si = info.get(i++);
-                setStringValue(id, si.getId());
-                setIntValue(id + ELEVATION, si.getElevation());
-                setIntValue(id + AZIMUTH, si.getAzimuth(), 3);
-                setIntValue(id + NOISE, si.getNoise());
+    override fun setSatelliteInfo(info: List<SatelliteInfo>) {
+        require(info.size <= 4) { "Maximum list size is 4" }
+        var i = 0
+        for (id in ID_FIELDS) {
+            if (i < info.size) {
+                val si = info[i++]
+                setStringValue(id, si.id)
+                setIntValue(id + ELEVATION, si.elevation)
+                setIntValue(id + AZIMUTH, si.azimuth, 3)
+                setIntValue(id + NOISE, si.noise)
             } else {
-                setStringValue(id, "");
-                setStringValue(id + ELEVATION, "");
-                setStringValue(id + AZIMUTH, "");
-                setStringValue(id + NOISE, "");
+                setStringValue(id, "")
+                setStringValue(id + ELEVATION, "")
+                setStringValue(id + AZIMUTH, "")
+                setStringValue(id + NOISE, "")
             }
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * @see net.sf.marineapi.nmea.sentence.GSVSentence#setSentenceCount(int)
-     */
-    public void setSentenceCount(int count) {
-        if (count < 1) {
-            throw new IllegalArgumentException(
-                    "Number of sentences cannot be negative");
-        }
-        setIntValue(NUMBER_OF_SENTENCES, count);
-    }
+    companion object {
+        // field indices
+        private const val NUMBER_OF_SENTENCES = 0
+        private const val SENTENCE_NUMBER = 1
+        private const val SATELLITES_IN_VIEW = 2
 
-    /*
-     * (non-Javadoc)
-     * @see net.sf.marineapi.nmea.sentence.GSVSentence#setSentenceIndex(int)
-     */
-    public void setSentenceIndex(int index) {
-        if (index < 0) {
-            throw new IllegalArgumentException(
-                    "Sentence index cannot be negative");
-        }
-        setIntValue(SENTENCE_NUMBER, index);
-    }
+        // satellite id fields
+        private val ID_FIELDS = intArrayOf(3, 7, 11, 15)
 
+        // satellite data fields, relative to each id field
+        private const val ELEVATION = 1
+        private const val AZIMUTH = 2
+        private const val NOISE = 3
+    }
 }

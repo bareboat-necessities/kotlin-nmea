@@ -18,56 +18,48 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.MTASentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.Units;
+import net.sf.marineapi.nmea.sentence.MTASentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.Units
 /**
  * MTA sentence parser.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-class MTAParser extends SentenceParser implements MTASentence {
+internal class MTAParser : SentenceParser, MTASentence {
+    /**
+     * Constructor.
+     *
+     * @param mta MTA sentence String to parse.
+     */
+    constructor(mta: String) : super(mta, SentenceId.MTA) {}
 
-	private static final int TEMPERATURE = 0;
-	private static final int UNIT_INDICATOR = 1;
+    /**
+     * Constructor for empty MTA sentence.
+     *
+     * @param talker Talker ID to set.
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.MTA, 2) {
+        setCharValue(UNIT_INDICATOR, Units.CELSIUS.toChar())
+    }
 
-	/**
-	 * Constructor.
-	 *
-	 * @param mta MTA sentence String to parse.
-	 */
-	public MTAParser(String mta) {
-		super(mta, SentenceId.MTA);
-	}
-
-	/**
-	 * Constructor for empty MTA sentence.
-	 *
-	 * @param talker Talker ID to set.
-	 */
-	public MTAParser(TalkerId talker) {
-		super(talker, SentenceId.MTA, 2);
-		setCharValue(UNIT_INDICATOR, Units.CELSIUS.toChar());
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.MTASentence#getTemperature()
-	 */
-	public double getTemperature() {
-		return getDoubleValue(TEMPERATURE);
-	}
-
-	/*
+	 *//*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.MTASentence#setTemperature(double)
 	 */
-	public void setTemperature(double temp) {
-		setDoubleValue(TEMPERATURE, temp, 1, 2);
-	}
+    override var temperature: Double
+        get() = getDoubleValue(TEMPERATURE)
+        set(temp) {
+            setDoubleValue(TEMPERATURE, temp, 1, 2)
+        }
 
+    companion object {
+        private const val TEMPERATURE = 0
+        private const val UNIT_INDICATOR = 1
+    }
 }

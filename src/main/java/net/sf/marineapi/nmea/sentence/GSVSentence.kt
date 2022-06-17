@@ -18,11 +18,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import java.util.List;
-
-import net.sf.marineapi.nmea.util.SatelliteInfo;
+import net.sf.marineapi.nmea.util.SatelliteInfo
 
 /**
  * Detailed GPS satellite data; satellites in view, satellite elevation, azimuth
@@ -32,92 +30,83 @@ import net.sf.marineapi.nmea.util.SatelliteInfo;
  * The last sentence in sequence may contain empty satellite information fields.
  * The empty fields may also be omitted, depending on the device model and
  * manufacturer.
- * <p>
- * Example: <br>
- * {@code $GPGSV,3,2,12,15,56,182,51,17,38,163,47,18,63,058,50,21,53,329,47*73}
- * 
+ *
+ *
+ * Example: <br></br>
+ * `$GPGSV,3,2,12,15,56,182,51,17,38,163,47,18,63,058,50,21,53,329,47*73`
+ *
  * @author Kimmo Tuukkanen
  */
-public interface GSVSentence extends Sentence {
+interface GSVSentence : Sentence {
+    /**
+     * Get the number of satellites in view.
+     *
+     * @return Satellite count
+     */
+    /**
+     * Set the number of satellites in view.
+     *
+     * @param count Satellite count
+     * @throws IllegalArgumentException If specified number is negative
+     */
+    var satelliteCount: Int
 
-	/**
-	 * Get the number of satellites in view.
-	 * 
-	 * @return Satellite count
-	 */
-	int getSatelliteCount();
+    /**
+     * Get the satellites information.
+     *
+     * @return List of SatelliteInfo objects.
+     */
+    fun getSatelliteInfo(): List<SatelliteInfo>
+    /**
+     * Get the total number of sentences in GSV sequence.
+     *
+     * @return Number of sentences
+     */
+    /**
+     * Set the total number of sentences in GSV sequence.
+     *
+     * @param count Number of sentences
+     * @throws IllegalArgumentException If specified count is negative
+     */
+    var sentenceCount: Int
+    /**
+     * Get the index of this sentence in GSV sequence.
+     *
+     * @return Sentence index
+     */
+    /**
+     * Set the index of this sentence in GSV sequence.
+     *
+     * @param index Sentence index to set
+     * @throws IllegalArgumentException If specified index is negative
+     */
+    var sentenceIndex: Int
 
-	/**
-	 * Get the satellites information.
-	 * 
-	 * @return List of SatelliteInfo objects.
-	 */
-	List<SatelliteInfo> getSatelliteInfo();
+    /**
+     * Tells if this is the first sentence in GSV sequence.
+     *
+     * @return true if first, otherwise false.
+     * @see .getSentenceCount
+     * @see .getSentenceIndex
+     */
+    val isFirst: Boolean
 
-	/**
-	 * Get the total number of sentences in GSV sequence.
-	 * 
-	 * @return Number of sentences
-	 */
-	int getSentenceCount();
+    /**
+     * Tells if this is the last sentence in GSV sequence. This is a convenience
+     * method for comparison of
+     * `({ #getSentenceCount()} == { #getSentenceIndex()})`
+     * .
+     *
+     * @return `true` if first, otherwise `false`.
+     */
+    val isLast: Boolean
 
-	/**
-	 * Get the index of this sentence in GSV sequence.
-	 * 
-	 * @return Sentence index
-	 */
-	int getSentenceIndex();
-
-	/**
-	 * Tells if this is the first sentence in GSV sequence.
-	 * 
-	 * @return true if first, otherwise false.
-	 * @see #getSentenceCount()
-	 * @see #getSentenceIndex()
-	 */
-	boolean isFirst();
-
-	/**
-	 * Tells if this is the last sentence in GSV sequence. This is a convenience
-	 * method for comparison of
-	 * {@code ({@link #getSentenceCount()} == {@link #getSentenceIndex()})}
-	 * .
-	 * 
-	 * @return {@code true} if first, otherwise {@code false}.
-	 */
-	boolean isLast();
-
-	/**
-	 * Set the number of satellites in view.
-	 * 
-	 * @param count Satellite count
-	 * @throws IllegalArgumentException If specified number is negative
-	 */
-	void setSatelliteCount(int count);
-
-	/**
-	 * Set the satellite information.
-	 * 
-	 * @param info List of SatelliteInfo objects, size from 0 to 4.
-	 * @throws IllegalArgumentException If specified list size is greater that
-	 *             maximum allowed number of satellites per sentence (4).
-	 */
-	void setSatelliteInfo(List<SatelliteInfo> info);
-
-	/**
-	 * Set the total number of sentences in GSV sequence.
-	 * 
-	 * @param count Number of sentences
-	 * @throws IllegalArgumentException If specified count is negative
-	 */
-	void setSentenceCount(int count);
-
-	/**
-	 * Set the index of this sentence in GSV sequence.
-	 * 
-	 * @param index Sentence index to set
-	 * @throws IllegalArgumentException If specified index is negative
-	 */
-	void setSentenceIndex(int index);
-
+    /**
+     * Set the satellite information.
+     *
+     * @param info List of SatelliteInfo objects, size from 0 to 4.
+     * @throws IllegalArgumentException If specified list size is greater that
+     * maximum allowed number of satellites per sentence (4).
+     */
+    fun setSatelliteInfo(info: List<SatelliteInfo>)
 }

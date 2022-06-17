@@ -18,44 +18,42 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.DataStatus;
+import net.sf.marineapi.nmea.util.DataStatus
 
 /**
  * Heading/Track control systems data and commands. HTD provides output from a
  * heading controller with information about values, modes and references in
  * use, while HTC provides input to a heading controller to set values, modes
  * and references
- * [<a href="http://www.nuovamarea.com/files/product%20manuals/nm%20manuals/NM-2C_v1.00.pdf">nuovamarea.com</a>].
+ * [[nuovamarea.com](http://www.nuovamarea.com/files/product%20manuals/nm%20manuals/NM-2C_v1.00.pdf)].
  *
  * @author Paweł Kozioł
  * @see HTCSentence
  */
-public interface HTDSentence extends HTCSentence, HeadingSentence {
-
+interface HTDSentence : HTCSentence, HeadingSentence {
     /**
      * Returns the rudder status.
      *
-     * @return {@code DataStatus.ACTIVE} when within limits or
-     *      {@code DataStatus.VOID} when limit reached or exceeded.
+     * @return `DataStatus.ACTIVE` when within limits or
+     * `DataStatus.VOID` when limit reached or exceeded.
      */
-    DataStatus getRudderStatus();
+    val rudderStatus: DataStatus?
 
     /**
      * Returns the off-heading status.
      *
-     * @return {@code DataStatus.ACTIVE} when within limits or
-     *      {@code DataStatus.VOID} when limit reached or exceeded.
+     * @return `DataStatus.ACTIVE` when within limits or
+     * `DataStatus.VOID` when limit reached or exceeded.
      */
-    DataStatus getOffHeadingStatus();
+    val offHeadingStatus: DataStatus?
 
     /**
      * Returns the off-track status.
      *
-     * @return {@code DataStatus.ACTIVE} when within limits or
-     *      {@code DataStatus.VOID} when limit reached or exceeded.
+     * @return `DataStatus.ACTIVE` when within limits or
+     * `DataStatus.VOID` when limit reached or exceeded.
      */
-    DataStatus getOffTrackStatus();
-
+    val offTrackStatus: DataStatus?
 }

@@ -18,111 +18,114 @@
  * You should have received a copy of the GNU Lesser General License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
 /**
- * <p>
+ *
+ *
  * Base interface for all AIS sentences (Automatic Identification System).
  * Notice that &quot;AIS&quot; does not refer to NMEA sentence type, but another
  * system/standard that transmits it's messages using NMEA 0183.
- * </p>
- * <p>
+ *
+ *
+ *
  * AIS sentences are parsed in two phases and they all share the same NMEA
  * sentence layout, so there is no dedicated interfaces for each AIS sentence
  * type (VDM, VDO etc).
- * </p>
- * <p>Example:<br>
- * {@code !AIVDM,1,1,,B,177KQJ5000G?tO`K>RA1wUbN0TKH,0*5C}</p>
- * 
+ *
+ *
+ * Example:<br></br>
+ * `!AIVDM,1,1,,B,177KQJ5000G?tO`K>RA1wUbN0TKH,0*5C`
+ *
  * @author Lázár József, Kimmo Tuukkanen
  */
-public interface AISSentence extends Sentence {
+interface AISSentence : Sentence {
+    /**
+     * Number of fragments in the currently accumulating message.
+     *
+     * @return number of fragments.
+     */
+    val numberOfFragments: Int
 
-	/**
-	 * Number of fragments in the currently accumulating message.
-	 * 
-	 * @return number of fragments.
-	 */
-	int getNumberOfFragments();
+    /**
+     * Returns the fragment number of this sentence (1-based).
+     *
+     * @return fragment index
+     */
+    val fragmentNumber: Int
 
-	/**
-	 * Returns the fragment number of this sentence (1-based).
-	 * 
-	 * @return fragment index
-	 */
-	int getFragmentNumber();
+    /**
+     * Returns the sequential message ID for multi-sentence messages.
+     *
+     * @return sequential message ID
+     */
+    val messageId: String?
 
-	/**
-	 * Returns the sequential message ID for multi-sentence messages.
-	 * 
-	 * @return sequential message ID
-	 */
-	String getMessageId();
+    /**
+     * Returns the radio channel information of the messsage.
+     *
+     * @return radio channel id
+     */
+    val radioChannel: String?
 
-	/**
-	 * Returns the radio channel information of the messsage.
-	 * 
-	 * @return radio channel id
-	 */
-	String getRadioChannel();
+    /**
+     * Returns the raw 6-bit decoded message.
+     *
+     * @return message body
+     */
+    val payload: String?
 
-	/**
-	 * Returns the raw 6-bit decoded message.
-	 * 
-	 * @return message body
-	 */
-	String getPayload();
+    /**
+     * Returns the number of fill bits required to pad the data payload to a 6
+     * bit boundary, ranging from 0 to 5.
+     *
+     * Equivalently, subtracting 5 from this tells how many least significant
+     * bits of the last 6-bit nibble in the data payload should be ignored.
+     *
+     * @return number of fill bits
+     */
+    val fillBits: Int
 
-	/**
-	 * Returns the number of fill bits required to pad the data payload to a 6
-	 * bit boundary, ranging from 0 to 5.
-	 * 
-	 * Equivalently, subtracting 5 from this tells how many least significant
-	 * bits of the last 6-bit nibble in the data payload should be ignored.
-	 * 
-	 * @return number of fill bits
-	 */
-	int getFillBits();
+    /**
+     * Tells if the AIS message is being delivered over multiple sentences.
+     *
+     * @return true if this sentence is part of a sequence
+     */
+    val isFragmented: Boolean
 
-	/**
-	 * Tells if the AIS message is being delivered over multiple sentences.
-	 * 
-	 * @return true if this sentence is part of a sequence
-	 */
-	boolean isFragmented();
+    /**
+     * Tells if this is the first fragment in message sequence.
+     *
+     * @return true if first fragment in sequence
+     */
+    val isFirstFragment: Boolean
 
-	/**
-	 * Tells if this is the first fragment in message sequence.
-	 * 
-	 * @return true if first fragment in sequence
-	 */
-	boolean isFirstFragment();
+    /**
+     * Tells if this is the last fragment in message sequence.
+     *
+     * @return true if last part of a sequence
+     */
+    val isLastFragment: Boolean
 
-	/**
-	 * Tells if this is the last fragment in message sequence.
-	 * 
-	 * @return true if last part of a sequence
-	 */
-	boolean isLastFragment();
-
-	/**
-	 * <p>
-	 * Tells if given sentence is part of message sequence.
-	 * </p>
-	 * <p>
-	 * Sentences are considered to belong in same sequence when the given
-	 * sentence meets the following conditions:
-	 * </p>
-	 * <ul>
-	 * <li>Same number of fragments, higher fragment #, same channel and same
-	 * message id</li>
-	 * <li>Same number of fragments, next fragment #, and either same channel or
-	 * same message id</li>
-	 * </ul>
-	 * 
-	 * @param sentence AISSentence to compare with.
-	 * @return true if this and given sentence belong in same sequence
-	 */
-	boolean isPartOfMessage(AISSentence sentence);
-
+    /**
+     *
+     *
+     * Tells if given sentence is part of message sequence.
+     *
+     *
+     *
+     * Sentences are considered to belong in same sequence when the given
+     * sentence meets the following conditions:
+     *
+     *
+     *  * Same number of fragments, higher fragment #, same channel and same
+     * message id
+     *  * Same number of fragments, next fragment #, and either same channel or
+     * same message id
+     *
+     *
+     * @param sentence AISSentence to compare with.
+     * @return true if this and given sentence belong in same sequence
+     */
+    fun isPartOfMessage(sentence: AISSentence): Boolean
 }

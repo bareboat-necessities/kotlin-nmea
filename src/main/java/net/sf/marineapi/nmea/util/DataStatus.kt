@@ -18,51 +18,46 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.util;
+package net.sf.marineapi.nmea.util
 
 /**
  * DataStatus defines the validity of data being broadcasted by an NMEA device.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public enum DataStatus {
+enum class DataStatus(private val character: Char) {
+    /** Valid data available. May also indicate boolean value `true`.  */
+    ACTIVE('A'),
 
-	/** Valid data available. May also indicate boolean value {@code true}. */
-	ACTIVE('A'),
+    /**
+     * No valid data available. May also indicate boolean value
+     * `false`.
+     */
+    VOID('V');
 
-	/**
-	 * No valid data available. May also indicate boolean value
-	 * {@code false}.
-	 */
-	VOID('V');
+    /**
+     * Returns the character used in NMEA sentences to indicate the status.
+     *
+     * @return Char indicator for DataStatus
+     */
+    fun toChar(): Char {
+        return character
+    }
 
-	private final char character;
-
-	DataStatus(char ch) {
-		character = ch;
-	}
-
-	/**
-	 * Returns the character used in NMEA sentences to indicate the status.
-	 * 
-	 * @return Char indicator for DataStatus
-	 */
-	public char toChar() {
-		return character;
-	}
-
-	/**
-	 * Returns the DataStatus enum for status char used in sentences.
-	 * 
-	 * @param ch Status char
-	 * @return DataStatus
-	 */
-	public static DataStatus valueOf(char ch) {
-		for (DataStatus ds : values()) {
-			if (ds.toChar() == ch) {
-				return ds;
-			}
-		}
-		return valueOf(String.valueOf(ch));
-	}
+    companion object {
+        /**
+         * Returns the DataStatus enum for status char used in sentences.
+         *
+         * @param ch Status char
+         * @return DataStatus
+         */
+        fun valueOf(ch: Char): DataStatus {
+            for (ds in values()) {
+                if (ds.toChar() == ch) {
+                    return ds
+                }
+            }
+            return valueOf(ch.toString())
+        }
+    }
 }

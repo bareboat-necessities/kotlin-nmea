@@ -18,26 +18,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
 /**
  * Interface for sentences containing the depth of water.
- * 
+ *
  * @author Kimmo Tuukkanen
  */
-public interface DepthSentence extends Sentence {
-
-	/**
-	 * Get depth of water, in meters.
-	 * 
-	 * @return Depth value
-	 */
-	double getDepth();
-
-	/**
-	 * Set depth of water, in meters.
-	 * 
-	 * @param depth Depth value
-	 */
-	void setDepth(double depth);
+interface DepthSentence : Sentence {
+    /**
+     * Get depth of water, in meters.
+     *
+     * @return Depth value
+     */
+    /**
+     * Set depth of water, in meters.
+     *
+     * @param depth Depth value
+     */
+    var depth: Double
 }

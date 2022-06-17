@@ -18,120 +18,109 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.parser;
+package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.GLLSentence;
-import net.sf.marineapi.nmea.sentence.SentenceId;
-import net.sf.marineapi.nmea.sentence.TalkerId;
-import net.sf.marineapi.nmea.util.DataStatus;
-import net.sf.marineapi.nmea.util.FaaMode;
-import net.sf.marineapi.nmea.util.Position;
-import net.sf.marineapi.nmea.util.Time;
+import net.sf.marineapi.nmea.sentence.GLLSentenceimport
 
+net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*
 /**
  * GLL Sentence parser.
  *
  * @author Kimmo Tuukkanen
  */
-class GLLParser extends PositionParser implements GLLSentence {
+internal class GLLParser : PositionParser, GLLSentence {
+    /**
+     * Creates a new instance of GLLParser.
+     *
+     * @param nmea GLL sentence String.
+     * @throws IllegalArgumentException If the given sentence is invalid or does
+     * not contain GLL sentence.
+     */
+    constructor(nmea: String) : super(nmea, SentenceId.GLL) {}
 
-	// field indices
-	private static final int LATITUDE = 0;
-	private static final int LAT_HEMISPHERE = 1;
-	private static final int LONGITUDE = 2;
-	private static final int LON_HEMISPHERE = 3;
-	private static final int UTC_TIME = 4;
-	private static final int DATA_STATUS = 5;
-	private static final int MODE = 6;
+    /**
+     * Creates GSA parser with empty sentence.
+     *
+     * @param talker TalkerId to set
+     */
+    constructor(talker: TalkerId?) : super(talker, SentenceId.GLL, 7) {}
 
-	/**
-	 * Creates a new instance of GLLParser.
-	 *
-	 * @param nmea GLL sentence String.
-	 * @throws IllegalArgumentException If the given sentence is invalid or does
-	 *             not contain GLL sentence.
-	 */
-	public GLLParser(String nmea) {
-		super(nmea, SentenceId.GLL);
-	}
-
-	/**
-	 * Creates GSA parser with empty sentence.
-	 *
-	 * @param talker TalkerId to set
-	 */
-	public GLLParser(TalkerId talker) {
-		super(talker, SentenceId.GLL, 7);
-	}
-
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.PositionSentence#getPosition()
 	 */
-	public Position getPosition() {
-		return parsePosition(LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE);
-	}
+    override fun getPosition(): Position? {
+        return parsePosition(LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE)
+    }
 
-	/*
+    /*
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.GLLSentence#getDataStatus()
-	 */
-	public DataStatus getStatus() {
-		return DataStatus.valueOf(getCharValue(DATA_STATUS));
-	}
-
-	public FaaMode getMode() {
-		if (getFieldCount() > MODE) {
-			return FaaMode.valueOf(getCharValue(MODE));
-		} else {
-			return null;
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.TimeSentence#getTime()
-	 */
-	public Time getTime() {
-		String str = getStringValue(UTC_TIME);
-		return new Time(str);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.PositionSentence#setPosition(net.sf.marineapi
-	 * .nmea.util.Position)
-	 */
-	public void setPosition(Position pos) {
-		setPositionValues(
-			pos, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE);
-	}
-
-	/*
+	 *//*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.GLLSentence#setDataStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-	public void setStatus(DataStatus status) {
-		setCharValue(DATA_STATUS, status.toChar());
-	}
+    override var status: DataStatus
+        get() = DataStatus.Companion.valueOf(getCharValue(DATA_STATUS))
+        set(status) {
+            setCharValue(DATA_STATUS, status.toChar())
+        }
 
-	public void setMode(FaaMode mode) {
-		if (this.getFieldCount() <= MODE) {
-			this.setFieldCount(7);
-		}
-		setCharValue(MODE, mode.toChar());
-	}
+    override fun getMode(): FaaMode? {
+        return if (fieldCount > MODE) {
+            FaaMode.Companion.valueOf(getCharValue(MODE))
+        } else {
+            null
+        }
+    }
 
-	/*
+    /*
+	 * (non-Javadoc)
+	 * @see net.sf.marineapi.nmea.sentence.TimeSentence#getTime()
+	 *//*
 	 * (non-Javadoc)
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.
 	 * nmea.util.Time)
 	 */
-	public void setTime(Time t) {
-		setStringValue(UTC_TIME, t.toString());
-	}
+    override var time: Time
+        get() {
+            val str = getStringValue(UTC_TIME)
+            return Time(str)
+        }
+        set(t) {
+            setStringValue(UTC_TIME, t.toString())
+        }
+
+    /*
+	 * (non-Javadoc)
+	 * @see
+	 * net.sf.marineapi.nmea.sentence.PositionSentence#setPosition(net.sf.marineapi
+	 * .nmea.util.Position)
+	 */
+    override fun setPosition(pos: Position) {
+        setPositionValues(
+            pos, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE
+        )
+    }
+
+    override fun setMode(mode: FaaMode) {
+        if (this.fieldCount <= MODE) {
+            this.fieldCount = 7
+        }
+        setCharValue(MODE, mode.toChar())
+    }
+
+    companion object {
+        // field indices
+        private const val LATITUDE = 0
+        private const val LAT_HEMISPHERE = 1
+        private const val LONGITUDE = 2
+        private const val LON_HEMISPHERE = 3
+        private const val UTC_TIME = 4
+        private const val DATA_STATUS = 5
+        private const val MODE = 6
+    }
 }

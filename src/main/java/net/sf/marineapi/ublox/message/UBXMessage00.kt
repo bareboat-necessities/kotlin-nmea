@@ -17,104 +17,101 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ublox.message;
+package net.sf.marineapi.ublox.message
 
-import net.sf.marineapi.nmea.util.Position;
-import net.sf.marineapi.nmea.util.Time;
-import net.sf.marineapi.ublox.util.UbloxNavigationStatus;
+import net.sf.marineapi.nmea.util.Position
+import net.sf.marineapi.nmea.util.Time
+import net.sf.marineapi.ublox.util.UbloxNavigationStatus
 
 /**
  * Proprietary u-blox NMEA extension "Lat/Long position data".
  *
  * @author Gunnar Hillert
- *
  */
-public interface UBXMessage00 extends UBXMessage {
+interface UBXMessage00 : UBXMessage {
+    /**
+     * @return UTC  time
+     */
+    fun getUtcTime(): Time
 
-	/**
-	 * @return UTC  time
-	 */
-	Time getUtcTime();
+    /**
+     * Holds all positional data:
+     *
+     *
+     *  * Latitude (degrees and minutes)
+     *  * North/South Indicator
+     *  * Longitude (degrees and minutes)
+     *  * East/West indicator
+     *  * Altitude above user datum ellipsoid
+     *
+     *
+     * @return Position
+     */
+    fun getPosition(): Position
 
-	/**
-	 * Holds all positional data:
-	 *
-	 * <ul>
-	 *   <li>Latitude (degrees and minutes)
-	 *   <li>North/South Indicator
-	 *   <li>Longitude (degrees and minutes)
-	 *   <li>East/West indicator
-	 *   <li>Altitude above user datum ellipsoid
-	 * </ul>
-	 *
-	 * @return Position
-	 */
-	Position getPosition();
+    /**
+     * Navigation Status:
+     *
+     * •NF = No Fix
+     * •DR = Dead reckoning only solution
+     * •G2 = Stand alone 2D solution
+     * •G3 = Stand alone 3D solution
+     * •D2 = Differential 2D solution
+     * •D3 = Differential 3D solution
+     * •RK = Combined GPS + dead reckoning solution
+     * •TT = Time only solution
+     *
+     * @return UbloxNavigationStatus
+     */
+    fun getNavigationStatus(): UbloxNavigationStatus?
 
-	/**
-	 * Navigation Status:
-	 *
-	 * •NF = No Fix
-	 * •DR = Dead reckoning only solution
-	 * •G2 = Stand alone 2D solution
-	 * •G3 = Stand alone 3D solution
-	 * •D2 = Differential 2D solution
-	 * •D3 = Differential 3D solution
-	 * •RK = Combined GPS + dead reckoning solution
-	 * •TT = Time only solution
-	 *
-	 * @return UbloxNavigationStatus
-	 */
-	UbloxNavigationStatus getNavigationStatus();
+    /**
+     * @return Horizontal accuracy estimate
+     */
+    fun getHorizontalAccuracyEstimate(): Double
 
-	/**
-	 * @return Horizontal accuracy estimate
-	 */
-	double getHorizontalAccuracyEstimate();
+    /**
+     * @return Vertical accuracy estimate
+     */
+    fun getVerticaAccuracyEstimate(): Double
 
-	/**
-	 * @return Vertical accuracy estimate
-	 */
-	double getVerticaAccuracyEstimate();
+    /**
+     * @return Speed over ground
+     */
+    fun getSpeedOverGround(): Double
 
-	/**
-	 * @return Speed over ground
-	 */
-	double getSpeedOverGround();
+    /**
+     * @return Course over ground
+     */
+    fun getCourseOverGround(): Double
 
-	/**
-	 * @return Course over ground
-	 */
-	double getCourseOverGround();
+    /**
+     * @return Vertical velocity (positive downwards)
+     */
+    fun getVerticaVelocity(): Double
 
-	/**
-	 * @return Vertical velocity (positive downwards)
-	 */
-	double getVerticaVelocity();
+    /**
+     * @return Age of differential corrections (blank when DGPS is notused)
+     */
+    fun getAgeOfDifferentialCorrections(): Int
 
-	/**
-	 * @return Age of differential corrections (blank when DGPS is notused)
-	 */
-	int getAgeOfDifferentialCorrections();
+    /**
+     * @return HDOP, Horizontal Dilution of Precision
+     */
+    fun getHDOP(): Double
 
-	/**
-	 * @return HDOP, Horizontal Dilution of Precision
-	 */
-	double getHDOP();
+    /**
+     * @return VDOP, Vertical Dilution of Precision
+     */
+    fun getVDOP(): Double
 
-	/**
-	 * @return VDOP, Vertical Dilution of Precision
-	 */
-	double getVDOP();
+    /**
+     * @return TDOP, Time Dilution of Precision
+     */
+    fun getTDOP(): Double
 
-	/**
-	 * @return TDOP, Time Dilution of Precision
-	 */
-	double getTDOP();
-
-	/**
-	 * @return Number of satellites used in the navigation solution.
-	 */
-	int getNumberOfSatellitesUsed();
-
+    /**
+     * @return Number of satellites used in the navigation solution.
+     */
+    fun getNumberOfSatellitesUsed(): Int
 }

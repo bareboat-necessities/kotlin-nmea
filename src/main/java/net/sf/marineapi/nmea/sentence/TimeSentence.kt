@@ -18,30 +18,27 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.Time;
+import net.sf.marineapi.nmea.util.*
 
 /**
  * Interface for sentences that provide UTC time. Notice that some sentences
  * contain only UTC time, while others may provide also date.
- * 
+ *
  * @author Kimmo Tuukkanen
  * @see net.sf.marineapi.nmea.sentence.DateSentence
  */
-public interface TimeSentence extends Sentence {
-
-	/**
-	 * Get the time of day.
-	 * 
-	 * @return Time
-	 */
-	Time getTime();
-
-	/**
-	 * Set the time of day.
-	 * 
-	 * @param t Time to set
-	 */
-	void setTime(Time t);
+interface TimeSentence : Sentence {
+    /**
+     * Get the time of day.
+     *
+     * @return Time
+     */
+    /**
+     * Set the time of day.
+     *
+     * @param t Time to set
+     */
+    var time: Time
 }

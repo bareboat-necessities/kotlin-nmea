@@ -18,60 +18,57 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.nmea.sentence;
+package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.DataStatus;
-import net.sf.marineapi.nmea.util.FaaMode;
+import net.sf.marineapi.nmea.util.DataStatus
+import net.sf.marineapi.nmea.util.FaaMode
 
 /**
  * Current geographic position and time.
- * <p>
- * Example: <br>
- * {@code $GPGLL,6011.552,N,02501.941,E,120045,A*26}
- * 
+ *
+ *
+ * Example: <br></br>
+ * `$GPGLL,6011.552,N,02501.941,E,120045,A*26`
+ *
  * @author Kimmo Tuukkanen
  */
-public interface GLLSentence extends PositionSentence, TimeSentence {
+interface GLLSentence : PositionSentence, TimeSentence {
+    /**
+     * Get the data quality status, valid or invalid.
+     *
+     * @return [DataStatus.ACTIVE] or [DataStatus.VOID]
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    /**
+     * Set the data quality status, valid or invalid.
+     *
+     * @param status DataStatus to set
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    var status: DataStatus
 
-	/**
-	 * Get the data quality status, valid or invalid.
-	 * 
-	 * @return {@link DataStatus#ACTIVE} or {@link DataStatus#VOID}
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-	DataStatus getStatus();
+    /**
+     * Get the FAA operating mode for GPS. Notice that this field is available in NMEA v3.0 and later.
+     *
+     * @return FaaMode enum
+     * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
+     * not available.
+     * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
+     * unexpected or illegal value.
+     */
+    fun getMode(): FaaMode?
 
-	/**
-	 * Set the data quality status, valid or invalid.
-	 * 
-	 * @param status DataStatus to set
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-	void setStatus(DataStatus status);
-
-	/**
-	 * Get the FAA operating mode for GPS. Notice that this field is available in NMEA v3.0 and later.
-	 *
-	 * @return FaaMode enum
-	 * @throws net.sf.marineapi.nmea.parser.DataNotAvailableException If the data is
-	 *             not available.
-	 * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
-	 *             unexpected or illegal value.
-	 */
-	FaaMode getMode();
-
-	/**
-	 * Set the FAA operation mode of GPS. Notice that this field is available in NMEA v3.0 and later. Thus, the number of
-	 * sentence fields may be adjusted when setting this value.
-	 *
-	 * @param mode FaaMode enum to set
-	 */
-	void setMode(FaaMode mode);
-
+    /**
+     * Set the FAA operation mode of GPS. Notice that this field is available in NMEA v3.0 and later. Thus, the number of
+     * sentence fields may be adjusted when setting this value.
+     *
+     * @param mode FaaMode enum to set
+     */
+    fun setMode(mode: FaaMode)
 }

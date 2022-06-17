@@ -18,12 +18,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.ais.util;
+package net.sf.marineapi.ais.util
 
 /**
  * Any message containing AIS rule violations.
- * 
+ *
  * @author Lázár József
  */
-public interface Violation {
-}
+interface Violation 

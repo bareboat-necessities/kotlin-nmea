@@ -17,18 +17,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Java Marine API. If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sf.marineapi.example;
+package net.sf.marineapi.example
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import net.sf.marineapi.nmea.io.SentenceReader;
-import net.sf.marineapi.nmea.util.Position;
-import net.sf.marineapi.ublox.event.AbstractUBXMessageListener;
-import net.sf.marineapi.ublox.message.UBXMessage00;
-import net.sf.marineapi.ublox.message.UBXMessage03;
+import net.sf.marineapi.nmea.io.SentenceReader
+import net.sf.marineapi.ublox.event.AbstractUBXMessageListener
+import net.sf.marineapi.ublox.message.UBXMessage00
+import net.sf.marineapi.ublox.message.UBXMessage03
+import java.io.*
 
 /**
  * Simple example application that takes a filename as command-line argument and
@@ -36,65 +31,62 @@ import net.sf.marineapi.ublox.message.UBXMessage03;
  *
  * @author Gunnar Hillert
  */
-public class UBXListenerExample {
+class UBXListenerExample(file: File?) {
+    private val reader: SentenceReader
 
-	private SentenceReader reader;
+    /**
+     * Creates a new instance of the UBX Listener Example
+     *
+     * @param file File containing NMEA data
+     */
+    init {
 
-	/**
-	 * Creates a new instance of the UBX Listener Example
-	 *
-	 * @param file File containing NMEA data
-	 */
-	public UBXListenerExample(File file) throws IOException {
+        // create sentence reader and provide input stream
+        val stream: InputStream = FileInputStream(file)
+        reader = SentenceReader(stream)
 
-		// create sentence reader and provide input stream
-		final InputStream stream = new FileInputStream(file);
-		reader = new SentenceReader(stream);
+        // listen for for all supported UBX messages
+        reader.addSentenceListener(UBXMessage00Listener())
+        reader.addSentenceListener(UBXMessage03Listener())
+        reader.start()
+    }
 
-		// listen for for all supported UBX messages
-		reader.addSentenceListener(new UBXMessage00Listener());
-		reader.addSentenceListener(new UBXMessage03Listener());
-		reader.start();
-	}
+    internal inner class UBXMessage00Listener : AbstractUBXMessageListener<UBXMessage00>() {
+        override fun onMessage(msg: UBXMessage00) {
+            val position = msg.position
+            println(position.longitude.toString() + " : " + position.latitude)
+            println("onMessage: $msg")
+        }
+    }
 
-	/**
-	 * Main method takes one command-line argument, the name of the file to
-	 * read.
-	 *
-	 * @param args Command-line arguments
-	 */
-	public static void main(String[] args) {
+    internal inner class UBXMessage03Listener : AbstractUBXMessageListener<UBXMessage03>() {
+        override fun onMessage(msg: UBXMessage03) {
+            val numberOfTrackedSatellites = msg.numberOfTrackedSatellites
+            println(String.format("Tracking %s satellites.", numberOfTrackedSatellites))
+            println("onMessage: $msg")
+        }
+    }
 
-		if (args.length != 1) {
-			System.out.println("Exactly 1 argument is required. Example usage:\njava UBXListenerExample pubx.log");
-			System.exit(1);
-		}
-
-		try {
-			new UBXListenerExample(new File(args[0]));
-			System.out.println("Running, press CTRL-C to stop..");
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
-
-	class UBXMessage00Listener extends AbstractUBXMessageListener<UBXMessage00> {
-		@Override
-		public void onMessage(UBXMessage00 msg) {
-			final Position position = msg.getPosition();
-			System.out.println(position.getLongitude() + " : " + position.getLatitude());
-			System.out.println("onMessage: " + msg.toString());
-		}
-	}
-
-	class UBXMessage03Listener extends AbstractUBXMessageListener<UBXMessage03> {
-		@Override
-		public void onMessage(UBXMessage03 msg) {
-			final int numberOfTrackedSatellites = msg.getNumberOfTrackedSatellites();
-			System.out.println(String.format("Tracking %s satellites.", numberOfTrackedSatellites));
-			System.out.println("onMessage: " + msg.toString());
-		}
-	}
-
+    companion object {
+        /**
+         * Main method takes one command-line argument, the name of the file to
+         * read.
+         *
+         * @param args Command-line arguments
+         */
+        @JvmStatic
+        fun main(args: Array<String>) {
+            if (args.size != 1) {
+                println("Exactly 1 argument is required. Example usage:\njava UBXListenerExample pubx.log")
+                System.exit(1)
+            }
+            try {
+                UBXListenerExample(File(args[0]))
+                println("Running, press CTRL-C to stop..")
+            } catch (e: IOException) {
+                e.printStackTrace()
+                System.exit(1)
+            }
+        }
+    }
 }
