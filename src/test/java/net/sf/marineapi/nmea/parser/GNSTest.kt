@@ -38,17 +38,18 @@ import org.junit.Test
 class GNSTest {
     var gns: GNSSentence? = null
     var empty: GNSSentence? = null
+
     @Before
     @Throws(Exception::class)
     fun setUp() {
         gns = GNSParser(EXAMPLE)
-        Assert.assertEquals(TalkerId.GN, gns.getTalkerId())
-        Assert.assertEquals(SentenceId.GNS.name, gns.getSentenceId())
-        Assert.assertEquals(12, gns.getFieldCount().toLong())
+        Assert.assertEquals(TalkerId.GN, gns!!.getTalkerId())
+        Assert.assertEquals(SentenceId.GNS.name, gns!!.getSentenceId())
+        Assert.assertEquals(12, gns!!.getFieldCount().toLong())
         empty = GNSParser(TalkerId.GP)
-        Assert.assertEquals(TalkerId.GP, empty.getTalkerId())
-        Assert.assertEquals(SentenceId.GNS.name, empty.getSentenceId())
-        Assert.assertEquals(12, empty.getFieldCount().toLong())
+        Assert.assertEquals(TalkerId.GP, empty!!.getTalkerId())
+        Assert.assertEquals(SentenceId.GNS.name, empty!!.getSentenceId())
+        Assert.assertEquals(12, empty!!.getFieldCount().toLong())
     }
 
     @get:Throws(Exception::class)

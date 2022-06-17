@@ -1,5 +1,6 @@
 package net.sf.marineapi.nmea.parser
 
+import java.util.Date
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
 import org.junit.Assert
@@ -12,9 +13,10 @@ import org.junit.Test
  * @author Kimmo Tuukkanen
  */
 class RMCTest {
-    var empty: RMCParser? = null
-    var rmc: RMCParser? = null
-    var legacy: RMCParser? = null
+    private var empty: RMCParser? = null
+    private var rmc: RMCParser? = null
+    private var legacy: RMCParser? = null
+
     @Before
     fun setUp() {
         try {
