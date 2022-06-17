@@ -20,7 +20,12 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.parser.VHWParser
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 /**
  * @author Kimmo Tuukkanen
@@ -29,7 +34,7 @@ class VHWTest {
     private var vhw: VHWParser? = null
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Before
     @Throws(Exception::class)
@@ -39,115 +44,115 @@ class VHWTest {
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VHWParser.VHWParser]
+     * [VHWParser.VHWParser]
      * .
      */
     @Test
     fun testConstructorString() {
-        assertTrue(vhw!!.talkerId === TalkerId.VW)
-        assertTrue(SentenceId.valueOf(vhw!!.sentenceId) === SentenceId.VHW)
+        Assert.assertTrue(vhw!!.getTalkerId() === TalkerId.VW)
+        Assert.assertTrue(SentenceId.valueOf(vhw!!.getSentenceId()) === SentenceId.VHW)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VHWParser.VHWParser]
+     * [VHWParser.VHWParser]
      * .
      */
     @Test
     fun testConstructorTalkerId() {
         val empty = VHWParser(TalkerId.II)
-        assertEquals(8, empty.fieldCount)
-        assertTrue('T' == empty.getCharValue(1))
-        assertTrue('M' == empty.getCharValue(3))
-        assertTrue('N' == empty.getCharValue(5))
-        assertTrue('K' == empty.getCharValue(7))
-        assertEquals("VHW", empty.sentenceId)
-        assertTrue(empty.talkerId === TalkerId.II)
+        Assert.assertEquals(8, empty.getFieldCount().toLong())
+        Assert.assertTrue('T' == empty.getCharValue(1))
+        Assert.assertTrue('M' == empty.getCharValue(3))
+        Assert.assertTrue('N' == empty.getCharValue(5))
+        Assert.assertTrue('K' == empty.getCharValue(7))
+        Assert.assertEquals("VHW", empty.getSentenceId())
+        Assert.assertTrue(empty.getTalkerId() === TalkerId.II)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VHWParser.getHeading].
+     * [VHWParser.getHeading].
      */
     @Test
     fun testGetHeading() {
-        assertEquals(0.0, vhw!!.getHeading(), 0.1)
+        Assert.assertEquals(0.0, vhw!!.getHeading(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VHWParser.getMagneticHeading].
+     * [VHWParser.getMagneticHeading].
      */
     @Test
     fun testGetMagneticHeading() {
-        assertEquals(1.5, vhw!!.getMagneticHeading(), 0.1)
+        Assert.assertEquals(1.5, vhw!!.getMagneticHeading(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VHWParser.getSpeedKmh].
+     * [VHWParser.getSpeedKmh].
      */
     @Test
     fun testGetSpeedKilometres() {
-        assertEquals(1.85, vhw!!.getSpeedKmh(), 0.01)
+        Assert.assertEquals(1.85, vhw!!.getSpeedKmh(), 0.01)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VHWParser.getSpeedKnots].
+     * [VHWParser.getSpeedKnots].
      */
     @Test
     fun testGetSpeedKnots() {
-        assertEquals(1.0, vhw!!.getSpeedKnots(), 0.1)
+        Assert.assertEquals(1.0, vhw!!.getSpeedKnots(), 0.1)
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.VHWParser.isTrue].
+     * Test method for [VHWParser.isTrue].
      */
     @Test
     fun testIsTrue() {
         // should always return true
-        assertTrue(vhw!!.isTrue())
+        Assert.assertTrue(vhw!!.isTrue())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VHWParser.setHeading].
+     * [VHWParser.setHeading].
      */
     @Test
     fun testSetHeading() {
         vhw!!.setHeading(90.456)
-        assertEquals(90.5, vhw!!.getHeading(), 0.1)
+        Assert.assertEquals(90.5, vhw!!.getHeading(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VHWParser.setMagneticHeading].
+     * [VHWParser.setMagneticHeading].
      */
     @Test
     fun testSetMagneticHeading() {
         vhw!!.setMagneticHeading(123.4567)
-        assertEquals(123.5, vhw!!.getMagneticHeading(), 0.1)
+        Assert.assertEquals(123.5, vhw!!.getMagneticHeading(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VHWParser.setSpeedKilometres].
+     * [VHWParser.setSpeedKilometres].
      */
     @Test
     fun testSetSpeedKilometres() {
         vhw!!.setSpeedKmh(5.5555)
-        assertEquals(5.6, vhw!!.getSpeedKmh(), 0.1)
+        Assert.assertEquals(5.6, vhw!!.getSpeedKmh(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VHWParser.setSpeedKnots].
+     * [VHWParser.setSpeedKnots].
      */
     @Test
     fun testSetSpeedKnots() {
         vhw!!.setSpeedKnots(12.155)
-        assertEquals(12.2, vhw!!.getSpeedKnots(), 0.1)
+        Assert.assertEquals(12.2, vhw!!.getSpeedKnots(), 0.1)
     }
 
     companion object {

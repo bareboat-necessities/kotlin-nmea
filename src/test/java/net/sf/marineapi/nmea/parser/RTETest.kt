@@ -1,6 +1,11 @@
 package net.sf.marineapi.nmea.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.RTESentence
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.RouteType
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 import java.util.*
 
 /**
@@ -17,212 +22,212 @@ class RTETest {
             empty = RTEParser(TalkerId.GP)
             rte = RTEParser(EXAMPLE)
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        assertEquals(4, empty.fieldCount)
+        Assert.assertEquals(4, empty!!.getFieldCount().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.addWaypointId].
+     * [RTEParser.addWaypointId].
      */
     @Test
     fun testAddWaypointId() {
-        empty.addWaypointId("1ST")
-        assertTrue(empty.toString().contains(",1ST*"))
-        empty.addWaypointId("2ND")
-        assertTrue(empty.toString().contains(",1ST,2ND*"))
-        empty.addWaypointId("3RD")
-        assertTrue(empty.toString().contains(",1ST,2ND,3RD*"))
+        empty!!.addWaypointId("1ST")
+        Assert.assertTrue(empty.toString().contains(",1ST*"))
+        empty!!.addWaypointId("2ND")
+        Assert.assertTrue(empty.toString().contains(",1ST,2ND*"))
+        empty!!.addWaypointId("3RD")
+        Assert.assertTrue(empty.toString().contains(",1ST,2ND,3RD*"))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.getRouteId].
+     * [RTEParser.getRouteId].
      */
     @Test
     fun testGetRouteId() {
-        assertEquals("0", rte.routeId)
+        Assert.assertEquals("0", rte!!.getRouteId())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.getSentenceCount].
+     * [RTEParser.getSentenceCount].
      */
     @Test
     fun testGetSentenceCount() {
-        assertEquals(1, rte.sentenceCount)
+        Assert.assertEquals(1, rte!!.getSentenceCount().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.getSentenceIndex].
+     * [RTEParser.getSentenceIndex].
      */
     @Test
     fun testGetSentenceIndex() {
-        assertEquals(1, rte.sentenceIndex)
+        Assert.assertEquals(1, rte!!.getSentenceIndex().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.getWaypointCount].
+     * [RTEParser.getWaypointCount].
      */
     @Test
     fun testGetWaypointCount() {
-        assertEquals(3, rte.waypointCount)
+        Assert.assertEquals(3, rte!!.getWaypointCount().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.getWaypointIds].
+     * [RTEParser.getWaypointIds].
      */
     @Test
     fun testGetWaypointIds() {
-        val ids: Array<String> = rte.waypointIds
-        assertNotNull(ids)
-        assertEquals(3, ids.size)
-        assertEquals("MELIN", ids[0])
-        assertEquals("RUSKI", ids[1])
-        assertEquals("KNUDAN", ids[2])
+        val ids = rte!!.getWaypointIds()
+        Assert.assertNotNull(ids)
+        Assert.assertEquals(3, ids!!.size.toLong())
+        Assert.assertEquals("MELIN", ids[0])
+        Assert.assertEquals("RUSKI", ids[1])
+        Assert.assertEquals("KNUDAN", ids[2])
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.isActiveRoute].
+     * [RTEParser.isActiveRoute].
      */
     @Test
     fun testIsActiveRoute() {
-        assertTrue(rte.isActiveRoute)
+        Assert.assertTrue(rte!!.isActiveRoute())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.RTEParser.isFirst].
+     * Test method for [RTEParser.isFirst].
      */
     @Test
     fun testIsFirst() {
-        assertTrue(rte.isFirst)
+        Assert.assertTrue(rte!!.isFirst())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.RTEParser.isLast].
+     * Test method for [RTEParser.isLast].
      */
     @Test
     fun testIsLast() {
-        assertTrue(rte.isLast)
+        Assert.assertTrue(rte!!.isLast())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.isWorkingRoute].
+     * [RTEParser.isWorkingRoute].
      */
     @Test
     fun testIsWorkingRoute() {
-        assertFalse(rte.isWorkingRoute)
+        Assert.assertFalse(rte!!.isWorkingRoute())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.getRouteId].
+     * [RTEParser.getRouteId].
      */
     @Test
     fun testSetRouteId() {
-        rte.routeId = "ID"
-        assertEquals("ID", rte.routeId)
+        rte!!.setRouteId("ID")
+        Assert.assertEquals("ID", rte!!.getRouteId())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.isActiveRoute].
+     * [RTEParser.isActiveRoute].
      */
     @Test
     fun testSetRouteTypeActive() {
-        rte.setRouteType(RouteType.ACTIVE)
-        assertTrue(rte.isActiveRoute)
-        assertFalse(rte.isWorkingRoute)
+        rte!!.setRouteType(RouteType.ACTIVE)
+        Assert.assertTrue(rte!!.isActiveRoute())
+        Assert.assertFalse(rte!!.isWorkingRoute())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.isActiveRoute].
+     * [RTEParser.isActiveRoute].
      */
     @Test
     fun testSetRouteTypeWorking() {
-        rte.setRouteType(RouteType.WORKING)
-        assertTrue(rte.isWorkingRoute)
-        assertFalse(rte.isActiveRoute)
+        rte!!.setRouteType(RouteType.WORKING)
+        Assert.assertTrue(rte!!.isWorkingRoute())
+        Assert.assertFalse(rte!!.isActiveRoute())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.setSentenceCount].
+     * [RTEParser.setSentenceCount].
      */
     @Test
     fun testSetSentenceCount() {
-        rte.sentenceCount = 3
-        assertEquals(3, rte.sentenceCount)
+        rte!!.setSentenceCount(3)
+        Assert.assertEquals(3, rte!!.getSentenceCount().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.setSentenceCount].
+     * [RTEParser.setSentenceCount].
      */
     @Test
     fun testSetSentenceCountWithNegativeValue() {
         try {
-            rte.sentenceCount = -1
-            fail("Did not throw exception")
+            rte!!.setSentenceCount(-1)
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
-            assertTrue(e.message!!.contains("cannot be negative"))
+            Assert.assertTrue(e.message!!.contains("cannot be negative"))
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.setSentenceIndex].
+     * [RTEParser.setSentenceIndex].
      */
     @Test
     fun testSetSentenceIndex() {
-        rte.sentenceIndex = 2
-        assertEquals(2, rte.sentenceIndex)
+        rte!!.setSentenceIndex(2)
+        Assert.assertEquals(2, rte!!.getSentenceIndex().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.setSentenceIndex].
+     * [RTEParser.setSentenceIndex].
      */
     @Test
     fun testSetSentenceIndexWithNegativeValue() {
         try {
-            rte.sentenceIndex = -1
-            fail("Did not throw exception")
+            rte!!.setSentenceIndex(-1)
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
-            assertTrue(e.message!!.contains("cannot be negative"))
+            Assert.assertTrue(e.message!!.contains("cannot be negative"))
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RTEParser.setWaypointIds].
+     * [RTEParser.setWaypointIds].
      */
     @Test
     fun testSetWaypointIds() {
-        val ids = arrayOf("ONE", "TWO", "THREE", "FOUR", "FIVE")
+        val ids = arrayOf<String?>("ONE", "TWO", "THREE", "FOUR", "FIVE")
         val expected = "\$GPRTE,1,1,c,0,ONE,TWO,THREE,FOUR,FIVE*7F"
-        rte.waypointIds = ids
-        assertEquals(5, rte.waypointCount)
-        assertEquals(expected, rte.toString())
-        assertTrue(Arrays.equals(ids, rte.waypointIds))
-        empty.waypointIds = ids
-        assertEquals(5, empty.waypointCount)
-        assertTrue(
+        rte!!.setWaypointIds(ids)
+        Assert.assertEquals(5, rte!!.getWaypointCount().toLong())
+        Assert.assertEquals(expected, rte.toString())
+        Assert.assertTrue(Arrays.equals(ids, rte!!.getWaypointIds()))
+        empty!!.setWaypointIds(ids)
+        Assert.assertEquals(5, empty!!.getWaypointCount().toLong())
+        Assert.assertTrue(
             empty.toString().startsWith(
                 "\$GPRTE,,,,,ONE,TWO,THREE,FOUR,FIVE*"
             )

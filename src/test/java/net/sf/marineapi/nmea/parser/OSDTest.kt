@@ -20,8 +20,14 @@
  */
 package net.sf.marineapi.nmea.parser
 
+import net.sf.marineapi.nmea.sentence.OSDSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.DataStatus
+import net.sf.marineapi.nmea.util.ReferenceSystem
 import net.sf.marineapi.nmea.util.Units
-import org.junit.Assert.assertEquals
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 /**
  * OSDTest
@@ -39,191 +45,191 @@ class OSDTest {
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.getHeading].
+     * [OSDParser.getHeading].
      */
     @Test
     fun testGetHeading() {
-        assertEquals(35.1, example.heading, 0.0)
+        Assert.assertEquals(35.1, example!!.getHeading(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.getHeadingStatus].
+     * [OSDParser.getHeadingStatus].
      */
     @Test
     fun testGetHeadingStatus() {
-        assertEquals(DataStatus.ACTIVE, example.headingStatus)
+        Assert.assertEquals(DataStatus.ACTIVE, example!!.getHeadingStatus())
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.getCourse].
+     * [OSDParser.getCourse].
      */
     @Test
     fun testGetCourse() {
-        assertEquals(36.0, example.course, 0.0)
+        Assert.assertEquals(36.0, example!!.getCourse(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.getCourseReference].
+     * [OSDParser.getCourseReference].
      */
     @Test
     fun testGetCourseReference() {
-        assertEquals(
+        Assert.assertEquals(
             ReferenceSystem.POSITIONING_SYSTEM_GROUND_REFERENCE,
-            example.courseReference
+            example!!.getCourseReference()
         )
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.getSpeed].
+     * [OSDParser.getSpeed].
      */
     @Test
     fun testGetSpeed() {
-        assertEquals(10.2, example.speed, 0.0)
+        Assert.assertEquals(10.2, example!!.getSpeed(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.getSpeedReference].
+     * [OSDParser.getSpeedReference].
      */
     @Test
     fun testGetSpeedReference() {
-        assertEquals(
+        Assert.assertEquals(
             ReferenceSystem.POSITIONING_SYSTEM_GROUND_REFERENCE,
-            example.speedReference
+            example!!.getSpeedReference()
         )
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.getVesselSet].
+     * [OSDParser.getVesselSet].
      */
     @Test
     fun testGetVesselSet() {
-        assertEquals(15.3, example.vesselSet, 0.0)
+        Assert.assertEquals(15.3, example!!.getVesselSet(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.getVesselDrift].
+     * [OSDParser.getVesselDrift].
      */
     @Test
     fun testGetVesselDrift() {
-        assertEquals(0.1, example.vesselDrift, 0.0)
+        Assert.assertEquals(0.1, example!!.getVesselDrift(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.getSpeedUnits].
+     * [OSDParser.getSpeedUnits].
      */
     @Test
     fun testGetSpeedUnits() {
-        assertEquals(Units.NAUTICAL_MILES, example.speedUnits)
+        Assert.assertEquals(Units.NAUTICAL_MILES, example!!.getSpeedUnits())
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.setHeading].
+     * [OSDParser.setHeading].
      */
     @Test
     fun testSetHeading() {
         val newHeading = 275.2
-        empty.heading = newHeading
-        assertEquals(newHeading, empty.heading, 0.0)
+        empty!!.setHeading(newHeading)
+        Assert.assertEquals(newHeading, empty!!.getHeading(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.setHeadingStatus].
+     * [OSDParser.setHeadingStatus].
      */
     @Test
     fun testSetHeadingStatus() {
-        val newStatus: DataStatus = DataStatus.VOID
-        empty.headingStatus = newStatus
-        assertEquals(newStatus, empty.headingStatus)
+        val newStatus = DataStatus.VOID
+        empty!!.setHeadingStatus(newStatus)
+        Assert.assertEquals(newStatus, empty!!.getHeadingStatus())
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.setCourse].
+     * [OSDParser.setCourse].
      */
     @Test
     fun testSetCourse() {
         val newCourse = 95.3
-        empty.course = newCourse
-        assertEquals(newCourse, empty.course, 0.0)
+        empty!!.setCourse(newCourse)
+        Assert.assertEquals(newCourse, empty!!.getCourse(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.setCourseReference].
+     * [OSDParser.setCourseReference].
      */
     @Test
     fun testSetCourseReference() {
-        val newReference: ReferenceSystem = ReferenceSystem.BOTTOM_TRACKING_LOG
-        empty.courseReference = newReference
-        assertEquals(newReference, empty.courseReference)
+        val newReference = ReferenceSystem.BOTTOM_TRACKING_LOG
+        empty!!.setCourseReference(newReference)
+        Assert.assertEquals(newReference, empty!!.getCourseReference())
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.setSpeed].
+     * [OSDParser.setSpeed].
      */
     @Test
     fun testSetSpeed() {
         val newSpeed = 11.2
-        empty.speed = newSpeed
-        assertEquals(newSpeed, empty.speed, 0.0)
+        empty!!.setSpeed(newSpeed)
+        Assert.assertEquals(newSpeed, empty!!.getSpeed(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.setSpeedReference].
+     * [OSDParser.setSpeedReference].
      */
     @Test
     fun testSetSpeedReference() {
-        val newReference: ReferenceSystem = ReferenceSystem.RADAR_TRACKING
-        empty.speedReference = newReference
-        assertEquals(newReference, empty.speedReference)
+        val newReference = ReferenceSystem.RADAR_TRACKING
+        empty!!.setSpeedReference(newReference)
+        Assert.assertEquals(newReference, empty!!.getSpeedReference())
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.setVesselSet].
+     * [OSDParser.setVesselSet].
      */
     @Test
     fun testSetVesselSet() {
         val newSet = 13.9
-        empty.vesselSet = newSet
-        assertEquals(newSet, empty.vesselSet, 0.0)
+        empty!!.setVesselSet(newSet)
+        Assert.assertEquals(newSet, empty!!.getVesselSet(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.setVesselDrift].
+     * [OSDParser.setVesselDrift].
      */
     @Test
     fun testSetVesselDrift() {
         val newDrift = 365.4
-        empty.vesselDrift = newDrift
-        assertEquals(newDrift, empty.vesselDrift, 0.0)
+        empty!!.setVesselDrift(newDrift)
+        Assert.assertEquals(newDrift, empty!!.getVesselDrift(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.OSDParser.setSpeedUnits].
+     * [OSDParser.setSpeedUnits].
      */
     @Test(expected = IllegalArgumentException::class)
     fun testSetSpeedUnits() {
         val newUnits = Units.NAUTICAL_MILES
-        empty.speedUnits = newUnits
-        assertEquals(newUnits, empty.speedUnits)
+        empty!!.setSpeedUnits(newUnits)
+        Assert.assertEquals(newUnits, empty!!.getSpeedUnits())
 
         // An invalid speed unit. Should throw IllegalArgumentException.
-        empty.speedUnits = Units.CELSIUS
+        empty!!.setSpeedUnits(Units.CELSIUS)
     }
 
     companion object {

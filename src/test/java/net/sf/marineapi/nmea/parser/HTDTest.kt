@@ -1,7 +1,12 @@
 package net.sf.marineapi.nmea.parser
 
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.Direction
+import net.sf.marineapi.nmea.util.SteeringMode
+import org.junit.Assert
 import org.junit.Before
+import org.junit.Test
 
 class HTDTest {
     private var htd: HTDParser? = null
@@ -15,115 +20,115 @@ class HTDTest {
     @Throws(Exception::class)
     fun testConstructor() {
         val empty = HTDParser(TalkerId.AG)
-        assertEquals(17, empty.fieldCount)
+        Assert.assertEquals(17, empty.getFieldCount().toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetOverride() {
-        assertEquals(DataStatus.VOID, htd!!.override)
+        Assert.assertEquals(DataStatus.VOID, htd!!.getOverride())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetRudderAngle() {
-        assertEquals(0.1, htd!!.rudderAngle, 0.01)
+        Assert.assertEquals(0.1, htd!!.getRudderAngle(), 0.01)
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetRudderDirection() {
-        assertEquals(Direction.RIGHT, htd!!.rudderDirection)
+        Assert.assertEquals(Direction.RIGHT, htd!!.getRudderDirection())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetSteeringMode() {
-        assertEquals(SteeringMode.MANUAL, htd!!.steeringMode)
+        Assert.assertEquals(SteeringMode.MANUAL, htd!!.getSteeringMode())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetTurnMode() {
-        assertNull(htd!!.turnMode)
+        Assert.assertNull(htd!!.getTurnMode())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetRudderLimit() {
-        assertEquals(15, htd!!.rudderLimit, 0.1)
+        Assert.assertEquals(15.0, htd!!.getRudderLimit(), 0.1)
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetOffHeadingLimit() {
-        assertEquals(15, htd!!.offHeadingLimit, 0.1)
+        Assert.assertEquals(15.0, htd!!.getOffHeadingLimit(), 0.1)
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetRadiusOfTurnForHEadingChanges() {
-        assertTrue(java.lang.Double.isNaN(htd!!.radiusOfTurn))
+        Assert.assertTrue(java.lang.Double.isNaN(htd!!.getRadiusOfTurn()))
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetRateOfTurn() {
-        assertTrue(java.lang.Double.isNaN(htd!!.rateOfTurn))
+        Assert.assertTrue(java.lang.Double.isNaN(htd!!.getRateOfTurn()))
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetHeadingToSteer() {
-        assertTrue(java.lang.Double.isNaN(htd!!.headingToSteer))
+        Assert.assertTrue(java.lang.Double.isNaN(htd!!.getHeadingToSteer()))
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetOffTrackLimit() {
-        assertTrue(java.lang.Double.isNaN(htd!!.offTrackLimit))
+        Assert.assertTrue(java.lang.Double.isNaN(htd!!.getOffTrackLimit()))
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetTrack() {
-        assertTrue(java.lang.Double.isNaN(htd!!.track))
+        Assert.assertTrue(java.lang.Double.isNaN(htd!!.getTrack()))
     }
 
     @Test
     @Throws(Exception::class)
     fun testIsHeadingTrue() {
-        assertTrue(htd!!.isHeadingTrue)
+        Assert.assertTrue(htd!!.isHeadingTrue())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetRudderStatus() {
-        assertEquals(DataStatus.ACTIVE, htd!!.rudderStatus)
+        Assert.assertEquals(DataStatus.ACTIVE, htd!!.getRudderStatus())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetOffHeadinStatus() {
-        assertEquals(DataStatus.ACTIVE, htd!!.offHeadingStatus)
+        Assert.assertEquals(DataStatus.ACTIVE, htd!!.getOffHeadingStatus())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetOffTrackStatus() {
-        assertEquals(DataStatus.ACTIVE, htd!!.offTrackStatus)
+        Assert.assertEquals(DataStatus.ACTIVE, htd!!.getOffTrackStatus())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetHeading() {
-        assertEquals(90.3, htd!!.heading, 0.1)
+        Assert.assertEquals(90.3, htd!!.getHeading(), 0.1)
     }
 
     @Test
     @Throws(Exception::class)
     fun testIsTrue() {
-        assertTrue(htd!!.isTrue)
+        Assert.assertTrue(htd!!.isTrue())
     }
 
     companion object {

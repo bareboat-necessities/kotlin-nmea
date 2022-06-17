@@ -2,9 +2,8 @@ package net.sf.marineapi.nmea.parser
 
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.CompassPoint
-import net.sf.marineapi.nmea.util.Position
 import net.sf.marineapi.nmea.util.Time
-import org.junit.Assert.*
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
@@ -15,95 +14,94 @@ import org.junit.Test
 class TLLTest {
     var tll: TLLParser? = null
     var empty: TLLParser? = null
-
     @Before
     fun setUp() {
         try {
             empty = TLLParser(TalkerId.RA)
             tll = TLLParser(EXAMPLE)
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        assertEquals(9, empty!!.fieldCount)
+        Assert.assertEquals(9, empty!!.getFieldCount().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.TLLParser.getNumber] .
+     * [TLLParser.getNumber] .
      */
     @Test
     fun testGetNumber() {
-        assertEquals(1, tll!!.getNumber())
+        Assert.assertEquals(1, tll!!.getNumber().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.TLLParser.getName] .
+     * [TLLParser.getName] .
      */
     @Test
     fun testGetName() {
-        assertEquals("ANDROS", tll!!.getName())
+        Assert.assertEquals("ANDROS", tll!!.getName())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.TLLParser.getPosition] .
+     * [TLLParser.getPosition] .
      */
     @Test
     fun testGetPosition() {
-        val p: Position? = tll!!.getPosition()
+        val p = tll!!.getPosition()
         val lat = 37 + 31.51205 / 60
         val lon = 24 + 36.0 / 60
-        assertNotNull(p)
-        assertEquals(lat, p!!.latitude, 0.0000001)
-        assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
-        assertEquals(lon, p.longitude, 0.0000001)
-        assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
+        Assert.assertNotNull(p)
+        Assert.assertEquals(lat, p.latitude, 0.0000001)
+        Assert.assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
+        Assert.assertEquals(lon, p.longitude, 0.0000001)
+        Assert.assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
     }
 
     @Test
     fun testGetTime() {
-        val t: Time = tll!!.getTime()
-        assertNotNull(t)
-        assertEquals(16, t.getHour())
-        assertEquals(37, t.getMinutes())
-        assertEquals(00.86, t.getSeconds(), 0.001)
+        val t = tll!!.getTime()
+        Assert.assertNotNull(t)
+        Assert.assertEquals(16, t.getHour().toLong())
+        Assert.assertEquals(37, t.getMinutes().toLong())
+        Assert.assertEquals(00.86, t.getSeconds(), 0.001)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.TTMParser.setNumber] .
+     * [TTMParser.setNumber] .
      */
     @Test
     fun testSetNumber() {
         val number = 999
         tll!!.setNumber(number)
-        assertTrue(tll.toString().contains(",999,"))
+        Assert.assertTrue(tll.toString().contains(",999,"))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.TTMParser.setName] .
+     * [TTMParser.setName] .
      */
     @Test
     fun testSetName() {
         tll!!.setName("VRACHNOU")
-        assertTrue(tll.toString().contains(",VRACHNOU,"))
+        Assert.assertTrue(tll.toString().contains(",VRACHNOU,"))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.TTMParser.setTime] .
+     * [TTMParser.setTime] .
      */
     @Test
     fun testSetTime() {
         val t = Time(16, 7, 19.27)
         tll!!.setTime(t)
-        assertTrue(tll.toString().contains(",160719.27,"))
+        Assert.assertTrue(tll.toString().contains(",160719.27,"))
     }
 
     companion object {

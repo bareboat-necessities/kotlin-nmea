@@ -20,8 +20,11 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.Checksum
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.Checksum.add
+import net.sf.marineapi.nmea.sentence.Checksum.calculate
+import net.sf.marineapi.nmea.sentence.Checksum.index
+import org.junit.Assert
+import org.junit.Test
 
 /**
  * Tests the Checksum class.
@@ -31,7 +34,7 @@ import org.junit.Assert.assertEquals
 class ChecksumTest {
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.sentence.Checksum.add].
+     * [Checksum.add].
      */
     @Test
     fun testAdd() {
@@ -39,31 +42,31 @@ class ChecksumTest {
         val b = "\$GPGLL,6011.552,N,02501.941,E,120045,A*"
         val c = "\$GPGLL,6011.552,N,02501.941,E,120045,A*00"
         val expected = "$a*26"
-        assertEquals(expected, Checksum.add(a))
-        assertEquals(expected, Checksum.add(b))
-        assertEquals(expected, Checksum.add(c))
+        Assert.assertEquals(expected, add(a))
+        Assert.assertEquals(expected, add(b))
+        Assert.assertEquals(expected, add(c))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.sentence.Checksum.calculate]
+     * [Checksum.calculate]
      * .
      */
     @Test
     fun testCalculate() {
-        assertEquals("1D", Checksum.calculate(BODTest.EXAMPLE))
-        assertEquals("63", Checksum.calculate(GGATest.EXAMPLE))
-        assertEquals("26", Checksum.calculate(GLLTest.EXAMPLE))
-        assertEquals("0B", Checksum.calculate(RMCTest.EXAMPLE))
-        assertEquals("3D", Checksum.calculate(GSATest.EXAMPLE))
-        assertEquals("73", Checksum.calculate(GSVTest.EXAMPLE))
-        assertEquals("58", Checksum.calculate(RMBTest.EXAMPLE))
-        assertEquals("25", Checksum.calculate(RTETest.EXAMPLE))
+        Assert.assertEquals("1D", calculate(BODTest.Companion.EXAMPLE))
+        Assert.assertEquals("63", calculate(GGATest.Companion.EXAMPLE))
+        Assert.assertEquals("26", calculate(GLLTest.Companion.EXAMPLE))
+        Assert.assertEquals("0B", calculate(RMCTest.EXAMPLE))
+        Assert.assertEquals("3D", calculate(GSATest.Companion.EXAMPLE))
+        Assert.assertEquals("73", calculate(GSVTest.EXAMPLE))
+        Assert.assertEquals("58", calculate(RMBTest.EXAMPLE))
+        Assert.assertEquals("25", calculate(RTETest.EXAMPLE))
     }
 
     @Test
     fun testDelimiterIndex() {
-        assertEquals(13, Checksum.index("\$GPGGA,,,,,,,"))
-        assertEquals(13, Checksum.index("\$GPGGA,,,,,,,*00"))
+        Assert.assertEquals(13, index("\$GPGGA,,,,,,,").toLong())
+        Assert.assertEquals(13, index("\$GPGGA,,,,,,,*00").toLong())
     }
 }

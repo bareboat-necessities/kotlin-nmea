@@ -1,6 +1,10 @@
 package net.sf.marineapi.nmea.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.sentence.UBXSentence
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 /**
  * @author Gunnar Hillert
@@ -11,7 +15,7 @@ class UBXTest {
     private var ubxSentence: UBXSentence? = null
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Before
     @Throws(Exception::class)
@@ -21,32 +25,32 @@ class UBXTest {
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VDMParser.VDMParser]
+     * [VDMParser.VDMParser]
      * .
      */
     @Test
     fun testUBXParserTalkerId() {
         val empty: UBXSentence = UBXParser(TalkerId.P)
-        assertEquals(TalkerId.P, empty.talkerId)
-        assertEquals("UBX", empty.sentenceId)
-        assertEquals(6, empty.fieldCount)
+        Assert.assertEquals(TalkerId.P, empty.getTalkerId())
+        Assert.assertEquals("UBX", empty.getSentenceId())
+        Assert.assertEquals(6, empty.getFieldCount().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.UBXParser.getMessageId].
+     * [UBXParser.getMessageId].
      */
     @Test
     fun testGetMessageId() {
-        assertEquals(Integer.valueOf(0), ubxSentence.getMessageId())
+        assertEquals(Integer.valueOf(0), ubxSentence!!.getMessageId())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.UBXParser.getUBXFieldCount].
+     * [UBXParser.getUBXFieldCount].
      */
     @Test
     fun testGetUBXFieldCount() {
-        assertEquals(20, ubxSentence.getUBXFieldCount())
+        Assert.assertEquals(20, ubxSentence!!.getUBXFieldCount().toLong())
     }
 }

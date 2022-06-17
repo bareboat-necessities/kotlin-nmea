@@ -1,6 +1,12 @@
 package net.sf.marineapi.nmea.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.GSASentence
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.FaaMode
+import net.sf.marineapi.nmea.util.GpsFixStatus
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 /**
  * Tests the GSA sentence parser.
@@ -16,157 +22,157 @@ class GSATest {
             empty = GSAParser(TalkerId.GP)
             instance = GSAParser(EXAMPLE)
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        assertEquals(17, empty.fieldCount)
+        Assert.assertEquals(17, empty!!.getFieldCount().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.GSAParser.getFixStatus] .
+     * [GSAParser.getFixStatus] .
      */
     @Test
     fun testGetFixStatus() {
-        assertEquals(GpsFixStatus.GPS_3D, instance.fixStatus)
+        Assert.assertEquals(GpsFixStatus.GPS_3D, instance!!.getFixStatus())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.GSAParser.getMode].
+     * Test method for [GSAParser.getMode].
      */
     @Test
     fun testGetFaaMode() {
-        assertEquals(FaaMode.AUTOMATIC, instance.mode)
+        Assert.assertEquals(FaaMode.AUTOMATIC, instance!!.getMode())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.GSAParser.getHorizontalDOP].
+     * [GSAParser.getHorizontalDOP].
      */
     @Test
     fun testGetHorizontalDOP() {
-        val hdop: Double = instance.horizontalDOP
-        assertEquals(1.6, hdop, 0.001)
+        val hdop = instance!!.getHorizontalDOP()
+        Assert.assertEquals(1.6, hdop, 0.001)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.GSAParser.getPositionDOP].
+     * [GSAParser.getPositionDOP].
      */
     @Test
     fun testGetPositionDOP() {
-        val pdop: Double = instance.positionDOP
-        assertEquals(1.6, pdop, 0.001)
+        val pdop = instance!!.getPositionDOP()
+        Assert.assertEquals(1.6, pdop, 0.001)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.GSAParser.getSatelliteIds].
+     * [GSAParser.getSatelliteIds].
      */
     @Test
     fun testGetSatelliteIds() {
-        val satellites: Array<String> = instance.satelliteIds
-        assertEquals(5, satellites.size)
-        assertEquals("02", satellites[0])
-        assertEquals("07", satellites[1])
-        assertEquals("09", satellites[2])
-        assertEquals("24", satellites[3])
-        assertEquals("26", satellites[4])
+        val satellites = instance!!.getSatelliteIds()
+        Assert.assertEquals(5, satellites!!.size.toLong())
+        Assert.assertEquals("02", satellites[0])
+        Assert.assertEquals("07", satellites[1])
+        Assert.assertEquals("09", satellites[2])
+        Assert.assertEquals("24", satellites[3])
+        Assert.assertEquals("26", satellites[4])
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.GSAParser.getVerticalDOP].
+     * [GSAParser.getVerticalDOP].
      */
     @Test
     fun testGetVerticalDOP() {
-        val vdop: Double = instance.verticalDOP
-        assertEquals(1.0, vdop, 0.001)
+        val vdop = instance!!.getVerticalDOP()
+        Assert.assertEquals(1.0, vdop, 0.001)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.GSAParser.setFixStatus]
+     * [GSAParser.setFixStatus]
      * .
      */
     @Test
     fun testSetFixStatus() {
-        instance.fixStatus = GpsFixStatus.GPS_NA
-        assertTrue(instance.toString().contains(",A,1,"))
-        assertEquals(GpsFixStatus.GPS_NA, instance.fixStatus)
-        instance.fixStatus = GpsFixStatus.GPS_2D
-        assertTrue(instance.toString().contains(",A,2,"))
-        assertEquals(GpsFixStatus.GPS_2D, instance.fixStatus)
-        instance.fixStatus = GpsFixStatus.GPS_3D
-        assertTrue(instance.toString().contains(",A,3,"))
-        assertEquals(GpsFixStatus.GPS_3D, instance.fixStatus)
+        instance!!.setFixStatus(GpsFixStatus.GPS_NA)
+        Assert.assertTrue(instance.toString().contains(",A,1,"))
+        Assert.assertEquals(GpsFixStatus.GPS_NA, instance!!.getFixStatus())
+        instance!!.setFixStatus(GpsFixStatus.GPS_2D)
+        Assert.assertTrue(instance.toString().contains(",A,2,"))
+        Assert.assertEquals(GpsFixStatus.GPS_2D, instance!!.getFixStatus())
+        instance!!.setFixStatus(GpsFixStatus.GPS_3D)
+        Assert.assertTrue(instance.toString().contains(",A,3,"))
+        Assert.assertEquals(GpsFixStatus.GPS_3D, instance!!.getFixStatus())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.GSAParser.setMode].
+     * [GSAParser.setMode].
      */
     @Test
     fun testSetFaaMode() {
-        instance.mode = FaaMode.DGPS
-        assertTrue(instance.toString().contains(",D,"))
-        assertEquals(FaaMode.DGPS, instance.mode)
-        instance.mode = FaaMode.SIMULATED
-        assertTrue(instance.toString().contains(",S,"))
-        assertEquals(FaaMode.SIMULATED, instance.mode)
+        instance!!.setMode(FaaMode.DGPS)
+        Assert.assertTrue(instance.toString().contains(",D,"))
+        Assert.assertEquals(FaaMode.DGPS, instance!!.getMode())
+        instance!!.setMode(FaaMode.SIMULATED)
+        Assert.assertTrue(instance.toString().contains(",S,"))
+        Assert.assertEquals(FaaMode.SIMULATED, instance!!.getMode())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.GSAParser.setHorizontalDOP].
+     * [GSAParser.setHorizontalDOP].
      */
     @Test
     fun testSetHorizontalDOP() {
         val hdop = 1.98765
-        instance.horizontalDOP = hdop
-        assertEquals(hdop, instance.horizontalDOP, 0.1)
+        instance!!.setHorizontalDOP(hdop)
+        Assert.assertEquals(hdop, instance!!.getHorizontalDOP(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.GSAParser.setPositionDOP].
+     * [GSAParser.setPositionDOP].
      */
     @Test
     fun testSetPositionDOP() {
         val pdop = 1.56788
-        instance.positionDOP = pdop
-        assertEquals(pdop, instance.positionDOP, 0.1)
+        instance!!.setPositionDOP(pdop)
+        Assert.assertEquals(pdop, instance!!.getPositionDOP(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.GSAParser.setSatellitesIds]
+     * [GSAParser.setSatellitesIds]
      * .
      */
     @Test
     fun testSetSatelliteIds() {
-        val ids = arrayOf("02", "04", "06", "08", "10", "12")
-        instance.satelliteIds = ids
-        val satellites: Array<String> = instance.satelliteIds
-        assertEquals(ids.size, satellites.size)
+        val ids = arrayOf<String?>("02", "04", "06", "08", "10", "12")
+        instance!!.setSatelliteIds(ids)
+        val satellites = instance!!.getSatelliteIds()
+        Assert.assertEquals(ids.size.toLong(), satellites!!.size.toLong())
         var i = 0
         for (id in ids) {
-            assertEquals(id, satellites[i++])
+            Assert.assertEquals(id, satellites[i++])
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.GSAParser.setVerticalDOP].
+     * [GSAParser.setVerticalDOP].
      */
     @Test
     fun testSetVerticalDOP() {
         val vdop = 1.56789
-        instance.verticalDOP = vdop
-        assertEquals(vdop, instance.verticalDOP, 0.1)
+        instance!!.setVerticalDOP(vdop)
+        Assert.assertEquals(vdop, instance!!.getVerticalDOP(), 0.1)
     }
 
     companion object {

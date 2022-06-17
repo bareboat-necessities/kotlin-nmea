@@ -21,9 +21,14 @@
 package net.sf.marineapi.nmea.parser
 
 import net.sf.marineapi.nmea.sentence.GNSSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.CompassPoint
 import net.sf.marineapi.nmea.util.Position
 import net.sf.marineapi.nmea.util.Time
+import org.junit.Assert
 import org.junit.Before
+import org.junit.Test
 
 /**
  * GNS parser tests
@@ -37,32 +42,32 @@ class GNSTest {
     @Throws(Exception::class)
     fun setUp() {
         gns = GNSParser(EXAMPLE)
-        assertEquals(TalkerId.GN, gns.talkerId)
-        assertEquals(SentenceId.GNS.name, gns.sentenceId)
-        assertEquals(12, gns.fieldCount)
+        Assert.assertEquals(TalkerId.GN, gns.getTalkerId())
+        Assert.assertEquals(SentenceId.GNS.name, gns.getSentenceId())
+        Assert.assertEquals(12, gns.getFieldCount().toLong())
         empty = GNSParser(TalkerId.GP)
-        assertEquals(TalkerId.GP, empty.talkerId)
-        assertEquals(SentenceId.GNS.name, empty.sentenceId)
-        assertEquals(12, empty.fieldCount)
+        Assert.assertEquals(TalkerId.GP, empty.getTalkerId())
+        Assert.assertEquals(SentenceId.GNS.name, empty.getSentenceId())
+        Assert.assertEquals(12, empty.getFieldCount().toLong())
     }
 
     @get:Throws(Exception::class)
     @get:Test
     val time: Unit
         get() {
-            val t: Time = gns.time
-            assertEquals(1, t.getHour())
-            assertEquals(40, t.getMinutes())
-            assertEquals(35.00, t.getSeconds(), 0.001)
+            val t = gns!!.getTime()
+            Assert.assertEquals(1, t!!.getHour().toLong())
+            Assert.assertEquals(40, t.getMinutes().toLong())
+            Assert.assertEquals(35.00, t.getSeconds(), 0.001)
         }
 
     @Test
     @Throws(Exception::class)
     fun setTime() {
-        gns.time = Time(10, 20, 30.0)
-        assertEquals(10, gns.time.getHour())
-        assertEquals(20, gns.time.getMinutes())
-        assertEquals(30.0, gns.time.getSeconds(), 0.1)
+        gns!!.setTime(Time(10, 20, 30.0))
+        Assert.assertEquals(10, gns!!.getTime()!!.getHour().toLong())
+        Assert.assertEquals(20, gns!!.getTime()!!.getMinutes().toLong())
+        Assert.assertEquals(30.0, gns!!.getTime()!!.getSeconds(), 0.1)
     }
 
     // 4332.69262,S,17235.48549,E
@@ -74,11 +79,11 @@ class GNSTest {
             // 4332.69262,S,17235.48549,E
             val LAT = -(43 + 32.69262 / 60)
             val LON = 172 + 35.48549 / 60
-            val p: Position = gns.getPosition()
-            assertEquals(LAT, p.latitude, 0.00001)
-            assertEquals(CompassPoint.SOUTH, p.latitudeHemisphere)
-            assertEquals(LON, p.longitude, 0.00001)
-            assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
+            val p = gns!!.getPosition()
+            Assert.assertEquals(LAT, p!!.latitude, 0.00001)
+            Assert.assertEquals(CompassPoint.SOUTH, p.latitudeHemisphere)
+            Assert.assertEquals(LON, p.longitude, 0.00001)
+            Assert.assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
         }
 
     @Test
@@ -86,141 +91,141 @@ class GNSTest {
     fun setPosition() {
         val LAT = 61.23456
         val LON = 21.23456
-        empty.setPosition(Position(LAT, LON))
-        val p: Position = empty.getPosition()
-        assertEquals(LAT, p.latitude, 0.00001)
-        assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
-        assertEquals(LON, p.longitude, 0.00001)
-        assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
+        empty!!.setPosition(Position(LAT, LON))
+        val p = empty!!.getPosition()
+        Assert.assertEquals(LAT, p!!.latitude, 0.00001)
+        Assert.assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
+        Assert.assertEquals(LON, p.longitude, 0.00001)
+        Assert.assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
     }
 
     @get:Throws(Exception::class)
     @get:Test
     val gpsMode: Unit
         get() {
-            assertEquals(GNSSentence.Mode.RTK, gns.getGpsMode())
-            assertEquals(GNSSentence.Mode.NONE, empty.getGpsMode())
+            Assert.assertEquals(GNSSentence.Mode.RTK, gns!!.getGpsMode())
+            Assert.assertEquals(GNSSentence.Mode.NONE, empty!!.getGpsMode())
         }
 
     @Test
     @Throws(Exception::class)
     fun setGpsMode() {
-        gns.setGpsMode(GNSSentence.Mode.DGPS)
-        assertTrue(gns.toString().contains(",DR,"))
-        assertEquals(GNSSentence.Mode.DGPS, gns.getGpsMode())
-        assertEquals(GNSSentence.Mode.RTK, gns.getGlonassMode())
-        assertEquals(0, gns.getAdditionalModes().size)
+        gns!!.setGpsMode(GNSSentence.Mode.DGPS)
+        Assert.assertTrue(gns.toString().contains(",DR,"))
+        Assert.assertEquals(GNSSentence.Mode.DGPS, gns!!.getGpsMode())
+        Assert.assertEquals(GNSSentence.Mode.RTK, gns!!.getGlonassMode())
+        Assert.assertEquals(0, gns!!.getAdditionalModes()!!.size.toLong())
     }
 
     @get:Throws(Exception::class)
     @get:Test
     val glonassMode: Unit
         get() {
-            assertEquals(GNSSentence.Mode.RTK, gns.getGlonassMode())
-            assertEquals(GNSSentence.Mode.NONE, empty.getGlonassMode())
+            Assert.assertEquals(GNSSentence.Mode.RTK, gns!!.getGlonassMode())
+            Assert.assertEquals(GNSSentence.Mode.NONE, empty!!.getGlonassMode())
         }
 
     @Test
     @Throws(Exception::class)
     fun setGlonassMode() {
-        gns.setGlonassMode(GNSSentence.Mode.FRTK)
-        assertTrue(gns.toString().contains(",RF,"))
-        assertEquals(GNSSentence.Mode.FRTK, gns.getGlonassMode())
-        assertEquals(GNSSentence.Mode.RTK, gns.getGpsMode())
-        assertEquals(0, gns.getAdditionalModes().size)
+        gns!!.setGlonassMode(GNSSentence.Mode.FRTK)
+        Assert.assertTrue(gns.toString().contains(",RF,"))
+        Assert.assertEquals(GNSSentence.Mode.FRTK, gns!!.getGlonassMode())
+        Assert.assertEquals(GNSSentence.Mode.RTK, gns!!.getGpsMode())
+        Assert.assertEquals(0, gns!!.getAdditionalModes()!!.size.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun setAdditionalModes() {
-        gns.setAdditionalModes(GNSSentence.Mode.AUTOMATIC, GNSSentence.Mode.ESTIMATED)
-        assertTrue(gns.toString().contains(",RRAE,"))
-        assertEquals(GNSSentence.Mode.RTK, gns.getGpsMode())
-        assertEquals(GNSSentence.Mode.RTK, gns.getGlonassMode())
+        gns!!.setAdditionalModes(GNSSentence.Mode.AUTOMATIC, GNSSentence.Mode.ESTIMATED)
+        Assert.assertTrue(gns.toString().contains(",RRAE,"))
+        Assert.assertEquals(GNSSentence.Mode.RTK, gns!!.getGpsMode())
+        Assert.assertEquals(GNSSentence.Mode.RTK, gns!!.getGlonassMode())
     }
 
     @get:Throws(Exception::class)
     @get:Test
     val additionalModes: Unit
         get() {
-            gns.setAdditionalModes(GNSSentence.Mode.AUTOMATIC, GNSSentence.Mode.ESTIMATED)
-            val additional: Array<GNSSentence.Mode> = gns.getAdditionalModes()
-            assertEquals(2, additional.size)
-            assertEquals(GNSSentence.Mode.AUTOMATIC, additional[0])
-            assertEquals(GNSSentence.Mode.ESTIMATED, additional[1])
+            gns!!.setAdditionalModes(GNSSentence.Mode.AUTOMATIC, GNSSentence.Mode.ESTIMATED)
+            val additional = gns!!.getAdditionalModes()
+            Assert.assertEquals(2, additional!!.size.toLong())
+            Assert.assertEquals(GNSSentence.Mode.AUTOMATIC, additional[0])
+            Assert.assertEquals(GNSSentence.Mode.ESTIMATED, additional[1])
         }
 
     @get:Throws(Exception::class)
     @get:Test
     val satelliteCount: Unit
         get() {
-            assertEquals(13, gns.satelliteCount)
+            Assert.assertEquals(13, gns!!.getSatelliteCount().toLong())
         }
 
     @Test
     @Throws(Exception::class)
     fun setSatelliteCount() {
-        gns.satelliteCount = 8
-        assertTrue(gns.toString().contains(",08,"))
-        assertEquals(8, gns.satelliteCount)
+        gns!!.setSatelliteCount(8)
+        Assert.assertTrue(gns.toString().contains(",08,"))
+        Assert.assertEquals(8, gns!!.getSatelliteCount().toLong())
     }
 
     @get:Throws(Exception::class)
     @get:Test
     val horizontalDOP: Unit
         get() {
-            assertEquals(0.9, gns.horizontalDOP, 0.001)
+            Assert.assertEquals(0.9, gns!!.getHorizontalDOP(), 0.001)
         }
 
     @Test
     @Throws(Exception::class)
     fun setHorizontalDOP() {
-        gns.horizontalDOP = 0.123
-        assertEquals(0.12, gns.horizontalDOP, 0.001)
+        gns!!.setHorizontalDOP(0.123)
+        Assert.assertEquals(0.12, gns!!.getHorizontalDOP(), 0.001)
     }
 
     @get:Throws(Exception::class)
     @get:Test
     val orthometricHeight: Unit
         get() {
-            assertEquals(25.63, gns.orthometricHeight, 0.001)
+            Assert.assertEquals(25.63, gns!!.getOrthometricHeight(), 0.001)
         }
 
     @Test
     @Throws(Exception::class)
     fun setOrthometricHeight() {
-        gns.orthometricHeight = 12.342
-        assertEquals(12.34, gns.orthometricHeight, 0.0001)
+        gns!!.setOrthometricHeight(12.342)
+        Assert.assertEquals(12.34, gns!!.getOrthometricHeight(), 0.0001)
     }
 
     @get:Throws(Exception::class)
     @get:Test
     val geoidalSeparation: Unit
         get() {
-            assertEquals(11.24, gns.geoidalSeparation, 0.001)
+            Assert.assertEquals(11.24, gns!!.getGeoidalSeparation(), 0.001)
         }
 
     @Test
     @Throws(Exception::class)
     fun setGeoidalSeparation() {
-        gns.geoidalSeparation = 1.234
-        assertEquals(1.23, gns.geoidalSeparation, 0.001)
+        gns!!.setGeoidalSeparation(1.234)
+        Assert.assertEquals(1.23, gns!!.getGeoidalSeparation(), 0.001)
     }
 
     @Test
     @Throws(Exception::class)
     fun testDgpsAge() {
-        empty.dgpsAge = 10
-        assertTrue(empty.toString().contains(",10.0,*"))
-        assertEquals(10, empty.dgpsAge, 0.1)
+        empty!!.setDgpsAge(10.0)
+        Assert.assertTrue(empty.toString().contains(",10.0,*"))
+        Assert.assertEquals(10.0, empty!!.getDgpsAge(), 0.1)
     }
 
     @Test
     @Throws(Exception::class)
     fun testDgpsStationId() {
-        gns.dgpsStationId = "1234"
-        assertTrue(gns.toString().contains(",1234*"))
-        assertEquals("1234", gns.dgpsStationId)
+        gns!!.setDgpsStationId("1234")
+        Assert.assertTrue(gns.toString().contains(",1234*"))
+        Assert.assertEquals("1234", gns!!.getDgpsStationId())
     }
 
     companion object {

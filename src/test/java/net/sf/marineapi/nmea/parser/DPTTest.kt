@@ -1,6 +1,10 @@
 package net.sf.marineapi.nmea.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.DPTSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 class DPTTest {
     var empty: DPTSentence? = null
@@ -14,52 +18,52 @@ class DPTTest {
 
     @Test
     fun testDPTParser() {
-        assertEquals(TalkerId.II, empty.talkerId)
-        assertEquals("DPT", empty.sentenceId)
-        assertEquals(3, empty.fieldCount)
+        Assert.assertEquals(TalkerId.II, empty!!.getTalkerId())
+        Assert.assertEquals("DPT", empty!!.getSentenceId())
+        Assert.assertEquals(3, empty!!.getFieldCount().toLong())
     }
 
     @Test
     fun testDPTParserString() {
-        assertEquals(TalkerId.II, dpt.talkerId)
-        assertEquals("DPT", dpt.sentenceId)
-        assertEquals(3, dpt.fieldCount)
+        Assert.assertEquals(TalkerId.II, dpt!!.getTalkerId())
+        Assert.assertEquals("DPT", dpt!!.getSentenceId())
+        Assert.assertEquals(3, dpt!!.getFieldCount().toLong())
     }
 
     @Test
     fun testGetDepth() {
-        assertEquals(12.6, dpt.depth, 0.01)
+        Assert.assertEquals(12.6, dpt!!.getDepth(), 0.01)
     }
 
     @Test
     fun testGetOffset() {
-        assertEquals(-1.0, dpt.offset, 0.01)
+        Assert.assertEquals(-1.0, dpt!!.getOffset(), 0.01)
     }
 
     @Test
     fun testSetDepth() {
         val depth = 1.2333333
-        empty.depth = depth
-        assertEquals(depth, empty.depth, 0.1)
+        empty!!.setDepth(depth)
+        Assert.assertEquals(depth, empty!!.getDepth(), 0.1)
     }
 
     @Test
     fun testSetOffset() {
         val offset = 1.555555
-        empty.offset = offset
-        assertEquals(offset, empty.offset, 0.1)
+        empty!!.setOffset(offset)
+        Assert.assertEquals(offset, empty!!.getOffset(), 0.1)
     }
 
     @Test
     fun testGetMaximum() {
-        assertEquals(100, dpt.maximum, 1)
+        Assert.assertEquals(100.0, dpt!!.getMaximum(), 1.0)
     }
 
     @Test
     fun testSetMaximum() {
         val max = 123
-        dpt.maximum = max
-        assertEquals(max, dpt.maximum, 1)
+        dpt!!.setMaximum(max.toDouble())
+        Assert.assertEquals(max.toDouble(), dpt!!.getMaximum(), 1.0)
     }
 
     companion object {

@@ -1,10 +1,9 @@
 package net.sf.marineapi.nmea.parser
 
-import junit.framework.Assert.assertNotNull
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
-import org.junit.Assert.*
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
@@ -22,30 +21,30 @@ class GGATest {
             empty = GGAParser(TalkerId.GP)
             gga = GGAParser(EXAMPLE)
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        assertEquals(14, empty!!.fieldCount)
+        Assert.assertEquals(14, empty!!.getFieldCount().toLong())
     }
 
     @Test
     fun testGetAltitude() {
-        assertEquals(28.0, gga!!.altitude, 0.001)
+        Assert.assertEquals(28.0, gga!!.getAltitude(), 0.001)
     }
 
     @Test
     fun testGetAltitudeUnits() {
-        assertEquals(Units.METER, gga!!.altitudeUnits)
+        Assert.assertEquals(Units.METER, gga!!.getAltitudeUnits())
     }
 
     @Test
     fun testGetDgpsAge() {
         try {
-            gga!!.dgpsAge
-            fail("Did not throw ParseException")
+            gga!!.getDgpsAge()
+            Assert.fail("Did not throw ParseException")
         } catch (e: DataNotAvailableException) {
             // ok
         } catch (e: Exception) {
@@ -56,38 +55,38 @@ class GGATest {
     @Test
     fun testGetDgpsStationId() {
         try {
-            gga!!.dgpsStationId
-            fail("Did not throw ParseException")
+            gga!!.getDgpsStationId()
+            Assert.fail("Did not throw ParseException")
         } catch (e: DataNotAvailableException) {
             // ok
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     @Test
     fun testGetFixQuality() {
-        assertEquals(GpsFixQuality.NORMAL, gga!!.fixQuality)
+        Assert.assertEquals(GpsFixQuality.NORMAL, gga!!.getFixQuality())
     }
 
     @Test
     fun testGetGeoidalHeight() {
-        assertEquals(19.6, gga!!.geoidalHeight, 0.001)
+        Assert.assertEquals(19.6, gga!!.getGeoidalHeight(), 0.001)
     }
 
     @Test
     fun testGetGeoidalHeightUnits() {
-        assertEquals(Units.METER, gga!!.geoidalHeightUnits)
+        Assert.assertEquals(Units.METER, gga!!.getGeoidalHeightUnits())
     }
 
     @Test
     fun testGetHorizontalDOP() {
-        assertEquals(2.0, gga!!.horizontalDOP, 0.001)
+        Assert.assertEquals(2.0, gga!!.getHorizontalDOP(), 0.001)
     }
 
     @Test
     fun testGetNumberOfSatellites() {
-        assertEquals(0, gga!!.satelliteCount)
+        Assert.assertEquals(0, gga!!.getSatelliteCount().toLong())
     }
 
     @Test
@@ -96,23 +95,23 @@ class GGATest {
         val lat = 60 + 11.552 / 60
         val lon = 25 + 1.941 / 60
         val alt = 28.0
-        val p: Position? = gga!!.getPosition()
-        assertNotNull(p)
-        assertEquals(lat, p!!.latitude, 0.0000001)
-        assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
-        assertEquals(lon, p.longitude, 0.0000001)
-        assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
-        assertEquals(Datum.WGS84, p.datum)
-        assertEquals(alt, p.altitude, 0.01)
+        val p = gga!!.getPosition()
+        Assert.assertNotNull(p)
+        Assert.assertEquals(lat, p.latitude, 0.0000001)
+        Assert.assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
+        Assert.assertEquals(lon, p.longitude, 0.0000001)
+        Assert.assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
+        Assert.assertEquals(Datum.WGS84, p.datum)
+        Assert.assertEquals(alt, p.altitude, 0.01)
     }
 
     @Test
     fun testGetTime() {
-        val t: Time = gga!!.time
-        assertNotNull(t)
-        assertEquals(12, t.getHour())
-        assertEquals(0, t.getMinutes())
-        assertEquals(44.567, t.getSeconds(), 0.001)
+        val t = gga!!.getTime()
+        Assert.assertNotNull(t)
+        Assert.assertEquals(12, t.getHour().toLong())
+        Assert.assertEquals(0, t.getMinutes().toLong())
+        Assert.assertEquals(44.567, t.getSeconds(), 0.001)
     }
 
     /**
@@ -121,63 +120,63 @@ class GGATest {
     @Test
     fun testGGAParser() {
         val instance = GGAParser(EXAMPLE)
-        val sid: SentenceId = SentenceId.valueOf(instance.sentenceId)
-        assertEquals(SentenceId.GGA, sid)
+        val sid = SentenceId.valueOf(instance.getSentenceId())
+        Assert.assertEquals(SentenceId.GGA, sid)
     }
 
     @Test
     fun testSetAltitude() {
         val alt = 11.11111
-        gga!!.altitude = alt
-        assertEquals(alt, gga!!.altitude, 0.1)
+        gga!!.setAltitude(alt)
+        Assert.assertEquals(alt, gga!!.getAltitude(), 0.1)
     }
 
     @Test
     fun testSetAltitudeUnits() {
-        assertEquals(Units.METER, gga!!.altitudeUnits)
-        gga!!.altitudeUnits = Units.FEET
-        assertEquals(Units.FEET, gga!!.altitudeUnits)
+        Assert.assertEquals(Units.METER, gga!!.getAltitudeUnits())
+        gga!!.setAltitudeUnits(Units.FEET)
+        Assert.assertEquals(Units.FEET, gga!!.getAltitudeUnits())
     }
 
     @Test
     fun testSetDgpsAge() {
         val age = 33.333333
-        gga!!.dgpsAge = age
-        assertEquals(age, gga!!.dgpsAge, 0.1)
+        gga!!.setDgpsAge(age)
+        Assert.assertEquals(age, gga!!.getDgpsAge(), 0.1)
     }
 
     @Test
     fun testSetDgpsStationId() {
-        gga!!.dgpsStationId = "0001"
-        assertEquals("0001", gga!!.dgpsStationId)
+        gga!!.setDgpsStationId("0001")
+        Assert.assertEquals("0001", gga!!.getDgpsStationId())
     }
 
     @Test
     fun testSetFixQuality() {
-        assertEquals(GpsFixQuality.NORMAL, gga!!.fixQuality)
-        gga!!.fixQuality = GpsFixQuality.INVALID
-        assertEquals(GpsFixQuality.INVALID, gga!!.fixQuality)
+        Assert.assertEquals(GpsFixQuality.NORMAL, gga!!.getFixQuality())
+        gga!!.setFixQuality(GpsFixQuality.INVALID)
+        Assert.assertEquals(GpsFixQuality.INVALID, gga!!.getFixQuality())
     }
 
     @Test
     fun testSetGeoidalHeight() {
         val height = 3.987654
-        gga!!.geoidalHeight = height
-        assertEquals(height, gga!!.geoidalHeight, 0.1)
+        gga!!.setGeoidalHeight(height)
+        Assert.assertEquals(height, gga!!.getGeoidalHeight(), 0.1)
     }
 
     @Test
     fun testSetGeoidalHeightUnits() {
-        assertEquals(Units.METER, gga!!.geoidalHeightUnits)
-        gga!!.geoidalHeightUnits = Units.FEET
-        assertEquals(Units.FEET, gga!!.geoidalHeightUnits)
+        Assert.assertEquals(Units.METER, gga!!.getGeoidalHeightUnits())
+        gga!!.setGeoidalHeightUnits(Units.FEET)
+        Assert.assertEquals(Units.FEET, gga!!.getGeoidalHeightUnits())
     }
 
     @Test
     fun testSetHorizontalDOP() {
         val hdop = 0.123456
-        gga!!.horizontalDOP = hdop
-        assertEquals(hdop, gga!!.horizontalDOP, 0.1)
+        gga!!.setHorizontalDOP(hdop)
+        Assert.assertEquals(hdop, gga!!.getHorizontalDOP(), 0.1)
     }
 
     @Test
@@ -189,42 +188,42 @@ class GGATest {
         p.altitude = alt
         gga!!.setPosition(p)
         val str = gga.toString()
-        assertTrue(str.contains(",6101.111,N,"))
-        assertTrue(str.contains(",02707.777,E,"))
-        val wp: Position = gga!!.getPosition()
-        assertNotNull(wp)
-        assertEquals(lat, wp.latitude, 0.0000001)
-        assertEquals(lon, wp.longitude, 0.0000001)
-        assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
-        assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
-        assertEquals(alt, wp.altitude, 0.01)
+        Assert.assertTrue(str.contains(",6101.111,N,"))
+        Assert.assertTrue(str.contains(",02707.777,E,"))
+        val wp = gga!!.getPosition()
+        Assert.assertNotNull(wp)
+        Assert.assertEquals(lat, wp.latitude, 0.0000001)
+        Assert.assertEquals(lon, wp.longitude, 0.0000001)
+        Assert.assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
+        Assert.assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
+        Assert.assertEquals(alt, wp.altitude, 0.01)
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.GGAParser.getTime].
+     * Test method for [GGAParser.getTime].
      */
     @Test
     fun testSetTime() {
         val t = Time(1, 2, 3.456)
-        gga!!.time = t
-        assertTrue(gga.toString().contains("GPGGA,010203.456,6011"))
+        gga!!.setTime(t)
+        Assert.assertTrue(gga.toString().contains("GPGGA,010203.456,6011"))
     }
 
     @Test
     fun testSetNumberOfSatellites() {
-        gga!!.satelliteCount = 5
-        assertEquals(5, gga!!.satelliteCount)
-        assertTrue(gga.toString().contains(",E,1,05,2.0,28.0,"))
+        gga!!.setSatelliteCount(5)
+        Assert.assertEquals(5, gga!!.getSatelliteCount().toLong())
+        Assert.assertTrue(gga.toString().contains(",E,1,05,2.0,28.0,"))
     }
 
     @Test
     fun testSetNumberOfSatellitesThrows() {
         try {
-            gga!!.satelliteCount = -1
-            fail("setSatelliteCount() did not throw exception")
+            gga!!.setSatelliteCount(-1)
+            Assert.fail("setSatelliteCount() did not throw exception")
         } catch (e: IllegalArgumentException) {
-            assertEquals(0, gga!!.satelliteCount)
-            assertEquals("Satelite count cannot be negative", e.message)
+            Assert.assertEquals(0, gga!!.getSatelliteCount().toLong())
+            Assert.assertEquals("Satelite count cannot be negative", e.message)
         }
     }
 

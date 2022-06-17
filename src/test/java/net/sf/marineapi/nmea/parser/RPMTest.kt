@@ -1,6 +1,11 @@
 package net.sf.marineapi.nmea.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.RPMSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.DataStatus
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 class RPMTest {
     var rpm: RPMSentence? = null
@@ -14,83 +19,83 @@ class RPMTest {
 
     @Test
     fun testRPMParserString() {
-        assertEquals(TalkerId.II, rpm.talkerId)
-        assertEquals("RPM", rpm.sentenceId)
-        assertEquals(5, rpm.fieldCount)
+        Assert.assertEquals(TalkerId.II, rpm!!.getTalkerId())
+        Assert.assertEquals("RPM", rpm!!.getSentenceId())
+        Assert.assertEquals(5, rpm!!.getFieldCount().toLong())
     }
 
     @Test
     fun testRPMParserTalkerId() {
-        assertEquals(TalkerId.II, empty.talkerId)
-        assertEquals("RPM", empty.sentenceId)
-        assertEquals(5, empty.fieldCount)
+        Assert.assertEquals(TalkerId.II, empty!!.getTalkerId())
+        Assert.assertEquals("RPM", empty!!.getSentenceId())
+        Assert.assertEquals(5, empty!!.getFieldCount().toLong())
     }
 
     @Test
     fun testGetId() {
-        assertEquals(1, rpm.id)
+        Assert.assertEquals(1, rpm!!.getId().toLong())
     }
 
     @Test
     fun testGetPitch() {
-        assertEquals(10.5, rpm.pitch, 0.1)
+        Assert.assertEquals(10.5, rpm!!.getPitch(), 0.1)
     }
 
     @Test
     fun testGetRPM() {
-        assertEquals(2418.2, rpm.rPM, 0.1)
+        Assert.assertEquals(2418.2, rpm!!.getRPM(), 0.1)
     }
 
     @Test
     fun testGetSource() {
-        assertEquals('E', rpm.source)
+        Assert.assertEquals('E'.code.toLong(), rpm!!.getSource().code.toLong())
     }
 
     @Test
     fun testGetStatus() {
-        assertEquals(DataStatus.ACTIVE, rpm.status)
+        Assert.assertEquals(DataStatus.ACTIVE, rpm!!.getStatus())
     }
 
     @Test
     fun testIsEngine() {
-        assertTrue(rpm.isEngine)
+        Assert.assertTrue(rpm!!.isEngine())
     }
 
     @Test
     fun testIsShaft() {
-        assertFalse(rpm.isShaft)
+        Assert.assertFalse(rpm!!.isShaft())
     }
 
     @Test
     fun testSetId() {
-        empty.id = 2
-        assertEquals(2, empty.id)
+        empty!!.setId(2)
+        Assert.assertEquals(2, empty!!.getId().toLong())
     }
 
     @Test
     fun testSetPitch() {
-        empty.pitch = 3.14
-        assertEquals(3.1, empty.pitch, 0.1)
+        empty!!.setPitch(3.14)
+        Assert.assertEquals(3.1, empty!!.getPitch(), 0.1)
     }
 
     @Test
     fun testSetRPM() {
-        empty.rPM = 1234.56
-        assertEquals(1234.56, empty.rPM, 0.01)
+        empty!!.setRPM(1234.56)
+        Assert.assertEquals(1234.56, empty!!.getRPM(), 0.01)
     }
 
     @Test
     fun testSetSource() {
-        empty.source = RPMSentence.SHAFT
-        assertTrue(empty.isShaft)
-        assertEquals(RPMSentence.SHAFT, empty.source)
+        empty!!.setSource(RPMSentence.SHAFT)
+        Assert.assertTrue(empty!!.isShaft())
+        Assert.assertEquals(RPMSentence.SHAFT.code.toLong(), empty!!.getSource().code.toLong())
     }
 
     @Test
     fun testSetInvalidSource() {
         try {
-            empty.source = 'A'
-            fail("Didn't throw exception")
+            empty!!.setSource('A')
+            Assert.fail("Didn't throw exception")
         } catch (e: Exception) {
             // pass
         }
@@ -98,8 +103,8 @@ class RPMTest {
 
     @Test
     fun testSetStatus() {
-        empty.status = DataStatus.VOID
-        assertEquals(DataStatus.VOID, empty.status)
+        empty!!.setStatus(DataStatus.VOID)
+        Assert.assertEquals(DataStatus.VOID, empty!!.getStatus())
     }
 
     companion object {

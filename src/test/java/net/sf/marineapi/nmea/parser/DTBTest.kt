@@ -20,8 +20,14 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.DTBSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
+import java.text.DateFormat
 import java.text.ParseException
+import java.text.SimpleDateFormat
 
 /**
  * DTBTest - test class for Boreal GasFinder Channel B
@@ -42,58 +48,58 @@ class DTBTest {
     @Test
     fun testDTBParserTalkerId() {
         val mwdp = DTBParser(TalkerId.GF)
-        assertEquals(TalkerId.GF, mwdp.talkerId)
-        assertEquals("DTB", mwdp.sentenceId)
+        Assert.assertEquals(TalkerId.GF, mwdp.getTalkerId())
+        Assert.assertEquals("DTB", mwdp.getSentenceId())
     }
 
     @Test
     fun testGetChannelNumber() {
-        assertEquals(2, gasFinderMC.channelNumber)
-        assertEquals(2, gasFinder2.channelNumber)
+        Assert.assertEquals(2, gasFinderMC!!.getChannelNumber().toLong())
+        Assert.assertEquals(2, gasFinder2!!.getChannelNumber().toLong())
     }
 
     @Test
     fun testGetGasConcentration() {
-        assertEquals(1.5, gasFinderMC.gasConcentration, 0.1)
-        assertEquals(7.7, gasFinder2.gasConcentration, 0.1)
+        Assert.assertEquals(1.5, gasFinderMC!!.getGasConcentration(), 0.1)
+        Assert.assertEquals(7.7, gasFinder2!!.getGasConcentration(), 0.1)
     }
 
     @Test
     fun testGetConfidenceFactorR2() {
-        assertEquals(99, gasFinderMC.confidenceFactorR2)
-        assertEquals(98, gasFinder2.confidenceFactorR2)
+        Assert.assertEquals(99, gasFinderMC!!.getConfidenceFactorR2().toLong())
+        Assert.assertEquals(98, gasFinder2!!.getConfidenceFactorR2().toLong())
     }
 
     @Test
     fun testGetDistance() {
-        assertEquals(600, gasFinderMC.distance, 0.1)
-        assertEquals(600, gasFinder2.distance, 0.1)
+        Assert.assertEquals(600.0, gasFinderMC!!.getDistance(), 0.1)
+        Assert.assertEquals(600.0, gasFinder2!!.getDistance(), 0.1)
     }
 
     @Test
     fun testGetLightLevel() {
-        assertEquals(11067, gasFinderMC.lightLevel)
-        assertEquals(5527, gasFinder2.lightLevel)
+        Assert.assertEquals(11067, gasFinderMC!!.getLightLevel().toLong())
+        Assert.assertEquals(5527, gasFinder2!!.getLightLevel().toLong())
     }
 
     @Test
     @Throws(ParseException::class)
     fun testGetDateTime() {
         val DATE_PARSER: DateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-        assertEquals(DATE_PARSER.parse("2002/03/01 00:30:28"), gasFinderMC.dateTime)
-        assertEquals(DATE_PARSER.parse("2011/01/27 13:29:28"), gasFinder2.dateTime)
+        Assert.assertEquals(DATE_PARSER.parse("2002/03/01 00:30:28"), gasFinderMC!!.getDateTime())
+        Assert.assertEquals(DATE_PARSER.parse("2011/01/27 13:29:28"), gasFinder2!!.getDateTime())
     }
 
     @Test
     fun testGetSerialNumber() {
-        assertEquals("HF-1xxx", gasFinderMC.serialNumber)
-        assertEquals("HFH2O-1xxx", gasFinder2.serialNumber)
+        Assert.assertEquals("HF-1xxx", gasFinderMC!!.getSerialNumber())
+        Assert.assertEquals("HFH2O-1xxx", gasFinder2!!.getSerialNumber())
     }
 
     @Test
     fun testGetStatusCode() {
-        assertEquals(1, gasFinderMC.statusCode)
-        assertEquals(1, gasFinder2.statusCode)
+        Assert.assertEquals(1, gasFinderMC!!.getStatusCode().toLong())
+        Assert.assertEquals(1, gasFinder2!!.getStatusCode().toLong())
     }
 
     companion object {

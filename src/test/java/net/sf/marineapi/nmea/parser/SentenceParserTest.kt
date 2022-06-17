@@ -1,6 +1,14 @@
 package net.sf.marineapi.nmea.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.Sentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.test.util.FOOParser
+import net.sf.marineapi.test.util.FOOSentence
+import org.junit.Assert
+import org.junit.Assume
+import org.junit.Before
+import org.junit.Test
 
 /**
  * Tests the sentence parser base class.
@@ -15,7 +23,7 @@ class SentenceParserTest {
      */
     @Before
     fun setUp() {
-        instance = SentenceParser(RMCTest.EXAMPLE)
+        instance = SentenceParser(RMCTest.Companion.EXAMPLE)
     }
 
     /**
@@ -24,7 +32,7 @@ class SentenceParserTest {
     @Test
     fun testConstructorForEmptySentence() {
         val s: Sentence = SentenceParser(TalkerId.GP, SentenceId.GLL, 5)
-        assertEquals("\$GPGLL,,,,,*7C", s.toString())
+        Assert.assertEquals("\$GPGLL,,,,,*7C", s.toString())
     }
 
     /**
@@ -33,7 +41,7 @@ class SentenceParserTest {
     @Test
     fun testConstructorForEmptyProprietary() {
         val s: Sentence = SentenceParser(TalkerId.P, "RWIILOG", 5)
-        assertEquals("\$PRWIILOG,,,,,*3D", s.toString())
+        Assert.assertEquals("\$PRWIILOG,,,,,*3D", s.toString())
     }
 
     /**
@@ -43,16 +51,16 @@ class SentenceParserTest {
     @Test
     fun testConstructorWithCustomParser() {
         val foo = "FOO"
-        val sf = SentenceFactory.getInstance()
+        val sf: SentenceFactory = SentenceFactory.getInstance()
         sf.registerParser(foo, FOOParser::class.java)
         val fooSentence = "\$GPFOO,B,A,R"
         val fp: FOOSentence = FOOParser(fooSentence)
-        val s: Sentence? = sf.createParser(fooSentence)
-        assertTrue(s is SentenceParser)
-        assertTrue(s is FOOParser)
-        assertEquals(foo, s.sentenceId)
-        assertEquals(TalkerId.GP, s.talkerId)
-        assertEquals(s, fp)
+        val s = sf.createParser(fooSentence)
+        Assert.assertTrue(s is SentenceParser)
+        Assert.assertTrue(s is FOOParser)
+        Assert.assertEquals(foo, s!!.getSentenceId())
+        Assert.assertEquals(TalkerId.GP, s.getTalkerId())
+        Assert.assertEquals(s, fp)
     }
 
     /**
@@ -63,11 +71,11 @@ class SentenceParserTest {
         try {
             val sent = "GPBOD,234.9,T,228.8,M,RUSKI,*1D"
             SentenceParser(sent)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (se: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
@@ -92,10 +100,10 @@ class SentenceParserTest {
      */
     private fun testConstructorWithAIS(ais: String) {
         val s: Sentence = SentenceParser(ais)
-        assertTrue(s.isValid)
-        assertFalse(s.isProprietary)
-        assertEquals(Sentence.ALTERNATIVE_BEGIN_CHAR, s.beginChar)
-        assertEquals(ais, s.toString())
+        Assert.assertTrue(s.isValid())
+        Assert.assertFalse(s.isProprietary())
+        Assert.assertEquals(Sentence.ALTERNATIVE_BEGIN_CHAR.code.toLong(), s.getBeginChar().code.toLong())
+        Assert.assertEquals(ais, s.toString())
     }
 
     /**
@@ -104,11 +112,11 @@ class SentenceParserTest {
     @Test
     fun testConstructorWithProprietary() {
         val s: Sentence = SentenceParser("\$PRWIILOG,GGA,A,T,1,0", "RWIILOG")
-        assertTrue(s.isValid)
-        assertTrue(s.isProprietary)
-        assertEquals(Sentence.BEGIN_CHAR, s.beginChar)
-        assertEquals(TalkerId.P, s.talkerId)
-        assertEquals("RWIILOG", s.sentenceId)
+        Assert.assertTrue(s.isValid())
+        Assert.assertTrue(s.isProprietary())
+        Assert.assertEquals(Sentence.BEGIN_CHAR.code.toLong(), s.getBeginChar().code.toLong())
+        Assert.assertEquals(TalkerId.P, s.getTalkerId())
+        Assert.assertEquals("RWIILOG", s.getSentenceId())
     }
 
     /**
@@ -118,11 +126,11 @@ class SentenceParserTest {
     fun testConstructorWithNulls() {
         try {
             SentenceParser(null, null as String?)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // OK
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
@@ -132,12 +140,12 @@ class SentenceParserTest {
     @Test
     fun testConstructorWithNullType() {
         try {
-            SentenceParser(RMCTest.EXAMPLE, null as String?)
-            fail("Did not throw exception")
+            SentenceParser(RMCTest.Companion.EXAMPLE, null as String?)
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // OK
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
@@ -148,11 +156,11 @@ class SentenceParserTest {
     fun testConstructorWithUnsupportedTalker() {
         try {
             SentenceParser("\$XZGGA,VALID,BUT,TALKER,NOT,SUPPORTED")
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (se: IllegalArgumentException) {
-            assertTrue(se.message!!.endsWith(".TalkerId.XZ"))
+            Assert.assertTrue(se.message!!.endsWith(".TalkerId.XZ"))
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
@@ -163,17 +171,17 @@ class SentenceParserTest {
     fun testConstructorWithWrongType() {
         try {
             SentenceParser(BODTest.EXAMPLE, SentenceId.GLL.toString())
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // OK
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.getCharValue].
+     * [SentenceParser.getCharValue].
      */
     @Test
     fun testGetCharValueWithEmptyFields() {
@@ -181,17 +189,17 @@ class SentenceParserTest {
         val s = SentenceParser(nmea)
         try {
             s.getCharValue(3)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (ex: DataNotAvailableException) {
             // pass
         } catch (ex: Exception) {
-            fail(ex.message)
+            Assert.fail(ex.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.getDoubleValue].
+     * [SentenceParser.getDoubleValue].
      */
     @Test
     fun testGetDoubleValueWithEmptyFields() {
@@ -199,17 +207,17 @@ class SentenceParserTest {
         val s = SentenceParser(nmea)
         try {
             s.getDoubleValue(2)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (ex: DataNotAvailableException) {
             // pass
         } catch (ex: Exception) {
-            fail(ex.message)
+            Assert.fail(ex.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.getDoubleValue].
+     * [SentenceParser.getDoubleValue].
      */
     @Test
     fun testGetDoubleValueWithInvalidValue() {
@@ -217,27 +225,27 @@ class SentenceParserTest {
         val s = SentenceParser(nmea)
         try {
             s.getDoubleValue(2)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (ex: ParseException) {
             // pass
         } catch (ex: Exception) {
-            fail(ex.message)
+            Assert.fail(ex.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.getSentenceId].
+     * [SentenceParser.getSentenceId].
      */
     @Test
     fun testGetSentenceId() {
-        val sid: SentenceId = SentenceId.valueOf(instance!!.sentenceId)
-        assertEquals(SentenceId.RMC, sid)
+        val sid = SentenceId.valueOf(instance!!.getSentenceId())
+        Assert.assertEquals(SentenceId.RMC, sid)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.getStringValue].
+     * [SentenceParser.getStringValue].
      */
     @Test
     fun testGetStringValue() {
@@ -246,13 +254,13 @@ class SentenceParserTest {
         val data = "6011.552,N,02501.941,E,120045,A"
         val expected = data.split(",".toRegex()).toTypedArray()
         for (i in expected.indices) {
-            assertEquals(expected[i], s.getStringValue(i))
+            Assert.assertEquals(expected[i], s.getStringValue(i))
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.getStringValue].
+     * [SentenceParser.getStringValue].
      */
     @Test
     fun testGetStringValueWithEmptyFields() {
@@ -260,107 +268,107 @@ class SentenceParserTest {
         val s = SentenceParser(nmea)
         try {
             s.getStringValue(2)
-            fail("Did not throw exception")
+            Assert.fail("Did not throw exception")
         } catch (ex: DataNotAvailableException) {
             // pass
         } catch (ex: Exception) {
-            fail(ex.message)
+            Assert.fail(ex.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.getStringValue].
+     * [SentenceParser.getStringValue].
      */
     @Test
     fun testGetStringValueWithIndexGreaterThanAllowed() {
         try {
-            instance!!.getStringValue(instance!!.fieldCount)
-            fail("Did not throw IndexOutOfBoundsException")
+            instance!!.getStringValue(instance!!.getFieldCount())
+            Assert.fail("Did not throw IndexOutOfBoundsException")
         } catch (e: IndexOutOfBoundsException) {
             // pass
         } catch (e: Exception) {
-            fail("Unexpected exception was thrown")
+            Assert.fail("Unexpected exception was thrown")
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.getStringValue].
+     * [SentenceParser.getStringValue].
      */
     @Test
     fun testGetStringValueWithNegativeIndex() {
         try {
             instance!!.getStringValue(-1)
-            fail("Did not throw IndexOutOfBoundsException")
+            Assert.fail("Did not throw IndexOutOfBoundsException")
         } catch (e: IndexOutOfBoundsException) {
             // pass
         } catch (e: Exception) {
-            fail("Unexpected exception was thrown")
+            Assert.fail("Unexpected exception was thrown")
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.getStringValue].
+     * [SentenceParser.getStringValue].
      */
     @Test
     fun testGetStringValueWithValidIndex() {
         try {
             var `val` = instance!!.getStringValue(0)
-            assertEquals("120044.567", `val`)
-            `val` = instance!!.getStringValue(instance!!.fieldCount - 1)
-            assertEquals("A", `val`)
+            Assert.assertEquals("120044.567", `val`)
+            `val` = instance!!.getStringValue(instance!!.getFieldCount() - 1)
+            Assert.assertEquals("A", `val`)
         } catch (e: IndexOutOfBoundsException) {
-            fail("Unexpected IndexOutOfBoundsException")
+            Assert.fail("Unexpected IndexOutOfBoundsException")
         } catch (e: Exception) {
-            fail("Unexpected exception was thrown")
+            Assert.fail("Unexpected exception was thrown")
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.getTalkerId].
+     * [SentenceParser.getTalkerId].
      */
     @Test
     fun testGetTalkerId() {
-        assertEquals(TalkerId.GP, instance!!.talkerId)
+        Assert.assertEquals(TalkerId.GP, instance!!.getTalkerId())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.isProprietary].
+     * [SentenceParser.isProprietary].
      */
     @Test
     fun testIsProprietary() {
-        assertFalse(instance!!.isProprietary)
+        Assert.assertFalse(instance!!.isProprietary())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.setBeginChar].
+     * [SentenceParser.setBeginChar].
      */
     @Test
     fun testSetBeginChar() {
-        assertEquals(Sentence.BEGIN_CHAR, instance!!.getBeginChar())
+        Assert.assertEquals(Sentence.BEGIN_CHAR.code.toLong(), instance!!.getBeginChar().code.toLong())
         instance!!.setBeginChar(Sentence.ALTERNATIVE_BEGIN_CHAR)
-        assertEquals(Sentence.ALTERNATIVE_BEGIN_CHAR, instance!!.getBeginChar())
+        Assert.assertEquals(Sentence.ALTERNATIVE_BEGIN_CHAR.code.toLong(), instance!!.getBeginChar().code.toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.isValid].
+     * [SentenceParser.isValid].
      */
     @Test
     fun testIsValid() {
-        assertTrue(instance!!.isValid)
+        Assert.assertTrue(instance!!.isValid())
         instance!!.setStringValue(0, "\t")
-        assertFalse(instance!!.isValid)
+        Assert.assertFalse(instance!!.isValid())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.setDoubleValue]
+     * [SentenceParser.setDoubleValue]
      * .
      */
     @Test
@@ -368,34 +376,34 @@ class SentenceParserTest {
         val field = 0
         val value = 123.456789
         instance!!.setDoubleValue(field, value)
-        assertEquals(value.toString(), instance!!.getStringValue(field))
+        Assert.assertEquals(value.toString(), instance!!.getStringValue(field))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.setDoubleValue]
+     * [SentenceParser.setDoubleValue]
      * .
      */
     @Test
     fun testSetDoubleValueWithPrecision() {
         instance!!.setDoubleValue(0, 3.14, 0, 0)
-        assertEquals("3", instance!!.getStringValue(0))
+        Assert.assertEquals("3", instance!!.getStringValue(0))
         instance!!.setDoubleValue(0, 3.14, 2, 0)
-        assertEquals("03", instance!!.getStringValue(0))
+        Assert.assertEquals("03", instance!!.getStringValue(0))
         instance!!.setDoubleValue(0, 3.14, 1, 4)
-        assertEquals("3.1400", instance!!.getStringValue(0))
+        Assert.assertEquals("3.1400", instance!!.getStringValue(0))
         instance!!.setDoubleValue(0, 678.910, 3, 3)
-        assertEquals("678.910", instance!!.getStringValue(0))
+        Assert.assertEquals("678.910", instance!!.getStringValue(0))
         instance!!.setDoubleValue(0, 123.456, 4, 1)
-        assertEquals("0123.5", instance!!.getStringValue(0))
+        Assert.assertEquals("0123.5", instance!!.getStringValue(0))
         instance!!.setDoubleValue(0, 78.910, 1, 1)
-        assertEquals("78.9", instance!!.getStringValue(0))
+        Assert.assertEquals("78.9", instance!!.getStringValue(0))
         instance!!.setDoubleValue(0, 0.910, 0, 3)
-        assertEquals(".910", instance!!.getStringValue(0))
+        Assert.assertEquals(".910", instance!!.getStringValue(0))
         instance!!.setDoubleValue(0, 0.910, 3, 2)
-        assertEquals("000.91", instance!!.getStringValue(0))
+        Assert.assertEquals("000.91", instance!!.getStringValue(0))
         instance!!.setDoubleValue(0, 0.910, 0, 2)
-        assertEquals(".91", instance!!.getStringValue(0))
+        Assert.assertEquals(".91", instance!!.getStringValue(0))
     }
 
     @Test
@@ -406,78 +414,78 @@ class SentenceParserTest {
         // https://bugs.openjdk.java.net/browse/JDK-8029896
         // https://bugs.openjdk.java.net/browse/JDK-8039915
         val version = System.getProperty("java.version")
-        org.junit.Assume.assumeTrue(!version.startsWith("1.7."))
+        Assume.assumeTrue(!version.startsWith("1.7."))
 
         // would fail in jdk7 claiming "12.35" not equal to "12.34"
         instance!!.setDoubleValue(0, 12.345, 1, 2)
-        assertEquals("12.35", instance!!.getStringValue(0))
+        Assert.assertEquals("12.35", instance!!.getStringValue(0))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.setIntValue]
+     * [SentenceParser.setIntValue]
      * .
      */
     @Test
     fun testSetIntValueWithLeading() {
         instance!!.setIntValue(0, 0, 0)
-        assertEquals("0", instance!!.getStringValue(0))
+        Assert.assertEquals("0", instance!!.getStringValue(0))
         instance!!.setIntValue(0, 0, 1)
-        assertEquals("0", instance!!.getStringValue(0))
+        Assert.assertEquals("0", instance!!.getStringValue(0))
         instance!!.setIntValue(0, 1, 2)
-        assertEquals("01", instance!!.getStringValue(0))
+        Assert.assertEquals("01", instance!!.getStringValue(0))
         instance!!.setIntValue(0, 1, 3)
-        assertEquals("001", instance!!.getStringValue(0))
+        Assert.assertEquals("001", instance!!.getStringValue(0))
         instance!!.setIntValue(0, 12, 1)
-        assertEquals("12", instance!!.getStringValue(0))
+        Assert.assertEquals("12", instance!!.getStringValue(0))
         instance!!.setIntValue(0, 12, 2)
-        assertEquals("12", instance!!.getStringValue(0))
+        Assert.assertEquals("12", instance!!.getStringValue(0))
         instance!!.setIntValue(0, 12, 3)
-        assertEquals("012", instance!!.getStringValue(0))
+        Assert.assertEquals("012", instance!!.getStringValue(0))
         instance!!.setIntValue(0, -1, 3)
-        assertEquals("-01", instance!!.getStringValue(0))
+        Assert.assertEquals("-01", instance!!.getStringValue(0))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.toString].
+     * [SentenceParser.toString].
      */
     @Test
     fun testToString() {
-        assertEquals(RMCTest.EXAMPLE, instance.toString())
-        assertEquals(instance.toString(), instance!!.toSentence())
+        Assert.assertEquals(RMCTest.Companion.EXAMPLE, instance.toString())
+        Assert.assertEquals(instance.toString(), instance!!.toSentence())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.toSentence].
+     * [SentenceParser.toSentence].
      */
     @Test
     fun testToSentenceWithMaxLength() {
         val max = instance.toString().length + 1
-        assertEquals(RMCTest.EXAMPLE, instance!!.toSentence(max))
+        Assert.assertEquals(RMCTest.Companion.EXAMPLE, instance!!.toSentence(max))
     }
 
     /**
      * Test method for
-     * [§(int)][net.sf.marineapi.nmea.parser.SentenceParser.].
+     * [§(int)][SentenceParser.].
      */
     @Test
     fun testToSentenceWithMaxLengthOnLimit() {
         val max = instance.toString().length
-        assertEquals(RMCTest.EXAMPLE, instance!!.toSentence(max))
+        Assert.assertEquals(RMCTest.Companion.EXAMPLE, instance!!.toSentence(max))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.toSentence].
+     * [SentenceParser.toSentence].
      */
     @Test
     fun testToSentenceWithMaxLengthExceeded() {
         try {
             val max = instance.toString().length - 1
-            assertEquals(RMCTest.EXAMPLE, instance!!.toSentence(max))
-            fail("didn't throw exception")
+            Assert.assertEquals(RMCTest.Companion.EXAMPLE, instance!!.toSentence(max))
+            Assert.fail("didn't throw exception")
         } catch (e: Exception) {
             // pass
         }
@@ -485,76 +493,76 @@ class SentenceParserTest {
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.equals]
+     * [SentenceParser.equals]
      */
     @Test
     fun testEquals() {
-        assertTrue(instance!!.equals(SentenceParser(RMCTest.EXAMPLE)))
+        Assert.assertTrue(instance!!.equals(SentenceParser(RMCTest.Companion.EXAMPLE)))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.equals]
+     * [SentenceParser.equals]
      */
     @Test
     fun testEqualsWithNonEqual() {
-        assertFalse(instance!!.equals(SentenceParser(RMBTest.EXAMPLE)))
+        Assert.assertFalse(instance!!.equals(SentenceParser(RMBTest.Companion.EXAMPLE)))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.equals]
+     * [SentenceParser.equals]
      */
     @Test
     fun testEqualsWithNull() {
-        assertFalse(instance!!.equals(null))
+        Assert.assertFalse(instance!!.equals(null))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.SentenceParser.equals]
+     * [SentenceParser.equals]
      */
     @Test
     fun testEqualsWithSelf() {
-        assertTrue(instance!!.equals(instance))
+        Assert.assertTrue(instance!!.equals(instance))
     }
 
     @Test
     fun testSetFieldCountLowerByOne() {
-        val count = instance!!.fieldCount - 1
-        val lastIndex = instance!!.fieldCount - 2
+        val count = instance!!.getFieldCount() - 1
+        val lastIndex = instance!!.getFieldCount() - 2
         val value = instance!!.getStringValue(lastIndex)
-        instance!!.fieldCount = count
-        assertEquals(count, instance!!.fieldCount)
-        assertEquals(value, instance!!.getStringValue(lastIndex))
+        instance!!.setFieldCount(count)
+        Assert.assertEquals(count.toLong(), instance!!.getFieldCount().toLong())
+        Assert.assertEquals(value, instance!!.getStringValue(lastIndex))
     }
 
     @Test
     fun testSetFieldCountLower() {
         val parser = SentenceParser("\$GPGGA,1,2,3,4")
-        parser.fieldCount = 2
-        assertEquals(2, parser.fieldCount)
-        assertEquals("1", parser.getStringValue(0))
-        assertEquals("2", parser.getStringValue(1))
-        assertTrue(parser.toString().startsWith("\$GPGGA,1,2*"))
+        parser.setFieldCount(2)
+        Assert.assertEquals(2, parser.getFieldCount().toLong())
+        Assert.assertEquals("1", parser.getStringValue(0))
+        Assert.assertEquals("2", parser.getStringValue(1))
+        Assert.assertTrue(parser.toString().startsWith("\$GPGGA,1,2*"))
     }
 
     @Test
     fun testSetFieldCountHigherByOne() {
-        val count = instance!!.fieldCount + 1
-        val lastIndex = instance!!.fieldCount - 1
+        val count = instance!!.getFieldCount() + 1
+        val lastIndex = instance!!.getFieldCount() - 1
         val value = instance!!.getStringValue(lastIndex)
-        instance!!.fieldCount = count
-        assertEquals(count, instance!!.fieldCount)
-        assertEquals(value, instance!!.getStringValue(lastIndex))
+        instance!!.setFieldCount(count)
+        Assert.assertEquals(count.toLong(), instance!!.getFieldCount().toLong())
+        Assert.assertEquals(value, instance!!.getStringValue(lastIndex))
     }
 
     @Test
     fun testSetFieldCountHigher() {
         val parser = SentenceParser("\$GPGGA,1,2,3,4")
-        parser.fieldCount = 8
-        assertEquals(8, parser.fieldCount)
-        assertTrue(parser.toString().startsWith("\$GPGGA,1,2,3,4,,,,*"))
+        parser.setFieldCount(8)
+        Assert.assertEquals(8, parser.getFieldCount().toLong())
+        Assert.assertTrue(parser.toString().startsWith("\$GPGGA,1,2,3,4,,,,*"))
     }
 
     @Test
@@ -562,10 +570,10 @@ class SentenceParserTest {
         val parser = SentenceParser("\$GPGGA,1,2,3,4")
         val values = arrayOf<String?>("5", "6", "7")
         parser.setStringValues(0, values)
-        assertEquals(3, parser.fieldCount)
-        assertEquals("5", parser.getStringValue(0))
-        assertEquals("6", parser.getStringValue(1))
-        assertEquals("7", parser.getStringValue(2))
+        Assert.assertEquals(3, parser.getFieldCount().toLong())
+        Assert.assertEquals("5", parser.getStringValue(0))
+        Assert.assertEquals("6", parser.getStringValue(1))
+        Assert.assertEquals("7", parser.getStringValue(2))
     }
 
     @Test
@@ -573,11 +581,11 @@ class SentenceParserTest {
         val parser = SentenceParser("\$GPGGA,1,2,3,4")
         val values = arrayOf<String?>("5", "6", "7")
         parser.setStringValues(1, values)
-        assertEquals(4, parser.fieldCount)
-        assertEquals("1", parser.getStringValue(0))
-        assertEquals("5", parser.getStringValue(1))
-        assertEquals("6", parser.getStringValue(2))
-        assertEquals("7", parser.getStringValue(3))
+        Assert.assertEquals(4, parser.getFieldCount().toLong())
+        Assert.assertEquals("1", parser.getStringValue(0))
+        Assert.assertEquals("5", parser.getStringValue(1))
+        Assert.assertEquals("6", parser.getStringValue(2))
+        Assert.assertEquals("7", parser.getStringValue(3))
     }
 
     companion object {

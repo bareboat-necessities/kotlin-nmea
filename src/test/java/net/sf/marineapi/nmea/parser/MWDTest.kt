@@ -1,6 +1,11 @@
 package net.sf.marineapi.nmea.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.MWDSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 /**
  * @author Richard van Nieuwenhoven
@@ -9,7 +14,7 @@ class MWDTest {
     private var mwd: MWDSentence? = null
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Before
     @Throws(Exception::class)
@@ -20,52 +25,52 @@ class MWDTest {
     @Test
     fun testMWDParserTalkerId() {
         val mwdp = MWDParser(TalkerId.II)
-        assertEquals(TalkerId.II, mwdp.talkerId)
-        assertEquals(SentenceId.MWD.toString(), mwdp.sentenceId)
+        Assert.assertEquals(TalkerId.II, mwdp.getTalkerId())
+        Assert.assertEquals(SentenceId.MWD.toString(), mwdp.getSentenceId())
     }
 
     @Test
     fun testGetMagneticWindDirection() {
-        assertTrue(java.lang.Double.isNaN(mwd.magneticWindDirection))
+        Assert.assertTrue(java.lang.Double.isNaN(mwd!!.getMagneticWindDirection()))
     }
 
     @Test
     fun testGetTrueWindDirection() {
-        assertEquals(295.19, mwd.trueWindDirection, 0.1)
+        Assert.assertEquals(295.19, mwd!!.getTrueWindDirection(), 0.1)
     }
 
     @Test
     fun testGetWindSpeed() {
-        assertEquals(2.62, mwd.windSpeed, 0.1)
+        Assert.assertEquals(2.62, mwd!!.getWindSpeed(), 0.1)
     }
 
     @Test
     fun testGetWindSpeedKnots() {
-        assertEquals(5.09, mwd.windSpeedKnots, 0.1)
+        Assert.assertEquals(5.09, mwd!!.getWindSpeedKnots(), 0.1)
     }
 
     @Test
     fun testSetMagneticWindDirection() {
-        mwd.magneticWindDirection = 123.4
-        assertEquals(123.4, mwd.magneticWindDirection, 0.1)
+        mwd!!.setMagneticWindDirection(123.4)
+        Assert.assertEquals(123.4, mwd!!.getMagneticWindDirection(), 0.1)
     }
 
     @Test
     fun testSetTrueWindDirection() {
-        mwd.trueWindDirection = 234.5
-        assertEquals(234.5, mwd.trueWindDirection, 0.1)
+        mwd!!.setTrueWindDirection(234.5)
+        Assert.assertEquals(234.5, mwd!!.getTrueWindDirection(), 0.1)
     }
 
     @Test
     fun testSetWindSpeed() {
-        mwd.windSpeed = 12.3
-        assertEquals(12.3, mwd.windSpeed, 0.1)
+        mwd!!.setWindSpeed(12.3)
+        Assert.assertEquals(12.3, mwd!!.getWindSpeed(), 0.1)
     }
 
     @Test
     fun testSetWindSpeedKnots() {
-        mwd.windSpeedKnots = 6.2
-        assertEquals(6.2, mwd.windSpeedKnots, 0.1)
+        mwd!!.setWindSpeedKnots(6.2)
+        Assert.assertEquals(6.2, mwd!!.getWindSpeedKnots(), 0.1)
     }
 
     companion object {

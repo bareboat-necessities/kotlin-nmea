@@ -20,7 +20,12 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.HDTSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 /**
  * @author Kimmo Tuukkanen
@@ -29,7 +34,7 @@ class HDTTest {
     var hdt: HDTSentence? = null
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Before
     @Throws(Exception::class)
@@ -43,74 +48,74 @@ class HDTTest {
     @Test
     fun testConstructor() {
         val empty: HDTSentence = HDTParser(TalkerId.HE)
-        assertEquals(TalkerId.HE, empty.talkerId)
-        assertEquals(SentenceId.HDT.toString(), empty.sentenceId)
+        Assert.assertEquals(TalkerId.HE, empty.getTalkerId())
+        Assert.assertEquals(SentenceId.HDT.toString(), empty.getSentenceId())
         try {
-            empty.heading
+            empty.getHeading()
         } catch (e: DataNotAvailableException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.HDTParser.isTrue].
+     * Test method for [HDTParser.isTrue].
      */
     @Test
     fun testIsTrue() {
-        assertTrue(hdt.isTrue)
+        Assert.assertTrue(hdt!!.isTrue())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDTParser.getHeading].
+     * [HDTParser.getHeading].
      */
     @Test
     fun testGetHeading() {
-        val value: Double = hdt.heading
-        assertEquals(90.0, value, 0.1)
+        val value = hdt!!.getHeading()
+        Assert.assertEquals(90.0, value, 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDTParser.setHeading].
+     * [HDTParser.setHeading].
      */
     @Test
     fun testSetHeading() {
-        hdt.heading = 123.45
-        assertEquals(123.5, hdt.heading, 0.1)
+        hdt!!.setHeading(123.45)
+        Assert.assertEquals(123.5, hdt!!.getHeading(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDTParser.setHeading].
+     * [HDTParser.setHeading].
      */
     @Test
     fun testSetNegativeHeading() {
         try {
-            hdt.heading = -0.005
-            fail("Did not throw exception")
+            hdt!!.setHeading(-0.005)
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDTParser.setHeading].
+     * [HDTParser.setHeading].
      */
     @Test
     fun testSetHeadingTooHigh() {
         try {
-            hdt.heading = 360.0001
-            fail("Did not throw exception")
+            hdt!!.setHeading(360.0001)
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 

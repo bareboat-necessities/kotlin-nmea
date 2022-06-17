@@ -1,7 +1,14 @@
 package net.sf.marineapi.nmea.parser
 
+import net.sf.marineapi.nmea.sentence.RMBSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.CompassPoint
+import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.Direction
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.util.Waypoint
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 /**
  * Tests the RMB sentence parser.
@@ -21,180 +28,180 @@ class RMBTest {
             empty = RMBParser(TalkerId.GP)
             rmb = RMBParser(EXAMPLE)
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        assertEquals(13, empty.fieldCount)
+        Assert.assertEquals(13, empty!!.getFieldCount().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.getArrivalStatus].
+     * [RMBParser.getArrivalStatus].
      */
     @Test
     fun testArrivalStatus() {
-        assertEquals(DataStatus.VOID, rmb.arrivalStatus)
-        assertFalse(rmb.hasArrived())
-        rmb.arrivalStatus = DataStatus.ACTIVE
-        assertEquals(DataStatus.ACTIVE, rmb.arrivalStatus)
-        assertTrue(rmb.hasArrived())
-        rmb.arrivalStatus = DataStatus.VOID
-        assertEquals(DataStatus.VOID, rmb.arrivalStatus)
-        assertFalse(rmb.hasArrived())
+        Assert.assertEquals(DataStatus.VOID, rmb!!.getArrivalStatus())
+        Assert.assertFalse(rmb!!.hasArrived())
+        rmb!!.setArrivalStatus(DataStatus.ACTIVE)
+        Assert.assertEquals(DataStatus.ACTIVE, rmb!!.getArrivalStatus())
+        Assert.assertTrue(rmb!!.hasArrived())
+        rmb!!.setArrivalStatus(DataStatus.VOID)
+        Assert.assertEquals(DataStatus.VOID, rmb!!.getArrivalStatus())
+        Assert.assertFalse(rmb!!.hasArrived())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.getBearing] .
+     * [RMBParser.getBearing] .
      */
     @Test
     fun testGetBearing() {
-        assertEquals(234.9, rmb.bearing, 0.001)
+        Assert.assertEquals(234.9, rmb!!.getBearing(), 0.001)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.getCrossTrackError].
+     * [RMBParser.getCrossTrackError].
      */
     @Test
     fun testGetCrossTrackError() {
-        assertEquals(0.0, rmb.crossTrackError, 0.001)
+        Assert.assertEquals(0.0, rmb!!.getCrossTrackError(), 0.001)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.getDestination] .
+     * [RMBParser.getDestination] .
      */
     @Test
     fun testGetDestination() {
         val id = "RUSKI"
         val lat = 55 + 36.200 / 60
         val lon = 14 + 36.500 / 60
-        val wp: Waypoint = rmb.getDestination()
-        assertNotNull(wp)
-        assertEquals(id, wp.id)
-        assertEquals(lat, wp.latitude, 0.0000001)
-        assertEquals(lon, wp.longitude, 0.0000001)
-        assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
-        assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
+        val wp = rmb!!.getDestination()
+        Assert.assertNotNull(wp)
+        Assert.assertEquals(id, wp!!.id)
+        Assert.assertEquals(lat, wp.latitude, 0.0000001)
+        Assert.assertEquals(lon, wp.longitude, 0.0000001)
+        Assert.assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
+        Assert.assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.getOriginId].
+     * [RMBParser.getOriginId].
      */
     @Test
     fun testGetOriginId() {
         // FIXME test data should contain ID
         try {
-            assertEquals("", rmb.originId)
-            fail("Did not throw ParseException")
+            Assert.assertEquals("", rmb!!.getOriginId())
+            Assert.fail("Did not throw ParseException")
         } catch (e: Exception) {
-            assertTrue(e is DataNotAvailableException)
+            Assert.assertTrue(e is DataNotAvailableException)
         }
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.RMBParser.getRange]
+     * Test method for [RMBParser.getRange]
      * .
      */
     @Test
     fun testGetRange() {
-        assertEquals(432.3, rmb.range, 0.001)
+        Assert.assertEquals(432.3, rmb!!.getRange(), 0.001)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.getStatus].
+     * [RMBParser.getStatus].
      */
     @Test
     fun testGetStatus() {
-        assertEquals(DataStatus.ACTIVE, rmb.status)
+        Assert.assertEquals(DataStatus.ACTIVE, rmb!!.getStatus())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.getSteerTo].
+     * [RMBParser.getSteerTo].
      */
     @Test
     fun testGetSteerTo() {
-        assertEquals(Direction.RIGHT, rmb.steerTo)
+        Assert.assertEquals(Direction.RIGHT, rmb!!.getSteerTo())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.getVelocity].
+     * [RMBParser.getVelocity].
      */
     @Test
     fun testGetVelocity() {
         // FIXME test data should contain velocity
         try {
-            assertEquals(0.0, rmb.velocity, 0.001)
-            fail("Did not throw ParseException")
+            Assert.assertEquals(0.0, rmb!!.getVelocity(), 0.001)
+            Assert.fail("Did not throw ParseException")
         } catch (e: Exception) {
-            assertTrue(e is DataNotAvailableException)
+            Assert.assertTrue(e is DataNotAvailableException)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.setBearing] .
+     * [RMBParser.setBearing] .
      */
     @Test
     fun testSetBearing() {
         val brg = 90.56789
-        rmb.bearing = brg
-        assertTrue(rmb.toString().contains(",090.6,"))
-        assertEquals(brg, rmb.bearing, 0.1)
+        rmb!!.setBearing(brg)
+        Assert.assertTrue(rmb.toString().contains(",090.6,"))
+        Assert.assertEquals(brg, rmb!!.getBearing(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.setBearing] .
+     * [RMBParser.setBearing] .
      */
     @Test
     fun testSetBearingWithNegativeValue() {
         try {
-            rmb.bearing = -0.001
-            fail("Did not throw exception")
+            rmb!!.setBearing(-0.001)
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
-            assertTrue(e.message!!.contains("0..360"))
+            Assert.assertTrue(e.message!!.contains("0..360"))
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.setBearing] .
+     * [RMBParser.setBearing] .
      */
     @Test
     fun testSetBearingWithValueGreaterThanAllowed() {
         try {
-            rmb.bearing = 360.001
-            fail("Did not throw exception")
+            rmb!!.setBearing(360.001)
+            Assert.fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
-            assertTrue(e.message!!.contains("0..360"))
+            Assert.assertTrue(e.message!!.contains("0..360"))
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.setCrossTrackError]
+     * [RMBParser.setCrossTrackError]
      * .
      */
     @Test
     fun testSetCrossTrackError() {
         val xte = 2.56789
-        rmb.crossTrackError = xte
-        assertTrue(rmb.toString().contains(",2.57,"))
-        assertEquals(xte, rmb.crossTrackError, 0.2)
+        rmb!!.setCrossTrackError(xte)
+        Assert.assertTrue(rmb.toString().contains(",2.57,"))
+        Assert.assertEquals(xte, rmb!!.getCrossTrackError(), 0.2)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.setDestination] .
+     * [RMBParser.setDestination] .
      */
     @Test
     fun testSetDestination() {
@@ -202,100 +209,100 @@ class RMBTest {
         val lat = 61 + 1.111 / 60
         val lon = 27 + 7.777 / 60
         val d = Waypoint(id, lat, lon)
-        rmb.setDestination(d)
-        val str: String = rmb.toString()
-        val wp: Waypoint = rmb.getDestination()
-        assertTrue(str.contains(",MYDEST,6101.111,N,02707.777,E,"))
-        assertNotNull(wp)
-        assertEquals(id, wp.id)
-        assertEquals(lat, wp.latitude, 0.0000001)
-        assertEquals(lon, wp.longitude, 0.0000001)
-        assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
-        assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
+        rmb!!.setDestination(d)
+        val str = rmb.toString()
+        val wp = rmb!!.getDestination()
+        Assert.assertTrue(str.contains(",MYDEST,6101.111,N,02707.777,E,"))
+        Assert.assertNotNull(wp)
+        Assert.assertEquals(id, wp!!.id)
+        Assert.assertEquals(lat, wp.latitude, 0.0000001)
+        Assert.assertEquals(lon, wp.longitude, 0.0000001)
+        Assert.assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
+        Assert.assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.setOriginId].
+     * [RMBParser.setOriginId].
      */
     @Test
     fun testSetOriginId() {
-        rmb.originId = "ORIGIN"
-        assertTrue(rmb.toString().contains(",ORIGIN,RUSKI,"))
-        assertEquals("ORIGIN", rmb.originId)
+        rmb!!.setOriginId("ORIGIN")
+        Assert.assertTrue(rmb.toString().contains(",ORIGIN,RUSKI,"))
+        Assert.assertEquals("ORIGIN", rmb!!.getOriginId())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.setRange] .
+     * [RMBParser.setRange] .
      */
     @Test
     fun testSetRange() {
         val range = 12.3456
-        rmb.range = range
-        assertTrue(rmb.toString().contains(",12.3,"))
-        assertEquals(range, rmb.range, 0.1)
+        rmb!!.setRange(range)
+        Assert.assertTrue(rmb.toString().contains(",12.3,"))
+        Assert.assertEquals(range, rmb!!.getRange(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.setStatus].
+     * [RMBParser.setStatus].
      */
     @Test
     fun testSetStatus() {
-        rmb.status = DataStatus.ACTIVE
-        assertEquals(DataStatus.ACTIVE, rmb.status)
+        rmb!!.setStatus(DataStatus.ACTIVE)
+        Assert.assertEquals(DataStatus.ACTIVE, rmb!!.getStatus())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.setSteerTo].
+     * [RMBParser.setSteerTo].
      */
     @Test
     fun testSetSteerTo() {
-        rmb.steerTo = Direction.LEFT
-        assertTrue(rmb.toString().contains(",L,"))
-        assertEquals(Direction.LEFT, rmb.steerTo)
+        rmb!!.setSteerTo(Direction.LEFT)
+        Assert.assertTrue(rmb.toString().contains(",L,"))
+        Assert.assertEquals(Direction.LEFT, rmb!!.getSteerTo())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.setSteerTo].
+     * [RMBParser.setSteerTo].
      */
     @Test
     fun testSetSteerToWithNull() {
         try {
-            rmb.steerTo = null
-            fail("Did not throw IllegalArgumentException")
+            rmb!!.setSteerTo(null)
+            Assert.fail("Did not throw IllegalArgumentException")
         } catch (e: IllegalArgumentException) {
-            assertTrue(e.message!!.contains("LEFT or RIGHT"))
+            Assert.assertTrue(e.message!!.contains("LEFT or RIGHT"))
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.setVelocity].
+     * [RMBParser.setVelocity].
      */
     @Test
     fun testSetVelocity() {
         val v = 40.66666
-        rmb.velocity = v
-        assertTrue(rmb.toString().contains(",40.7,"))
-        assertEquals(v, rmb.velocity, 0.1)
+        rmb!!.setVelocity(v)
+        Assert.assertTrue(rmb.toString().contains(",40.7,"))
+        Assert.assertEquals(v, rmb!!.getVelocity(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.RMBParser.setVelocity].
+     * [RMBParser.setVelocity].
      */
     @Test
     fun testSetVelocityWithNegativeValue() {
         val v = -0.123
-        rmb.velocity = v
-        assertTrue(rmb.toString().contains(",-0.1,"))
-        assertEquals(v, rmb.velocity, 0.1)
+        rmb!!.setVelocity(v)
+        Assert.assertTrue(rmb.toString().contains(",-0.1,"))
+        Assert.assertEquals(v, rmb!!.getVelocity(), 0.1)
     }
 
     companion object {

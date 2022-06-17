@@ -1,6 +1,10 @@
 package net.sf.marineapi.nmea.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.sentence.VLWSentence
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 class VLWTest {
     var vlw: VLWSentence? = null
@@ -14,60 +18,60 @@ class VLWTest {
 
     @Test
     fun testVLWParserString() {
-        assertEquals(TalkerId.VW, vlw.talkerId)
-        assertEquals("VLW", vlw.sentenceId)
-        assertEquals(4, vlw.fieldCount)
+        Assert.assertEquals(TalkerId.VW, vlw!!.getTalkerId())
+        Assert.assertEquals("VLW", vlw!!.getSentenceId())
+        Assert.assertEquals(4, vlw!!.getFieldCount().toLong())
     }
 
     @Test
     fun testVLWParserTalkerId() {
-        assertEquals(TalkerId.VD, empty.talkerId)
-        assertEquals("VLW", empty.sentenceId)
-        assertEquals(4, empty.fieldCount)
+        Assert.assertEquals(TalkerId.VD, empty!!.getTalkerId())
+        Assert.assertEquals("VLW", empty!!.getSentenceId())
+        Assert.assertEquals(4, empty!!.getFieldCount().toLong())
     }
 
     @Test
     fun testGetTotal() {
-        assertEquals(2.8, vlw.getTotal(), 0.1)
+        Assert.assertEquals(2.8, vlw!!.getTotal(), 0.1)
     }
 
     @Test
     fun testGetTotalUnits() {
-        assertEquals('N', vlw.getTotalUnits())
+        Assert.assertEquals('N'.code.toLong(), vlw!!.getTotalUnits().code.toLong())
     }
 
     @Test
     fun testGetTrip() {
-        assertEquals(0.8, vlw.getTrip(), 0.1)
+        Assert.assertEquals(0.8, vlw!!.getTrip(), 0.1)
     }
 
     @Test
     fun testGetTripUnits() {
-        assertEquals('N', vlw.getTripUnits())
+        Assert.assertEquals('N'.code.toLong(), vlw!!.getTripUnits().code.toLong())
     }
 
     @Test
     fun testSetTotal() {
-        empty.setTotal(3.14)
-        assertEquals(3.1, empty.getTotal(), 0.1)
+        empty!!.setTotal(3.14)
+        Assert.assertEquals(3.1, empty!!.getTotal(), 0.1)
     }
 
     @Test
     fun testSetTotalUnits() {
-        empty.setTotalUnits(VLWSentence.KM)
-        assertEquals(VLWSentence.KM, empty.getTotalUnits())
+        empty!!.setTotalUnits(VLWSentence.KM)
+        Assert.assertEquals(VLWSentence.KM.code.toLong(), empty!!.getTotalUnits().code.toLong())
     }
 
     @Test
     fun testSetTrip() {
-        empty.setTrip(0.0)
-        assertEquals(0.0, empty.getTrip(), 0.1)
+        empty!!.setTrip(0.0)
+        Assert.assertEquals(0.0, empty!!.getTrip(), 0.1)
     }
 
     @Test
     fun testSetTripUnits() {
-        empty.setTripUnits(VLWSentence.NM)
-        assertEquals(VLWSentence.NM, empty.getTripUnits())
+        empty!!.setTripUnits(VLWSentence.NM)
+        Assert.assertEquals(VLWSentence.NM.code.toLong(), empty!!.getTripUnits().code.toLong())
     }
 
     companion object {

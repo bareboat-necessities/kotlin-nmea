@@ -20,7 +20,13 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.parser.HDGParser
+import net.sf.marineapi.nmea.sentence.HDGSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 /**
  * @author Kimmo Tuukkanen
@@ -29,7 +35,7 @@ class HDGTest {
     var hdg: HDGSentence? = null
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Before
     @Throws(Exception::class)
@@ -43,236 +49,236 @@ class HDGTest {
     @Test
     fun testConstructor() {
         val empty: HDGSentence = HDGParser(TalkerId.HC)
-        assertEquals(TalkerId.HC, empty.talkerId)
-        assertEquals(SentenceId.HDG.toString(), empty.sentenceId)
+        Assert.assertEquals(TalkerId.HC, empty.getTalkerId())
+        Assert.assertEquals(SentenceId.HDG.toString(), empty.getSentenceId())
         try {
-            empty.heading
+            empty.getHeading()
         } catch (e: DataNotAvailableException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.HDTParser.isTrue].
+     * Test method for [HDTParser.isTrue].
      */
     @Test
     fun testIsTrue() {
-        assertFalse(hdg.isTrue)
+        Assert.assertFalse(hdg!!.isTrue())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.HDGParser]
+     * [HDGParser.HDGParser]
      * .
      */
     @Test
     fun testHDGParserString() {
-        assertTrue(hdg.isValid)
-        assertEquals(TalkerId.HC, hdg.talkerId)
-        assertEquals("HDG", hdg.sentenceId)
+        Assert.assertTrue(hdg!!.isValid())
+        Assert.assertEquals(TalkerId.HC, hdg!!.getTalkerId())
+        Assert.assertEquals("HDG", hdg!!.getSentenceId())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.HDGParser]
+     * [HDGParser.HDGParser]
      * .
      */
     @Test
     fun testHDGParserTalkerId() {
         val hdgp = HDGParser(TalkerId.HC)
-        assertTrue(hdgp.isValid)
-        assertEquals(TalkerId.HC, hdgp.talkerId)
-        assertEquals("HDG", hdgp.sentenceId)
+        Assert.assertTrue(hdgp.isValid())
+        Assert.assertEquals(TalkerId.HC, hdgp.getTalkerId())
+        Assert.assertEquals("HDG", hdgp.getSentenceId())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.getDeviation].
+     * [HDGParser.getDeviation].
      */
     @Test
     fun testGetDeviation() {
-        assertEquals(1.2, hdg.deviation, 0.1)
+        Assert.assertEquals(1.2, hdg!!.getDeviation(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.getHeading].
+     * [HDGParser.getHeading].
      */
     @Test
     fun testGetHeading() {
-        assertEquals(123.4, hdg.heading, 0.1)
+        Assert.assertEquals(123.4, hdg!!.getHeading(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.getVariation].
+     * [HDGParser.getVariation].
      */
     @Test
     fun testGetVariation() {
         // 1.2 degrees west -> -1.2
-        assertEquals(-1.2, hdg.variation, 0.1)
+        Assert.assertEquals(-1.2, hdg!!.getVariation(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.setDeviation].
+     * [HDGParser.setDeviation].
      */
     @Test
     fun testSetDeviationWest() {
         val dev = -5.5
-        hdg.deviation = dev
-        assertEquals(dev, hdg.deviation, 0.1)
-        assertTrue(hdg.toString().contains(",005.5,W,"))
+        hdg!!.setDeviation(dev)
+        Assert.assertEquals(dev, hdg!!.getDeviation(), 0.1)
+        Assert.assertTrue(hdg.toString().contains(",005.5,W,"))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.setDeviation].
+     * [HDGParser.setDeviation].
      */
     @Test
     fun testSetDeviationEast() {
         val dev = 5.5
-        hdg.deviation = dev
-        assertEquals(dev, hdg.deviation, 0.1)
-        assertTrue(hdg.toString().contains(",005.5,E,"))
+        hdg!!.setDeviation(dev)
+        Assert.assertEquals(dev, hdg!!.getDeviation(), 0.1)
+        Assert.assertTrue(hdg.toString().contains(",005.5,E,"))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.setDeviation].
+     * [HDGParser.setDeviation].
      */
     @Test
     fun testSetDeviationTooHigh() {
         val value = 180.000001
         try {
-            hdg.deviation = value
-            fail("Did not throw exception")
+            hdg!!.setDeviation(value)
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.setDeviation].
+     * [HDGParser.setDeviation].
      */
     @Test
     fun testSetDeviationTooLow() {
         val value = -180.000001
         try {
-            hdg.heading = value
-            fail("Did not throw exception")
+            hdg!!.setHeading(value)
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.setHeading].
+     * [HDGParser.setHeading].
      */
     @Test
     fun testSetHeading() {
         val value = 359.9
-        hdg.heading = value
-        assertEquals(value, hdg.heading, 0.1)
+        hdg!!.setHeading(value)
+        Assert.assertEquals(value, hdg!!.getHeading(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.setHeading].
+     * [HDGParser.setHeading].
      */
     @Test
     fun testSetHeadingTooHigh() {
         val value = 360.000001
         try {
-            hdg.heading = value
-            fail("Did not throw exception")
+            hdg!!.setHeading(value)
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.setHeading].
+     * [HDGParser.setHeading].
      */
     @Test
     fun testSetHeadingTooLow() {
         val value = -0.000001
         try {
-            hdg.heading = value
-            fail("Did not throw exception")
+            hdg!!.setHeading(value)
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.setVariation].
+     * [HDGParser.setVariation].
      */
     @Test
     fun testSetVariationEast() {
         val `var` = 179.9
-        hdg.variation = `var`
-        assertEquals(`var`, hdg.variation, 0.1)
-        assertTrue(hdg.toString().contains(",179.9,E*"))
+        hdg!!.setVariation(`var`)
+        Assert.assertEquals(`var`, hdg!!.getVariation(), 0.1)
+        Assert.assertTrue(hdg.toString().contains(",179.9,E*"))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.setVariation].
+     * [HDGParser.setVariation].
      */
     @Test
     fun testSetVariationWest() {
         val `var` = -0.1
-        hdg.variation = `var`
-        assertEquals(`var`, hdg.variation, 0.1)
-        assertTrue(hdg.toString().contains(",000.1,W*"))
+        hdg!!.setVariation(`var`)
+        Assert.assertEquals(`var`, hdg!!.getVariation(), 0.1)
+        Assert.assertTrue(hdg.toString().contains(",000.1,W*"))
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.setVariation].
+     * [HDGParser.setVariation].
      */
     @Test
     fun testSetVariationTooHigh() {
         val `var` = 180.00001
         try {
-            hdg.variation = `var`
-            fail("Did not throw exception")
+            hdg!!.setVariation(`var`)
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.HDGParser.setVariation].
+     * [HDGParser.setVariation].
      */
     @Test
     fun testSetVariationTooLow() {
         val `var` = -180.00001
         try {
-            hdg.variation = `var`
-            fail("Did not throw exception")
+            hdg!!.setVariation(`var`)
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 

@@ -1,6 +1,10 @@
 package net.sf.marineapi.nmea.parser
 
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.AISSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 /**
  * @author Kimmo Tuukkanen
@@ -11,7 +15,7 @@ class VDMTest {
     private var frag2: AISSentence? = null
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Before
     @Throws(Exception::class)
@@ -23,135 +27,135 @@ class VDMTest {
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VDMParser.VDMParser]
+     * [VDMParser.VDMParser]
      * .
      */
     @Test
     fun testVDMParserTalkerId() {
         val empty: AISSentence = VDMParser(TalkerId.AI)
-        assertEquals(TalkerId.AI, empty.talkerId)
-        assertEquals("VDM", empty.sentenceId)
-        assertEquals(6, empty.fieldCount)
+        Assert.assertEquals(TalkerId.AI, empty.getTalkerId())
+        Assert.assertEquals("VDM", empty.getSentenceId())
+        Assert.assertEquals(6, empty.getFieldCount().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VDMParser.getNumberOfFragments].
+     * [VDMParser.getNumberOfFragments].
      */
     @Test
     fun testGetNumberOfFragments() {
-        assertEquals(1, vdm.numberOfFragments)
-        assertEquals(2, frag1.numberOfFragments)
-        assertEquals(2, frag2.numberOfFragments)
+        Assert.assertEquals(1, vdm!!.getNumberOfFragments().toLong())
+        Assert.assertEquals(2, frag1!!.getNumberOfFragments().toLong())
+        Assert.assertEquals(2, frag2!!.getNumberOfFragments().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VDMParser.getFragmentNumber].
+     * [VDMParser.getFragmentNumber].
      */
     @Test
     fun testGetFragmentNumber() {
-        assertEquals(1, vdm.fragmentNumber)
-        assertEquals(1, frag1.fragmentNumber)
-        assertEquals(2, frag2.fragmentNumber)
+        Assert.assertEquals(1, vdm!!.getFragmentNumber().toLong())
+        Assert.assertEquals(1, frag1!!.getFragmentNumber().toLong())
+        Assert.assertEquals(2, frag2!!.getFragmentNumber().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VDMParser.getMessageId].
+     * [VDMParser.getMessageId].
      */
     @Test
     fun testGetMessageId() {
-        assertEquals("1", frag1.messageId)
-        assertEquals("1", frag2.messageId)
+        Assert.assertEquals("1", frag1!!.getMessageId())
+        Assert.assertEquals("1", frag2!!.getMessageId())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VDMParser.getRadioChannel].
+     * [VDMParser.getRadioChannel].
      */
     @Test
     fun testGetRadioChannel() {
-        assertEquals("A", vdm.radioChannel)
-        assertEquals("A", frag1.radioChannel)
-        assertEquals("A", frag2.radioChannel)
+        Assert.assertEquals("A", vdm!!.getRadioChannel())
+        Assert.assertEquals("A", frag1!!.getRadioChannel())
+        Assert.assertEquals("A", frag2!!.getRadioChannel())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VDMParser.getPayload].
+     * [VDMParser.getPayload].
      */
     @Test
     fun testGetPayload() {
-        assertEquals("403OviQuMGCqWrRO9>E6fE700@GO", vdm.payload)
-        assertEquals("88888888880", frag2.payload)
+        Assert.assertEquals("403OviQuMGCqWrRO9>E6fE700@GO", vdm!!.getPayload())
+        Assert.assertEquals("88888888880", frag2!!.getPayload())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VDMParser.getFillBits].
+     * [VDMParser.getFillBits].
      */
     @Test
     fun testGetFillBits() {
-        assertEquals(0, vdm.fillBits)
-        assertEquals(0, frag1.fillBits)
-        assertEquals(2, frag2.fillBits)
+        Assert.assertEquals(0, vdm!!.getFillBits().toLong())
+        Assert.assertEquals(0, frag1!!.getFillBits().toLong())
+        Assert.assertEquals(2, frag2!!.getFillBits().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VDMParser.isFragmented].
+     * [VDMParser.isFragmented].
      */
     @Test
     fun testIsFragmented() {
-        assertFalse(vdm.isFragmented)
-        assertTrue(frag1.isFragmented)
-        assertTrue(frag2.isFragmented)
+        Assert.assertFalse(vdm!!.isFragmented())
+        Assert.assertTrue(frag1!!.isFragmented())
+        Assert.assertTrue(frag2!!.isFragmented())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VDMParser.isFirstFragment].
+     * [VDMParser.isFirstFragment].
      */
     @Test
     fun testIsFirstFragment() {
-        assertTrue(vdm.isFirstFragment)
-        assertTrue(frag1.isFirstFragment)
-        assertFalse(frag2.isFirstFragment)
+        Assert.assertTrue(vdm!!.isFirstFragment())
+        Assert.assertTrue(frag1!!.isFirstFragment())
+        Assert.assertFalse(frag2!!.isFirstFragment())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VDMParser.isLastFragment].
+     * [VDMParser.isLastFragment].
      */
     @Test
     fun testIsLastFragment() {
-        assertTrue(vdm.isLastFragment)
-        assertFalse(frag1.isLastFragment)
-        assertTrue(frag2.isLastFragment)
+        Assert.assertTrue(vdm!!.isLastFragment())
+        Assert.assertFalse(frag1!!.isLastFragment())
+        Assert.assertTrue(frag2!!.isLastFragment())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.VDMParser.isPartOfMessage]
+     * [VDMParser.isPartOfMessage]
      * .
      */
     @Test
     fun testIsPartOfMessage() {
-        assertFalse(vdm.isPartOfMessage(frag1))
-        assertFalse(vdm.isPartOfMessage(frag2))
-        assertFalse(frag1.isPartOfMessage(vdm))
-        assertFalse(frag2.isPartOfMessage(vdm))
-        assertTrue(frag1.isPartOfMessage(frag2))
-        assertFalse(frag2.isPartOfMessage(frag1))
+        Assert.assertFalse(vdm!!.isPartOfMessage(frag1))
+        Assert.assertFalse(vdm!!.isPartOfMessage(frag2))
+        Assert.assertFalse(frag1!!.isPartOfMessage(vdm))
+        Assert.assertFalse(frag2!!.isPartOfMessage(vdm))
+        Assert.assertTrue(frag1!!.isPartOfMessage(frag2))
+        Assert.assertFalse(frag2!!.isPartOfMessage(frag1))
     }
 
     @Test
     fun testToStringWithAIS() {
         val vdm: AISSentence = VDMParser(EXAMPLE)
         val empty: AISSentence = VDMParser(TalkerId.AI)
-        assertEquals(EXAMPLE, vdm.toString())
-        assertEquals("!AIVDM,,,,,,*57", empty.toString())
+        Assert.assertEquals(EXAMPLE, vdm.toString())
+        Assert.assertEquals("!AIVDM,,,,,,*57", empty.toString())
     }
 
     companion object {

@@ -1,7 +1,14 @@
 package net.sf.marineapi.nmea.parser
 
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.sentence.XTESentence
+import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.Direction
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.util.FaaMode
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 class XTETest {
     private var empty: XTESentence? = null
@@ -15,74 +22,74 @@ class XTETest {
 
     @Test
     fun testXTEParserString() {
-        assertEquals(TalkerId.II, instance.talkerId)
-        assertEquals(SentenceId.XTE.name, instance.sentenceId)
-        assertEquals(6, instance.fieldCount)
-        assertTrue(instance.isValid)
+        Assert.assertEquals(TalkerId.II, instance!!.getTalkerId())
+        Assert.assertEquals(SentenceId.XTE.name, instance!!.getSentenceId())
+        Assert.assertEquals(6, instance!!.getFieldCount().toLong())
+        Assert.assertTrue(instance!!.isValid())
     }
 
     @Test
     fun testXTEParserTalkerId() {
-        assertEquals(TalkerId.GP, empty.talkerId)
-        assertEquals(SentenceId.XTE.name, empty.sentenceId)
-        assertEquals(6, empty.fieldCount)
-        assertTrue(empty.isValid)
+        Assert.assertEquals(TalkerId.GP, empty!!.getTalkerId())
+        Assert.assertEquals(SentenceId.XTE.name, empty!!.getSentenceId())
+        Assert.assertEquals(6, empty!!.getFieldCount().toLong())
+        Assert.assertTrue(empty!!.isValid())
     }
 
     @Test
     fun testGetCycleLockStatus() {
-        assertEquals(DataStatus.ACTIVE, instance.getCycleLockStatus())
+        Assert.assertEquals(DataStatus.ACTIVE, instance!!.getCycleLockStatus())
     }
 
     @Test
     fun testGetMagnitude() {
-        assertEquals(5.36, instance.getMagnitude(), 0.001)
+        Assert.assertEquals(5.36, instance!!.getMagnitude(), 0.001)
     }
 
     @Test
     fun testGetMode() {
-        assertEquals(FaaMode.NONE, empty.getMode())
+        Assert.assertEquals(FaaMode.NONE, empty!!.getMode())
     }
 
     @Test
     fun testGetStatus() {
-        assertEquals(DataStatus.VOID, empty.getStatus())
+        Assert.assertEquals(DataStatus.VOID, empty!!.getStatus())
     }
 
     @Test
     fun testGetSteerTo() {
-        assertEquals(Direction.RIGHT, instance.getSteerTo())
+        Assert.assertEquals(Direction.RIGHT, instance!!.getSteerTo())
     }
 
     @Test
     fun testSetCycleLockStatus() {
-        instance.setCycleLockStatus(DataStatus.VOID)
-        assertEquals(DataStatus.VOID, instance.getCycleLockStatus())
+        instance!!.setCycleLockStatus(DataStatus.VOID)
+        Assert.assertEquals(DataStatus.VOID, instance!!.getCycleLockStatus())
     }
 
     @Test
     fun testSetMagnitude() {
         val distance = 1.234
-        empty.setMagnitude(1.234)
-        assertEquals(distance, empty.getMagnitude(), 0.01)
+        empty!!.setMagnitude(1.234)
+        Assert.assertEquals(distance, empty!!.getMagnitude(), 0.01)
     }
 
     @Test
     fun testSetMode() {
-        instance.setMode(FaaMode.DGPS)
-        assertEquals(FaaMode.DGPS, instance.getMode())
+        instance!!.setMode(FaaMode.DGPS)
+        Assert.assertEquals(FaaMode.DGPS, instance!!.getMode())
     }
 
     @Test
     fun testSetStatus() {
-        instance.setStatus(DataStatus.VOID)
-        assertEquals(DataStatus.VOID, instance.getStatus())
+        instance!!.setStatus(DataStatus.VOID)
+        Assert.assertEquals(DataStatus.VOID, instance!!.getStatus())
     }
 
     @Test
     fun testSetSteerTo() {
-        instance.setSteerTo(Direction.LEFT)
-        assertEquals(Direction.LEFT, instance.getSteerTo())
+        instance!!.setSteerTo(Direction.LEFT)
+        Assert.assertEquals(Direction.LEFT, instance!!.getSteerTo())
     }
 
     companion object {

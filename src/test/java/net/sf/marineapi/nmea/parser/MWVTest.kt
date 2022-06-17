@@ -20,8 +20,14 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.util.Units
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.parser.MWVParser
+import net.sf.marineapi.nmea.sentence.MWVSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.*
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 /**
  * @author Kimmo Tuukkanen
@@ -30,7 +36,7 @@ class MWVTest {
     private var mwv: MWVSentence? = null
 
     /**
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     @Before
     @Throws(Exception::class)
@@ -40,182 +46,182 @@ class MWVTest {
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.MWVParser.MWVParser]
+     * [MWVParser.MWVParser]
      * .
      */
     @Test
     fun testMWVParserTalkerId() {
         val mwvp = MWVParser(TalkerId.II)
-        assertEquals(TalkerId.II, mwvp.talkerId)
-        assertEquals(SentenceId.MWV.toString(), mwvp.sentenceId)
-        assertEquals(DataStatus.VOID, mwvp.status)
+        Assert.assertEquals(TalkerId.II, mwvp.getTalkerId())
+        Assert.assertEquals(SentenceId.MWV.toString(), mwvp.getSentenceId())
+        Assert.assertEquals(DataStatus.VOID, mwvp.getStatus())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.MWVParser.getAngle]
+     * Test method for [MWVParser.getAngle]
      * .
      */
     @Test
     fun testGetAngle() {
-        assertEquals(125.1, mwv.angle, 0.1) // "$IIMWV,125.1,T,5.5,A"
+        Assert.assertEquals(125.1, mwv!!.getAngle(), 0.1) // "$IIMWV,125.1,T,5.5,A"
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.MWVParser.getSpeed]
+     * Test method for [MWVParser.getSpeed]
      * .
      */
     @Test
     fun testGetSpeed() {
-        assertEquals(5.5, mwv.speed, 0.1)
+        Assert.assertEquals(5.5, mwv!!.getSpeed(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.MWVParser.getSpeedUnit].
+     * [MWVParser.getSpeedUnit].
      */
     @Test
     fun testGetSpeedUnit() {
-        assertEquals(Units.METER, mwv.speedUnit)
+        Assert.assertEquals(Units.METER, mwv!!.getSpeedUnit())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.MWVParser.getStatus].
+     * [MWVParser.getStatus].
      */
     @Test
     fun testGetStatus() {
-        assertEquals(DataStatus.ACTIVE, mwv.status)
+        Assert.assertEquals(DataStatus.ACTIVE, mwv!!.getStatus())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.MWVParser.isTrue].
+     * Test method for [MWVParser.isTrue].
      */
     @Test
     fun testIsTrue() {
-        assertTrue(mwv.isTrue)
+        Assert.assertTrue(mwv!!.isTrue())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.MWVParser.setAngle].
+     * [MWVParser.setAngle].
      */
     @Test
     fun testSetAngle() {
         val angle = 88.123
-        mwv.angle = angle
-        assertEquals(angle, mwv.angle, 0.1)
+        mwv!!.setAngle(angle)
+        Assert.assertEquals(angle, mwv!!.getAngle(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.MWVParser.setAngle].
+     * [MWVParser.setAngle].
      */
     @Test
     fun testSetNegativeAngle() {
         val angle = -0.1
         try {
-            mwv.angle = angle
-            fail("Did not throw exception")
+            mwv!!.setAngle(angle)
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.MWVParser.setAngle].
+     * [MWVParser.setAngle].
      */
     @Test
     fun testSetAngleOutOfRange() {
         val angle = 360.1
         try {
-            mwv.angle = angle
-            fail("Did not throw exception")
+            mwv!!.setAngle(angle)
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.MWVParser.setSpeed].
+     * [MWVParser.setSpeed].
      */
     @Test
     fun testSetSpeed() {
         val speed = 7.75
-        mwv.speed = speed
-        assertEquals(speed, mwv.speed, 0.1)
+        mwv!!.setSpeed(speed)
+        Assert.assertEquals(speed, mwv!!.getSpeed(), 0.1)
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.MWVParser.setSpeed].
+     * [MWVParser.setSpeed].
      */
     @Test
     fun testSetNegativeSpeed() {
         val speed = -0.01
         try {
-            mwv.speed = speed
-            fail("Did not throw exception")
+            mwv!!.setSpeed(speed)
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.MWVParser.setSpeedUnit]
+     * [MWVParser.setSpeedUnit]
      * .
      */
     @Test
     fun testSetSpeedUnit() {
-        mwv.speedUnit = Units.KILOMETERS
-        assertEquals(Units.KILOMETERS, mwv.speedUnit)
+        mwv!!.setSpeedUnit(Units.KILOMETERS)
+        Assert.assertEquals(Units.KILOMETERS, mwv!!.getSpeedUnit())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.MWVParser.setSpeedUnit]
+     * [MWVParser.setSpeedUnit]
      * .
      */
     @Test
     fun testSetInvalidSpeedUnit() {
         try {
-            mwv.speedUnit = Units.FATHOMS
-            fail("Did not throw exception")
+            mwv!!.setSpeedUnit(Units.FATHOMS)
+            Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.MWVParser.setStatus]
+     * [MWVParser.setStatus]
      * .
      */
     @Test
     fun testSetStatus() {
-        mwv.status = DataStatus.VOID
-        assertEquals(DataStatus.VOID, mwv.status)
+        mwv!!.setStatus(DataStatus.VOID)
+        Assert.assertEquals(DataStatus.VOID, mwv!!.getStatus())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.MWVParser.setTrue].
+     * [MWVParser.setTrue].
      */
     @Test
     fun testSetTrue() {
-        assertTrue(mwv.isTrue)
-        mwv.isTrue = false
-        assertFalse(mwv.isTrue)
+        Assert.assertTrue(mwv!!.isTrue())
+        mwv!!.setTrue(false)
+        Assert.assertFalse(mwv!!.isTrue())
     }
 
     companion object {

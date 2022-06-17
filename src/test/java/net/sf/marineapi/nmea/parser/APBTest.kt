@@ -1,7 +1,12 @@
 package net.sf.marineapi.nmea.parser
 
+import net.sf.marineapi.nmea.sentence.APBSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.Direction
-import org.junit.Assert.assertEquals
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 class APBTest {
     private var apb: APBSentence? = null
@@ -15,106 +20,106 @@ class APBTest {
 
     @Test
     fun testAPBParserString() {
-        assertEquals(TalkerId.GP, apb.talkerId)
-        assertEquals("APB", apb.sentenceId)
-        assertEquals(14, apb.fieldCount)
+        Assert.assertEquals(TalkerId.GP, apb!!.getTalkerId())
+        Assert.assertEquals("APB", apb!!.getSentenceId())
+        Assert.assertEquals(14, apb!!.getFieldCount().toLong())
     }
 
     @Test
     fun testAPBParserTalkerId() {
-        assertEquals(TalkerId.AG, empty.talkerId)
-        assertEquals("APB", empty.sentenceId)
-        assertEquals(14, empty.fieldCount)
+        Assert.assertEquals(TalkerId.AG, empty!!.getTalkerId())
+        Assert.assertEquals("APB", empty!!.getSentenceId())
+        Assert.assertEquals(14, empty!!.getFieldCount().toLong())
     }
 
     @Test
     fun testGetBearingPositionToDestination() {
-        empty.bearingPositionToDestination = 123.45
-        assertEquals(123.5, empty.bearingPositionToDestination, 0.1)
+        empty!!.setBearingPositionToDestination(123.45)
+        Assert.assertEquals(123.5, empty!!.getBearingPositionToDestination(), 0.1)
     }
 
     @Test
     fun testGetBearingOriginToDestination() {
-        empty.bearingOriginToDestination = 234.56
-        assertEquals(234.6, empty.bearingOriginToDestination, 0.1)
+        empty!!.setBearingOriginToDestination(234.56)
+        Assert.assertEquals(234.6, empty!!.getBearingOriginToDestination(), 0.1)
     }
 
     @Test
     fun testGetCrossTrackError() {
-        empty.crossTrackError = 12.345
-        assertEquals(12.3, empty.crossTrackError, 0.1)
+        empty!!.setCrossTrackError(12.345)
+        Assert.assertEquals(12.3, empty!!.getCrossTrackError(), 0.1)
     }
 
     @Test
     fun testGetCrossTrackUnits() {
-        empty.crossTrackUnits = APBSentence.NM
-        assertEquals(APBSentence.NM, empty.crossTrackUnits)
+        empty!!.setCrossTrackUnits(APBSentence.NM)
+        Assert.assertEquals(APBSentence.NM.code.toLong(), empty!!.getCrossTrackUnits().code.toLong())
     }
 
     @Test
     fun testGetCycleLockStatus() {
-        empty.cycleLockStatus = DataStatus.ACTIVE
-        assertEquals(DataStatus.ACTIVE, empty.cycleLockStatus)
+        empty!!.setCycleLockStatus(DataStatus.ACTIVE)
+        Assert.assertEquals(DataStatus.ACTIVE, empty!!.getCycleLockStatus())
     }
 
     @Test
     fun testGetDestionationWaypointId() {
-        empty.setDestinationWaypointId("WP001")
-        assertEquals("WP001", empty.destionationWaypointId)
+        empty!!.setDestinationWaypointId("WP001")
+        Assert.assertEquals("WP001", empty!!.getDestionationWaypointId())
     }
 
     @Test
     fun testGetHeadingToDestionation() {
-        empty.setHeadingToDestination(98.765)
-        assertEquals(98.8, empty.headingToDestionation, 0.1)
+        empty!!.setHeadingToDestination(98.765)
+        Assert.assertEquals(98.8, empty!!.getHeadingToDestionation(), 0.1)
     }
 
     @Test
     fun testGetStatus() {
-        empty.status = DataStatus.VOID
-        assertEquals(DataStatus.VOID, empty.status)
+        empty!!.setStatus(DataStatus.VOID)
+        Assert.assertEquals(DataStatus.VOID, empty!!.getStatus())
     }
 
     @Test
     fun testGetSteerTo() {
-        empty.steerTo = Direction.LEFT
-        assertEquals(Direction.LEFT, empty.steerTo)
+        empty!!.setSteerTo(Direction.LEFT)
+        Assert.assertEquals(Direction.LEFT, empty!!.getSteerTo())
     }
 
     @Test
     fun testIsArrivalCircleEntered() {
-        empty.isArrivalCircleEntered = true
-        assertTrue(empty.isArrivalCircleEntered)
+        empty!!.setArrivalCircleEntered(true)
+        Assert.assertTrue(empty!!.isArrivalCircleEntered())
     }
 
     @Test
     fun testIsBearingOriginToDestionationTrue() {
-        empty.isBearingOriginToDestionationTrue = true
-        assertTrue(empty.isBearingOriginToDestionationTrue)
+        empty!!.setBearingOriginToDestionationTrue(true)
+        Assert.assertTrue(empty!!.isBearingOriginToDestionationTrue())
     }
 
     @Test
     fun testIsBearingPositionToDestinationTrue() {
-        empty.isBearingPositionToDestinationTrue = false
-        assertFalse(empty.isBearingPositionToDestinationTrue)
+        empty!!.setBearingPositionToDestinationTrue(false)
+        Assert.assertFalse(empty!!.isBearingPositionToDestinationTrue())
     }
 
     @Test
     fun testIsHeadingToDestinationTrue() {
-        empty.isHeadingToDestinationTrue = true
-        assertTrue(empty.isHeadingToDestinationTrue)
+        empty!!.setHeadingToDestinationTrue(true)
+        Assert.assertTrue(empty!!.isHeadingToDestinationTrue())
     }
 
     @Test
     fun testIsPerpendicularPassed() {
-        empty.isPerpendicularPassed = false
-        assertFalse(empty.isPerpendicularPassed)
+        empty!!.setPerpendicularPassed(false)
+        Assert.assertFalse(empty!!.isPerpendicularPassed())
     }
 
     @Test
     fun testSetArrivalCircleEntered() {
-        empty.isArrivalCircleEntered = true
-        assertTrue(empty.isArrivalCircleEntered)
+        empty!!.setArrivalCircleEntered(true)
+        Assert.assertTrue(empty!!.isArrivalCircleEntered())
     }
 
     companion object {

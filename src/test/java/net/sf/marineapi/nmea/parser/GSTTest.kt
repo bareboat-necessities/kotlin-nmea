@@ -1,7 +1,11 @@
 package net.sf.marineapi.nmea.parser
 
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.Time
-import org.junit.Assert.assertEquals
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 /**
  * Test the GST sentence parser.
@@ -17,116 +21,116 @@ class GSTTest {
             empty = GSTParser(TalkerId.GP)
             gst = GSTParser(EXAMPLE)
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        assertEquals(8, empty!!.fieldCount)
+        Assert.assertEquals(8, empty!!.getFieldCount().toLong())
     }
 
     @Test
     fun testGetPseudoRangeResidualsRMS() {
-        assertEquals(0.006, gst!!.pseudoRangeResidualsRMS, 0.001)
+        Assert.assertEquals(0.006, gst!!.getPseudoRangeResidualsRMS(), 0.001)
     }
 
     @Test
     fun testGetSemiMajorError() {
-        assertEquals(0.023, gst!!.semiMajorError, 0.001)
+        Assert.assertEquals(0.023, gst!!.getSemiMajorError(), 0.001)
     }
 
     @Test
     fun testGetSemiMinorError() {
-        assertEquals(0.020, gst!!.semiMinorError, 0.001)
+        Assert.assertEquals(0.020, gst!!.getSemiMinorError(), 0.001)
     }
 
     @Test
     fun testGetErrorEllipseOrientation() {
-        assertEquals(273.6, gst!!.errorEllipseOrientation, 0.001)
+        Assert.assertEquals(273.6, gst!!.getErrorEllipseOrientation(), 0.001)
     }
 
     @Test
     fun testGetLatitudeError() {
-        assertEquals(0.023, gst!!.latitudeError, 0.001)
+        Assert.assertEquals(0.023, gst!!.getLatitudeError(), 0.001)
     }
 
     @Test
     fun testGetLongitudeError() {
-        assertEquals(0.020, gst!!.longitudeError, 0.001)
+        Assert.assertEquals(0.020, gst!!.getLongitudeError(), 0.001)
     }
 
     @Test
     fun testGetAltitudeError() {
-        assertEquals(0.031, gst!!.altitudeError, 0.001)
+        Assert.assertEquals(0.031, gst!!.getAltitudeError(), 0.001)
     }
 
     @Test
     fun testGetTime() {
-        val t: Time = gst!!.time
-        assertNotNull(t)
-        assertEquals(17, t.getHour())
-        assertEquals(28, t.getMinutes())
-        assertEquals(14.0, t.getSeconds(), 0.001)
+        val t = gst!!.getTime()
+        Assert.assertNotNull(t)
+        Assert.assertEquals(17, t.getHour().toLong())
+        Assert.assertEquals(28, t.getMinutes().toLong())
+        Assert.assertEquals(14.0, t.getSeconds(), 0.001)
     }
 
     @Test
     fun testGSTParser() {
         val instance = GSTParser(EXAMPLE)
-        val sid: SentenceId = SentenceId.valueOf(instance.sentenceId)
-        assertEquals(SentenceId.GST, sid)
+        val sid = SentenceId.valueOf(instance.getSentenceId())
+        Assert.assertEquals(SentenceId.GST, sid)
     }
 
     @Test
     fun testSetPseudoRangeResidualsRMS() {
-        gst!!.pseudoRangeResidualsRMS = 0.012
-        assertEquals(0.012, gst!!.pseudoRangeResidualsRMS, 0.001)
+        gst!!.setPseudoRangeResidualsRMS(0.012)
+        Assert.assertEquals(0.012, gst!!.getPseudoRangeResidualsRMS(), 0.001)
     }
 
     @Test
     fun testSetSemiMajorError() {
-        gst!!.semiMajorError = 0.015
-        assertEquals(0.015, gst!!.semiMajorError, 0.001)
+        gst!!.setSemiMajorError(0.015)
+        Assert.assertEquals(0.015, gst!!.getSemiMajorError(), 0.001)
     }
 
     @Test
     fun testSetSemiMinorError() {
-        gst!!.semiMinorError = 0.032
-        assertEquals(0.032, gst!!.semiMinorError, 0.001)
+        gst!!.setSemiMinorError(0.032)
+        Assert.assertEquals(0.032, gst!!.getSemiMinorError(), 0.001)
     }
 
     @Test
     fun testSetErrorEllipseOrientation() {
-        gst!!.errorEllipseOrientation = 121.3
-        assertEquals(121.3, gst!!.errorEllipseOrientation, 0.001)
+        gst!!.setErrorEllipseOrientation(121.3)
+        Assert.assertEquals(121.3, gst!!.getErrorEllipseOrientation(), 0.001)
     }
 
     @Test
     fun testSetLatitudeError() {
-        gst!!.latitudeError = 0.068
-        assertEquals(0.068, gst!!.latitudeError, 0.001)
+        gst!!.setLatitudeError(0.068)
+        Assert.assertEquals(0.068, gst!!.getLatitudeError(), 0.001)
     }
 
     @Test
     fun testSetLongitudeError() {
-        gst!!.longitudeError = 0.011
-        assertEquals(0.011, gst!!.longitudeError, 0.001)
+        gst!!.setLongitudeError(0.011)
+        Assert.assertEquals(0.011, gst!!.getLongitudeError(), 0.001)
     }
 
     @Test
     fun testSetAltitudeError() {
-        gst!!.altitudeError = 0.013
-        assertEquals(0.013, gst!!.altitudeError, 0.001)
+        gst!!.setAltitudeError(0.013)
+        Assert.assertEquals(0.013, gst!!.getAltitudeError(), 0.001)
     }
 
     @Test
     fun testSetTime() {
-        gst!!.time = Time(1, 2, 3.456)
-        val t: Time = gst!!.time
-        assertNotNull(t)
-        assertEquals(1, t.getHour())
-        assertEquals(2, t.getMinutes())
-        assertEquals(3.456, t.getSeconds(), 0.001)
+        gst!!.setTime(Time(1, 2, 3.456))
+        val t = gst!!.getTime()
+        Assert.assertNotNull(t)
+        Assert.assertEquals(1, t.getHour().toLong())
+        Assert.assertEquals(2, t.getMinutes().toLong())
+        Assert.assertEquals(3.456, t.getSeconds(), 0.001)
     }
 
     companion object {

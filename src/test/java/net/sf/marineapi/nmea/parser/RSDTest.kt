@@ -20,8 +20,13 @@
  */
 package net.sf.marineapi.nmea.parser
 
+import net.sf.marineapi.nmea.sentence.RSDSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.DisplayRotation
 import net.sf.marineapi.nmea.util.Units
-import org.junit.Assert.assertEquals
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 /**
  * RSDTest
@@ -39,266 +44,266 @@ class RSDTest {
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.getOriginOneRange].
+     * [RSDParser.getOriginOneRange].
      */
     @Test
     fun testGetOriginOneRange() {
-        assertEquals(12.0, example.originOneRange, 0.0)
+        Assert.assertEquals(12.0, example!!.getOriginOneRange(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.getOriginOneBearing].
+     * [RSDParser.getOriginOneBearing].
      */
     @Test
     fun testGetOriginOneBearing() {
-        assertEquals(90.0, example.originOneBearing, 0.0)
+        Assert.assertEquals(90.0, example!!.getOriginOneBearing(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.getVRMOneRange].
+     * [RSDParser.getVRMOneRange].
      */
     @Test
     fun testGetVRMOneRange() {
-        assertEquals(24.0, example.vRMOneRange, 0.0)
+        Assert.assertEquals(24.0, example!!.getVRMOneRange(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.getEBLOneBearing].
+     * [RSDParser.getEBLOneBearing].
      */
     @Test
     fun testGetEBLOneBearing() {
-        assertEquals(45.0, example.eBLOneBearing, 0.0)
+        Assert.assertEquals(45.0, example!!.getEBLOneBearing(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.getOriginTwoRange].
+     * [RSDParser.getOriginTwoRange].
      */
     @Test
     fun testGetOriginTwoRange() {
-        assertEquals(6.0, example.originTwoRange, 0.0)
+        Assert.assertEquals(6.0, example!!.getOriginTwoRange(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.getOriginTwoBearing].
+     * [RSDParser.getOriginTwoBearing].
      */
     @Test
     fun testGetOriginTwoBearing() {
-        assertEquals(270.0, example.originTwoBearing, 0.0)
+        Assert.assertEquals(270.0, example!!.getOriginTwoBearing(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.getVRMTwoRange].
+     * [RSDParser.getVRMTwoRange].
      */
     @Test
     fun testGetVRMTwoRange() {
-        assertEquals(12.0, example.vRMTwoRange, 0.0)
+        Assert.assertEquals(12.0, example!!.getVRMTwoRange(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.getEBLTwoBearing].
+     * [RSDParser.getEBLTwoBearing].
      */
     @Test
     fun testGetEBLTwoBearing() {
-        assertEquals(315.0, example.eBLTwoBearing, 0.0)
+        Assert.assertEquals(315.0, example!!.getEBLTwoBearing(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.getCursorRange].
+     * [RSDParser.getCursorRange].
      */
     @Test
     fun testGetCursorRange() {
-        assertEquals(6.5, example.cursorRange, 0.0)
+        Assert.assertEquals(6.5, example!!.getCursorRange(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.getCursorBearing].
+     * [RSDParser.getCursorBearing].
      */
     @Test
     fun testGetCursorBearing() {
-        assertEquals(118.0, example.cursorBearing, 0.0)
+        Assert.assertEquals(118.0, example!!.getCursorBearing(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.getRangeScale].
+     * [RSDParser.getRangeScale].
      */
     @Test
     fun testGetRangeScale() {
-        assertEquals(96.0, example.rangeScale, 0.0)
+        Assert.assertEquals(96.0, example!!.getRangeScale(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.getRangeUnits].
+     * [RSDParser.getRangeUnits].
      */
     @Test
     fun testGetRangeUnits() {
-        assertEquals(Units.NAUTICAL_MILES, example.rangeUnits)
+        Assert.assertEquals(Units.NAUTICAL_MILES, example!!.getRangeUnits())
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.getDisplayRotation].
+     * [RSDParser.getDisplayRotation].
      */
     @Test
     fun testGetDisplayRotation() {
-        assertEquals(DisplayRotation.NORTH_UP, example.displayRotation)
+        Assert.assertEquals(DisplayRotation.NORTH_UP, example!!.getDisplayRotation())
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.setOriginOneRange].
+     * [RSDParser.setOriginOneRange].
      */
     @Test
     fun testSetOriginOneRange() {
         val newRange = 0.75
-        empty.originOneRange = newRange
-        assertEquals(newRange, empty.originOneRange, 0.0)
+        empty!!.setOriginOneRange(newRange)
+        Assert.assertEquals(newRange, empty!!.getOriginOneRange(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.setOriginOneBearing].
+     * [RSDParser.setOriginOneBearing].
      */
     @Test
     fun testSetOriginOneBearing() {
         val newBearing = 93.2
-        empty.originOneBearing = newBearing
-        assertEquals(newBearing, empty.originOneBearing, 0.0)
+        empty!!.setOriginOneBearing(newBearing)
+        Assert.assertEquals(newBearing, empty!!.getOriginOneBearing(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.setVRMOneRange].
+     * [RSDParser.setVRMOneRange].
      */
     @Test
     fun testSetVRMOneRange() {
         val newRange = 12.5
-        empty.vRMOneRange = newRange
-        assertEquals(newRange, empty.vRMOneRange, 0.0)
+        empty!!.setVRMOneRange(newRange)
+        Assert.assertEquals(newRange, empty!!.getVRMOneRange(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.setEBLOneBearing].
+     * [RSDParser.setEBLOneBearing].
      */
     @Test
     fun testSetEBLOneBearing() {
         val newBearing = 147.0
-        empty.eBLOneBearing = newBearing
-        assertEquals(newBearing, empty.eBLOneBearing, 0.0)
+        empty!!.setEBLOneBearing(newBearing)
+        Assert.assertEquals(newBearing, empty!!.getEBLOneBearing(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.setOriginTwoRange].
+     * [RSDParser.setOriginTwoRange].
      */
     @Test
     fun testSetOriginTwoRange() {
         val newRange = 0.75
-        empty.originTwoRange = newRange
-        assertEquals(newRange, empty.originTwoRange, 0.0)
+        empty!!.setOriginTwoRange(newRange)
+        Assert.assertEquals(newRange, empty!!.getOriginTwoRange(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.setOriginTwoBearing].
+     * [RSDParser.setOriginTwoBearing].
      */
     @Test
     fun testSetOriginTwoBearing() {
         val newBearing = 93.2
-        empty.originTwoBearing = newBearing
-        assertEquals(newBearing, empty.originTwoBearing, 0.0)
+        empty!!.setOriginTwoBearing(newBearing)
+        Assert.assertEquals(newBearing, empty!!.getOriginTwoBearing(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.setVRMTwoRange].
+     * [RSDParser.setVRMTwoRange].
      */
     @Test
     fun testSetVRMTwoRange() {
         val newRange = 12.5
-        empty.vRMTwoRange = newRange
-        assertEquals(newRange, empty.vRMTwoRange, 0.0)
+        empty!!.setVRMTwoRange(newRange)
+        Assert.assertEquals(newRange, empty!!.getVRMTwoRange(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.setEBLTwoBearing].
+     * [RSDParser.setEBLTwoBearing].
      */
     @Test
     fun testSetEBLTwoBearing() {
         val newBearing = 147.0
-        empty.eBLTwoBearing = newBearing
-        assertEquals(newBearing, empty.eBLTwoBearing, 0.0)
+        empty!!.setEBLTwoBearing(newBearing)
+        Assert.assertEquals(newBearing, empty!!.getEBLTwoBearing(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.setCursorRange].
+     * [RSDParser.setCursorRange].
      */
     @Test
     fun testSetCursorRange() {
         val newRange = 48.32
-        empty.cursorRange = newRange
-        assertEquals(newRange, empty.cursorRange, 0.0)
+        empty!!.setCursorRange(newRange)
+        Assert.assertEquals(newRange, empty!!.getCursorRange(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.setCursorBearing].
+     * [RSDParser.setCursorBearing].
      */
     @Test
     fun testSetCursorBearing() {
         val newBearing = 300.4
-        empty.cursorBearing = newBearing
-        assertEquals(newBearing, empty.cursorBearing, 0.0)
+        empty!!.setCursorBearing(newBearing)
+        Assert.assertEquals(newBearing, empty!!.getCursorBearing(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.setRangeScale].
+     * [RSDParser.setRangeScale].
      */
     @Test
     fun testSetRangeScale() {
         val newScale = 0.75
-        empty.rangeScale = newScale
-        assertEquals(newScale, empty.rangeScale, 0.0)
+        empty!!.setRangeScale(newScale)
+        Assert.assertEquals(newScale, empty!!.getRangeScale(), 0.0)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.setRangeUnits].
+     * [RSDParser.setRangeUnits].
      */
     @Test(expected = IllegalArgumentException::class)
     fun testSetRangeUnits() {
         val newUnits = Units.KILOMETERS
-        empty.rangeUnits = newUnits
-        assertEquals(newUnits, empty.rangeUnits)
+        empty!!.setRangeUnits(newUnits)
+        Assert.assertEquals(newUnits, empty!!.getRangeUnits())
 
         // Invalid range unit. Should throw IllegalArgumentException
         val invalidUnits = Units.FATHOMS
-        empty.rangeUnits = invalidUnits
+        empty!!.setRangeUnits(invalidUnits)
     }
 
     /**
      * Test for
-     * [net.sf.marineapi.nmea.parser.RSDParser.setDisplayRotation].
+     * [RSDParser.setDisplayRotation].
      */
     @Test
     fun testSetDisplayRotation() {
-        val newRotation: DisplayRotation = DisplayRotation.COURSE_UP
-        empty.displayRotation = newRotation
-        assertEquals(newRotation, empty.displayRotation)
+        val newRotation = DisplayRotation.COURSE_UP
+        empty!!.setDisplayRotation(newRotation)
+        Assert.assertEquals(newRotation, empty!!.getDisplayRotation())
     }
 
     companion object {

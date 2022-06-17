@@ -1,8 +1,10 @@
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.util.Date
-import net.sf.marineapi.nmea.util.Time
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.*
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 import java.util.*
 
 /**
@@ -19,142 +21,142 @@ class ZDATest {
             empty = ZDAParser(TalkerId.GP)
             zda = ZDAParser(EXAMPLE)
         } catch (e: Exception) {
-            fail(e.message)
+            Assert.fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        assertEquals(6, empty!!.fieldCount)
+        Assert.assertEquals(6, empty!!.getFieldCount().toLong())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.ZDAParser.getDate].
+     * Test method for [ZDAParser.getDate].
      */
     @Test
     fun testGetDate() {
         val expected = Date(2004, 8, 7)
-        val parsed = zda!!.getDate()
-        assertEquals(expected, parsed)
+        val parsed: Date = zda!!.getDate()
+        Assert.assertEquals(expected, parsed)
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.ZDAParser.getDay].
+     * Test method for [ZDAParser.getDay].
      */
     @Test
     fun testGetDay() {
-        assertEquals(7, zda!!.getDate().getDay())
+        Assert.assertEquals(7, zda!!.getDate().day.toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.ZDAParser.getLocalZoneHours].
+     * [ZDAParser.getLocalZoneHours].
      */
     @Test
     fun testGetLocalZoneHours() {
-        assertEquals(0, zda!!.getLocalZoneHours())
+        Assert.assertEquals(0, zda!!.getLocalZoneHours().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.ZDAParser.setLocalZoneHours].
+     * [ZDAParser.setLocalZoneHours].
      */
     @Test
     fun testSetLocalZoneHours() {
         val hours = 7
         zda!!.setLocalZoneHours(hours)
-        assertTrue(zda.toString().contains(",2004,07,00*"))
-        assertEquals(hours, zda!!.getLocalZoneHours())
+        Assert.assertTrue(zda.toString().contains(",2004,07,00*"))
+        Assert.assertEquals(hours.toLong(), zda!!.getLocalZoneHours().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.ZDAParser.getLocalZoneMinutes].
+     * [ZDAParser.getLocalZoneMinutes].
      */
     @Test
     fun testGetLocalZoneMinutes() {
-        assertEquals(0, zda!!.getLocalZoneMinutes())
+        Assert.assertEquals(0, zda!!.getLocalZoneMinutes().toLong())
     }
 
     /**
      * Test method for
-     * [net.sf.marineapi.nmea.parser.ZDAParser.setLocalZoneMinutes].
+     * [ZDAParser.setLocalZoneMinutes].
      */
     @Test
     fun testSetLocalZoneMinutes() {
         val min = 9
         zda!!.setLocalZoneMinutes(min)
-        assertTrue(zda.toString().contains(",2004,00,09*"))
-        assertEquals(min, zda!!.getLocalZoneMinutes())
+        Assert.assertTrue(zda.toString().contains(",2004,00,09*"))
+        Assert.assertEquals(min.toLong(), zda!!.getLocalZoneMinutes().toLong())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.ZDAParser.getMonth]
+     * Test method for [ZDAParser.getMonth]
      * .
      */
     @Test
     fun testGetMonth() {
-        assertEquals(8, zda!!.getDate().getMonth())
+        Assert.assertEquals(8, zda!!.getDate().month.toLong())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.ZDAParser.getTime].
+     * Test method for [ZDAParser.getTime].
      */
     @Test
     fun testGetTime() {
         val t = zda!!.getTime()
-        assertNotNull(t)
-        assertEquals(3, t.getHour())
-        assertEquals(29, t.getMinutes())
-        assertEquals(15.0, t.getSeconds(), 0.1)
+        Assert.assertNotNull(t)
+        Assert.assertEquals(3, t.getHour().toLong())
+        Assert.assertEquals(29, t.getMinutes().toLong())
+        Assert.assertEquals(15.0, t.getSeconds(), 0.1)
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.ZDAParser.getYear].
+     * Test method for [ZDAParser.getYear].
      */
     @Test
     fun testGetYear() {
-        assertEquals(2004, zda!!.getDate().getYear())
+        Assert.assertEquals(2004, zda!!.getDate().year.toLong())
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.ZDAParser.getTime].
+     * Test method for [ZDAParser.getTime].
      */
     @Test
     fun testSetDate() {
         zda!!.setDate(Date(10, 6, 9))
-        assertTrue(zda.toString().contains(",032915,09,06,2010,00,"))
+        Assert.assertTrue(zda.toString().contains(",032915,09,06,2010,00,"))
         zda!!.setDate(Date(85, 12, 11))
-        assertTrue(zda.toString().contains(",032915,11,12,1985,00,"))
+        Assert.assertTrue(zda.toString().contains(",032915,11,12,1985,00,"))
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.ZDAParser.setTime].
+     * Test method for [ZDAParser.setTime].
      */
     @Test
     fun testSetTime() {
         // 09:08:07.6
         val t = Time(9, 8, 7.6)
         zda!!.setTime(t)
-        assertTrue(zda.toString().startsWith("\$GPZDA,090807.600,07,"))
+        Assert.assertTrue(zda.toString().startsWith("\$GPZDA,090807.600,07,"))
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.ZDAParser.setTimeAndLocalZone].
+     * Test method for [ZDAParser.setTimeAndLocalZone].
      */
     @Test
     fun testSetTimeAndLocalZone() {
         // 09:08:07.6+01:02
         val t = Time(9, 8, 7.6, 1, 2)
         zda!!.setTimeAndLocalZone(t)
-        assertEquals(1, zda!!.getLocalZoneHours())
-        assertEquals(2, zda!!.getLocalZoneMinutes())
-        assertTrue(zda.toString().startsWith("\$GPZDA,090807.600,07,"))
-        assertTrue(zda.toString().contains("2004,01,02*"))
+        Assert.assertEquals(1, zda!!.getLocalZoneHours().toLong())
+        Assert.assertEquals(2, zda!!.getLocalZoneMinutes().toLong())
+        Assert.assertTrue(zda.toString().startsWith("\$GPZDA,090807.600,07,"))
+        Assert.assertTrue(zda.toString().contains("2004,01,02*"))
     }
 
     /**
-     * Test method for [net.sf.marineapi.nmea.parser.ZDAParser.toDate].
+     * Test method for [ZDAParser.toDate].
      */
     @Test
     fun testToDate() {
@@ -163,17 +165,17 @@ class ZDATest {
         zda!!.setDate(d)
         zda!!.setTime(t)
         val cal = GregorianCalendar()
-        cal.set(Calendar.YEAR, 2010)
-        cal.set(Calendar.MONTH, 5)
-        cal.set(Calendar.DAY_OF_MONTH, 15)
-        cal.set(Calendar.HOUR_OF_DAY, 12)
-        cal.set(Calendar.MINUTE, 15)
-        cal.set(Calendar.SECOND, 30)
-        cal.set(Calendar.MILLISECOND, 246)
+        cal[Calendar.YEAR] = 2010
+        cal[Calendar.MONTH] = 5
+        cal[Calendar.DAY_OF_MONTH] = 15
+        cal[Calendar.HOUR_OF_DAY] = 12
+        cal[Calendar.MINUTE] = 15
+        cal[Calendar.SECOND] = 30
+        cal[Calendar.MILLISECOND] = 246
         val result = zda!!.toDate()
-        val expected: java.util.Date = cal.getTime()
-        assertEquals(expected, result)
-        assertEquals(expected.time, result!!.time)
+        val expected = cal.time
+        Assert.assertEquals(expected, result)
+        Assert.assertEquals(expected.time, result.time)
     }
 
     companion object {

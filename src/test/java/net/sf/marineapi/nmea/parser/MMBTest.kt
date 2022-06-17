@@ -1,6 +1,11 @@
 package net.sf.marineapi.nmea.parser
 
+import net.sf.marineapi.nmea.sentence.MMBSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import org.junit.Assert
 import org.junit.Before
+import org.junit.Test
 
 /**
  * MMBTest
@@ -19,37 +24,37 @@ class MMBTest {
 
     @Test
     fun testConstructors() {
-        assertEquals(4, mmb.fieldCount)
-        assertEquals(4, empty.fieldCount)
-        assertEquals(TalkerId.II, mmb.talkerId)
-        assertEquals(TalkerId.WI, empty.talkerId)
-        assertEquals(SentenceId.MMB.name, empty.sentenceId)
+        Assert.assertEquals(4, mmb!!.getFieldCount().toLong())
+        Assert.assertEquals(4, empty!!.getFieldCount().toLong())
+        Assert.assertEquals(TalkerId.II, mmb!!.getTalkerId())
+        Assert.assertEquals(TalkerId.WI, empty!!.getTalkerId())
+        Assert.assertEquals(SentenceId.MMB.name, empty!!.getSentenceId())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetInchesOfMercury() {
-        assertEquals(29.9870, mmb.inchesOfMercury, 0.0001)
+        Assert.assertEquals(29.9870, mmb!!.getInchesOfMercury(), 0.0001)
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetBars() {
-        assertEquals(1.0154, mmb.bars, 0.0001)
+        Assert.assertEquals(1.0154, mmb!!.getBars(), 0.0001)
     }
 
     @Test
     @Throws(Exception::class)
     fun testSetInchesOfMercury() {
-        mmb.inchesOfMercury = 29.9999
-        assertEquals(29.9999, mmb.inchesOfMercury, 0.0001)
+        mmb!!.setInchesOfMercury(29.9999)
+        Assert.assertEquals(29.9999, mmb!!.getInchesOfMercury(), 0.0001)
     }
 
     @Test
     @Throws(Exception::class)
     fun testSetBars() {
-        mmb.bars = 1.1234
-        assertEquals(1.1234, mmb.bars, 0.0001)
+        mmb!!.setBars(1.1234)
+        Assert.assertEquals(1.1234, mmb!!.getBars(), 0.0001)
     }
 
     companion object {
