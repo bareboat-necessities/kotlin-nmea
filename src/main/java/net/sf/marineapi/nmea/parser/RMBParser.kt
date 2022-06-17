@@ -128,7 +128,7 @@ internal class RMBParser : PositionParser, RMBSentence {
 	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#hasArrived()
 	 */
     override fun hasArrived(): Boolean {
-        return DataStatus.ACTIVE == arrivalStatus
+        return DataStatus.ACTIVE == getArrivalStatus()
     }
 
     /*
@@ -137,8 +137,8 @@ internal class RMBParser : PositionParser, RMBSentence {
 	 * net.sf.marineapi.nmea.sentence.RMBSentence#setArrivalStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-    override fun setArrivalStatus(status: DataStatus) {
-        setCharValue(ARRIVAL_STATUS, status.toChar())
+    override fun setArrivalStatus(status: DataStatus?) {
+        setCharValue(ARRIVAL_STATUS, status!!.toChar())
     }
 
     /*
@@ -164,8 +164,8 @@ internal class RMBParser : PositionParser, RMBSentence {
 	 * net.sf.marineapi.nmea.sentence.RMBSentence#setDestination(net.sf.marineapi
 	 * .nmea.util.Waypoint)
 	 */
-    override fun setDestination(dest: Waypoint) {
-        setStringValue(DEST_WPT, dest.id)
+    override fun setDestination(dest: Waypoint?) {
+        setStringValue(DEST_WPT, dest!!.id)
         setPositionValues(dest, DEST_LAT, DEST_LAT_HEM, DEST_LON, DEST_LON_HEM)
     }
 
@@ -174,7 +174,7 @@ internal class RMBParser : PositionParser, RMBSentence {
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.RMBSentence#setOriginId(java.lang.String)
 	 */
-    override fun setOriginId(id: String) {
+    override fun setOriginId(id: String?) {
         setStringValue(ORIGIN_WPT, id)
     }
 
@@ -192,8 +192,8 @@ internal class RMBParser : PositionParser, RMBSentence {
 	 * net.sf.marineapi.nmea.sentence.RMBSentence#setStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-    override fun setStatus(status: DataStatus) {
-        setCharValue(STATUS, status.toChar())
+    override fun setStatus(status: DataStatus?) {
+        setCharValue(STATUS, status!!.toChar())
     }
 
     /*
@@ -202,9 +202,9 @@ internal class RMBParser : PositionParser, RMBSentence {
 	 * net.sf.marineapi.nmea.sentence.RMBSentence#setSteerTo(net.sf.marineapi
 	 * .nmea.util.Direction)
 	 */
-    override fun setSteerTo(steer: Direction) {
+    override fun setSteerTo(steer: Direction?) {
         require(!(steer != Direction.LEFT && steer != Direction.RIGHT)) { "Expected steer-to is LEFT or RIGHT." }
-        setCharValue(STEER_TO, steer.toChar())
+        setCharValue(STEER_TO, steer!!.toChar())
     }
 
     /*

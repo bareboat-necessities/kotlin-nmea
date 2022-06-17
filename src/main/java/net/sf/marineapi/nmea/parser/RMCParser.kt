@@ -24,6 +24,9 @@ import net.sf.marineapi.nmea.sentence.RMCSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
+import java.util.*
+import java.util.Date
+
 
 /**
  * RMC sentence parser.
@@ -51,7 +54,7 @@ internal class RMCParser : PositionParser, RMCSentence {
 	 * @see net.sf.marineapi.nmea.sentence.RMCSentence#getCorrectedCourse()
 	 */
     override fun getCorrectedCourse(): Double {
-        return course + variation
+        return getCourse() + getVariation()
     }
 
     /*
@@ -125,7 +128,7 @@ internal class RMCParser : PositionParser, RMCSentence {
 	 */
     override fun getVariation(): Double {
         var variation = getDoubleValue(MAG_VARIATION)
-        if (CompassPoint.EAST == directionOfVariation && variation > 0) {
+        if (CompassPoint.EAST == getDirectionOfVariation() && variation > 0) {
             variation = -variation
         }
         return variation
@@ -145,7 +148,7 @@ internal class RMCParser : PositionParser, RMCSentence {
 	 * net.sf.marineapi.nmea.sentence.DateSentence#setDate(net.sf.marineapi.
 	 * nmea.util.Date)
 	 */
-    override fun setDate(date: Date) {
+    override fun setDate(date: Date?) {
         setStringValue(UTC_DATE, date.toString())
     }
 
@@ -155,9 +158,9 @@ internal class RMCParser : PositionParser, RMCSentence {
 	 * net.sf.marineapi.nmea.sentence.RMCSentence#setDirectionOfVariation(net
 	 * .sf.marineapi.nmea.util.Direction)
 	 */
-    override fun setDirectionOfVariation(dir: CompassPoint) {
+    override fun setDirectionOfVariation(dir: CompassPoint?) {
         require(!(dir != CompassPoint.EAST && dir != CompassPoint.WEST)) { "Invalid variation direction, expected EAST or WEST." }
-        setCharValue(VAR_HEMISPHERE, dir.toChar())
+        setCharValue(VAR_HEMISPHERE, dir!!.toChar())
     }
 
     /*
@@ -166,9 +169,9 @@ internal class RMCParser : PositionParser, RMCSentence {
 	 * net.sf.marineapi.nmea.sentence.RMCSentence#setFaaMode(net.sf.marineapi
 	 * .nmea.util.FaaMode)
 	 */
-    override fun setMode(mode: FaaMode) {
-        fieldCount = 12
-        setCharValue(MODE, mode.toChar())
+    override fun setMode(mode: FaaMode?) {
+        setFieldCount(12)
+        setCharValue(MODE, mode!!.toChar())
     }
 
     /*
@@ -195,8 +198,8 @@ internal class RMCParser : PositionParser, RMCSentence {
 	 * net.sf.marineapi.nmea.sentence.RMCSentence#setDataStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-    override fun setStatus(status: DataStatus) {
-        setCharValue(DATA_STATUS, status.toChar())
+    override fun setStatus(status: DataStatus?) {
+        setCharValue(DATA_STATUS, status!!.toChar())
     }
 
     /*
@@ -205,7 +208,7 @@ internal class RMCParser : PositionParser, RMCSentence {
 	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.
 	 * nmea.util.Time)
 	 */
-    override fun setTime(t: Time) {
+    override fun setTime(t: Time?) {
         setStringValue(UTC_TIME, t.toString())
     }
 
