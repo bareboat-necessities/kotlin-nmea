@@ -59,8 +59,7 @@ class SatelliteInfoProviderExample(file: File?) : SatelliteInfoListener {
         for (si in event.getSatelliteInfo()) {
             val ptrn = "%s: %d, %d"
             val msg = String.format(
-                ptrn, si.id, si!!.azimuth, si
-                    .elevation
+                ptrn, si!!.id, si.getAzimuth(), si.getElevation()
             )
             println(msg)
         }

@@ -52,16 +52,16 @@ class UBXListenerExample(file: File?) {
     }
 
     internal inner class UBXMessage00Listener : AbstractUBXMessageListener<UBXMessage00>() {
-        override fun onMessage(msg: UBXMessage00) {
-            val position = msg.position
+        override fun onMessage(msg: UBXMessage00?) {
+            val position = msg!!.getPosition()
             println(position.longitude.toString() + " : " + position.latitude)
             println("onMessage: $msg")
         }
     }
 
     internal inner class UBXMessage03Listener : AbstractUBXMessageListener<UBXMessage03>() {
-        override fun onMessage(msg: UBXMessage03) {
-            val numberOfTrackedSatellites = msg.numberOfTrackedSatellites
+        override fun onMessage(msg: UBXMessage03?) {
+            val numberOfTrackedSatellites = msg!!.getNumberOfTrackedSatellites()
             println(String.format("Tracking %s satellites.", numberOfTrackedSatellites))
             println("onMessage: $msg")
         }

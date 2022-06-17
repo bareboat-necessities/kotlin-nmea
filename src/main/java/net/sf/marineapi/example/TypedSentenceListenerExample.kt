@@ -47,14 +47,14 @@ class TypedSentenceListenerExample(file: File?) : AbstractSentenceListener<RMCSe
         reader.start()
     }
 
-    override fun sentenceRead(sentence: RMCSentence) {
+    override fun sentenceRead(sentence: RMCSentence?) {
 
         // AbstractSentenceListener requires you to implement this method.
         // Only RMC sentences are broadcasted here as abstract listener is
         // filtering all the others. Thus, no need for checking sentence type
         // and casting. You can also override sentenceRead(SentenceEvent e),
         // but you really shouldn't.
-        println(sentence.position)
+        println(sentence!!.getPosition())
     }
 
     companion object {

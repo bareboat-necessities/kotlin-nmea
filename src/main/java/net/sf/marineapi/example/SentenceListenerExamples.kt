@@ -54,10 +54,10 @@ class SentenceListenerExamples(file: File?) {
         override fun readingStopped() {}
         override fun sentenceRead(event: SentenceEvent) {
             val s = event.sentence
-            if ("GLL" == s.sentenceId) {
+            if ("GLL" == s.getSentenceId()) {
                 val gll = s as GLLSentence
                 println("GLL position: " + gll.getPosition())
-            } else if ("GGA" == s.sentenceId) {
+            } else if ("GGA" == s.getSentenceId()) {
                 val gga = s as GGASentence
                 println("GGA position: " + gga.getPosition())
             }
@@ -70,13 +70,13 @@ class SentenceListenerExamples(file: File?) {
         override fun readingStopped() {}
         override fun sentenceRead(event: SentenceEvent) {
             val gsv = event.sentence as GSVSentence
-            println("GSV satellites in view: " + gsv.satelliteCount)
+            println("GSV satellites in view: " + gsv.getSatelliteCount())
         }
     }
 
     inner class GSAListener : AbstractSentenceListener<GSASentence>() {
-        override fun sentenceRead(gsa: GSASentence) {
-            println("GSA position DOP: " + gsa.positionDOP)
+        override fun sentenceRead(gsa: GSASentence?) {
+            println("GSA position DOP: " + gsa!!.getPositionDOP())
         }
     }
 
