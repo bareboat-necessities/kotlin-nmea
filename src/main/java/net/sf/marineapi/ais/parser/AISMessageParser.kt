@@ -41,7 +41,7 @@ open class AISMessageParser : AISMessage {
      *
      * @see .append
      */
-    constructor() {}
+    constructor()
 
     /**
      * Construct a parser with given AIS sentences. The result will parser for

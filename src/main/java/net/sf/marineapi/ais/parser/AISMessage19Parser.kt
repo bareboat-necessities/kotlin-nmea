@@ -72,14 +72,14 @@ internal class AISMessage19Parser(content: Sixbit) : AISPositionReportBParser(co
 
     override fun toString(): String {
         var result = super.toString()
-        result += AISPositionReportBParser.Companion.SEPARATOR + "Name:    " + name
-        result += AISPositionReportBParser.Companion.SEPARATOR + "Type:    " + ShipType.shipTypeToString(
+        result += AISPositionReportBParser.SEPARATOR + "Name:    " + name
+        result += AISPositionReportBParser.SEPARATOR + "Type:    " + ShipType.shipTypeToString(
             typeOfShipAndCargoType
         )
         val dim = "Bow: " + bow + ", Stern: " + stern +
                 ", Port: " + port + ", Starboard: " + starboard + " [m]"
-        result += AISPositionReportBParser.Companion.SEPARATOR + "Dim:     " + dim
-        result += AISPositionReportBParser.Companion.SEPARATOR + "EPFD:    " + PositioningDevice.toString(typeOfEPFD)
+        result += AISPositionReportBParser.SEPARATOR + "Dim:     " + dim
+        result += AISPositionReportBParser.SEPARATOR + "EPFD:    " + PositioningDevice.toString(typeOfEPFD)
         return result
     }
 

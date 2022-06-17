@@ -38,14 +38,14 @@ internal class ZDAParser : SentenceParser, ZDASentence {
      * @param nmea ZDA sentence String
      * @throws IllegalArgumentException If specified sentence is invalid.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.ZDA) {}
+    constructor(nmea: String) : super(nmea, SentenceId.ZDA)
 
     /**
      * Creates WPL parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.ZDA, 6) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.ZDA, 6)
 
     /*
 	 * (non-Javadoc)
@@ -144,7 +144,7 @@ internal class ZDAParser : SentenceParser, ZDASentence {
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.ZDASentence#toDate()
 	 */
-    override fun toDate(): Date? {
+    override fun toDate(): Date {
         val d = date
         val t = time
         return t.toDate(d.toDate())

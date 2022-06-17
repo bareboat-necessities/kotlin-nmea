@@ -1,5 +1,8 @@
 package net.sf.marineapi.ais.parser
 
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertFalse
+import net.sf.marineapi.ais.util.Sixbit
 import org.junit.Test
 
 /**
@@ -10,8 +13,8 @@ import org.junit.Test
 class AISPositionReportParserTest {
     // !AIVDM,1,1,,A,13u?etPv2;0n:dDPwUM1U1Cb069D,0*23
     private val payload = "13u?etPv2;0n:dDPwUM1U1Cb069D"
-    private val sixbit: Sixbit = Sixbit(payload, 0)
-    private val msg: AISPositionReport = AISPositionReportParser(sixbit)
+    private val sixbit = Sixbit(payload, 0)
+    private val msg = AISPositionReportParser(sixbit)
 
     @get:Throws(Exception::class)
     @get:Test

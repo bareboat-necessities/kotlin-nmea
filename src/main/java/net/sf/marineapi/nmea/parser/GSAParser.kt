@@ -35,14 +35,14 @@ internal class GSAParser : SentenceParser, GSASentence {
      * @param nmea GSA sentence String
      * @throws IllegalArgumentException If specified sentence is invalid.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GSA) {}
+    constructor(nmea: String) : super(nmea, SentenceId.GSA)
 
     /**
      * Creates GSA parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.GSA, 17) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.GSA, 17)
 
     /*
 	 * (non-Javadoc)

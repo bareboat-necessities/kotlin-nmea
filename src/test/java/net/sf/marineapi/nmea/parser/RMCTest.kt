@@ -1,9 +1,10 @@
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.util.Date
-import net.sf.marineapi.nmea.util.Position
-import net.sf.marineapi.nmea.util.Time
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.*
+import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Test
 
 /**
  * Tests the RMC sentence parser.
@@ -125,9 +126,9 @@ class RMCTest {
         val p: Position? = rmc!!.getPosition()
         assertNotNull(p)
         assertEquals(lat, p!!.latitude, 0.0000001)
-        assertEquals(lon, p!!.longitude, 0.0000001)
-        assertEquals(CompassPoint.NORTH, p!!.latitudeHemisphere)
-        assertEquals(CompassPoint.EAST, p!!.longitudeHemisphere)
+        assertEquals(lon, p.longitude, 0.0000001)
+        assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
+        assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
     }
 
     /**
@@ -258,9 +259,9 @@ class RMCTest {
         assertTrue(str.contains(",6101.111,N,02707.777,E,"))
         assertNotNull(wp)
         assertEquals(lat, wp!!.latitude, 0.0000001)
-        assertEquals(lon, wp!!.longitude, 0.0000001)
-        assertEquals(CompassPoint.NORTH, wp!!.latitudeHemisphere)
-        assertEquals(CompassPoint.EAST, wp!!.longitudeHemisphere)
+        assertEquals(lon, wp.longitude, 0.0000001)
+        assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
+        assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
     }
 
     /**

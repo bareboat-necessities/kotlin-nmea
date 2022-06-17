@@ -48,7 +48,7 @@ abstract class PositionParser : SentenceParser {
      * @param type Expected Sentence ID
      * @see SentenceParser.SentenceParser
      */
-    protected constructor(nmea: String, type: SentenceId) : super(nmea, type) {}
+    protected constructor(nmea: String, type: SentenceId) : super(nmea, type)
 
     /**
      * Constructor for empty sentence.
@@ -58,7 +58,7 @@ abstract class PositionParser : SentenceParser {
      * @param size Number of empty data fields to set.
      * @see SentenceParser.SentenceParser
      */
-    protected constructor(talker: TalkerId?, type: SentenceId, size: Int) : super(talker, type, size) {}
+    protected constructor(talker: TalkerId?, type: SentenceId, size: Int) : super(talker, type, size)
 
     /**
      * Parses the hemisphere of latitude from specified field.

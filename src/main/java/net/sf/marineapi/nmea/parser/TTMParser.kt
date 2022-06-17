@@ -39,7 +39,7 @@ internal class TTMParser : SentenceParser, TTMSentence {
      * @throws IllegalArgumentException
      * If specified sentence is invalid.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.TTM) {}
+    constructor(nmea: String) : super(nmea, SentenceId.TTM)
 
     /**
      * Create a TTM parser with an empty sentence.
@@ -47,7 +47,7 @@ internal class TTMParser : SentenceParser, TTMSentence {
      * @param talker
      * TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.TTM, 15) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.TTM, 15)
 
     /*
 	 * (non-Javadoc)
@@ -174,7 +174,7 @@ internal class TTMParser : SentenceParser, TTMSentence {
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#getName()
 	 */
-    override fun getName(): String? {
+    override fun getName(): String {
         return getStringValue(NAME)
     }
 

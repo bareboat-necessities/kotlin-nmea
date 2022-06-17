@@ -178,8 +178,8 @@ class AbstractSentenceListenerTest {
     internal open inner class GenericsListener<A, B : Sentence?> : AbstractSentenceListener<B> {
         open var received: B? = null
 
-        constructor() {}
-        constructor(type: Class<B>?) : super(type) {}
+        constructor()
+        constructor(type: Class<B>?) : super(type)
 
         fun stringify(obj: A): String {
             return obj.toString()
@@ -191,8 +191,8 @@ class AbstractSentenceListenerTest {
     }
 
     internal inner class ExtendedGenericsListener<A, B, C : Sentence?> : GenericsListener<B, C> {
-        constructor() {}
-        constructor(type: Class<C>?) : super(type) {}
+        constructor()
+        constructor(type: Class<C>?) : super(type)
 
         fun hashify(obj: A): Int {
             return obj.hashCode()

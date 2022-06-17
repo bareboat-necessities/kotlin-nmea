@@ -1,9 +1,12 @@
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.util.Position
-import net.sf.marineapi.nmea.util.Time
-import net.sf.marineapi.nmea.util.Units
-import org.junit.Assert.assertEquals
+import junit.framework.Assert.assertNotNull
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.*
+import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Test
 
 /**
  * Test the GGA sentence parser.
@@ -96,11 +99,11 @@ class GGATest {
         val p: Position? = gga!!.getPosition()
         assertNotNull(p)
         assertEquals(lat, p!!.latitude, 0.0000001)
-        assertEquals(CompassPoint.NORTH, p!!.latitudeHemisphere)
-        assertEquals(lon, p!!.longitude, 0.0000001)
-        assertEquals(CompassPoint.EAST, p!!.longitudeHemisphere)
-        assertEquals(Datum.WGS84, p!!.datum)
-        assertEquals(alt, p!!.altitude, 0.01)
+        assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
+        assertEquals(lon, p.longitude, 0.0000001)
+        assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
+        assertEquals(Datum.WGS84, p.datum)
+        assertEquals(alt, p.altitude, 0.01)
     }
 
     @Test
@@ -188,13 +191,13 @@ class GGATest {
         val str = gga.toString()
         assertTrue(str.contains(",6101.111,N,"))
         assertTrue(str.contains(",02707.777,E,"))
-        val wp: Position? = gga!!.getPosition()
+        val wp: Position = gga!!.getPosition()
         assertNotNull(wp)
-        assertEquals(lat, wp!!.latitude, 0.0000001)
-        assertEquals(lon, wp!!.longitude, 0.0000001)
-        assertEquals(CompassPoint.NORTH, wp!!.latitudeHemisphere)
-        assertEquals(CompassPoint.EAST, wp!!.longitudeHemisphere)
-        assertEquals(alt, wp!!.altitude, 0.01)
+        assertEquals(lat, wp.latitude, 0.0000001)
+        assertEquals(lon, wp.longitude, 0.0000001)
+        assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
+        assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
+        assertEquals(alt, wp.altitude, 0.01)
     }
 
     /**

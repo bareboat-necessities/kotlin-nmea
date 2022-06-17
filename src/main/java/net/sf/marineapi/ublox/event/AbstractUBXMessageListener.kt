@@ -50,7 +50,7 @@ import net.sf.marineapi.util.GenericTypeResolver
 </T> */
 abstract class AbstractUBXMessageListener<T : UBXMessage?> : AbstractSentenceListener<UBXSentence> {
     val messageType: Class<*>?
-    private val factory: UBXMessageFactory? = UBXMessageFactory.Companion.getInstance()
+    private val factory: UBXMessageFactory? = UBXMessageFactory.getInstance()
 
     /**
      * Default constructor with automatic generic type resolving. Notice that

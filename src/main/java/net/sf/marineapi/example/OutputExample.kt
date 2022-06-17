@@ -15,7 +15,7 @@ object OutputExample {
     fun main(args: Array<String>) {
 
         // Create a fresh MWV parser
-        val sf: SentenceFactory = SentenceFactory.Companion.getInstance()
+        val sf: SentenceFactory = SentenceFactory.getInstance()
         val mwv = sf.createParser(TalkerId.II, "MWV") as MWVSentence
 
         // should output "$IIMWV,,,,,V*36" 

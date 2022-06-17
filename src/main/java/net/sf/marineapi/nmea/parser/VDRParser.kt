@@ -36,7 +36,7 @@ internal class VDRParser : SentenceParser, VDRSentence {
      *
      * @param nmea VDR sentence String
      */
-    constructor(nmea: String) : super(nmea) {}
+    constructor(nmea: String) : super(nmea)
 
     /**
      * Creates a new empty instance of VDRParser.

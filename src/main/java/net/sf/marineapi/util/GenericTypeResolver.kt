@@ -67,10 +67,9 @@ object GenericTypeResolver {
     ): Type {
         val superClass = child.genericSuperclass
         if (superClass is ParameterizedType) {
-            val pt = superClass
-            val rawType = pt.rawType as Class<*>
+            val rawType = superClass.rawType as Class<*>
             val typeParams = rawType.getTypeParameters()
-            val typeArgs = pt.actualTypeArguments
+            val typeArgs = superClass.actualTypeArguments
             for (i in typeParams.indices) {
                 if (typeArgs[i] is TypeVariable<*>) {
                     val arg = typeArgs[i] as TypeVariable<*>

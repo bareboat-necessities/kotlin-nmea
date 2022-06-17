@@ -37,21 +37,21 @@ internal open class DTAParser : SentenceParser, DTASentence {
      *
      * @param talker DTA talkerId
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.DTA, 8) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.DTA, 8)
 
     /**
      * Creates a new instance of DTAParser.
      *
      * @param nmea DTA sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.DTA) {}
+    constructor(nmea: String) : super(nmea, SentenceId.DTA)
 
     /**
      * Creates a new instance of DTAParser.
      *
      * @param nmea DTA sentence String
      */
-    protected constructor(nmea: String, type: SentenceId) : super(nmea, type) {}
+    protected constructor(nmea: String, type: SentenceId) : super(nmea, type)
 
     /**
      * Creates a new instance of DTAParser with specified type and data fields.
@@ -60,7 +60,7 @@ internal open class DTAParser : SentenceParser, DTASentence {
      * @param type SentenceId enum
      * @param size number of data fields in DTASentence (not counting header and checksum).
      */
-    protected constructor(talker: TalkerId?, type: SentenceId, size: Int) : super(talker, type, size) {}
+    protected constructor(talker: TalkerId?, type: SentenceId, size: Int) : super(talker, type, size)
 
     /**
      * Returns the field index fixed with possible offset.

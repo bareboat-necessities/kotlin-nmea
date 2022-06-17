@@ -35,7 +35,7 @@ object Checksum {
     fun add(nmea: String): String {
         val str = nmea.substring(0, index(nmea))
         val sum = calculate(str)
-        return String.format("%s%c%s", str, Sentence.Companion.CHECKSUM_DELIMITER, sum)
+        return String.format("%s%c%s", str, Sentence.CHECKSUM_DELIMITER, sum)
     }
 
     /**
@@ -72,6 +72,6 @@ object Checksum {
      * @return Index of checksum separator or String length.
      */
     fun index(nmea: String): Int {
-        return if (nmea.indexOf(Sentence.Companion.CHECKSUM_DELIMITER) > 0) nmea.indexOf(Sentence.Companion.CHECKSUM_DELIMITER) else nmea.length
+        return if (nmea.indexOf(Sentence.CHECKSUM_DELIMITER) > 0) nmea.indexOf(Sentence.CHECKSUM_DELIMITER) else nmea.length
     }
 }

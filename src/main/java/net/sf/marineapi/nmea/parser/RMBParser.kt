@@ -20,9 +20,13 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.RMBSentenceimport
+import net.sf.marineapi.nmea.sentence.RMBSentence
+import net.sf.marineapi.nmea.sentence.SentenceId
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.DataStatus
+import net.sf.marineapi.nmea.util.Direction
+import net.sf.marineapi.nmea.util.Waypoint
 
-net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*
 /**
  * RMB sentence parser.
  *
@@ -34,14 +38,14 @@ internal class RMBParser : PositionParser, RMBSentence {
      *
      * @param nmea RMB sentence string
      */
-    constructor(nmea: String) : super(nmea, SentenceId.RMB) {}
+    constructor(nmea: String) : super(nmea, SentenceId.RMB)
 
     /**
      * Creates RMB parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.RMB, 13) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.RMB, 13)
 
     /*
 	 * (non-Javadoc)
@@ -89,12 +93,12 @@ internal class RMBParser : PositionParser, RMBSentence {
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.RMBSentence#getDestination()
 	 */
-    override fun getDestination(): Waypoint? {
+    override fun getDestination(): Waypoint {
         val id = getStringValue(DEST_WPT)
         val p = parsePosition(
             DEST_LAT, DEST_LAT_HEM, DEST_LON, DEST_LON_HEM
         )
-        return p!!.toWaypoint(id)
+        return p.toWaypoint(id)
     }
 
     /*

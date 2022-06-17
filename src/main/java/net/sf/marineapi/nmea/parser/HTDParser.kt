@@ -34,14 +34,14 @@ internal class HTDParser : HTCParser, HTDSentence {
      *
      * @param nmea HTD sentence String to parse.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.HTD) {}
+    constructor(nmea: String) : super(nmea, SentenceId.HTD)
 
     /**
      * Constructor for empty HTD sentence.
      *
      * @param talker Talker ID to set.
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.HTD, 17) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.HTD, 17)
 
     override val rudderStatus: DataStatus?
         get() = if (hasValue(RUDDER_STATUS)) {

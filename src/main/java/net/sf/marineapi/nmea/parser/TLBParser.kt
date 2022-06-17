@@ -44,7 +44,7 @@ internal class TLBParser : SentenceParser, TLBSentence {
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.TLB, 0) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.TLB, 0)
 
     /**
      * @see net.sf.marineapi.nmea.sentence.TLBSentence.getTargetIds

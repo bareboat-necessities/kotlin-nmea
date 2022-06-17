@@ -72,7 +72,7 @@ abstract class AbstractDataReader : Runnable {
 	 */
     override fun run() {
         val monitor = ActivityMonitor(parent)
-        val factory: SentenceFactory = SentenceFactory.Companion.getInstance()
+        val factory: SentenceFactory = SentenceFactory.getInstance()
         while (isRunning) {
             try {
                 val data = read()

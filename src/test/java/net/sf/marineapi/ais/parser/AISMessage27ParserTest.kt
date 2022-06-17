@@ -1,5 +1,8 @@
 package net.sf.marineapi.ais.parser
 
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertFalse
+import net.sf.marineapi.ais.util.Sixbit
 import org.junit.Test
 
 /**
@@ -11,8 +14,8 @@ import org.junit.Test
 class AISMessage27ParserTest {
     // !AIVDM,1,1,,,Kk:qFP0?fhT8=7m@,0*50
     private val payload = "Kk:qFP0?fhT8=7m@"
-    private val sixbit: Sixbit = Sixbit(payload, 0)
-    private val message: AISMessage27 = AisMessage27Parser(sixbit)
+    private val sixbit = Sixbit(payload, 0)
+    private val message = AisMessage27Parser(sixbit)
 
     @get:Test
     val repeatIndicator: Unit

@@ -20,8 +20,14 @@
  */
 package net.sf.marineapi.nmea.parser
 
+import net.sf.marineapi.nmea.sentence.DTASentence
+import net.sf.marineapi.nmea.sentence.TalkerId
 import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
+import java.text.DateFormat
 import java.text.ParseException
+import java.text.SimpleDateFormat
 
 /**
  * DTATest - test class for Boreal GasFinder
@@ -32,6 +38,7 @@ import java.text.ParseException
 class DTATest {
     private var gasFinderMC: DTASentence? = null
     private var gasFinder2: DTASentence? = null
+
     @Before
     @Throws(Exception::class)
     fun setUp() {

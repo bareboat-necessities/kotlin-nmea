@@ -34,14 +34,14 @@ internal class DPTParser : SentenceParser, DPTSentence {
      *
      * @param nmea DPT sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.DPT) {}
+    constructor(nmea: String) : super(nmea, SentenceId.DPT)
 
     /**
      * Creates a new instance of DPTParser with empty data fields.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.DPT, 3) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.DPT, 3)
 
     /*
 	 * (non-Javadoc)

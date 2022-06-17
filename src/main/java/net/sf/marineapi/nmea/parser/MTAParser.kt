@@ -34,7 +34,7 @@ internal class MTAParser : SentenceParser, MTASentence {
      *
      * @param mta MTA sentence String to parse.
      */
-    constructor(mta: String) : super(mta, SentenceId.MTA) {}
+    constructor(mta: String) : super(mta, SentenceId.MTA)
 
     /**
      * Constructor for empty MTA sentence.

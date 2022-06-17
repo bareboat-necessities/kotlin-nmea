@@ -1,8 +1,10 @@
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.util.Position
-import net.sf.marineapi.nmea.util.Time
-import org.junit.Assert.assertEquals
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.*
+import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Test
 
 /**
  * Tests the GLL sentence parser.
@@ -51,9 +53,9 @@ class GLLTest {
         val p: Position? = instance!!.getPosition()
         assertNotNull(p)
         assertEquals(lat, p!!.latitude, 0.0000001)
-        assertEquals(lon, p!!.longitude, 0.0000001)
-        assertEquals(CompassPoint.NORTH, p!!.latitudeHemisphere)
-        assertEquals(CompassPoint.EAST, p!!.longitudeHemisphere)
+        assertEquals(lon, p.longitude, 0.0000001)
+        assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
+        assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
     }
 
     /**
@@ -95,7 +97,7 @@ class GLLTest {
         assertTrue(s2.contains(",02501.941,E,"))
         assertNotNull(p)
         assertEquals(lat, p!!.latitude, 0.0000001)
-        assertEquals(lon, p!!.longitude, 0.0000001)
+        assertEquals(lon, p.longitude, 0.0000001)
     }
 
     /**
@@ -112,7 +114,7 @@ class GLLTest {
         assertTrue(s1.contains(",00000.000,E,"))
         assertNotNull(p)
         assertEquals(0.0, p!!.latitude, 0.0000001)
-        assertEquals(0.0, p!!.longitude, 0.0000001)
+        assertEquals(0.0, p.longitude, 0.0000001)
     }
 
     /**

@@ -67,7 +67,7 @@ class Measurement {
     /**
      * Creates a new empty instance of Measurement.
      */
-    constructor() {}
+    constructor()
 
     /**
      * Creates a new instance of Measurement with given values.

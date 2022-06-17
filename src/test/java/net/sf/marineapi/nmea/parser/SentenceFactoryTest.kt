@@ -44,12 +44,12 @@ class SentenceFactoryTest {
      */
     @Test
     fun testCreateParser() {
-        val bod: Sentence? = instance.createParser(BODTest.Companion.EXAMPLE)
+        val bod: Sentence? = instance.createParser(BODTest.EXAMPLE)
         assertNotNull(bod)
         assertTrue(bod is Sentence)
         assertTrue(bod is BODSentence)
         assertTrue(bod is BODParser)
-        assertEquals(BODTest.Companion.EXAMPLE, bod.toSentence())
+        assertEquals(BODTest.EXAMPLE, bod.toSentence())
     }
 
     /**

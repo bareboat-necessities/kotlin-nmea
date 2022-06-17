@@ -37,7 +37,7 @@ internal class CURParser : SentenceParser, CURSentence {
      * @throws IllegalArgumentException If specified String is invalid or does
      * not contain a CUR sentence.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.CUR) {}
+    constructor(nmea: String) : super(nmea, SentenceId.CUR)
 
     /**
      * Creates CUR parser with empty sentence.
@@ -63,7 +63,7 @@ internal class CURParser : SentenceParser, CURSentence {
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.BODSentence#getCurrentDirectionReference()
 	 */
-    override val currentDirectionReference: String?
+    override val currentDirectionReference: String
         get() = getStringValue(DIRECTION_REFERENCE)
 
     /*
@@ -71,7 +71,7 @@ internal class CURParser : SentenceParser, CURSentence {
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.BODSentence#getCurrentHeadingReference()
 	 */
-    override val currentHeadingReference: String?
+    override val currentHeadingReference: String
         get() = getStringValue(HEADING_REFERENCE)
 
     /*

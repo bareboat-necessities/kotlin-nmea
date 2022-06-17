@@ -142,7 +142,7 @@ class SentenceFactory private constructor() {
      * implement expected constructors or is otherwise unusable.
      */
     fun createParser(nmea: String): Sentence? {
-        val sid: String = SentenceId.Companion.parseStr(nmea)
+        val sid: String = SentenceId.parseStr(nmea)
         return createParserImpl(sid, nmea)
     }
 
@@ -243,8 +243,8 @@ class SentenceFactory private constructor() {
         parser: Class<out SentenceParser>
     ) {
         try {
-            parser.getConstructor(*arrayOf<Class<*>>(String::class.java))
-            parser.getConstructor(*arrayOf<Class<*>>(TalkerId::class.java))
+            parser.getConstructor(String::class.java)
+            parser.getConstructor(TalkerId::class.java)
             parsers!![type] = parser
         } catch (e: SecurityException) {
             val msg = "Unable to register parser due security violation"

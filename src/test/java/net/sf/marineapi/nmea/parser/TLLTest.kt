@@ -1,8 +1,12 @@
 package net.sf.marineapi.nmea.parser
 
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.CompassPoint
 import net.sf.marineapi.nmea.util.Position
 import net.sf.marineapi.nmea.util.Time
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Test
 
 /**
  * This is a test class for the TLL NMEA Sentence
@@ -55,9 +59,9 @@ class TLLTest {
         val lon = 24 + 36.0 / 60
         assertNotNull(p)
         assertEquals(lat, p!!.latitude, 0.0000001)
-        assertEquals(CompassPoint.NORTH, p!!.latitudeHemisphere)
-        assertEquals(lon, p!!.longitude, 0.0000001)
-        assertEquals(CompassPoint.EAST, p!!.longitudeHemisphere)
+        assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
+        assertEquals(lon, p.longitude, 0.0000001)
+        assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
     }
 
     @Test

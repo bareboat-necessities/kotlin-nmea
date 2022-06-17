@@ -1,6 +1,5 @@
 package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage04
 import net.sf.marineapi.ais.util.Sixbit
 import org.junit.Test
 import junit.framework.TestCase.*

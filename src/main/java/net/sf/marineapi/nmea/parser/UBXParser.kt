@@ -38,15 +38,15 @@ import net.sf.marineapi.ublox.parser.UBXMessageParser
  * @see UBXMessageParser
  */
 internal class UBXParser : SentenceParser, UBXSentence {
-    constructor(nmea: String) : super(nmea, SentenceId.UBX) {}
+    constructor(nmea: String) : super(nmea, SentenceId.UBX)
 
     /**
      * Creates a new empty UBX Parser.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.UBX, 6) {}
-    constructor(nmea: String, type: String?) : super(nmea, type) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.UBX, 6)
+    constructor(nmea: String, type: String?) : super(nmea, type)
 
     override fun getMessageId(): Int {
         return super.getIntValue(0)
@@ -56,7 +56,7 @@ internal class UBXParser : SentenceParser, UBXSentence {
         return super.getIntValue(index)
     }
 
-    override fun getUBXFieldStringValue(index: Int): String? {
+    override fun getUBXFieldStringValue(index: Int): String {
         return super.getStringValue(index)
     }
 

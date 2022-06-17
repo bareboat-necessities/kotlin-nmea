@@ -34,14 +34,14 @@ internal class RPMParser : SentenceParser, RPMSentence {
      *
      * @param nmea NMEA sentence String.
      */
-    constructor(nmea: String) : super(nmea) {}
+    constructor(nmea: String) : super(nmea)
 
     /**
      * Creates a new empty parser.
      *
      * @param talker TalkerId to set.
      */
-    constructor(talker: TalkerId?) : super(talker, "RPM", 5) {}
+    constructor(talker: TalkerId?) : super(talker, "RPM", 5)
 
     /*
 	 * (non-Javadoc)

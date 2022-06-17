@@ -34,7 +34,7 @@ internal class RSAParser : SentenceParser, RSASentence {
      *
      * @param nmea RSA sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.RSA) {}
+    constructor(nmea: String) : super(nmea, SentenceId.RSA)
 
     /**
      * Creates a new instance of RSAParser with empty data fields.

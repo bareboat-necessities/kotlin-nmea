@@ -37,7 +37,7 @@ class PositionParserTest {
     @Before
     @Throws(Exception::class)
     fun setUp() {
-        instance = object : PositionParser(GLLTest.Companion.EXAMPLE, SentenceId.GLL) {}
+        instance = object : PositionParser(GLLTest.EXAMPLE, SentenceId.GLL) {}
     }
 
     /**

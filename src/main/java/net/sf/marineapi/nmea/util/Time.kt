@@ -20,8 +20,6 @@
  */
 package net.sf.marineapi.nmea.util
 
-import java.text.DecimalFormatimport
-
 java.text.DecimalFormatSymbolsimport java.util.* java.util.Date
 /**
  * Represents a time of day in 24-hour clock, i.e. the UTC time used as default
@@ -139,8 +137,7 @@ class Time {
             return true
         }
         if (obj is Time) {
-            val d = obj
-            return d.getHour() == getHour() && d.getMinutes() == getMinutes() && d.getSeconds() == getSeconds() && d.offsetHours == offsetHours && d.offsetMinutes == offsetMinutes
+            return obj.getHour() == getHour() && obj.getMinutes() == getMinutes() && obj.getSeconds() == getSeconds() && obj.offsetHours == offsetHours && obj.offsetMinutes == offsetMinutes
         }
         return false
     }

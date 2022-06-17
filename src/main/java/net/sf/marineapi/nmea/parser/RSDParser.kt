@@ -35,14 +35,14 @@ internal class RSDParser : SentenceParser, RSDSentence {
      *
      * @param nmea RSD sentence string.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.RSD) {}
+    constructor(nmea: String) : super(nmea, SentenceId.RSD)
 
     /**
      * Creates RSD parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.RSD, 13) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.RSD, 13)
     /**
      * @see net.sf.marineapi.nmea.sentence.RSDSentence.getOriginOneRange
      */

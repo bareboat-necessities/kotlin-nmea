@@ -36,7 +36,7 @@ internal class MHUParser : SentenceParser, MHUSentence {
      *
      * @param nmea MHU sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.MHU) {}
+    constructor(nmea: String) : super(nmea, SentenceId.MHU)
 
     /**
      * Constructor for fresh MHU sentence.

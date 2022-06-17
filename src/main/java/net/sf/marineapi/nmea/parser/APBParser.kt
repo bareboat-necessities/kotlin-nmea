@@ -20,9 +20,11 @@
  */
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.APBSentenceimport
+import net.sf.marineapi.nmea.sentence.APBSentence
+import net.sf.marineapi.nmea.sentence.TalkerId
+import net.sf.marineapi.nmea.util.DataStatus
+import net.sf.marineapi.nmea.util.Direction
 
-net.sf.marineapi.nmea.sentence.TalkerIdimport net.sf.marineapi.nmea.util.*
 /**
  * APB parser.
  *
@@ -34,14 +36,14 @@ internal class APBParser : SentenceParser, APBSentence {
      *
      * @param nmea NMEA sentence String.
      */
-    constructor(nmea: String) : super(nmea) {}
+    constructor(nmea: String) : super(nmea)
 
     /**
      * Creates a new empty APBParser.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, "APB", 14) {}
+    constructor(talker: TalkerId?) : super(talker, "APB", 14)
 
     /*
 	 * (non-Javadoc)
@@ -140,7 +142,7 @@ internal class APBParser : SentenceParser, APBSentence {
 	 * @see
 	 * net.sf.marineapi.nmea.sentence.APBSentence#getDestionationWaypointId()
 	 */
-    override val destionationWaypointId: String?
+    override val destionationWaypointId: String
         get() = getStringValue(DEST_WAYPOINT_ID)
 
     /*

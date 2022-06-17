@@ -37,7 +37,7 @@ internal class VWRParser : SentenceParser, VWRSentence {
      * @param nmea VWR sentence String
      * @throws IllegalArgumentException If specified sentence is invalid
      */
-    constructor(nmea: String) : super(nmea, SentenceId.VWR) {}
+    constructor(nmea: String) : super(nmea, SentenceId.VWR)
 
     /**
      * Creates VWR parser with empty sentence.
@@ -45,9 +45,9 @@ internal class VWRParser : SentenceParser, VWRSentence {
      * @param talker TalkerId to set
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.VWR, 9) {
-        setCharValue(KNOTS_INDICATOR, VWRSentence.Companion.KNOT)
-        setCharValue(MPS_INDICATOR, VWRSentence.Companion.MPS)
-        setCharValue(KMPH_INDICATOR, VWRSentence.Companion.KMPH)
+        setCharValue(KNOTS_INDICATOR, VWRSentence.KNOT)
+        setCharValue(MPS_INDICATOR, VWRSentence.MPS)
+        setCharValue(KMPH_INDICATOR, VWRSentence.KMPH)
     }
 
     /*

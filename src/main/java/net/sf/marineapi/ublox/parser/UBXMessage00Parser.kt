@@ -47,7 +47,7 @@ internal class UBXMessage00Parser(sentence: UBXSentence) : UBXMessageParser(sent
         val latitudeHemisphereIndicatorField = sentence.getUBXFieldCharValue(LAT_HEMISPHERE)
         val longitudeField = sentence.getUBXFieldStringValue(LONGITUDE)
         val longitudeHemisphereIndicatorField = sentence.getUBXFieldCharValue(LON_HEMISPHERE)
-        val position: Position = PositionParser.Companion.parsePosition(
+        val position: Position = PositionParser.parsePosition(
             latitudeField, latitudeHemisphereIndicatorField,
             longitudeField, longitudeHemisphereIndicatorField
         )
@@ -60,7 +60,7 @@ internal class UBXMessage00Parser(sentence: UBXSentence) : UBXMessageParser(sent
      * @see UBXMessage00.getNavigationStatus
      */
     override fun getNavigationStatus(): UbloxNavigationStatus? {
-        return UbloxNavigationStatus.Companion.fromNavigationStatusCode(
+        return UbloxNavigationStatus.fromNavigationStatusCode(
             sentence.getUBXFieldStringValue(
                 NAVIGATION_STATUS
             )

@@ -1,5 +1,7 @@
 package net.sf.marineapi.ais.parser
 
+import junit.framework.TestCase.assertEquals
+import net.sf.marineapi.ais.util.Sixbit
 import org.junit.Test
 
 /**
@@ -12,10 +14,10 @@ class AISMessage24ParserTest {
     // !AIVDO,1,1,,B,H1c2;qDTijklmno31<<C970`43<1,0*28 (part B)
     private val payloadA = "H1c2;qA@PU>0U>060<h5=>0:1Dp"
     private val payloadB = "H1c2;qDTijklmno31<<C970`43<1"
-    private val sixbitA: Sixbit = Sixbit(payloadA, 2)
-    private val sixbitB: Sixbit = Sixbit(payloadB, 0)
-    private val partA: AISMessage24 = AISMessage24Parser(sixbitA)
-    private val partB: AISMessage24 = AISMessage24Parser(sixbitB)
+    private val sixbitA = Sixbit(payloadA, 2)
+    private val sixbitB = Sixbit(payloadB, 0)
+    private val partA = AISMessage24Parser(sixbitA)
+    private val partB = AISMessage24Parser(sixbitB)
 
     @get:Throws(Exception::class)
     @get:Test

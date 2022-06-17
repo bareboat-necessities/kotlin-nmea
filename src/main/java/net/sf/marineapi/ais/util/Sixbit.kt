@@ -79,7 +79,7 @@ class Sixbit(payload: String?, fillBits: Int) {
      * @param to End index
      * @return BitVector for specified range.
      */
-    operator fun get(from: Int, to: Int): BitVector? {
+    operator fun get(from: Int, to: Int): BitVector {
         return fBitVector[from, to]
     }
 

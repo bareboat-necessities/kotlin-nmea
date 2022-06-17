@@ -41,7 +41,7 @@ internal abstract class AISParser : SentenceParser, AISSentence {
      * @param nmea NMEA sentence String.
      * @param sid Expected sentence ID
      */
-    constructor(nmea: String, sid: SentenceId) : super(nmea, sid) {}
+    constructor(nmea: String, sid: SentenceId) : super(nmea, sid)
 
     /**
      * Creates a new empty VDOParser.
@@ -49,7 +49,7 @@ internal abstract class AISParser : SentenceParser, AISSentence {
      * @param tid TalkerId to set
      * @param sid SentenceId to set
      */
-    constructor(tid: TalkerId?, sid: SentenceId) : super('!', tid, sid, 6) {}
+    constructor(tid: TalkerId?, sid: SentenceId) : super('!', tid, sid, 6)
 
     override val numberOfFragments: Int
         get() = getIntValue(NUMBER_OF_FRAGMENTS)

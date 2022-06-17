@@ -1,5 +1,8 @@
 package net.sf.marineapi.ais.parser
 
+import junit.framework.TestCase.*
+import net.sf.marineapi.ais.message.AISMessage21
+import net.sf.marineapi.ais.util.Sixbit
 import org.junit.Test
 
 /**
@@ -11,8 +14,8 @@ class AISMessage21ParserTest {
     // !AIVDO,2,1,5,B,E1c2;q@b44ah4ah0h:2ab@70VRpU<Bgpm4:gP50HH`Th`QF5,0*7B
     // !AIVDO,2,2,5,B,1CQ1A83PCAH0,0*60
     private val payload = "E1c2;q@b44ah4ah0h:2ab@70VRpU<Bgpm4:gP50HH`Th`QF51CQ1A83PCAH0"
-    private val sixbit: Sixbit = Sixbit(payload, 0)
-    private val msg: AISMessage21 = AISMessage21Parser(sixbit)
+    private val sixbit = Sixbit(payload, 0)
+    private val msg = AISMessage21Parser(sixbit)
 
     // Nav Type?
     @get:Throws(Exception::class)

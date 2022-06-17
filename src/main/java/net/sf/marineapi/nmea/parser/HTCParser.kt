@@ -29,10 +29,10 @@ net.sf.marineapi.nmea.sentence.SentenceIdimport net.sf.marineapi.nmea.sentence.T
  * @author Paweł Kozioł
  */
 internal open class HTCParser : SentenceParser, HTCSentence {
-    constructor(nmea: String) : super(nmea, SentenceId.HTC) {}
-    constructor(talker: TalkerId?) : super(talker, SentenceId.HTC, 13) {}
-    constructor(nmea: String, type: SentenceId) : super(nmea, type) {}
-    constructor(tid: TalkerId?, sid: SentenceId, size: Int) : super(tid, sid, size) {}
+    constructor(nmea: String) : super(nmea, SentenceId.HTC)
+    constructor(talker: TalkerId?) : super(talker, SentenceId.HTC, 13)
+    constructor(nmea: String, type: SentenceId) : super(nmea, type)
+    constructor(tid: TalkerId?, sid: SentenceId, size: Int) : super(tid, sid, size)
 
     override val override: DataStatus?
         get() = if (hasValue(OVERRIDE)) {

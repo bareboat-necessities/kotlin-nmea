@@ -104,7 +104,7 @@ class SentenceReaderTest {
     @Throws(Exception::class)
     fun testSetDatagramSocket() {
         val server = UDPServerMock()
-        val received: MutableList<TXTSentence?> = ArrayList<TXTSentence?>()
+        val received: MutableList<TXTSentence?> = ArrayList()
         val host: InetAddress = InetAddress.getLocalHost()
         val socket = DatagramSocket(3810, host)
         reader!!.setDatagramSocket(socket)
@@ -248,7 +248,7 @@ class SentenceReaderTest {
     // Test "reader" that only repeats the given sentence
     inner class DummyDataReader(private val sentence: String) : AbstractDataReader() {
         @Throws(Exception::class)
-        override fun read(): String? {
+        override fun read(): String {
             return this.sentence
         }
     }

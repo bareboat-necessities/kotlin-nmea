@@ -215,7 +215,7 @@ abstract class AbstractProvider<T : ProviderEvent?> : SentenceListener {
         val expired = events.stream()
             .filter { event: SentenceEvent -> now - event.timeStamp > timeout }
             .collect(Collectors.toList())
-        events.removeAll(expired)
+        events.removeAll(expired.toSet())
     }
 
     /*

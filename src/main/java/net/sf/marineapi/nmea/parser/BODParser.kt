@@ -37,7 +37,7 @@ internal class BODParser : SentenceParser, BODSentence {
      * @throws IllegalArgumentException If specified String is invalid or does
      * not contain a BOD sentence.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.BOD) {}
+    constructor(nmea: String) : super(nmea, SentenceId.BOD)
 
     /**
      * Creates GSA parser with empty sentence.

@@ -36,14 +36,14 @@ internal class GGAParser : PositionParser, GGASentence {
      * @throws IllegalArgumentException If the specified sentence is invalid or
      * not a GGA sentence.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.GGA) {}
+    constructor(nmea: String) : super(nmea, SentenceId.GGA)
 
     /**
      * Creates GSA parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.GGA, 14) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.GGA, 14)
 
     /*
 	 * (non-Javadoc)
@@ -168,7 +168,7 @@ internal class GGAParser : PositionParser, GGASentence {
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.PositionSentence#getPosition()
 	 */
-    override fun getPosition(): Position? {
+    override fun getPosition(): Position {
         val pos = parsePosition(
             LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE
         )

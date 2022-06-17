@@ -34,14 +34,14 @@ internal class VLWParser : SentenceParser, VLWSentence {
      *
      * @param nmea NMEA sentence STring.
      */
-    constructor(nmea: String) : super(nmea) {}
+    constructor(nmea: String) : super(nmea)
 
     /**
      * Creates a new empty instance of VLWParser.
      *
      * @param talker TalkerId to set.
      */
-    constructor(talker: TalkerId?) : super(talker, "VLW", 4) {}
+    constructor(talker: TalkerId?) : super(talker, "VLW", 4)
 
     /*
 	 * (non-Javadoc)
@@ -122,7 +122,7 @@ internal class VLWParser : SentenceParser, VLWSentence {
      * @param unit Unit char
      */
     private fun setUnit(index: Int, unit: Char) {
-        require(!(unit != VLWSentence.Companion.KM && unit != VLWSentence.Companion.NM)) { "Invalid distance unit, expected 'N' or 'K'" }
+        require(!(unit != VLWSentence.KM && unit != VLWSentence.NM)) { "Invalid distance unit, expected 'N' or 'K'" }
         setCharValue(index, unit)
     }
 

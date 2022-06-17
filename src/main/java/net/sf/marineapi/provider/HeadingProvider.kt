@@ -48,7 +48,7 @@ class HeadingProvider
     override fun createProviderEvent(): HeadingEvent? {
         for (s in getSentences()) {
             if (s is HeadingSentence) {
-                return HeadingEvent(this, s as HeadingSentence)
+                return HeadingEvent(this, s)
             }
         }
         return null

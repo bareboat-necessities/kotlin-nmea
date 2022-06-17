@@ -106,7 +106,7 @@ abstract class AbstractSentenceListener<T : Sentence?> : SentenceListener {
      */
     override fun sentenceRead(event: SentenceEvent) {
         val sentence = event.sentence
-        if (sentenceType!!.isAssignableFrom(sentence!!.javaClass)) {
+        if (sentenceType!!.isAssignableFrom(sentence.javaClass)) {
             sentenceRead(sentence as T)
         }
     }

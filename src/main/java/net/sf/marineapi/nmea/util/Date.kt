@@ -87,8 +87,7 @@ class Date {
             return true
         }
         if (obj is Date) {
-            val d = obj
-            if (d.getDay() == getDay() && d.getMonth() == getMonth() && d.getYear() == getYear()) {
+            if (obj.getDay() == getDay() && obj.getMonth() == getMonth() && obj.getYear() == getYear()) {
                 return true
             }
         }

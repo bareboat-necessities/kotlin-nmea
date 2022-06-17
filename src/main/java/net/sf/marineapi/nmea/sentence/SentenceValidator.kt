@@ -83,7 +83,7 @@ object SentenceValidator {
     fun isValid(nmea: String): Boolean {
         var isValid = false
         if (isSentence(nmea)) {
-            var i: Int = nmea.indexOf(Sentence.Companion.CHECKSUM_DELIMITER)
+            var i: Int = nmea.indexOf(Sentence.CHECKSUM_DELIMITER)
             if (i > 0) {
                 val sum = nmea.substring(++i, nmea.length)
                 isValid = sum == Checksum.calculate(nmea)

@@ -38,7 +38,7 @@ internal class STALKParser : SentenceParser, STALKSentence {
      *
      * @param nmea `$STALK` sentence String.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.ALK) {}
+    constructor(nmea: String) : super(nmea, SentenceId.ALK)
 
     /**
      * Constructor with TalkerId, mostly for compatibility with SentenceFactory.
@@ -52,7 +52,7 @@ internal class STALKParser : SentenceParser, STALKSentence {
         require(tid == TalkerId.ST) { "\$STALK talker id 'ST' is mandatory (got $tid)" }
     }
 
-    override fun getCommand(): String? {
+    override fun getCommand(): String {
         return getStringValue(COMMAND)
     }
 
@@ -60,7 +60,7 @@ internal class STALKParser : SentenceParser, STALKSentence {
         setStringValue(COMMAND, cmd)
     }
 
-    override fun getParameters(): Array<String?>? {
+    override fun getParameters(): Array<String?> {
         return getStringValues(FIRST_PARAM)
     }
 

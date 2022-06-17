@@ -37,7 +37,7 @@ internal class VTGParser : SentenceParser, VTGSentence {
      * @param nmea VTG sentence String
      * @throws IllegalArgumentException If specified sentence is invalid
      */
-    constructor(nmea: String) : super(nmea, SentenceId.VTG) {}
+    constructor(nmea: String) : super(nmea, SentenceId.VTG)
 
     /**
      * Creates VTG parser with empty sentence.
@@ -45,10 +45,10 @@ internal class VTGParser : SentenceParser, VTGSentence {
      * @param talker TalkerId to set
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.VTG, 9) {
-        setCharValue(TRUE_INDICATOR, VTGSentence.Companion.TRUE)
-        setCharValue(MAGNETIC_INDICATOR, VTGSentence.Companion.MAGNETIC)
-        setCharValue(KNOTS_INDICATOR, VTGSentence.Companion.KNOT)
-        setCharValue(KMPH_INDICATOR, VTGSentence.Companion.KMPH)
+        setCharValue(TRUE_INDICATOR, VTGSentence.TRUE)
+        setCharValue(MAGNETIC_INDICATOR, VTGSentence.MAGNETIC)
+        setCharValue(KNOTS_INDICATOR, VTGSentence.KNOT)
+        setCharValue(KMPH_INDICATOR, VTGSentence.KMPH)
     }
 
     /*

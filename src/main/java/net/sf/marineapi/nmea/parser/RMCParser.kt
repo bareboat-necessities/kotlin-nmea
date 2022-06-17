@@ -35,14 +35,14 @@ internal class RMCParser : PositionParser, RMCSentence {
      * @param nmea RMC sentence String.
      * @throws IllegalArgumentException If specified sentence is invalid.
      */
-    constructor(nmea: String) : super(nmea, SentenceId.RMC) {}
+    constructor(nmea: String) : super(nmea, SentenceId.RMC)
 
     /**
      * Creates a ZDA parser with empty sentence.
      *
      * @param talker TalkerId to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.RMC, 12) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.RMC, 12)
 
     /*
 	 * (non-Javadoc)
@@ -115,7 +115,7 @@ internal class RMCParser : PositionParser, RMCSentence {
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.PositionSentence#getPosition()
 	 */
-    override fun getPosition(): Position? {
+    override fun getPosition(): Position {
         return parsePosition(LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE)
     }
 

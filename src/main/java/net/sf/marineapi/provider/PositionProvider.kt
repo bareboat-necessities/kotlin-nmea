@@ -69,33 +69,31 @@ class PositionProvider
         var fix: GpsFixQuality? = null
         for (s in getSentences()) {
             if (s is RMCSentence) {
-                val rmc = s
-                sog = rmc.speed
+                sog = s.speed
                 try {
-                    cog = rmc.course
+                    cog = s.course
                 } catch (e: DataNotAvailableException) {
                     // If we are not moving, cource can be undefined. Leave null in that case.
                 }
-                d = rmc.date
-                t = rmc.time
+                d = s.date
+                t = s.time
                 if (p == null) {
-                    p = rmc.getPosition()
-                    if (rmc.fieldCount > 11) {
-                        mode = rmc.mode
+                    p = s.getPosition()
+                    if (s.fieldCount > 11) {
+                        mode = s.mode
                     }
                 }
             } else if (s is VTGSentence) {
-                val vtg = s
-                sog = vtg.getSpeedKnots()
+                sog = s.getSpeedKnots()
                 try {
-                    cog = vtg.getTrueCourse()
+                    cog = s.getTrueCourse()
                 } catch (e: DataNotAvailableException) {
                     // If we are not moving, cource can be undefined. Leave null in that case.
                 }
             } else if (s is GGASentence) {
                 // Using GGA as primary position source as it contains both
                 // position and altitude
-                val gga = s as GGASentence
+                val gga = s
                 p = gga.getPosition()
                 fix = gga.fixQuality
 
@@ -104,7 +102,7 @@ class PositionProvider
                     t = gga.time
                 }
             } else if (s is GLLSentence && p == null) {
-                val gll = s as GLLSentence
+                val gll = s
                 p = gll.getPosition()
             }
         }
@@ -131,7 +129,7 @@ class PositionProvider
     override fun isValid(): Boolean {
         for (s in getSentences()) {
             if (s is RMCSentence) {
-                val rmc = s as RMCSentence
+                val rmc = s
                 val ds = rmc.status
                 if (DataStatus.VOID == ds || rmc.fieldCount > 11 && FaaMode.NONE == rmc.mode) {
                     return false

@@ -20,9 +20,10 @@
  */
 package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage24import
+import net.sf.marineapi.ais.message.AISMessage24
+import net.sf.marineapi.ais.util.ShipType
+import net.sf.marineapi.ais.util.Sixbit
 
-net.sf.marineapi.ais.util.ShipTypeimport net.sf.marineapi.ais.util.Sixbit
 /**
  *
  * AIS Message 24 implementation: Ship Static Data - Class B
@@ -112,13 +113,13 @@ internal class AISMessage24Parser(content: Sixbit) : AISMessageParser(content, 1
         result = """$result
 	Type:      ${ShipType.shipTypeToString(typeOfShipAndCargoType)}"""
         result = """$result
-	Vendor id:      ${vendorId}"""
+	Vendor id:      $vendorId"""
         result = """$result
-	Unit Model Code:      ${unitModelCode}"""
+	Unit Model Code:      $unitModelCode"""
         result = """$result
-	Serial Number:      ${serialNumber}"""
+	Serial Number:      $serialNumber"""
         result = """$result
-	Call sign: ${callSign}"""
+	Call sign: $callSign"""
         val dim = "Bow: " + bow + ", Stern: " + stern + ", Port: " + port + ", Starboard: " + starboard + " [m]"
         result = "$result\n\tDim:       $dim"
         return result

@@ -34,14 +34,14 @@ internal class HDGParser : SentenceParser, HDGSentence {
      *
      * @param nmea HDG sentence String
      */
-    constructor(nmea: String) : super(nmea, SentenceId.HDG) {}
+    constructor(nmea: String) : super(nmea, SentenceId.HDG)
 
     /**
      * Creates a new empty HDG parser.
      *
      * @param talker Talker id to set
      */
-    constructor(talker: TalkerId?) : super(talker, SentenceId.HDG, 5) {}
+    constructor(talker: TalkerId?) : super(talker, SentenceId.HDG, 5)
 
     /*
 	 * (non-Javadoc)

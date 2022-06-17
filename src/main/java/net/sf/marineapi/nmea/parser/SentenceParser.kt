@@ -95,12 +95,12 @@ open class SentenceParser : Sentence {
             throw IllegalArgumentException(msg)
         }
         beginChar = nmea[0]
-        talkerId = TalkerId.Companion.parse(nmea)
-        sentenceId = SentenceId.Companion.parseStr(nmea)
-        val begin: Int = nmea.indexOf(Sentence.Companion.FIELD_DELIMITER) + 1
+        talkerId = TalkerId.parse(nmea)
+        sentenceId = SentenceId.parseStr(nmea)
+        val begin: Int = nmea.indexOf(Sentence.FIELD_DELIMITER) + 1
         val end = Checksum.index(nmea)
         val csv = nmea.substring(begin, end)
-        val values: Array<String> = csv.split(Sentence.Companion.FIELD_DELIMITER.toString().toRegex()).toTypedArray()
+        val values: Array<String> = csv.split(Sentence.FIELD_DELIMITER.toString().toRegex()).toTypedArray()
         fields!!.addAll(Arrays.asList(*values))
     }
 
@@ -118,8 +118,7 @@ open class SentenceParser : Sentence {
         tid,
         sid.toString(),
         size
-    ) {
-    }
+    )
 
     /**
      * Creates a new empty sentence with specified begin char, talker id,
@@ -173,12 +172,11 @@ open class SentenceParser : Sentence {
      * @param size Number of data fields
      */
     constructor(talker: TalkerId?, type: String?, size: Int) : this(
-        Sentence.Companion.BEGIN_CHAR,
+        Sentence.BEGIN_CHAR,
         talker,
         type,
         size
-    ) {
-    }
+    )
 
     /**
      * Creates a new instance of SentenceParser with specified sentence data.
@@ -188,7 +186,7 @@ open class SentenceParser : Sentence {
      * @param nmea Sentence String
      * @param type Sentence type enum
      */
-    internal constructor(nmea: String, type: SentenceId) : this(nmea, type.toString()) {}
+    internal constructor(nmea: String, type: SentenceId) : this(nmea, type.toString())
 
     /**
      * Creates a new instance of SentenceParser without any data.
@@ -197,7 +195,7 @@ open class SentenceParser : Sentence {
      * @param sid Sentence id to set in sentence
      * @param size Number of data fields following the sentence id field
      */
-    internal constructor(tid: TalkerId?, sid: SentenceId, size: Int) : this(tid, sid.toString(), size) {}
+    internal constructor(tid: TalkerId?, sid: SentenceId, size: Int) : this(tid, sid.toString(), size)
 
     /*
 	 * (non-Javadoc)
@@ -290,7 +288,7 @@ open class SentenceParser : Sentence {
 	 * @see net.sf.marineapi.nmea.sentence.Sentence#setBeginChar(char)
 	 */
     override fun setBeginChar(ch: Char) {
-        if (ch != Sentence.Companion.BEGIN_CHAR && ch != Sentence.Companion.ALTERNATIVE_BEGIN_CHAR) {
+        if (ch != Sentence.BEGIN_CHAR && ch != Sentence.ALTERNATIVE_BEGIN_CHAR) {
             val msg = "Invalid begin char; expected '$' or '!'"
             throw IllegalArgumentException(msg)
         }
@@ -328,15 +326,15 @@ open class SentenceParser : Sentence {
 	 * @see java.lang.Object#toString()
 	 */
     override fun toString(): String {
-        val sb = StringBuilder(Sentence.Companion.MAX_LENGTH)
+        val sb = StringBuilder(Sentence.MAX_LENGTH)
         sb.append(talkerId.toString())
         sb.append(sentenceId)
         for (field in fields!!) {
-            sb.append(Sentence.Companion.FIELD_DELIMITER)
+            sb.append(Sentence.FIELD_DELIMITER)
             sb.append(field ?: "")
         }
         val checksum = Checksum.xor(sb.toString())
-        sb.append(Sentence.Companion.CHECKSUM_DELIMITER)
+        sb.append(Sentence.CHECKSUM_DELIMITER)
         sb.append(checksum)
         sb.insert(0, beginChar)
         return sb.toString()
