@@ -57,7 +57,7 @@ import java.util.*
  */
 open class SentenceParser : Sentence {
     // The first character which will be '$' most of the times but could be '!'.
-    private override var beginChar: Char
+    override var beginChar: Char
 
     /*
 	 * (non-Javadoc)
@@ -132,10 +132,10 @@ open class SentenceParser : Sentence {
     protected constructor(begin: Char, talker: TalkerId?, type: String?, size: Int) {
         require(size >= 0) { "Size cannot be negative." }
         requireNotNull(talker) { "Talker ID must be specified" }
-        require((type == null || "") != type) { "Sentence ID must be specified" }
+        require(type == null || "" != type) { "Sentence ID must be specified" }
         beginChar = begin
         talkerId = talker
-        sentenceId = type
+        sentenceId = type!!
         val values = arrayOfNulls<String>(size)
         Arrays.fill(values, "")
         fields!!.addAll(Arrays.asList(*values))
@@ -155,7 +155,7 @@ open class SentenceParser : Sentence {
      * or is not of expected type.
      */
     constructor(nmea: String, type: String?) : this(nmea) {
-        require((type == null || "") != type) { "Sentence type must be specified." }
+        require(type == null || "" != type) { "Sentence type must be specified." }
         val sid = sentenceId
         if (sid != type) {
             val ptrn = "Sentence id mismatch; expected [%s], found [%s]."

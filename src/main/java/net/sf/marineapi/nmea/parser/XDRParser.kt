@@ -69,7 +69,7 @@ internal class XDRParser : SentenceParser, XDRSentence {
 	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#addMeasurement(net.sf.marineapi.nmea.util.Measurement[])
 	 */
     override fun addMeasurement(vararg m: Measurement?) {
-        val ms = measurements
+        val ms = getMeasurements()
         ms.addAll(Arrays.asList(*m))
         measurements = ms
     }
@@ -143,7 +143,7 @@ internal class XDRParser : SentenceParser, XDRSentence {
     private fun insertValues(i: Int, m: Measurement?) {
         if (m != null) {
             setStringValue(i, m.type)
-            setDoubleValue(i + VALUE_INDEX, m.value)
+            setDoubleValue(i + VALUE_INDEX, m.value!!)
             setStringValue(i + UNITS_INDEX, m.units)
             setStringValue(i + NAME_INDEX, m.name)
         }

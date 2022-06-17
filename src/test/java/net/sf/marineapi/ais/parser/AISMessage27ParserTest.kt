@@ -50,19 +50,19 @@ class AISMessage27ParserTest {
     @get:Test
     val longitude: Unit
         get() {
-            assertEquals(-7.3566666666666665, message.longitudeInDegrees, 0)
+            assertEquals(-7.3566666666666665, message.longitudeInDegrees.toDouble(), 0.0)
         }
 
     @get:Test
     val latitude: Unit
         get() {
-            assertEquals(56.36333333333334, message.latitudeInDegrees, 0)
+            assertEquals(56.36333333333334, message.latitudeInDegrees.toDouble(), 0.0)
         }
 
     @get:Test
     val speedOverGround: Unit
         get() {
-            assertEquals(15.0, message.speedOverGround, 0)
+            assertEquals(15.0, message.speedOverGround.toDouble(), 0.0)
         }
 
     @get:Test

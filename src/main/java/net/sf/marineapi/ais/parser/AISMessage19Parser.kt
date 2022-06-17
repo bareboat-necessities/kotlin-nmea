@@ -20,9 +20,11 @@
  */
 package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISMessage19import
+import net.sf.marineapi.ais.message.AISMessage19
+import net.sf.marineapi.ais.util.PositioningDevice
+import net.sf.marineapi.ais.util.ShipType
+import net.sf.marineapi.ais.util.Sixbit
 
-net.sf.marineapi.ais.util.PositioningDeviceimport net.sf.marineapi.ais.util.ShipTypeimport net.sf.marineapi.ais.util.Sixbit
 /**
  * AIS Message 19 implementation: Extended Class B Equipment Position Report.
  *

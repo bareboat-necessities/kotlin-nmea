@@ -20,9 +20,10 @@
  */
 package net.sf.marineapi.ais.parser
 
-import net.sf.marineapi.ais.message.AISPositionReportBimport
+import net.sf.marineapi.ais.message.AISPositionReportB
+import net.sf.marineapi.ais.util.*
 
-net.sf.marineapi.ais.util.*
+
 /**
  * Implementation for AIS Message 18 and 19:  Class B Equipment Position Report.
  *
@@ -49,14 +50,14 @@ net.sf.marineapi.ais.util.*
 internal open class AISPositionReportBParser : AISMessageParser, AISPositionReportB {
     private var fSOG = 0
     override var isAccurate = false
-        private set
+        set
     private var fLongitude = 0
     private var fLatitude = 0
     private var fCOG = 0
     override var trueHeading = 0
-        private set
+        set
     override var timeStamp = 0
-        private set
+        set
 
     /**
      * Constructor.
@@ -149,7 +150,7 @@ internal open class AISPositionReportBParser : AISMessageParser, AISPositionRepo
     }
 
     companion object {
-        protected const val SEPARATOR = "\n\t"
+        const val SEPARATOR = "\n\t"
         private const val SPEEDOVERGROUND = 0
         private const val POSITIONACCURACY = 1
         private const val LONGITUDE = 2

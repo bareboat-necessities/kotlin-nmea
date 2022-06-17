@@ -62,7 +62,7 @@ class Measurement {
      * @param units Units to set.
      */
     var units: String? = null
-    private var value: Double? = null
+    var value: Double? = null
 
     /**
      * Creates a new empty instance of Measurement.

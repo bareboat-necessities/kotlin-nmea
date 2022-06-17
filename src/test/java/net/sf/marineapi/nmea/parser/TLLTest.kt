@@ -15,6 +15,7 @@ import org.junit.Test
 class TLLTest {
     var tll: TLLParser? = null
     var empty: TLLParser? = null
+
     @Before
     fun setUp() {
         try {
