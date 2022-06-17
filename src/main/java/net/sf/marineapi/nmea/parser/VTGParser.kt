@@ -106,7 +106,7 @@ internal class VTGParser : SentenceParser, VTGSentence {
 	 * .util.FaaMode)
 	 */
     override fun setMode(mode: FaaMode) {
-        fieldCount = 9
+        setFieldCount(9)
         setCharValue(MODE, mode.toChar())
     }
 

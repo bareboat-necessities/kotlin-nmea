@@ -39,13 +39,13 @@ internal class XTEParser : SentenceParser, XTESentence {
      * @param nmea XTE sentence String
      */
     constructor(nmea: String) : super(nmea) {
-        fieldCount = 6
+        setFieldCount(6)
     }
 
     constructor(talker: TalkerId?) : super(talker, SentenceId.XTE, 6) {
-        mode = FaaMode.NONE
-        status = DataStatus.VOID
-        cycleLockStatus = DataStatus.VOID
+        setMode(FaaMode.NONE)
+        setStatus(DataStatus.VOID)
+        setCycleLockStatus(DataStatus.VOID)
         setCharValue(DISTANCE_UNIT, 'N')
     }
 
