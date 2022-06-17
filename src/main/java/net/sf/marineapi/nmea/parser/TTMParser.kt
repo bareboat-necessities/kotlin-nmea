@@ -69,18 +69,18 @@ internal class TTMParser : SentenceParser, TTMSentence {
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TimeSentence#setTime()
 	 */
-    override fun setTime(t: Time) {
+    override fun setTime(t: Time?) {
         /*
 		 * The TTM specification calls for seconds with TWO decimals, not the
 		 * usual three implemented by the Time.toString(). So we create our own
 		 * string.
 		 */
-        var str = String.format("%02d%02d", t.hour, t.minutes)
+        var str = String.format("%02d%02d", t!!.getHour(), t.getMinutes())
         val nf = DecimalFormat("00.00")
         val dfs = DecimalFormatSymbols()
         dfs.decimalSeparator = '.'
         nf.decimalFormatSymbols = dfs
-        str += nf.format(t.seconds)
+        str += nf.format(t.getSeconds())
         setStringValue(UTC_TIME, str)
     }
 
@@ -318,7 +318,7 @@ internal class TTMParser : SentenceParser, TTMSentence {
 	 *
 	 * @see net.sf.marineapi.nmea.sentence.TTMSentence#setName()
 	 */
-    override fun setName(name: String) {
+    override fun setName(name: String?) {
         setStringValue(NAME, name)
     }
 

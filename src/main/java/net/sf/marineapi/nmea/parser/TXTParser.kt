@@ -75,7 +75,7 @@ internal class TXTParser : SentenceParser, TXTSentence {
         return getStringValue(IDENTIFIER)
     }
 
-    override fun setIdentifier(id: String) {
+    override fun setIdentifier(id: String?) {
         setStringValue(IDENTIFIER, id)
     }
 
@@ -83,8 +83,8 @@ internal class TXTParser : SentenceParser, TXTSentence {
         return getStringValue(MESSAGE)
     }
 
-    override fun setMessage(msg: String) {
-        require(ASCII.matcher(msg).matches()) { "Message must be in ASCII character set" }
+    override fun setMessage(msg: String?) {
+        require(ASCII.matcher(msg.toString()).matches()) { "Message must be in ASCII character set" }
         setStringValue(MESSAGE, msg)
     }
 

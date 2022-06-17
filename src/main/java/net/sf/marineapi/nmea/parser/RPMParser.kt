@@ -151,8 +151,8 @@ internal class RPMParser : SentenceParser, RPMSentence {
 	 * net.sf.marineapi.nmea.sentence.RPMSentence#setStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-    override fun setStatus(status: DataStatus) {
-        setCharValue(STATUS, status.toChar())
+    override fun setStatus(status: DataStatus?) {
+        setCharValue(STATUS, status!!.toChar())
     }
 
     companion object {

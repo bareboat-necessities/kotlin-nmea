@@ -79,8 +79,8 @@ internal class ROTParser : SentenceParser, ROTSentence {
 	 * net.sf.marineapi.nmea.sentence.ROTSentence#setStatus(net.sf.marineapi
 	 * .nmea.util.DataStatus)
 	 */
-    override fun setStatus(status: DataStatus) {
-        setCharValue(STATUS, status.toChar())
+    override fun setStatus(status: DataStatus?) {
+        setCharValue(STATUS, status!!.toChar())
     }
 
     companion object {

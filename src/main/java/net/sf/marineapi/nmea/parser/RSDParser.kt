@@ -25,6 +25,7 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DisplayRotation
 import net.sf.marineapi.nmea.util.Units
+import java.util.*
 
 /**
  * RSD sentence parser
@@ -217,9 +218,9 @@ internal class RSDParser : SentenceParser, RSDSentence {
     /**
      * @see RSDSentence.setRangeUnits
      */
-    override fun setRangeUnits(units: Units) {
-        if (Arrays.asList(*VALID_RANGE_UNITS).contains(units)) {
-            setCharValue(RANGE_UNITS, units.toChar())
+    override fun setRangeUnits(units: Units?) {
+        if (listOf(*VALID_RANGE_UNITS).contains(units)) {
+            setCharValue(RANGE_UNITS, units!!.toChar())
         } else {
             var err = "Range units must be "
             for (i in VALID_RANGE_UNITS.indices) {
@@ -236,8 +237,8 @@ internal class RSDParser : SentenceParser, RSDSentence {
     /**
      * @see RSDSentence.setDisplayRotation
      */
-    override fun setDisplayRotation(rotation: DisplayRotation) {
-        setCharValue(DISPLAY_ROTATION, rotation.toChar())
+    override fun setDisplayRotation(rotation: DisplayRotation?) {
+        setCharValue(DISPLAY_ROTATION, rotation!!.toChar())
     }
 
     companion object {
