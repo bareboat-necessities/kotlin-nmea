@@ -24,6 +24,7 @@ import net.sf.marineapi.nmea.util.CompassPoint
 import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.FaaMode
 
+
 /**
  * Recommended minimum navigation information type C. Current time and date,
  * position, speed over ground, true course over ground and magnetic variation.
@@ -48,7 +49,8 @@ interface RMCSentence : PositionSentence, TimeSentence, DateSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If course or variation
      * field contains unexpected or illegal value.
      */
-    val correctedCourse: Double
+    fun getCorrectedCourse(): Double
+
     /**
      * Get true course over ground (COG).
      *
@@ -58,12 +60,8 @@ interface RMCSentence : PositionSentence, TimeSentence, DateSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set true course over ground (COG).
-     *
-     * @param cog True course in degrees
-     */
-    var course: Double
+    fun getCourse(): Double
+
     /**
      * Get the direction of magnetic variation; east or west.
      *
@@ -73,14 +71,8 @@ interface RMCSentence : PositionSentence, TimeSentence, DateSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the direction of magnetic variation, east or west.
-     *
-     * @param dir [CompassPoint.EAST] or [CompassPoint.WEST]
-     * @throws IllegalArgumentException If specified Direction is other than
-     * defined as valid for param `dir`.
-     */
-    var directionOfVariation: CompassPoint
+    fun getDirectionOfVariation(): CompassPoint?
+
     /**
      * Get the FAA operating mode for GPS.
      *
@@ -90,12 +82,8 @@ interface RMCSentence : PositionSentence, TimeSentence, DateSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the FAA operation mode of GPS.
-     *
-     * @param mode FaaMode enum to set
-     */
-    var mode: FaaMode
+    fun getMode(): FaaMode?
+
     /**
      * Get current speed over ground (SOG).
      *
@@ -105,12 +93,8 @@ interface RMCSentence : PositionSentence, TimeSentence, DateSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set current speed over ground (SOG).
-     *
-     * @param sog Speed in knots (nautical miles per hour).
-     */
-    var speed: Double
+    fun getSpeed(): Double
+
     /**
      * Gets the data status, valid or invalid.
      *
@@ -120,12 +104,8 @@ interface RMCSentence : PositionSentence, TimeSentence, DateSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the data status, valid or invalid.
-     *
-     * @param status [DataStatus.ACTIVE] or [DataStatus.VOID]
-     */
-    var status: DataStatus
+    fun getStatus(): DataStatus?
+
     /**
      * Get the magnetic variation. Easterly variation subtracts from true
      * course, and is thus returned as negative value. Otherwise, the value is
@@ -137,10 +117,49 @@ interface RMCSentence : PositionSentence, TimeSentence, DateSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
+    fun getVariation(): Double
+
+    /**
+     * Set true course over ground (COG).
+     *
+     * @param cog True course in degrees
+     */
+    fun setCourse(cog: Double)
+
+    /**
+     * Set the direction of magnetic variation, east or west.
+     *
+     * @param dir [CompassPoint.EAST] or [CompassPoint.WEST]
+     * @throws IllegalArgumentException If specified Direction is other than
+     * defined as valid for param `dir`.
+     */
+    fun setDirectionOfVariation(dir: CompassPoint?)
+
+    /**
+     * Set the FAA operation mode of GPS.
+     *
+     * @param mode FaaMode enum to set
+     */
+    fun setMode(mode: FaaMode?)
+
+    /**
+     * Set current speed over ground (SOG).
+     *
+     * @param sog Speed in knots (nautical miles per hour).
+     */
+    fun setSpeed(sog: Double)
+
+    /**
+     * Set the data status, valid or invalid.
+     *
+     * @param status [DataStatus.ACTIVE] or [DataStatus.VOID]
+     */
+    fun setStatus(status: DataStatus?)
+
     /**
      * Set the magnetic variation.
      *
      * @param var Magnetic variation in degrees
      */
-    var variation: Double
+    fun setVariation(`var`: Double)
 }

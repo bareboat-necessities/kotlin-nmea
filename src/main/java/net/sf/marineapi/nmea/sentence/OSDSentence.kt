@@ -20,7 +20,10 @@
  */
 package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.*
+import net.sf.marineapi.nmea.util.DataStatus
+import net.sf.marineapi.nmea.util.ReferenceSystem
+import net.sf.marineapi.nmea.util.Units
+
 
 /**
  * Own ship data.<br></br>
@@ -46,11 +49,8 @@ interface OSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set ownship heading
-     * @param heading the heading
-     */
-    var heading: Double
+    fun getHeading(): Double
+
     /**
      * Get the status of heading data
      * @return DataStatus the status
@@ -59,11 +59,8 @@ interface OSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the heading data status
-     * @param status the status
-     */
-    var headingStatus: DataStatus
+    fun getHeadingStatus(): DataStatus?
+
     /**
      * Get the course of ownship
      * @return Double the course
@@ -72,11 +69,8 @@ interface OSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set ownship course
-     * @param course the course
-     */
-    var course: Double
+    fun getCourse(): Double
+
     /**
      * Get the reference system used to calculate course
      * @return ReferenceSystem the reference
@@ -85,11 +79,8 @@ interface OSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the reference system for the course
-     * @param reference the reference
-     */
-    var courseReference: ReferenceSystem
+    fun getCourseReference(): ReferenceSystem?
+
     /**
      * Get ownship speed
      * @return Double the speed
@@ -98,11 +89,8 @@ interface OSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set ownship speed
-     * @param speed the speed
-     */
-    var speed: Double
+    fun getSpeed(): Double
+
     /**
      * Get the reference system used to calculate speed
      * @return ReferenceSystem the reference
@@ -111,11 +99,8 @@ interface OSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the reference system for the speed
-     * @param reference the reference
-     */
-    var speedReference: ReferenceSystem
+    fun getSpeedReference(): ReferenceSystem?
+
     /**
      * Get the vessel set (water current direction)
      * @return Double the set
@@ -124,11 +109,8 @@ interface OSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the vessel set
-     * @param set the vessel set
-     */
-    var vesselSet: Double
+    fun getVesselSet(): Double
+
     /**
      * Get the vessel drift
      * @return double the drift
@@ -137,11 +119,8 @@ interface OSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the vessel drift
-     * @param drift the vessel drift
-     */
-    var vesselDrift: Double
+    fun getVesselDrift(): Double
+
     /**
      * Get the units of speed measurements
      * @return Units the speed units (K, N, S)
@@ -150,9 +129,59 @@ interface OSDSentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
+    fun getSpeedUnits(): Units?
+
+    /**
+     * Set ownship heading
+     * @param heading the heading
+     */
+    fun setHeading(heading: Double)
+
+    /**
+     * Set the heading data status
+     * @param status the status
+     */
+    fun setHeadingStatus(status: DataStatus?)
+
+    /**
+     * Set ownship course
+     * @param course the course
+     */
+    fun setCourse(course: Double)
+
+    /**
+     * Set the reference system for the course
+     * @param reference the reference
+     */
+    fun setCourseReference(reference: ReferenceSystem?)
+
+    /**
+     * Set ownship speed
+     * @param speed the speed
+     */
+    fun setSpeed(speed: Double)
+
+    /**
+     * Set the reference system for the speed
+     * @param reference the reference
+     */
+    fun setSpeedReference(reference: ReferenceSystem?)
+
+    /**
+     * Set the vessel set
+     * @param set the vessel set
+     */
+    fun setVesselSet(set: Double)
+
+    /**
+     * Set the vessel drift
+     * @param drift the vessel drift
+     */
+    fun setVesselDrift(drift: Double)
+
     /**
      * Set the speed units
      * @param units the units
      */
-    var speedUnits: Units
+    fun setSpeedUnits(units: Units?)
 }

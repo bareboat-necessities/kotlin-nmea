@@ -22,6 +22,7 @@ package net.sf.marineapi.nmea.sentence
 
 import net.sf.marineapi.nmea.util.DataStatus
 
+
 /**
  *
  * Vessel's rate of turn given in degrees per minute. Negative values
@@ -38,21 +39,26 @@ interface ROTSentence : Sentence {
      *
      * @return Rate of Turn value (degrees per minute)
      */
+    fun getRateOfTurn(): Double
+
     /**
      * Sets the vessel's rate of turn value.
      *
      * @param rot Rate of Turn value to set (degrees per minute)
      */
-    var rateOfTurn: Double
+    fun setRateOfTurn(rot: Double)
+
     /**
      * Returns the data status (valid/invalid).
      *
      * @return True means data is valid
      */
+    fun getStatus(): DataStatus?
+
     /**
      * Sets the data status.
      *
      * @param status DataStatus to set.
      */
-    var status: DataStatus
+    fun setStatus(status: DataStatus?)
 }

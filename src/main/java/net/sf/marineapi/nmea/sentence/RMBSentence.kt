@@ -20,7 +20,10 @@
  */
 package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.*
+import net.sf.marineapi.nmea.util.DataStatus
+import net.sf.marineapi.nmea.util.Direction
+import net.sf.marineapi.nmea.util.Waypoint
+
 
 /**
  * Recommended minimum navigation information. This sentence is transmitted by a
@@ -45,14 +48,8 @@ interface RMBSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the arrival to waypoint status. Set [DataStatus.VOID] if not
-     * arrived at destination, otherwise [DataStatus.ACTIVE].
-     *
-     * @param status [DataStatus.VOID] or [DataStatus.ACTIVE].
-     * @throws IllegalArgumentException If status is `null`.
-     */
-    var arrivalStatus: DataStatus
+    fun getArrivalStatus(): DataStatus?
+
     /**
      * Get true bearing to destination.
      *
@@ -62,14 +59,8 @@ interface RMBSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set true bearing to destination, in degrees.
-     *
-     * @param bearing Bearing value, will be rounded to one decimal.
-     * @throws IllegalArgumentException If bearing value is out of bounds 0..360
-     * degrees.
-     */
-    var bearing: Double
+    fun getBearing(): Double
+
     /**
      * Get cross track error (XTE).
      *
@@ -79,14 +70,7 @@ interface RMBSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set cross track error (XTE), in nautical miles. Negative values are
-     * translated to positive, set Steer-To to indicate the direction of error.
-     *
-     * @param xte Cross track error value, will be rounded to one decimal.
-     * @see .setSteerTo
-     */
-    var crossTrackError: Double
+    fun getCrossTrackError(): Double
 
     /**
      * Get the destination waypoint.
@@ -98,6 +82,7 @@ interface RMBSentence : Sentence {
      * unexpected or illegal value.
      */
     fun getDestination(): Waypoint?
+
     /**
      * Get the ID of origin waypoint.
      *
@@ -107,12 +92,8 @@ interface RMBSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the ID of origin waypoint.
-     *
-     * @param id ID to set
-     */
-    var originId: String?
+    fun getOriginId(): String?
+
     /**
      * Get range to destination waypoint.
      *
@@ -122,12 +103,8 @@ interface RMBSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set range to destination waypoint.
-     *
-     * @param range Range value, in nautical miles.
-     */
-    var range: Double
+    fun getRange(): Double
+
     /**
      * Get the sentence data status, valid or invalid.
      *
@@ -137,12 +114,8 @@ interface RMBSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set status of sentence data, valid or invalid.
-     *
-     * @param status [DataStatus.ACTIVE] or [DataStatus.VOID]
-     */
-    var status: DataStatus
+    fun getStatus(): DataStatus?
+
     /**
      * Get the direction to steer to correct error (left/right).
      *
@@ -152,14 +125,8 @@ interface RMBSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set the direction to steer to correct error (left/right).
-     *
-     * @param steerTo [Direction.LEFT] or [Direction.RIGHT]
-     * @throws IllegalArgumentException If specified direction is any other than
-     * defined valid for param `steer`.
-     */
-    var steerTo: Direction
+    fun getSteerTo(): Direction?
+
     /**
      * Get velocity towards destination. Notice that returned value may also be
      * negative if vehicle is moving away from destination.
@@ -170,13 +137,7 @@ interface RMBSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    /**
-     * Set velocity towards destination. Notice that value may also be negative
-     * if vehicle is moving away from the destination.
-     *
-     * @param velocity Velocity, in knots (nautical miles per hour).
-     */
-    var velocity: Double
+    fun getVelocity(): Double
 
     /**
      * Tells if the destination waypoint has been reached or not.
@@ -190,9 +151,74 @@ interface RMBSentence : Sentence {
     fun hasArrived(): Boolean
 
     /**
+     * Set the arrival to waypoint status. Set [DataStatus.VOID] if not
+     * arrived at destination, otherwise [DataStatus.ACTIVE].
+     *
+     * @param status [DataStatus.VOID] or [DataStatus.ACTIVE].
+     * @throws IllegalArgumentException If status is `null`.
+     */
+    fun setArrivalStatus(status: DataStatus?)
+
+    /**
+     * Set true bearing to destination, in degrees.
+     *
+     * @param bearing Bearing value, will be rounded to one decimal.
+     * @throws IllegalArgumentException If bearing value is out of bounds 0..360
+     * degrees.
+     */
+    fun setBearing(bearing: Double)
+
+    /**
+     * Set cross track error (XTE), in nautical miles. Negative values are
+     * translated to positive, set Steer-To to indicate the direction of error.
+     *
+     * @param xte Cross track error value, will be rounded to one decimal.
+     * @see .setSteerTo
+     */
+    fun setCrossTrackError(xte: Double)
+
+    /**
      * Set the destination waypoint.
      *
      * @param dest Waypoint to set
      */
-    fun setDestination(dest: Waypoint)
+    fun setDestination(dest: Waypoint?)
+
+    /**
+     * Set the ID of origin waypoint.
+     *
+     * @param id ID to set
+     */
+    fun setOriginId(id: String?)
+
+    /**
+     * Set range to destination waypoint.
+     *
+     * @param range Range value, in nautical miles.
+     */
+    fun setRange(range: Double)
+
+    /**
+     * Set status of sentence data, valid or invalid.
+     *
+     * @param status [DataStatus.ACTIVE] or [DataStatus.VOID]
+     */
+    fun setStatus(status: DataStatus?)
+
+    /**
+     * Set the direction to steer to correct error (left/right).
+     *
+     * @param steerTo [Direction.LEFT] or [Direction.RIGHT]
+     * @throws IllegalArgumentException If specified direction is any other than
+     * defined valid for param `steer`.
+     */
+    fun setSteerTo(steerTo: Direction?)
+
+    /**
+     * Set velocity towards destination. Notice that value may also be negative
+     * if vehicle is moving away from the destination.
+     *
+     * @param velocity Velocity, in knots (nautical miles per hour).
+     */
+    fun setVelocity(velocity: Double)
 }
