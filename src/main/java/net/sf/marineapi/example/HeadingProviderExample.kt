@@ -24,6 +24,7 @@ import net.sf.marineapi.nmea.io.SentenceReader
 import net.sf.marineapi.provider.HeadingProvider
 import net.sf.marineapi.provider.event.HeadingEvent
 import net.sf.marineapi.provider.event.HeadingListener
+import net.sf.marineapi.provider.event.ProviderListener
 
 import java.io.*
 
@@ -49,7 +50,7 @@ class HeadingProviderExample(file: File?) : HeadingListener {
 
         // create provider and register listener
         provider = HeadingProvider(reader)
-        provider.addListener(this)
+        provider.addListener(this as ProviderListener<HeadingEvent?>)
         reader.start()
     }
 
