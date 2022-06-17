@@ -18,7 +18,8 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
 	implementation("com.neuronrobotics:nrjavaserial:5.2.1")
 
-	testImplementation("junit:junit:4.13.1")
+	testImplementation("junit:junit:4.13.2")
+	testRuntimeOnly("org.junit.vintage:junit-vintage-engine:4.12.2")
 }
 
 tasks.withType<KotlinCompile> {
