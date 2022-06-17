@@ -94,7 +94,7 @@ class BitVector {
         var value = 0
         var i = fBitVector.previousSetBit(to)
         while (i > from) {
-            (value += 1 shl to) - i
+            value += (1 shl (to - i))
             i = fBitVector.previousSetBit(i - 1)
         }
         return value

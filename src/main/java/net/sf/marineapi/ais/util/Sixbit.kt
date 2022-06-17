@@ -84,7 +84,7 @@ class Sixbit(payload: String?, fillBits: Int) {
     }
 
     private fun isValidCharacter(ascii: Char): Boolean {
-        return ascii.code >= 0x30 && ascii.code <= 0x77 && (ascii.code <= 0x57 || ascii.code) >= 0x60
+        return ascii.code >= 0x30 && ascii.code <= 0x77 && (ascii.code <= 0x57 || ascii.code >= 0x60)
     }
 
     private fun isValidString(bits: String): Boolean {
