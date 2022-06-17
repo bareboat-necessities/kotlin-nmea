@@ -60,7 +60,7 @@ class AISMessageFactory private constructor() {
      * due to illegal state, e.g. invalid or empty message.
      * @return AISMessage instance
      */
-    fun create(vararg sentences: AISSentence?): AISMessage {
+    fun create(vararg sentences: AISSentence): AISMessage {
         val parser = AISMessageParser(*sentences)
         if (!parsers.containsKey(parser.messageType)) {
             val msg = String.format("no parser for message type %d", parser.messageType)

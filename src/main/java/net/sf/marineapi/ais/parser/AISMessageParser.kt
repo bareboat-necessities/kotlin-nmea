@@ -55,8 +55,8 @@ open class AISMessageParser : AISMessage {
     constructor(vararg sentences: AISSentence) {
         var index = 1
         for (s in sentences) {
-            require(!(s.isFragmented && s.fragmentNumber != index++)) { "Incorrect order of AIS sentences" }
-            this.append(s.payload, s.fragmentNumber, s.fillBits)
+            require(!(s.isFragmented() && s.getFragmentNumber() != index++)) { "Incorrect order of AIS sentences" }
+            this.append(s.getPayload(), s.getFragmentNumber(), s.getFillBits())
         }
         decoder = Sixbit(message, fillBits)
     }
