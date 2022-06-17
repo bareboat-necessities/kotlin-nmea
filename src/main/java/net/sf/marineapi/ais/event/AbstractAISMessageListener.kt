@@ -22,7 +22,7 @@ package net.sf.marineapi.ais.event
 
 import net.sf.marineapi.ais.message.AISMessage
 
-import  net.sf.marineapi.ais.parser.AISMessageFactory
+import net.sf.marineapi.ais.parser.AISMessageFactory
 import net.sf.marineapi.nmea.event.AbstractSentenceListener
 import net.sf.marineapi.nmea.event.SentenceListener
 import net.sf.marineapi.nmea.sentence.AISSentence
@@ -55,10 +55,10 @@ import java.util.*
  * @see GenericTypeResolver
 </T> */
 abstract class AbstractAISMessageListener<T : AISMessage?> : AbstractSentenceListener<AISSentence> {
-    @kotlin.jvm.JvmField
+    @JvmField
     val messageType: Class<*>?
     private val queue: Queue<AISSentence> = LinkedList()
-    private val factory: AISMessageFactory? = AISMessageFactory.Companion.getInstance()
+    private val factory: AISMessageFactory? = AISMessageFactory.instance
 
     /**
      * Default constructor with automatic generic type resolving. Notice that
@@ -98,8 +98,8 @@ abstract class AbstractAISMessageListener<T : AISMessage?> : AbstractSentenceLis
      * This method has been declared `final` to ensure the correct
      * handling of received sentences.
      */
-    override fun sentenceRead(sentence: AISSentence) {
-        if (sentence.isFirstFragment) {
+    override fun sentenceRead(sentence: AISSentence?) {
+        if (sentence!!.isFirstFragment) {
             queue.clear()
         }
         queue.add(sentence)
