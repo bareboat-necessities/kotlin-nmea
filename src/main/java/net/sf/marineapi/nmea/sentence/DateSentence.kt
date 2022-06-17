@@ -20,7 +20,7 @@
  */
 package net.sf.marineapi.nmea.sentence
 
-import net.sf.marineapi.nmea.util.*
+import net.sf.marineapi.nmea.util.Date
 
 /**
  * Sentences that contains date information. Notice that some sentences may
@@ -40,6 +40,8 @@ interface DateSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
+    fun getDate(): Date?
+
     /**
      * Set date. Depending on the sentence type, the values may be inserted to
      * multiple fields or combined into one. Four-digit year value may also be
@@ -47,5 +49,5 @@ interface DateSentence : Sentence {
      *
      * @param date [Date]
      */
-    var date: Date
+    fun setDate(date: Date?)
 }
