@@ -63,7 +63,6 @@ class SentenceValidatorTest {
         // invalid checksum, otherwise valid
         Assert.assertFalse(isValid("\$ABCDE,1,2,3,4,5,6,7,8,9*00"))
         // something weird
-        Assert.assertFalse(isValid(null))
         Assert.assertFalse(isValid(""))
         Assert.assertFalse(isValid("$"))
         Assert.assertFalse(isValid("*"))
