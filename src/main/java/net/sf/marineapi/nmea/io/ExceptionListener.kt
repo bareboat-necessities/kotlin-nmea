@@ -20,7 +20,6 @@
  */
 package net.sf.marineapi.nmea.io
 
-java.lang.Exception
 /**
  * A listener callback interface for listening to Exceptions in DataReaders.
  *

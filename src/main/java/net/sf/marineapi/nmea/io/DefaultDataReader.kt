@@ -20,7 +20,10 @@
  */
 package net.sf.marineapi.nmea.io
 
-java.io.*import java.lang.Exception
+import java.io.BufferedReader
+import java.io.InputStream
+import java.io.InputStreamReader
+
 
 /**
  * The default data reader implementation using InputStream as data source.

@@ -24,6 +24,7 @@ import net.sf.marineapi.nmea.event.SentenceEvent
 import net.sf.marineapi.nmea.event.SentenceListener
 import net.sf.marineapi.nmea.sentence.Sentence
 import net.sf.marineapi.nmea.sentence.SentenceId
+
 import java.io.InputStream
 import java.net.DatagramSocket
 import java.util.*
@@ -216,7 +217,7 @@ class SentenceReader {
      * @param sentence sentence string.
      */
     fun fireSentenceEvent(sentence: Sentence?) {
-        val type = sentence!!.sentenceId
+        val type = sentence!!.getSentenceId()
         val targets: MutableSet<SentenceListener> = HashSet()
         if (listeners.containsKey(type)) {
             targets.addAll(listeners[type]!!)

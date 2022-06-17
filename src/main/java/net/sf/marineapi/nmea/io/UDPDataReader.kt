@@ -20,9 +20,10 @@
  */
 package net.sf.marineapi.nmea.io
 
-import java.net.DatagramPacketimport
+import java.net.DatagramPacket
+import java.net.DatagramSocket
+import java.util.*
 
-java.net.DatagramSocket java.lang.Exceptionimport java.util.*
 /**
  * DataReader implementation using DatagramSocket as data source.
  *
