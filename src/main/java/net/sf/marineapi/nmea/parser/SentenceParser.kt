@@ -577,7 +577,6 @@ open class SentenceParser : Sentence {
      * @return Array of String values
      */
     protected fun getStringValues(first: Int): Array<String> {
-        val values = arrayOfNulls<String>(fields!!.size - first)
-        return fields!!.subList(first, fields!!.size).toArray(values)
+        return fields!!.subList(first, fields!!.size).toTypedArray() as Array<String>
     }
 }
