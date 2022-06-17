@@ -35,7 +35,7 @@ class UBXMessage03Test {
 
     @Test
     fun testParsinfOfUBXMessage03() {
-        val sf: SentenceFactory = SentenceFactory.getInstance()
+        val sf: SentenceFactory = SentenceFactory.instance
         val sentence = sf.createParser(message03)
         Assert.assertTrue("Not a UBXSentence.", sentence is UBXSentence)
         val sentenceId = sentence!!.getSentenceId()

@@ -1,6 +1,5 @@
 package net.sf.marineapi.nmea.parser
 
-import net.sf.marineapi.nmea.sentence.RMBSentence.setBearing
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
 import org.junit.Assert
@@ -13,8 +12,8 @@ import org.junit.Test
  * @author Johan Bergkvist, Joshua Sweaney
  */
 class TTMTest {
-    var empty: TTMParser? = null
-    var ttm: TTMParser? = null
+    private var empty: TTMParser? = null
+    private var ttm: TTMParser? = null
     @Before
     fun setUp() {
         try {
