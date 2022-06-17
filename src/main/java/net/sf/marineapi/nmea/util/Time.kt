@@ -20,7 +20,11 @@
  */
 package net.sf.marineapi.nmea.util
 
-java.text.DecimalFormatSymbolsimport java.util.* java.util.Date
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
+import java.util.Date
+
 /**
  * Represents a time of day in 24-hour clock, i.e. the UTC time used as default
  * in NMEA 0183. Transmitted by
