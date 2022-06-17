@@ -15,7 +15,7 @@ object OutputExample {
     fun main(args: Array<String>) {
 
         // Create a fresh MWV parser
-        val sf: SentenceFactory = SentenceFactory.getInstance()
+        val sf: SentenceFactory = SentenceFactory.instance
         val mwv = sf.createParser(TalkerId.II, "MWV") as MWVSentence
 
         // should output "$IIMWV,,,,,V*36" 
@@ -24,11 +24,11 @@ object OutputExample {
         // Be sure to set all needed values correctly. For instance, in this
         // example setAngle() and setTrue() have mutual dependency. Likewise,
         // pay attention to set units correctly.
-        mwv.angle = 43.7
-        mwv.isTrue = true
-        mwv.speed = 4.54
-        mwv.speedUnit = Units.METER
-        mwv.status = DataStatus.ACTIVE
+        mwv.setAngle(43.7)
+        mwv.setTrue(true)
+        mwv.setSpeed(4.54)
+        mwv.setSpeedUnit(Units.METER)
+        mwv.setStatus(DataStatus.ACTIVE)
 
         // should output "$IIMWV,043.7,T,4.5,M,A*39"
         println(mwv.toSentence())
