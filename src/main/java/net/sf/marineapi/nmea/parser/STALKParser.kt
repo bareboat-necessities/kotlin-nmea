@@ -69,8 +69,9 @@ internal class STALKParser : SentenceParser, STALKSentence {
 
     override fun addParameter(param: String?) {
         val parameters: Array<String?> = getParameters()
-        parameters.toMutableList().add(param)
-        setParameters(*parameters)
+        val list = parameters.toMutableList()
+        list.add(param)
+        setParameters(*list.toTypedArray())
     }
 
     companion object {
