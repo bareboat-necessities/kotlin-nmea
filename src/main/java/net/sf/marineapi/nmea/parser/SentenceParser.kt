@@ -89,7 +89,7 @@ open class SentenceParser : Sentence {
         val end = Checksum.index(nmea)
         val csv = nmea.substring(begin, end)
         val values = csv.split(Sentence.FIELD_DELIMITER.toString().toRegex()).toTypedArray()
-        fields!!.addAll(Arrays.asList(*values))
+        fields!!.addAll(listOf(*values))
     }
 
     /**
