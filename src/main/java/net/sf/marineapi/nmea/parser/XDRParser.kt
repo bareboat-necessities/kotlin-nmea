@@ -24,7 +24,6 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.sentence.XDRSentence
 import net.sf.marineapi.nmea.util.Measurement
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**

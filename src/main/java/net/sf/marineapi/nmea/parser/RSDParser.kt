@@ -25,7 +25,6 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DisplayRotation
 import net.sf.marineapi.nmea.util.Units
-import java.util.*
 
 /**
  * RSD sentence parser

@@ -24,8 +24,6 @@ import net.sf.marineapi.nmea.sentence.RMCSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
-import java.util.*
-import java.util.Date
 
 
 /**
