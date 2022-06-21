@@ -40,10 +40,10 @@ object NavigationalStatus {
         "under way sailing",  // 8
         "reserved for future amendment",  // 9
         "reserved for future amendment",  //10
-        "reserved for future use",  //11
-        "reserved for future use",  //12
+        "power driven vessel towing astern",  //11
+        "power driven vessel pushing ahead or towing alongside",  //12
         "reserved for future use",  //13
-        "AIS-SART (active)",  //14
+        "AIS-SART MOB or EPIRB (active)",  //14
         "not defined" //15
     )
 
