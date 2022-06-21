@@ -503,15 +503,6 @@ class SentenceParserTest {
         Assert.assertFalse(instance!!.equals(null))
     }
 
-    /**
-     * Test method for
-     * [SentenceParser.equals]
-     */
-    @Test
-    fun testEqualsWithSelf() {
-        Assert.assertTrue(instance!! == instance)
-    }
-
     @Test
     fun testSetFieldCountLowerByOne() {
         val count = instance!!.getFieldCount() - 1

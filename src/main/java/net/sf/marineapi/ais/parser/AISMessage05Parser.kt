@@ -103,7 +103,7 @@ internal class AISMessage05Parser(content: Sixbit) : AISMessageParser(content, 4
         get() = fMaximumDraught / 10.0
 
     override fun toString(): String {
-        var result = "\tIMO:       " + iMONumber.toString()
+        var result = "\tIMO:       $iMONumber"
         result += SEPARATOR + "Call sign: " + callSign
         result += SEPARATOR + "Name:      " + name
         result += SEPARATOR + "Type:      " + ShipType.shipTypeToString(

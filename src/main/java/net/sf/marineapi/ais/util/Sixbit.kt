@@ -89,8 +89,8 @@ class Sixbit(payload: String?, fillBits: Int) {
 
     private fun isValidString(bits: String): Boolean {
         var valid = true
-        for (i in 0 until bits.length) {
-            if (!isValidCharacter(bits[i])) {
+        for (element in bits) {
+            if (!isValidCharacter(element)) {
                 valid = false
                 break
             }
@@ -115,8 +115,7 @@ class Sixbit(payload: String?, fillBits: Int) {
      */
     private fun transportToBinary(ascii: Char): Int {
         require(isValidCharacter(ascii)) { "Invalid transport character: $ascii" }
-        val retval: Int
-        retval = if (ascii.code < 0x60) ascii.code - 0x30 else ascii.code - 0x38
+        val retval: Int = if (ascii.code < 0x60) ascii.code - 0x30 else ascii.code - 0x38
         return retval
     }
 

@@ -23,7 +23,7 @@ class AbstractSentenceListenerTest {
 
     @Test
     fun testDefaultConstructorWhenExtended() {
-        val ebl: ExtendedBasicListener = ExtendedBasicListener()
+        val ebl = ExtendedBasicListener()
         Assert.assertEquals(BODSentence::class.java, ebl.sentenceType)
     }
 

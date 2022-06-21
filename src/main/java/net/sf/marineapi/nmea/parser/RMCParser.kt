@@ -67,8 +67,8 @@ internal class RMCParser : PositionParser, RMCSentence {
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DateSentence#getDate()
 	 */
-    override fun getDate(): net.sf.marineapi.nmea.util.Date {
-        return net.sf.marineapi.nmea.util.Date(getStringValue(UTC_DATE))
+    override fun getDate(): Date {
+        return Date(getStringValue(UTC_DATE))
     }
 
     /*
@@ -146,7 +146,7 @@ internal class RMCParser : PositionParser, RMCSentence {
 	 * net.sf.marineapi.nmea.sentence.DateSentence#setDate(net.sf.marineapi.
 	 * nmea.util.Date)
 	 */
-    override fun setDate(date: net.sf.marineapi.nmea.util.Date?) {
+    override fun setDate(date: Date?) {
         setStringValue(UTC_DATE, date.toString())
     }
 

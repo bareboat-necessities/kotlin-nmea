@@ -43,7 +43,7 @@ class DateTest {
     }
 
     /**
-     * Test method for [Date.Date].
+     * Test method for [Date].
      */
     @Test
     fun testConstructor() {
@@ -54,7 +54,7 @@ class DateTest {
 
     /**
      * Test method for
-     * [Date.Date].
+     * [Date].
      */
     @Test
     fun testConstructorWithValues() {
@@ -66,7 +66,7 @@ class DateTest {
 
     /**
      * Test method for
-     * [Date.Date].
+     * [Date].
      */
     @Test
     fun testConstructorWithString() {
@@ -87,15 +87,6 @@ class DateTest {
         val one = Date(2010, 6, 15)
         val two = Date(2010, 6, 15)
         Assert.assertTrue(one == two)
-    }
-
-    /**
-     * Test method for
-     * [Date.equals].
-     */
-    @Test
-    fun testEqualsItself() {
-        Assert.assertTrue(instance!! == instance)
     }
 
     /**

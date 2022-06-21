@@ -72,6 +72,7 @@ object Checksum {
      * @return Index of checksum separator or String length.
      */
     fun index(nmea: String): Int {
-        return if (nmea.indexOf(Sentence.CHECKSUM_DELIMITER) > 0) nmea.indexOf(Sentence.CHECKSUM_DELIMITER) else nmea.length
+        return if (nmea.indexOf(Sentence.CHECKSUM_DELIMITER) > 0) nmea.indexOf(Sentence.CHECKSUM_DELIMITER)
+        else nmea.length
     }
 }

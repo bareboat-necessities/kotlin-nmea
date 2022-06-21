@@ -332,7 +332,6 @@ class TimeTest {
         val a = Time(1, 2, 3.456)
         val b = Time(1, 2, 3.456)
         val c = Time(2, 3, 4.567)
-        Assert.assertTrue(a == a)
         Assert.assertTrue(a == b)
         Assert.assertFalse(a == c)
         Assert.assertFalse(a == Any())

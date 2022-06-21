@@ -39,7 +39,7 @@ import java.util.logging.Logger
  *
  *
  * @author Kimmo Tuukkanen
- * @see SentenceReader.SentenceReader
+ * @see SentenceReader
  */
 abstract class AbstractDataReader(var parent: SentenceReader? = null) : Runnable {
 
