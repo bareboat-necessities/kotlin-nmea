@@ -70,7 +70,7 @@ internal class RMCParser : PositionParser, RMCSentence {
 	 * @see net.sf.marineapi.nmea.sentence.DateSentence#getDate()
 	 */
     override fun getDate(): Date {
-        return Date(getStringValue(UTC_DATE))
+        return net.sf.marineapi.nmea.util.Date(getStringValue(UTC_DATE)).toDate()
     }
 
     /*
