@@ -31,7 +31,7 @@ class HeadingProviderTest : HeadingListener {
     @Throws(Exception::class)
     fun setUp() {
         factory = SentenceFactory.instance
-        val file = File("target/test-classes/data/sample1.txt")
+        val file = File("build/resources/test/data/sample1.txt")
         val str = FileInputStream(file)
         val r = SentenceReader(str)
         instance = HeadingProvider(r)

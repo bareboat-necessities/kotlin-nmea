@@ -48,7 +48,7 @@ class PositionProviderTest : PositionListener {
     @Before
     @Throws(Exception::class)
     fun setUp() {
-        val f = File("target/test-classes/data/Navibe-GM720.txt")
+        val f = File("build/resources/test/data/Navibe-GM720.txt")
         val str = FileInputStream(f)
         val r = SentenceReader(str)
         instance = PositionProvider(r)

@@ -44,8 +44,8 @@ class WPLTest {
         Assert.assertEquals("RUSKI", wp!!.id)
         Assert.assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
         Assert.assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
-        Assert.assertEquals(lat, java.lang.Double.valueOf(wp.latitude))
-        Assert.assertEquals(lon, java.lang.Double.valueOf(wp.longitude))
+        Assert.assertEquals(lat, java.lang.Double.valueOf(wp.latitude), 0.0000001)
+        Assert.assertEquals(lon, java.lang.Double.valueOf(wp.longitude), 0.0000001)
     }
 
     /**
