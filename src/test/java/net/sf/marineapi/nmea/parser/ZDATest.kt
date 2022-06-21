@@ -37,8 +37,8 @@ class ZDATest {
      */
     @Test
     fun testGetDate() {
-        val expected = Date(2004, 8, 7)
-        val parsed: Date = zda!!.getDate()
+        val expected = net.sf.marineapi.nmea.util.Date(2004, 8, 7)
+        val parsed = zda!!.getDate()
         Assert.assertEquals(expected, parsed)
     }
 
@@ -47,7 +47,7 @@ class ZDATest {
      */
     @Test
     fun testGetDay() {
-        Assert.assertEquals(7, zda!!.getDate().day.toLong())
+        Assert.assertEquals(7, zda!!.getDate().getDay().toLong())
     }
 
     /**
@@ -98,7 +98,7 @@ class ZDATest {
      */
     @Test
     fun testGetMonth() {
-        Assert.assertEquals(8, zda!!.getDate().month.toLong())
+        Assert.assertEquals(8, zda!!.getDate().getMonth().toLong())
     }
 
     /**
@@ -118,7 +118,7 @@ class ZDATest {
      */
     @Test
     fun testGetYear() {
-        Assert.assertEquals(2004, zda!!.getDate().year.toLong())
+        Assert.assertEquals(2004, zda!!.getDate().getYear().toLong())
     }
 
     /**
@@ -126,9 +126,9 @@ class ZDATest {
      */
     @Test
     fun testSetDate() {
-        zda!!.setDate(Date(10, 6, 9))
+        zda!!.setDate(net.sf.marineapi.nmea.util.Date(10, 6, 9))
         Assert.assertTrue(zda.toString().contains(",032915,09,06,2010,00,"))
-        zda!!.setDate(Date(85, 12, 11))
+        zda!!.setDate(net.sf.marineapi.nmea.util.Date(85, 12, 11))
         Assert.assertTrue(zda.toString().contains(",032915,11,12,1985,00,"))
     }
 
@@ -162,7 +162,7 @@ class ZDATest {
      */
     @Test
     fun testToDate() {
-        val d = Date(2010, 6, 15)
+        val d = net.sf.marineapi.nmea.util.Date(2010, 6, 15)
         val t = Time(12, 15, 30.246, 2, 0)
         zda!!.setDate(d)
         zda!!.setTime(t)

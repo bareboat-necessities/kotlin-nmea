@@ -77,7 +77,7 @@ class PositionProvider
                 } catch (e: DataNotAvailableException) {
                     // If we are not moving, cource can be undefined. Leave null in that case.
                 }
-                d = s.getDate()
+                d = s.getDate()!!.toDate()
                 t = s.getTime()
                 if (p == null) {
                     p = s.getPosition()

@@ -52,11 +52,11 @@ internal class ZDAParser : SentenceParser, ZDASentence {
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.DateSentence#getDate()
 	 */
-    override fun getDate(): Date {
+    override fun getDate(): net.sf.marineapi.nmea.util.Date {
         val y = getIntValue(YEAR)
         val m = getIntValue(MONTH)
         val d = getIntValue(DAY)
-        return Date(y, m, d)
+        return net.sf.marineapi.nmea.util.Date(y, m, d)
     }
 
     /*
@@ -95,10 +95,10 @@ internal class ZDAParser : SentenceParser, ZDASentence {
 	 * net.sf.marineapi.nmea.sentence.DateSentence#setDate(net.sf.marineapi.
 	 * nmea.util.Date)
 	 */
-    override fun setDate(date: Date?) {
-        setIntValue(YEAR, date!!.year)
-        setIntValue(MONTH, date.month, 2)
-        setIntValue(DAY, date.day, 2)
+    override fun setDate(date: net.sf.marineapi.nmea.util.Date?) {
+        setIntValue(YEAR, date!!.getYear())
+        setIntValue(MONTH, date.getMonth(), 2)
+        setIntValue(DAY, date.getDay(), 2)
     }
 
     /*
@@ -148,7 +148,7 @@ internal class ZDAParser : SentenceParser, ZDASentence {
     override fun toDate(): Date {
         val d = getDate()
         val t = getTime()
-        return t.toDate(d)
+        return t.toDate(d.toDate())
     }
 
     companion object {

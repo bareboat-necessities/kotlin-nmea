@@ -67,8 +67,8 @@ class RMCTest {
      */
     @Test
     fun testGetDate() {
-        val expected = Date(2005, 7, 16)
-        val parsed: Date = rmc!!.getDate()
+        val expected = net.sf.marineapi.nmea.util.Date(2005, 7, 16)
+        val parsed = rmc!!.getDate()
         Assert.assertEquals(expected, parsed)
     }
 
@@ -77,7 +77,7 @@ class RMCTest {
      */
     @Test
     fun testGetDay() {
-        Assert.assertEquals(16, rmc!!.getDate().day.toLong())
+        Assert.assertEquals(16, rmc!!.getDate().getDay().toLong())
     }
 
     /**
@@ -114,7 +114,7 @@ class RMCTest {
      */
     @Test
     fun testGetMonth() {
-        Assert.assertEquals(7, rmc!!.getDate().month.toLong())
+        Assert.assertEquals(7, rmc!!.getDate().getMonth().toLong())
     }
 
     /**
@@ -159,7 +159,7 @@ class RMCTest {
      */
     @Test
     fun testGetYear() {
-        Assert.assertEquals(2005, rmc!!.getDate().year.toLong())
+        Assert.assertEquals(2005, rmc!!.getDate().getYear().toLong())
     }
 
     /**
@@ -189,9 +189,9 @@ class RMCTest {
      */
     @Test
     fun testSetDate() {
-        rmc!!.setDate(Date(2010, 6, 9))
+        rmc!!.setDate(net.sf.marineapi.nmea.util.Date(2010, 6, 9))
         Assert.assertTrue(rmc.toString().contains(",360.0,090610,006.1,"))
-        rmc!!.setDate(Date(2010, 11, 12))
+        rmc!!.setDate(net.sf.marineapi.nmea.util.Date(2010, 11, 12))
         Assert.assertTrue(rmc.toString().contains(",360.0,121110,006.1,"))
     }
 

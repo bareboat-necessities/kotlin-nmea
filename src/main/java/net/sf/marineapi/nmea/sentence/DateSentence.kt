@@ -41,7 +41,7 @@ interface DateSentence : Sentence {
      * @throws net.sf.marineapi.nmea.parser.ParseException If the field contains
      * unexpected or illegal value.
      */
-    fun getDate(): Date?
+    fun getDate(): net.sf.marineapi.nmea.util.Date?
 
     /**
      * Set date. Depending on the sentence type, the values may be inserted to
@@ -50,5 +50,5 @@ interface DateSentence : Sentence {
      *
      * @param date [Date]
      */
-    fun setDate(date: Date?)
+    fun setDate(date: net.sf.marineapi.nmea.util.Date?)
 }
