@@ -16,88 +16,74 @@ class AISMessage09ParserTest {
     private val sixbit = Sixbit(payload, 0)
     private val msg: AISMessage09 = AISMessage09Parser(sixbit)
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val altitude: Unit
-        get() {
-            Assert.assertEquals(16, msg.altitude.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getAltitude() {
+        Assert.assertEquals(16, msg.altitude.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val speedOverGround: Unit
-        get() {
-            Assert.assertEquals(100.0, msg.speedOverGround.toDouble(), 0.1)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getSpeedOverGround() {
+        Assert.assertEquals(100.0, msg.speedOverGround.toDouble(), 0.1)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val positionAccuracy: Unit
-        get() {
-            Assert.assertEquals(true, msg.isAccurate)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getPositionAccuracy() {
+        Assert.assertEquals(true, msg.isAccurate)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val longitudeInDegrees: Unit
-        get() {
-            Assert.assertEquals(-82.91646, msg.longitudeInDegrees, 0.00001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getLongitudeInDegrees() {
+        Assert.assertEquals(-82.91646, msg.longitudeInDegrees, 0.00001)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val latitudeInDegrees: Unit
-        get() {
-            Assert.assertEquals(29.20575, msg.latitudeInDegrees, 0.00001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getLatitudeInDegrees() {
+        Assert.assertEquals(29.20575, msg.latitudeInDegrees, 0.00001)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val courseOverGround: Unit
-        get() {
-            Assert.assertEquals(30.0, msg.courseOverGround, 0.1)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getCourseOverGround() {
+        Assert.assertEquals(30.0, msg.courseOverGround, 0.1)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val timeStamp: Unit
-        get() {
-            Assert.assertEquals(11, msg.timeStamp.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getTimeStamp() {
+        Assert.assertEquals(11, msg.timeStamp.toLong())
+    }
 
-    // 1 == false, "not available" (default)
-    @get:Throws(Exception::class)
-    @get:Test
-    val dTEFlag: Unit
-        get() {
-            // 1 == false, "not available" (default)
-            Assert.assertEquals(false, msg.dTEFlag)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getDTEFlag() {
+        // 1 == false, "not available" (default)
+        Assert.assertEquals(false, msg.dTEFlag)
+    }
 
-    // 0 == Autonomous and continuous mode (default)
-    @get:Throws(Exception::class)
-    @get:Test
-    val assignedModeFlag: Unit
-        get() {
-            // 0 == Autonomous and continuous mode (default)
-            Assert.assertEquals(false, msg.assignedModeFlag)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getAssignedModeFlag() {
+        // 0 == Autonomous and continuous mode (default)
+        Assert.assertEquals(false, msg.assignedModeFlag)
+    }
 
-    // 0 = RAIM not in use (default)
-    @get:Throws(Exception::class)
-    @get:Test
-    val rAIMFlag: Unit
-        get() {
-            // 0 = RAIM not in use (default)
-            Assert.assertEquals(false, msg.rAIMFlag)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getRAIMFlag() {
+        // 0 = RAIM not in use (default)
+        Assert.assertEquals(false, msg.rAIMFlag)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val radioStatus: Unit
-        get() {
-            Assert.assertEquals(0, msg.radioStatus.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getRadioStatus() {
+        Assert.assertEquals(0, msg.radioStatus.toLong())
+    }
 
     @Test
     fun hasLatitude() {

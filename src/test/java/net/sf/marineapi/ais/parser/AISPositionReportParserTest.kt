@@ -16,77 +16,66 @@ class AISPositionReportParserTest {
     private val sixbit = Sixbit(payload, 0)
     private val msg: AISPositionReport = AISPositionReportParser(sixbit)
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val navigationalStatus: Unit
-        get() {
-            Assert.assertEquals(0, msg.navigationalStatus.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getNavigationalStatus() {
+        Assert.assertEquals(0, msg.navigationalStatus.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val rateOfTurn: Unit
-        get() {
-            Assert.assertEquals(-2.9, msg.rateOfTurn, 0.1)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getRateOfTurn() {
+        Assert.assertEquals(-2.9, msg.rateOfTurn, 0.1)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val speedOverGround: Unit
-        get() {
-            Assert.assertEquals(13.9, msg.speedOverGround, 0.1)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getSpeedOverGround() {
+        Assert.assertEquals(13.9, msg.speedOverGround, 0.1)
+    }
 
-    // 0 == low (> 10 meters)
-    @get:Throws(Exception::class)
-    @get:Test
-    val positionAccuracy: Unit
-        get() {
-            // 0 == low (> 10 meters)
-            Assert.assertFalse(msg.isAccurate)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getPositionAccuracy() {
+        // 0 == low (> 10 meters)
+        Assert.assertFalse(msg.isAccurate)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val longitudeInDegrees: Unit
-        get() {
-            Assert.assertEquals(11.8329767, msg.longitudeInDegrees, 0.0000001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getLongitudeInDegrees() {
+        Assert.assertEquals(11.8329767, msg.longitudeInDegrees, 0.0000001)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val latitudeInDegrees: Unit
-        get() {
-            Assert.assertEquals(57.6603533, msg.latitudeInDegrees, 0.0000001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getLatitudeInDegrees() {
+        Assert.assertEquals(57.6603533, msg.latitudeInDegrees, 0.0000001)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val courseOverGround: Unit
-        get() {
-            Assert.assertEquals(40.4, msg.courseOverGround, 0.1)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getCourseOverGround() {
+        Assert.assertEquals(40.4, msg.courseOverGround, 0.1)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val trueHeading: Unit
-        get() {
-            Assert.assertEquals(41, msg.trueHeading.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getTrueHeading() {
+        Assert.assertEquals(41, msg.trueHeading.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val timeStamp: Unit
-        get() {
-            Assert.assertEquals(53, msg.timeStamp.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getTimeStamp() {
+        Assert.assertEquals(53, msg.timeStamp.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val manouverIndicator: Unit
-        get() {
-            Assert.assertEquals(0, msg.manouverIndicator.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getManouverIndicator() {
+        Assert.assertEquals(0, msg.manouverIndicator.toLong())
+    }
 
     @Test
     fun hasLatitude() {

@@ -16,68 +16,58 @@ class AISMessage04Test {
     private val sixbit = Sixbit(payload, 0)
     private val msg: AISMessage04 = AISMessage04Parser(sixbit)
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val utcYear: Unit
-        get() {
-            Assert.assertEquals(2012, msg.utcYear.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getUtcYear() {
+        Assert.assertEquals(2012, msg.utcYear.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val utcMonth: Unit
-        get() {
-            Assert.assertEquals(6, msg.utcMonth.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getUtcMonth() {
+        Assert.assertEquals(6, msg.utcMonth.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val utcDay: Unit
-        get() {
-            Assert.assertEquals(8, msg.utcDay.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getUtcDay() {
+        Assert.assertEquals(8, msg.utcDay.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val utcHour: Unit
-        get() {
-            Assert.assertEquals(7, msg.utcHour.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getUtcHour() {
+        Assert.assertEquals(7, msg.utcHour.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val utcMinute: Unit
-        get() {
-            Assert.assertEquals(38, msg.utcMinute.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getUtcMinute() {
+        Assert.assertEquals(38, msg.utcMinute.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val utcSecond: Unit
-        get() {
-            Assert.assertEquals(20, msg.utcSecond.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getUtcSecond() {
+        Assert.assertEquals(20, msg.utcSecond.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val latitudeInDegrees: Unit
-        get() {
-            Assert.assertEquals(-29.870835, msg.latitudeInDegrees, 0.000001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getLatitudeInDegrees() {
+        Assert.assertEquals(-29.870835, msg.latitudeInDegrees, 0.000001)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val longitudeInDegrees: Unit
-        get() {
-            Assert.assertEquals(31.033513, msg.longitudeInDegrees, 0.000001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getLongitudeInDegrees() {
+        Assert.assertEquals(31.033513, msg.longitudeInDegrees, 0.000001)
+    }
 
-    // 1 = GPS
-    @get:Throws(Exception::class)
-    @get:Test
-    val typeOfEPFD: Unit
-        get() {
-            // 1 = GPS
-            Assert.assertEquals(1, msg.typeOfEPFD.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getTypeOfEPFD() {
+        // 1 = GPS
+        Assert.assertEquals(1, msg.typeOfEPFD.toLong())
+    }
 }

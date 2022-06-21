@@ -17,117 +17,101 @@ class AISMessage05Test {
     private val sixbit = Sixbit(payload, 2)
     private val msg: AISMessage05 = AISMessage05Parser(sixbit)
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val aISVersionIndicator: Unit
-        get() {
-            Assert.assertEquals(0, msg.aISVersionIndicator.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getAISVersionIndicator() {
+        Assert.assertEquals(0, msg.aISVersionIndicator.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val iMONumber: Unit
-        get() {
-            Assert.assertEquals(439303422, msg.iMONumber.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getIMONumber() {
+        Assert.assertEquals(439303422, msg.iMONumber.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val callSign: Unit
-        get() {
-            Assert.assertEquals("ZA83R", msg.callSign)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getCallSign() {
+        Assert.assertEquals("ZA83R", msg.callSign)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val name: Unit
-        get() {
-            Assert.assertEquals("ARCO AVON", msg.name)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getName() {
+        Assert.assertEquals("ARCO AVON", msg.name)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val typeOfShipAndCargoType: Unit
-        get() {
-            Assert.assertEquals(69, msg.typeOfShipAndCargoType.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getTypeOfShipAndCargoType() {
+        Assert.assertEquals(69, msg.typeOfShipAndCargoType.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val bow: Unit
-        get() {
-            Assert.assertEquals(113, msg.bow.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getBow() {
+        Assert.assertEquals(113, msg.bow.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val stern: Unit
-        get() {
-            Assert.assertEquals(31, msg.stern.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getStern() {
+        Assert.assertEquals(31, msg.stern.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val port: Unit
-        get() {
-            Assert.assertEquals(17, msg.port.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getPort() {
+        Assert.assertEquals(17, msg.port.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val starboard: Unit
-        get() {
-            Assert.assertEquals(11, msg.starboard.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getStarboard() {
+        Assert.assertEquals(11, msg.starboard.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val typeOfEPFD: Unit
-        get() {
-            Assert.assertEquals(0, msg.typeOfEPFD.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getTypeOfEPFD() {
+        Assert.assertEquals(0, msg.typeOfEPFD.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val eTAMonth: Unit
-        get() {
-            Assert.assertEquals(3, msg.eTAMonth.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getETAMonth() {
+        Assert.assertEquals(3, msg.eTAMonth.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val eTADay: Unit
-        get() {
-            Assert.assertEquals(23, msg.eTADay.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getETADay() {
+        Assert.assertEquals(23, msg.eTADay.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val eTAHour: Unit
-        get() {
-            Assert.assertEquals(19, msg.eTAHour.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getETAHour() {
+        Assert.assertEquals(19, msg.eTAHour.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val eTAMinute: Unit
-        get() {
-            Assert.assertEquals(45, msg.eTAMinute.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getETAMinute() {
+        Assert.assertEquals(45, msg.eTAMinute.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val maximumDraught: Unit
-        get() {
-            Assert.assertEquals(13.2, msg.maximumDraught, 0.1)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getMaximumDraught() {
+        Assert.assertEquals(13.2, msg.maximumDraught, 0.1)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val destination: Unit
-        get() {
-            Assert.assertEquals("HOUSTON", msg.destination)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getDestination() {
+        Assert.assertEquals("HOUSTON", msg.destination)
+    }
 
     @Test
     fun testIsDteReady() {

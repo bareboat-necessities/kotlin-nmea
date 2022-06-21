@@ -20,87 +20,74 @@ class AISMessage24ParserTest {
     private val partA: AISMessage24 = AISMessage24Parser(sixbitA)
     private val partB: AISMessage24 = AISMessage24Parser(sixbitB)
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val partNumber: Unit
-        get() {
-            Assert.assertEquals(0, partA.partNumber.toLong())
-            Assert.assertEquals(1, partB.partNumber.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getPartNumber() {
+        Assert.assertEquals(0, partA.partNumber.toLong())
+        Assert.assertEquals(1, partB.partNumber.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val name: Unit
-        get() {
-            Assert.assertEquals("THIS IS A CLASS B UN", partA.name)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getName() {
+        Assert.assertEquals("THIS IS A CLASS B UN", partA.name)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val typeOfShipAndCargoType: Unit
-        get() {
-            Assert.assertEquals(36, partB.typeOfShipAndCargoType.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getTypeOfShipAndCargoType() {
+        Assert.assertEquals(36, partB.typeOfShipAndCargoType.toLong())
+    }
 
-    // TODO correct? should be "1234567" according to http://www.maritec.co.za/tools/aisvdmvdodecoding/
-    @get:Throws(Exception::class)
-    @get:Test
-    val vendorId: Unit
-        get() {
-            // TODO correct? should be "1234567" according to http://www.maritec.co.za/tools/aisvdmvdodecoding/
-            Assert.assertEquals("123", partB.vendorId)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getVendorId() {
+        // TODO correct? should be "1234567" according to http://www.maritec.co.za/tools/aisvdmvdodecoding/
+        Assert.assertEquals("123", partB.vendorId)
+    }
 
-    // TODO correct?
-    @get:Throws(Exception::class)
-    @get:Test
-    val unitModelCode: Unit
-        get() {
-            // TODO correct?
-            Assert.assertEquals(13, partB.unitModelCode.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getUnitModelCode() {
+        // TODO correct?
+        Assert.assertEquals(13, partB.unitModelCode.toLong())
+    }
 
-    // TODO correct?
-    @get:Throws(Exception::class)
-    @get:Test
-    val serialNumber: Unit
-        get() {
-            // TODO correct?
-            Assert.assertEquals(220599, partB.serialNumber.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getSerialNumber() {
+        // TODO correct?
+        Assert.assertEquals(220599, partB.serialNumber.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val callSign: Unit
-        get() {
-            Assert.assertEquals("CALLSIG", partB.callSign)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getCallSign() {
+        Assert.assertEquals("CALLSIG", partB.callSign)
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val bow: Unit
-        get() {
-            Assert.assertEquals(5, partB.bow.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getBow() {
+        Assert.assertEquals(5, partB.bow.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val stern: Unit
-        get() {
-            Assert.assertEquals(4, partB.stern.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getStern() {
+        Assert.assertEquals(4, partB.stern.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val port: Unit
-        get() {
-            Assert.assertEquals(3, partB.port.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getPort() {
+        Assert.assertEquals(3, partB.port.toLong())
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val starboard: Unit
-        get() {
-            Assert.assertEquals(12, partB.starboard.toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getStarboard() {
+        Assert.assertEquals(12, partB.starboard.toLong())
+    }
+
 }

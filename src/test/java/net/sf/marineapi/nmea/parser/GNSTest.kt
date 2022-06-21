@@ -52,15 +52,14 @@ class GNSTest {
         Assert.assertEquals(12, empty!!.getFieldCount().toLong())
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val time: Unit
-        get() {
-            val t = gns!!.getTime()
-            Assert.assertEquals(1, t!!.getHour().toLong())
-            Assert.assertEquals(40, t.getMinutes().toLong())
-            Assert.assertEquals(35.00, t.getSeconds(), 0.001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getTime() {
+        val t = gns!!.getTime()
+        Assert.assertEquals(1, t!!.getHour().toLong())
+        Assert.assertEquals(40, t.getMinutes().toLong())
+        Assert.assertEquals(35.00, t.getSeconds(), 0.001)
+    }
 
     @Test
     @Throws(Exception::class)
@@ -71,21 +70,19 @@ class GNSTest {
         Assert.assertEquals(30.0, gns!!.getTime()!!.getSeconds(), 0.1)
     }
 
-    // 4332.69262,S,17235.48549,E
-    @get:Throws(Exception::class)
-    @get:Test
-    val position: Unit
-        get() {
+    @Test
+    @Throws(Exception::class)
+    fun getPosition() {
 
-            // 4332.69262,S,17235.48549,E
-            val LAT = -(43 + 32.69262 / 60)
-            val LON = 172 + 35.48549 / 60
-            val p = gns!!.getPosition()
-            Assert.assertEquals(LAT, p!!.latitude, 0.00001)
-            Assert.assertEquals(CompassPoint.SOUTH, p.latitudeHemisphere)
-            Assert.assertEquals(LON, p.longitude, 0.00001)
-            Assert.assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
-        }
+        // 4332.69262,S,17235.48549,E
+        val LAT = -(43 + 32.69262 / 60)
+        val LON = 172 + 35.48549 / 60
+        val p = gns!!.getPosition()
+        Assert.assertEquals(LAT, p!!.latitude, 0.00001)
+        Assert.assertEquals(CompassPoint.SOUTH, p.latitudeHemisphere)
+        Assert.assertEquals(LON, p.longitude, 0.00001)
+        Assert.assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
+    }
 
     @Test
     @Throws(Exception::class)
@@ -100,13 +97,12 @@ class GNSTest {
         Assert.assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val gpsMode: Unit
-        get() {
-            Assert.assertEquals(GNSSentence.Mode.RTK, gns!!.getGpsMode())
-            Assert.assertEquals(GNSSentence.Mode.NONE, empty!!.getGpsMode())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getGpsMode() {
+        Assert.assertEquals(GNSSentence.Mode.RTK, gns!!.getGpsMode())
+        Assert.assertEquals(GNSSentence.Mode.NONE, empty!!.getGpsMode())
+    }
 
     @Test
     @Throws(Exception::class)
@@ -118,13 +114,12 @@ class GNSTest {
         Assert.assertEquals(0, gns!!.getAdditionalModes()!!.size.toLong())
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val glonassMode: Unit
-        get() {
-            Assert.assertEquals(GNSSentence.Mode.RTK, gns!!.getGlonassMode())
-            Assert.assertEquals(GNSSentence.Mode.NONE, empty!!.getGlonassMode())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getGlonassMode() {
+        Assert.assertEquals(GNSSentence.Mode.RTK, gns!!.getGlonassMode())
+        Assert.assertEquals(GNSSentence.Mode.NONE, empty!!.getGlonassMode())
+    }
 
     @Test
     @Throws(Exception::class)
@@ -145,23 +140,21 @@ class GNSTest {
         Assert.assertEquals(GNSSentence.Mode.RTK, gns!!.getGlonassMode())
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val additionalModes: Unit
-        get() {
-            gns!!.setAdditionalModes(GNSSentence.Mode.AUTOMATIC, GNSSentence.Mode.ESTIMATED)
-            val additional = gns!!.getAdditionalModes()
-            Assert.assertEquals(2, additional!!.size.toLong())
-            Assert.assertEquals(GNSSentence.Mode.AUTOMATIC, additional[0])
-            Assert.assertEquals(GNSSentence.Mode.ESTIMATED, additional[1])
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getAdditionalModes() {
+        gns!!.setAdditionalModes(GNSSentence.Mode.AUTOMATIC, GNSSentence.Mode.ESTIMATED)
+        val additional = gns!!.getAdditionalModes()
+        Assert.assertEquals(2, additional!!.size.toLong())
+        Assert.assertEquals(GNSSentence.Mode.AUTOMATIC, additional[0])
+        Assert.assertEquals(GNSSentence.Mode.ESTIMATED, additional[1])
+    }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val satelliteCount: Unit
-        get() {
-            Assert.assertEquals(13, gns!!.getSatelliteCount().toLong())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getSatelliteCount() {
+        Assert.assertEquals(13, gns!!.getSatelliteCount().toLong())
+    }
 
     @Test
     @Throws(Exception::class)
@@ -171,12 +164,11 @@ class GNSTest {
         Assert.assertEquals(8, gns!!.getSatelliteCount().toLong())
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val horizontalDOP: Unit
-        get() {
-            Assert.assertEquals(0.9, gns!!.getHorizontalDOP(), 0.001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getHorizontalDOP() {
+        Assert.assertEquals(0.9, gns!!.getHorizontalDOP(), 0.001)
+    }
 
     @Test
     @Throws(Exception::class)
@@ -185,12 +177,11 @@ class GNSTest {
         Assert.assertEquals(0.12, gns!!.getHorizontalDOP(), 0.001)
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val orthometricHeight: Unit
-        get() {
-            Assert.assertEquals(25.63, gns!!.getOrthometricHeight(), 0.001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getOrthometricHeight() {
+        Assert.assertEquals(25.63, gns!!.getOrthometricHeight(), 0.001)
+    }
 
     @Test
     @Throws(Exception::class)
@@ -199,12 +190,11 @@ class GNSTest {
         Assert.assertEquals(12.34, gns!!.getOrthometricHeight(), 0.0001)
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val geoidalSeparation: Unit
-        get() {
-            Assert.assertEquals(11.24, gns!!.getGeoidalSeparation(), 0.001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getGeoidalSeparation() {
+        Assert.assertEquals(11.24, gns!!.getGeoidalSeparation(), 0.001)
+    }
 
     @Test
     @Throws(Exception::class)

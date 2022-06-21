@@ -10,6 +10,7 @@ import org.junit.Test
 class GBSTest {
     private var gbs: GBSSentence? = null
     private var empty: GBSSentence? = null
+
     @Before
     @Throws(Exception::class)
     fun setUp() {
@@ -17,12 +18,11 @@ class GBSTest {
         empty = GBSParser(TalkerId.GP)
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val latitudeError: Unit
-        get() {
-            Assert.assertEquals(-0.031, gbs!!.getLatitudeError(), 0.001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getLatitudeError() {
+        Assert.assertEquals(-0.031, gbs!!.getLatitudeError(), 0.001)
+    }
 
     @Test
     @Throws(Exception::class)
@@ -31,12 +31,11 @@ class GBSTest {
         Assert.assertEquals(-0.123, empty!!.getLatitudeError(), 0.001)
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val longitudeError: Unit
-        get() {
-            Assert.assertEquals(-0.186, gbs!!.getLongitudeError(), 0.001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getLongitudeError() {
+        Assert.assertEquals(-0.186, gbs!!.getLongitudeError(), 0.001)
+    }
 
     @Test
     @Throws(Exception::class)
@@ -45,12 +44,11 @@ class GBSTest {
         Assert.assertEquals(-0.456, empty!!.getLongitudeError(), 0.001)
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val altitudeError: Unit
-        get() {
-            Assert.assertEquals(0.219, gbs!!.getAltitudeError(), 0.001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getAltitudeError() {
+        Assert.assertEquals(0.219, gbs!!.getAltitudeError(), 0.001)
+    }
 
     @Test
     @Throws(Exception::class)
@@ -59,12 +57,11 @@ class GBSTest {
         Assert.assertEquals(-0.456, empty!!.getAltitudeError(), 0.001)
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val satelliteId: Unit
-        get() {
-            Assert.assertEquals("19", gbs!!.getSatelliteId())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getSatelliteId() {
+        Assert.assertEquals("19", gbs!!.getSatelliteId())
+    }
 
     @Test
     @Throws(Exception::class)
@@ -73,12 +70,11 @@ class GBSTest {
         Assert.assertEquals("07", empty!!.getSatelliteId())
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val probability: Unit
-        get() {
-            Assert.assertEquals(0.000, gbs!!.getProbability(), 0.001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getProbability() {
+        Assert.assertEquals(0.000, gbs!!.getProbability(), 0.001)
+    }
 
     @Test
     @Throws(Exception::class)
@@ -87,12 +83,11 @@ class GBSTest {
         Assert.assertEquals(0.123, empty!!.getProbability(), 0.001)
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val estimate: Unit
-        get() {
-            Assert.assertEquals(-0.354, gbs!!.getEstimate(), 0.001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getEstimate() {
+        Assert.assertEquals(-0.354, gbs!!.getEstimate(), 0.001)
+    }
 
     @Test
     @Throws(Exception::class)
@@ -101,12 +96,11 @@ class GBSTest {
         Assert.assertEquals(-0.234, empty!!.getEstimate(), 0.001)
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val deviation: Unit
-        get() {
-            Assert.assertEquals(6.972, gbs!!.getDeviation(), 0.001)
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getDeviation() {
+        Assert.assertEquals(6.972, gbs!!.getDeviation(), 0.001)
+    }
 
     @Test
     @Throws(Exception::class)
@@ -115,12 +109,11 @@ class GBSTest {
         Assert.assertEquals(1.234, empty!!.getDeviation(), 0.001)
     }
 
-    @get:Throws(Exception::class)
-    @get:Test
-    val time: Unit
-        get() {
-            Assert.assertEquals("015509.000", gbs!!.getTime().toString())
-        }
+    @Test
+    @Throws(Exception::class)
+    fun getTime() {
+        Assert.assertEquals("015509.000", gbs!!.getTime().toString())
+    }
 
     @Test
     @Throws(Exception::class)
