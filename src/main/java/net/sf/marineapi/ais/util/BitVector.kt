@@ -66,11 +66,11 @@ class BitVector {
      * @return BitVector with specified range
      */
     operator fun get(from: Int, to: Int): BitVector {
-        var from = from
-        var to = to
-        to++
-        from++
-        return BitVector(fBitVector[from, to])
+        var from1 = from
+        var to1 = to
+        to1++
+        from1++
+        return BitVector(fBitVector[from1, to1])
     }
 
     /**
