@@ -72,7 +72,7 @@ class BODTest : TestCase() {
     @Test
     fun testConstructorWithNullString() {
         try {
-            BODParser((null as String?)!!)
+            BODParser(null as TalkerId?)
         } catch (e: IllegalArgumentException) {
             // OK
         } catch (e: Exception) {
