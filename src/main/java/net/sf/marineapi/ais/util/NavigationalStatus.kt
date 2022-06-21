@@ -64,7 +64,7 @@ object NavigationalStatus {
      * @return true if the status falls within the range
      */
     fun isCorrect(value: Int): Boolean {
-        return value in 0..15 &&
-                (9 <= value && value > 13)
+        return value in 0..15 && value != 9 && value != 10 && value != 13
+
     }
 }
