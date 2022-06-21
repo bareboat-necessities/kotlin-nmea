@@ -121,8 +121,8 @@ internal class VWRParser : SentenceParser, VWRSentence {
 	 * net.sf.marineapi.nmea.sentence.VWRSentence#setMode(net.sf.marineapi.nmea
 	 * .com.sailgrib.nmea.util.Direction)
 	 */
-    override fun setDirectionLeftRight(directionLeftRight: Direction) {
-        setCharValue(WIND_DIRECTION_LEFT_RIGHT_OF_BOW, directionLeftRight.toChar())
+    override fun setDirectionLeftRight(direction: Direction) {
+        setCharValue(WIND_DIRECTION_LEFT_RIGHT_OF_BOW, direction.toChar())
     }
 
     companion object {

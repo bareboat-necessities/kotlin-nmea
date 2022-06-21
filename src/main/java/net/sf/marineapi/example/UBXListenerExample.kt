@@ -32,7 +32,7 @@ import kotlin.system.exitProcess
  *
  * @author Gunnar Hillert
  */
-class UBXListenerExample(file: File?) {
+class UBXListenerExample(file: File) {
     private val reader: SentenceReader
 
     /**
@@ -55,7 +55,7 @@ class UBXListenerExample(file: File?) {
     internal inner class UBXMessage00Listener : AbstractUBXMessageListener<UBXMessage00>() {
         override fun onMessage(msg: UBXMessage00?) {
             val position = msg!!.getPosition()
-            println(position.longitude.toString() + " : " + position.latitude)
+            println("${position.longitude} : ${position.latitude}")
             println("onMessage: $msg")
         }
     }

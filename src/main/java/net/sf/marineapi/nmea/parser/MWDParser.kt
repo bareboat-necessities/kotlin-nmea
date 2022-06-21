@@ -67,9 +67,8 @@ internal class MWDParser : SentenceParser, MWDSentence {
      * @see net.sf.marineapi.nmea.sentence.MWDSentence#getTrueWindDirection()
      */
     override fun getTrueWindDirection(): Double {
-        return if (hasValue(WIND_DIRECTION_TRUE) && hasValue(WIND_DIRECTION_TRUE_UNIT) && getStringValue(
-                WIND_DIRECTION_TRUE_UNIT
-            ).equals("T", ignoreCase = true)
+        return if (hasValue(WIND_DIRECTION_TRUE) && hasValue(WIND_DIRECTION_TRUE_UNIT) &&
+            getStringValue(WIND_DIRECTION_TRUE_UNIT).equals("T", ignoreCase = true)
         ) {
             getDoubleValue(WIND_DIRECTION_TRUE)
         } else {
@@ -81,9 +80,8 @@ internal class MWDParser : SentenceParser, MWDSentence {
      * @see net.sf.marineapi.nmea.sentence.MWDSentence#getWindSpeed()
      */
     override fun getWindSpeed(): Double {
-        return if (hasValue(WIND_SPEED_METERS) && hasValue(WIND_SPEED_METERS_UNIT) && getStringValue(
-                WIND_SPEED_METERS_UNIT
-            ).equals("M", ignoreCase = true)
+        return if (hasValue(WIND_SPEED_METERS) && hasValue(WIND_SPEED_METERS_UNIT) &&
+            getStringValue(WIND_SPEED_METERS_UNIT).equals("M", ignoreCase = true)
         ) {
             getDoubleValue(WIND_SPEED_METERS)
         } else {
@@ -95,9 +93,8 @@ internal class MWDParser : SentenceParser, MWDSentence {
      * @see net.sf.marineapi.nmea.sentence.MWDSentence#getWindSpeedKnots()
      */
     override fun getWindSpeedKnots(): Double {
-        return if (hasValue(WIND_SPEED_KNOTS) && hasValue(WIND_SPEED_KNOTS_UNIT) && getStringValue(
-                WIND_SPEED_KNOTS_UNIT
-            ).equals("N", ignoreCase = true)
+        return if (hasValue(WIND_SPEED_KNOTS) && hasValue(WIND_SPEED_KNOTS_UNIT) &&
+            getStringValue(WIND_SPEED_KNOTS_UNIT).equals("N", ignoreCase = true)
         ) {
             getDoubleValue(WIND_SPEED_KNOTS)
         } else {

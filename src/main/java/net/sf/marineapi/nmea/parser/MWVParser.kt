@@ -135,11 +135,7 @@ internal class MWVParser : SentenceParser, MWVSentence {
 	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#setTrue(boolean)
 	 */
     override fun setTrue(isTrue: Boolean) {
-        if (isTrue) {
-            setCharValue(REFERENCE, 'T')
-        } else {
-            setCharValue(REFERENCE, 'R')
-        }
+        setCharValue(REFERENCE, if (isTrue) 'T' else 'R')
     }
 
     companion object {

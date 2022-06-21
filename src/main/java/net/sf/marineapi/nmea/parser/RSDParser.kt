@@ -210,8 +210,8 @@ internal class RSDParser : SentenceParser, RSDSentence {
     /**
      * @see RSDSentence.setRangeScale
      */
-    override fun setRangeScale(scale: Double) {
-        setDoubleValue(RANGE_SCALE, scale)
+    override fun setRangeScale(rangeScale: Double) {
+        setDoubleValue(RANGE_SCALE, rangeScale)
     }
 
     /**

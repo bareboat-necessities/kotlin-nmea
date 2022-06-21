@@ -33,7 +33,7 @@ import kotlin.system.exitProcess
 /**
  * @author Kimmo Tuukkanen
  */
-class SatelliteInfoProviderExample(file: File?) : SatelliteInfoListener {
+class SatelliteInfoProviderExample(file: File) : SatelliteInfoListener {
     var reader: SentenceReader
     var provider: SatelliteInfoProvider
 

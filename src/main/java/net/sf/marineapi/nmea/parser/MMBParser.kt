@@ -57,8 +57,8 @@ internal class MMBParser : SentenceParser, MMBSentence {
         return getDoubleValue(PRESSURE_BARS)
     }
 
-    override fun setInchesOfMercury(inHg: Double) {
-        setDoubleValue(PRESSURE_INHG, inHg)
+    override fun setInchesOfMercury(inhg: Double) {
+        setDoubleValue(PRESSURE_INHG, inhg)
     }
 
     override fun setBars(bars: Double) {

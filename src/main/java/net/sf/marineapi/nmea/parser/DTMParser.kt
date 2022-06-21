@@ -126,11 +126,7 @@ internal class DTMParser : SentenceParser, DTMSentence {
 	 */
     override fun setLatitudeOffset(offset: Double) {
         setDoubleValue(LATITUDE_OFFSET, offset, 1, 4)
-        if (offset < 0) {
-            setCharValue(LAT_OFFSET_HEMISPHERE, 'S')
-        } else {
-            setCharValue(LAT_OFFSET_HEMISPHERE, 'N')
-        }
+        setCharValue(LAT_OFFSET_HEMISPHERE, if (offset < 0) 'S' else 'N')
     }
 
     /*
@@ -141,11 +137,7 @@ internal class DTMParser : SentenceParser, DTMSentence {
 	 */
     override fun setLongitudeOffset(offset: Double) {
         setDoubleValue(LONGITUDE_OFFSET, offset, 1, 4)
-        if (offset < 0) {
-            setCharValue(LON_OFFSET_HEMISPHERE, 'W')
-        } else {
-            setCharValue(LON_OFFSET_HEMISPHERE, 'E')
-        }
+        setCharValue(LON_OFFSET_HEMISPHERE, if (offset < 0) 'W' else 'E')
     }
 
     /*

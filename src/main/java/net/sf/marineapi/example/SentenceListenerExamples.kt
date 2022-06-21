@@ -36,7 +36,7 @@ import kotlin.system.exitProcess
  *
  * @author Kimmo Tuukkanen
  */
-class SentenceListenerExamples(file: File?) {
+class SentenceListenerExamples(file: File) {
     /**
      * Constructor
      */

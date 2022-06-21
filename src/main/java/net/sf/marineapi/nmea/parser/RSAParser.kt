@@ -70,11 +70,10 @@ internal class RSAParser : SentenceParser, RSASentence {
     }
 
     override fun setStatus(side: Side, status: DataStatus) {
-        if (Side.STARBOARD == side) {
-            setCharValue(STARBOARD_STATUS, status.toChar())
-        } else {
-            setCharValue(PORT_STATUS, status.toChar())
-        }
+        setCharValue(
+            if (Side.STARBOARD == side) STARBOARD_STATUS else PORT_STATUS,
+            status.toChar()
+        )
     }
 
     companion object {

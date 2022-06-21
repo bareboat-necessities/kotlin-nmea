@@ -88,14 +88,14 @@ internal abstract class AISParser : SentenceParser, AISSentence {
         return getNumberOfFragments() == getFragmentNumber()
     }
 
-    override fun isPartOfMessage(line: AISSentence?): Boolean {
-        return if (getNumberOfFragments() == line!!.getNumberOfFragments() &&
-            getFragmentNumber() < line.getFragmentNumber()
+    override fun isPartOfMessage(sentence: AISSentence?): Boolean {
+        return if (getNumberOfFragments() == sentence!!.getNumberOfFragments() &&
+            getFragmentNumber() < sentence.getFragmentNumber()
         ) {
-            if (getFragmentNumber() + 1 == line.getFragmentNumber()) {
-                getRadioChannel() == line.getRadioChannel() || getMessageId() == line.getMessageId()
+            if (getFragmentNumber() + 1 == sentence.getFragmentNumber()) {
+                getRadioChannel() == sentence.getRadioChannel() || getMessageId() == sentence.getMessageId()
             } else {
-                getRadioChannel() == line.getRadioChannel() && getMessageId() == line.getMessageId()
+                getRadioChannel() == sentence.getRadioChannel() && getMessageId() == sentence.getMessageId()
             }
         } else {
             false

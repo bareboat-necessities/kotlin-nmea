@@ -202,9 +202,9 @@ internal class RMBParser : PositionParser, RMBSentence {
 	 * net.sf.marineapi.nmea.sentence.RMBSentence#setSteerTo(net.sf.marineapi
 	 * .nmea.util.Direction)
 	 */
-    override fun setSteerTo(steer: Direction?) {
-        require(!(steer != Direction.LEFT && steer != Direction.RIGHT)) { "Expected steer-to is LEFT or RIGHT." }
-        setCharValue(STEER_TO, steer!!.toChar())
+    override fun setSteerTo(steerTo: Direction?) {
+        require(steerTo == Direction.LEFT || steerTo == Direction.RIGHT) { "Expected steer-to is LEFT or RIGHT." }
+        setCharValue(STEER_TO, steerTo!!.toChar())
     }
 
     /*

@@ -24,13 +24,12 @@ import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
 
-
 /**
  * The default data reader implementation using InputStream as data source.
  *
  * @author Kimmo Tuukkanen
  */
-internal class DefaultDataReader(source: InputStream?, parent: SentenceReader?) : AbstractDataReader(parent) {
+internal class DefaultDataReader(source: InputStream, parent: SentenceReader?) : AbstractDataReader(parent) {
     private val buffer: BufferedReader
 
     /**

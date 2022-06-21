@@ -62,7 +62,11 @@ object Angle9 {
      * @return Angular value as String or "no heading" or "invalid heading"
      */
     fun getTrueHeadingString(value: Int): String {
-        return if (value == DEFAULTVALUE) "no heading" else if (value > MAXVALUE) "invalid heading" else value.toString()
+        return when {
+            value == DEFAULTVALUE -> "no heading"
+            value > MAXVALUE -> "invalid heading"
+            else -> value.toString()
+        }
     }
 
     /**

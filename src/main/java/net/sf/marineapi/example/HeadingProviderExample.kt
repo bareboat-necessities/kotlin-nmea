@@ -34,7 +34,7 @@ import kotlin.system.exitProcess
  *
  * @author Kimmo Tuukkanen
  */
-class HeadingProviderExample(file: File?) : HeadingListener {
+class HeadingProviderExample(file: File) : HeadingListener {
     private val reader: SentenceReader
     private val provider: HeadingProvider
 

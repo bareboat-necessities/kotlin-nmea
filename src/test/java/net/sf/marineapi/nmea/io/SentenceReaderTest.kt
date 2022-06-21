@@ -28,12 +28,12 @@ class SentenceReaderTest {
     private var paused = false
     private var started = false
     private var stopped = false
-    private var stream: InputStream? = null
+
     @Before
     @Throws(Exception::class)
     fun setUp() {
         val file = File(TEST_DATA)
-        stream = FileInputStream(file)
+        val stream = FileInputStream(file)
         reader = SentenceReader(stream)
         dummyListener = DummySentenceListener()
         testListener = TestSentenceListener()

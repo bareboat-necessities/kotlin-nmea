@@ -31,7 +31,7 @@ import kotlin.system.exitProcess
  *
  * @author Kimmo Tuukkanen
  */
-class TypedSentenceListenerExample(file: File?) : AbstractSentenceListener<RMCSentence>() {
+class TypedSentenceListenerExample(file: File) : AbstractSentenceListener<RMCSentence>() {
     private val reader: SentenceReader
 
     /**

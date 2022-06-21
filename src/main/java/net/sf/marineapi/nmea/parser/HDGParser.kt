@@ -108,8 +108,8 @@ internal class HDGParser : SentenceParser, HDGSentence {
 	 * (non-Javadoc)
 	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#setHeading(double)
 	 */
-    override fun setHeading(heading: Double) {
-        setDegreesValue(HEADING, heading)
+    override fun setHeading(hdt: Double) {
+        setDegreesValue(HEADING, hdt)
     }
 
     /*

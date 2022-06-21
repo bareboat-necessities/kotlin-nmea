@@ -35,8 +35,6 @@ class AISRuleViolation
  */(private val fPlaceOfViolation: String, private val fCurrentValue: Any, private val fValidRange: String?) :
     Violation {
     override fun toString(): String {
-        return "Violation: Value " + fCurrentValue.toString() +
-                " in " + fPlaceOfViolation +
-                " is outside the allowed range (" + fValidRange + ")"
+        return "Violation: Value $fCurrentValue in $fPlaceOfViolation is outside the allowed range ($fValidRange)"
     }
 }

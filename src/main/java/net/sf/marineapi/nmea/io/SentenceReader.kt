@@ -108,7 +108,7 @@ class SentenceReader {
      *
      * @param source Stream from which to read NMEA data
      */
-    constructor(source: InputStream?) {
+    constructor(source: InputStream) {
         reader = DefaultDataReader(source, this)
     }
 
@@ -345,7 +345,7 @@ class SentenceReader {
      *
      * @param stream InputStream to set.
      */
-    fun setInputStream(stream: InputStream?) {
+    fun setInputStream(stream: InputStream) {
         if (reader!!.isRunning) {
             stop()
         }

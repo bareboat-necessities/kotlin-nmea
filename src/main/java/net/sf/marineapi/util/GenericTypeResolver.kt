@@ -50,7 +50,7 @@ object GenericTypeResolver {
      */
     fun resolve(child: Class<*>, parent: Class<*>): Class<*> {
         val t = resolve(child, parent, HashMap())
-        check(!(t == null || t is TypeVariable<*>)) { "Cannot resolve generic type <T>, use constructor with Class<T> param." }
+        check(t !is TypeVariable<*>) { "Cannot resolve generic type <T>, use constructor with Class<T> param." }
         return t as Class<*>
     }
 

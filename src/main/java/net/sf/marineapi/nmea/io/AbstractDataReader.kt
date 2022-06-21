@@ -20,7 +20,6 @@
  */
 package net.sf.marineapi.nmea.io
 
-import net.sf.marineapi.nmea.io.SentenceReader
 import net.sf.marineapi.nmea.parser.SentenceFactory
 import net.sf.marineapi.nmea.parser.UnsupportedSentenceException
 import net.sf.marineapi.nmea.sentence.SentenceValidator

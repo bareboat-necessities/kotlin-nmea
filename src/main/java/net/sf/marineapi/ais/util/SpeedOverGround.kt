@@ -71,8 +71,10 @@ object SpeedOverGround {
      * @return Formatted value, "no SOG" or "&gt;=102.2"
      */
     fun toString(value: Int): String {
-        return if (!isAvailable(value)) "no SOG" else if (value == 1022) ">=102.2" else DecimalFormat("##0.0").format(
-            toKnots(value)
-        )
+        return when {
+            !isAvailable(value) -> "no SOG"
+            value == 1022 -> ">=102.2"
+            else -> DecimalFormat("##0.0").format(toKnots(value))
+        }
     }
 }

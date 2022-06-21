@@ -37,7 +37,7 @@ import kotlin.system.exitProcess
  * @author Kimmo Tuukkanen
  * @see PositionProvider
  */
-class PositionProviderExample(f: File?) : PositionListener, ExceptionListener {
+class PositionProviderExample(f: File) : PositionListener, ExceptionListener {
     var provider: PositionProvider
 
     init {
