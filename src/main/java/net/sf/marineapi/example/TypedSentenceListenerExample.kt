@@ -24,6 +24,7 @@ import net.sf.marineapi.nmea.event.AbstractSentenceListener
 import net.sf.marineapi.nmea.io.SentenceReader
 import net.sf.marineapi.nmea.sentence.RMCSentence
 import java.io.*
+import kotlin.system.exitProcess
 
 /**
  * Example application demonstrating the usage of AbstractSentenceListener.
@@ -67,14 +68,14 @@ class TypedSentenceListenerExample(file: File?) : AbstractSentenceListener<RMCSe
         fun main(args: Array<String>) {
             if (args.size != 1) {
                 println("Usage:\njava TypedSentenceListenerExample <file>")
-                System.exit(1)
+                exitProcess(1)
             }
             try {
                 TypedSentenceListenerExample(File(args[0]))
                 println("Running, press CTRL-C to stop..")
             } catch (e: IOException) {
                 e.printStackTrace()
-                System.exit(1)
+                exitProcess(1)
             }
         }
     }

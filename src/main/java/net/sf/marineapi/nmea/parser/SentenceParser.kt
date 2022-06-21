@@ -238,7 +238,7 @@ open class SentenceParser : Sentence {
 
     override fun isAISSentence(): Boolean {
         val types = arrayOf("VDO", "VDM")
-        return Arrays.asList(*types).contains(getSentenceId())
+        return listOf(*types).contains(getSentenceId())
     }
 
     /*
@@ -358,8 +358,7 @@ open class SentenceParser : Sentence {
      * @return Field as parsed by [Double.parseDouble]
      */
     fun getDoubleValue(index: Int): Double {
-        val value: Double
-        value = try {
+        val value: Double = try {
             getStringValue(index).toDouble()
         } catch (ex: NumberFormatException) {
             throw ParseException("Field does not contain double value", ex)
@@ -374,8 +373,7 @@ open class SentenceParser : Sentence {
      * @return Field parsed by [Integer.parseInt]
      */
     protected fun getIntValue(index: Int): Int {
-        val value: Int
-        value = try {
+        val value: Int = try {
             getStringValue(index).toInt()
         } catch (ex: NumberFormatException) {
             throw ParseException("Field does not contain integer value", ex)
@@ -413,7 +411,7 @@ open class SentenceParser : Sentence {
      * @return True if field contains value, otherwise false.
      */
     protected fun hasValue(index: Int): Boolean {
-        return fields!!.size > index && fields!![index] != null && !fields!![index]!!.isEmpty()
+        return fields!!.size > index && fields!![index] != null && fields!![index]!!.isNotEmpty()
     }
 
     /**
@@ -476,7 +474,7 @@ open class SentenceParser : Sentence {
                 pattern.append('0')
             }
         }
-        if (pattern.length == 0) {
+        if (pattern.isEmpty()) {
             pattern.append('0')
         }
         val nf = DecimalFormat(pattern.toString())

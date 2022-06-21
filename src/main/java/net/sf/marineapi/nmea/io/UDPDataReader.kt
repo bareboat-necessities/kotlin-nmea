@@ -49,7 +49,7 @@ internal class UDPDataReader
             // and store the individual sentences in the queue.  Queue will always start empty here.
             data = receive()
             val lines = data!!.split("\\r?\\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            queue.addAll(Arrays.asList(*lines))
+            queue.addAll(listOf(*lines))
         }
         return data
     }

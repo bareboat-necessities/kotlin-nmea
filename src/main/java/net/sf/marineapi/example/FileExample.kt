@@ -26,6 +26,7 @@ import net.sf.marineapi.nmea.io.SentenceReader
 import net.sf.marineapi.nmea.sentence.GGASentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import java.io.*
+import kotlin.system.exitProcess
 
 /**
  * Simple example application that takes a filename as command-line argument and
@@ -105,14 +106,14 @@ class FileExample(file: File?) : SentenceListener {
         fun main(args: Array<String>) {
             if (args.size != 1) {
                 println("Example usage:\njava FileExample nmea.log")
-                System.exit(1)
+                exitProcess(1)
             }
             try {
                 FileExample(File(args[0]))
                 println("Running, press CTRL-C to stop..")
             } catch (e: IOException) {
                 e.printStackTrace()
-                System.exit(1)
+                exitProcess(1)
             }
         }
     }

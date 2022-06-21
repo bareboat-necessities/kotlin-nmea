@@ -31,7 +31,7 @@ object ManeuverIndicator {
     private const val MAXVALUE = 2
 
     /** Valid range with default value for "no value"  */
-    const val RANGE = "[" + MINVALUE + "," + MAXVALUE + "] + {" + DEFAULTVALUE + "}"
+    const val RANGE = "[$MINVALUE,$MAXVALUE] + {$DEFAULTVALUE}"
 
     /**
      * Checks if the value is in the correct range.
@@ -40,7 +40,7 @@ object ManeuverIndicator {
      * @return true if the value is correct
      */
     fun isCorrect(value: Int): Boolean {
-        return MINVALUE <= value && value <= MAXVALUE || value == DEFAULTVALUE
+        return value in MINVALUE..MAXVALUE || value == DEFAULTVALUE
     }
 
     /**

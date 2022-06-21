@@ -24,6 +24,7 @@ import net.sf.marineapi.nmea.sentence.HDGSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.CompassPoint
+import kotlin.math.abs
 
 /**
  * HDG sentence parser.
@@ -100,7 +101,7 @@ internal class HDGParser : SentenceParser, HDGSentence {
         } else {
             setStringValue(DEV_DIRECTION, "")
         }
-        setDoubleValue(DEVIATION, Math.abs(deviation), 3, 1)
+        setDoubleValue(DEVIATION, abs(deviation), 3, 1)
     }
 
     /*
@@ -124,7 +125,7 @@ internal class HDGParser : SentenceParser, HDGSentence {
         } else {
             setStringValue(VAR_DIRECTION, "")
         }
-        setDoubleValue(VARIATION, Math.abs(variation), 3, 1)
+        setDoubleValue(VARIATION, abs(variation), 3, 1)
     }
 
     companion object {

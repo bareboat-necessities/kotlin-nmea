@@ -36,7 +36,7 @@ object TimeStamp {
      * @return true if the time stamp falls within a range
      */
     fun isAvailable(value: Int): Boolean {
-        return value >= MINVALUE && value <= MAXVALUE
+        return value in MINVALUE..MAXVALUE
     }
 
     /**
@@ -51,7 +51,7 @@ object TimeStamp {
             61 -> "positioning system manual"
             62 -> "dead reckoning"
             63 -> "positioning system inoperative"
-            else -> Integer.toString(value)
+            else -> value.toString()
         }
     }
 }

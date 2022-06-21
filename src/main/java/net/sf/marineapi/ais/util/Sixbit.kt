@@ -50,7 +50,7 @@ class Sixbit(payload: String?, fillBits: Int) {
         this.payload = payload
         require(isValidString(this.payload)) { "Invalid payload characters" }
         fBitVector = BitVector(payload.length * BITS_PER_CHAR)
-        for (i in 0 until payload.length) {
+        for (i in payload.indices) {
             val c = payload[i]
             val b = transportToBinary(c)
             convert(b, i * BITS_PER_CHAR, BITS_PER_CHAR)
@@ -84,7 +84,7 @@ class Sixbit(payload: String?, fillBits: Int) {
     }
 
     private fun isValidCharacter(ascii: Char): Boolean {
-        return ascii.code >= 0x30 && ascii.code <= 0x77 && (ascii.code <= 0x57 || ascii.code >= 0x60)
+        return ascii.code in 0x30..0x77 && (ascii.code <= 0x57 || ascii.code >= 0x60)
     }
 
     private fun isValidString(bits: String): Boolean {
@@ -116,7 +116,7 @@ class Sixbit(payload: String?, fillBits: Int) {
     private fun transportToBinary(ascii: Char): Int {
         require(isValidCharacter(ascii)) { "Invalid transport character: $ascii" }
         val retval: Int
-        if (ascii.code < 0x60) retval = ascii.code - 0x30 else retval = ascii.code - 0x38
+        retval = if (ascii.code < 0x60) ascii.code - 0x30 else ascii.code - 0x38
         return retval
     }
 

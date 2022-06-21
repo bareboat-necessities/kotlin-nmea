@@ -98,7 +98,7 @@ internal class GNSParser : PositionParser, GNSSentence {
         }
         val additional = mode.substring(VAR_MODE)
         val modes = arrayOfNulls<GNSSentence.Mode>(additional.length)
-        for (i in 0 until additional.length) {
+        for (i in additional.indices) {
             modes[i] = GNSSentence.Mode.valueOf(additional[i])
         }
         return modes

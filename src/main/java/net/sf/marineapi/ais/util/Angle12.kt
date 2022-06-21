@@ -33,7 +33,7 @@ object Angle12 {
     private const val MAXVALUE = 3599
 
     /** Valid range with default value for "no value"  */
-    const val RANGE = "[" + MINVALUE + "," + MAXVALUE + "] + {" + DEFAULTVALUE + "}"
+    const val RANGE = "[$MINVALUE,$MAXVALUE] + {$DEFAULTVALUE}"
 
     /**
      * Tells if the angular value is correct, i.e. within the range 0..3599 or
@@ -43,7 +43,7 @@ object Angle12 {
      * @return `true` if correct, otherwise `false`.
      */
     fun isCorrect(value: Int): Boolean {
-        return MINVALUE <= value && value <= MAXVALUE || value == DEFAULTVALUE
+        return value in MINVALUE..MAXVALUE || value == DEFAULTVALUE
     }
 
     /**
@@ -73,8 +73,7 @@ object Angle12 {
      * @return a string representing the angular value
      */
     fun toString(value: Int): String {
-        val msg: String
-        msg = if (isCorrect(value)) {
+        val msg: String = if (isCorrect(value)) {
             if (isAvailable(value)) DecimalFormat("##0.0;-##0.0").format(toDegrees(value)) else "not available"
         } else "illegal value"
         return msg

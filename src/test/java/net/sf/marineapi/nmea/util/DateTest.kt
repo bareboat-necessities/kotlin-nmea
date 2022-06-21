@@ -83,10 +83,10 @@ class DateTest {
     @Test
     fun testEqualsAfterInit() {
         val d = Date()
-        Assert.assertTrue(d.equals(instance))
+        Assert.assertTrue(d == instance)
         val one = Date(2010, 6, 15)
         val two = Date(2010, 6, 15)
-        Assert.assertTrue(one.equals(two))
+        Assert.assertTrue(one == two)
     }
 
     /**
@@ -95,7 +95,7 @@ class DateTest {
      */
     @Test
     fun testEqualsItself() {
-        Assert.assertTrue(instance!!.equals(instance))
+        Assert.assertTrue(instance!! == instance)
     }
 
     /**
@@ -110,17 +110,17 @@ class DateTest {
         val a = Date(y, m, d)
         val b = Date(y, m, d)
         a.setDay(b.getDay() - 1)
-        Assert.assertFalse(a.equals(b))
+        Assert.assertFalse(a == b)
         b.setDay(a.getDay())
-        Assert.assertTrue(a.equals(b))
+        Assert.assertTrue(a == b)
         a.setMonth(b.getMonth() - 1)
-        Assert.assertFalse(a.equals(b))
+        Assert.assertFalse(a == b)
         b.setMonth(a.getMonth())
-        Assert.assertTrue(a.equals(b))
+        Assert.assertTrue(a == b)
         a.setYear(b.getYear() - 1)
-        Assert.assertFalse(a.equals(b))
+        Assert.assertFalse(a == b)
         b.setYear(a.getYear())
-        Assert.assertTrue(a.equals(b))
+        Assert.assertTrue(a == b)
     }
 
     /**
@@ -129,10 +129,10 @@ class DateTest {
      */
     @Test
     fun testEqualsWrongType() {
-        val str: String = "foobar"
+        val str = "foobar"
         val dbl: Any = java.lang.Double.valueOf(123.0)
         Assert.assertFalse(instance!!.equals(str))
-        Assert.assertFalse(instance!!.equals(dbl))
+        Assert.assertFalse(instance!! == dbl)
     }
 
     /**

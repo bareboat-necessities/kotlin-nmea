@@ -243,7 +243,7 @@ class SentenceReaderTest {
     // Test "reader" that only repeats the given sentence
     inner class DummyDataReader(private val sentence: String) : AbstractDataReader() {
         @Throws(Exception::class)
-        override fun read(): String? {
+        override fun read(): String {
             return this.sentence
         }
     }

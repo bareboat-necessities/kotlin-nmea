@@ -54,11 +54,11 @@ class ChecksumTest {
      */
     @Test
     fun testCalculate() {
-        Assert.assertEquals("1D", calculate(BODTest.Companion.EXAMPLE))
-        Assert.assertEquals("63", calculate(GGATest.Companion.EXAMPLE))
-        Assert.assertEquals("26", calculate(GLLTest.Companion.EXAMPLE))
+        Assert.assertEquals("1D", calculate(BODTest.EXAMPLE))
+        Assert.assertEquals("63", calculate(GGATest.EXAMPLE))
+        Assert.assertEquals("26", calculate(GLLTest.EXAMPLE))
         Assert.assertEquals("0B", calculate(RMCTest.EXAMPLE))
-        Assert.assertEquals("3D", calculate(GSATest.Companion.EXAMPLE))
+        Assert.assertEquals("3D", calculate(GSATest.EXAMPLE))
         Assert.assertEquals("73", calculate(GSVTest.EXAMPLE))
         Assert.assertEquals("58", calculate(RMBTest.EXAMPLE))
         Assert.assertEquals("25", calculate(RTETest.EXAMPLE))

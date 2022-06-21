@@ -100,7 +100,7 @@ class SerialPortExample : SentenceListener {
             val e: Enumeration<*> = CommPortIdentifier.getPortIdentifiers()
             while (e.hasMoreElements()) {
                 val id: CommPortIdentifier = e.nextElement() as CommPortIdentifier
-                if (id.getPortType() === CommPortIdentifier.PORT_SERIAL) {
+                if (id.portType === CommPortIdentifier.PORT_SERIAL) {
                     val sp: SerialPort = id.open("SerialExample", 30) as SerialPort
                     sp.setSerialPortParams(
                         4800, SerialPort.DATABITS_8,
@@ -108,10 +108,10 @@ class SerialPortExample : SentenceListener {
                     )
                     sp.enableReceiveTimeout(1000)
                     sp.enableReceiveThreshold(0)
-                    val `is`: InputStream = sp.getInputStream()
+                    val `is`: InputStream = sp.inputStream
                     val isr = InputStreamReader(`is`)
                     val buf = BufferedReader(isr)
-                    System.out.println("Scanning port " + sp.getName())
+                    println("Scanning port " + sp.name)
 
                     // try each port few times before giving up
                     for (i in 0..4) {
@@ -144,7 +144,7 @@ class SerialPortExample : SentenceListener {
         try {
             val sp: SerialPort? = getSerialPort()
             if (sp != null) {
-                val `is`: InputStream = sp.getInputStream()
+                val `is`: InputStream = sp.inputStream
                 val sr = SentenceReader(`is`)
                 sr.addSentenceListener(this)
                 sr.start()

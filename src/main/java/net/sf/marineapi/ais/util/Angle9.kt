@@ -31,7 +31,7 @@ object Angle9 {
     private const val MAXVALUE = 359
 
     /** Valid range with default value for "no value"  */
-    const val RANGE = "[" + MINVALUE + "," + MAXVALUE + "] + {" + DEFAULTVALUE + "}"
+    const val RANGE = "[$MINVALUE,$MAXVALUE] + {$DEFAULTVALUE}"
 
     /**
      * Tells if the given angular value is correct, i.e. within range of 0..359
@@ -41,7 +41,7 @@ object Angle9 {
      * @return `true` if correct, otherwise `false`.
      */
     fun isCorrect(value: Int): Boolean {
-        return MINVALUE <= value && value <= MAXVALUE || value == DEFAULTVALUE
+        return value in MINVALUE..MAXVALUE || value == DEFAULTVALUE
     }
 
     /**
@@ -62,11 +62,7 @@ object Angle9 {
      * @return Angular value as String or "no heading" or "invalid heading"
      */
     fun getTrueHeadingString(value: Int): String {
-        val headingString: String
-        headingString =
-            if (value == DEFAULTVALUE) "no heading" else if (value > MAXVALUE) "invalid heading" else Integer.toString(
-                value
-            )
+        val headingString: String = if (value == DEFAULTVALUE) "no heading" else if (value > MAXVALUE) "invalid heading" else value.toString()
         return headingString
     }
 
@@ -77,9 +73,8 @@ object Angle9 {
      * @return Angular value as String or "not available" or "illegal value"
      */
     fun toString(value: Int): String {
-        val msg: String
-        msg = if (isCorrect(value)) {
-            if (isAvailable(value)) Integer.toString(value) else "not available"
+        val msg: String = if (isCorrect(value)) {
+            if (isAvailable(value)) value.toString() else "not available"
         } else "illegal value"
         return msg
     }

@@ -26,6 +26,8 @@ import java.text.DecimalFormatSymbols
 import java.util.GregorianCalendar
 import java.util.Calendar
 import java.util.Date
+import kotlin.math.floor
+import kotlin.math.roundToLong
 
 /**
  * Represents a time of day in 24-hour clock, i.e. the UTC time used as default
@@ -164,7 +166,7 @@ class Time {
      */
     val milliseconds: Long
         get() {
-            var m = Math.round(getSeconds() * 1000)
+            var m = (getSeconds() * 1000).roundToLong()
             m += (getMinutes() * 60 * 1000).toLong()
             m += (getHour() * 3600 * 1000).toLong()
             return m
@@ -257,8 +259,8 @@ class Time {
      */
     fun toDate(d: Date?): Date {
         val seconds = getSeconds()
-        val fullSeconds = Math.floor(seconds).toInt()
-        val milliseconds = Math.round((seconds - fullSeconds) * 1000).toInt()
+        val fullSeconds = floor(seconds).toInt()
+        val milliseconds = ((seconds - fullSeconds) * 1000).roundToLong().toInt()
         val cal = GregorianCalendar()
         cal.time = d
         cal[Calendar.HOUR_OF_DAY] = getHour()
@@ -291,7 +293,7 @@ class Time {
     fun toISO8601(): String {
         val hr = getHour()
         val min = getMinutes()
-        val sec = Math.floor(getSeconds()).toInt()
+        val sec = floor(getSeconds()).toInt()
         val tzHr = offsetHours
         val tzMin = offsetMinutes
         return String.format(TIME_PATTERN, hr, min, sec, tzHr, tzMin)

@@ -24,6 +24,7 @@ import net.sf.marineapi.ublox.event.AbstractUBXMessageListener
 import net.sf.marineapi.ublox.message.UBXMessage00
 import net.sf.marineapi.ublox.message.UBXMessage03
 import java.io.*
+import kotlin.system.exitProcess
 
 /**
  * Simple example application that takes a filename as command-line argument and
@@ -78,14 +79,14 @@ class UBXListenerExample(file: File?) {
         fun main(args: Array<String>) {
             if (args.size != 1) {
                 println("Exactly 1 argument is required. Example usage:\njava UBXListenerExample pubx.log")
-                System.exit(1)
+                exitProcess(1)
             }
             try {
                 UBXListenerExample(File(args[0]))
                 println("Running, press CTRL-C to stop..")
             } catch (e: IOException) {
                 e.printStackTrace()
-                System.exit(1)
+                exitProcess(1)
             }
         }
     }

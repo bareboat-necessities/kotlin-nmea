@@ -84,12 +84,12 @@ object SentenceValidator {
         var isValid = false
         if (isSentence(nmea)) {
             var i: Int = nmea.indexOf(Sentence.CHECKSUM_DELIMITER)
-            if (i > 0) {
+            isValid = if (i > 0) {
                 val sum = nmea.substring(++i, nmea.length)
-                isValid = sum == Checksum.calculate(nmea)
+                sum == Checksum.calculate(nmea)
             } else {
                 // no checksum
-                isValid = true
+                true
             }
         }
         return isValid

@@ -29,6 +29,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
+import kotlin.system.exitProcess
 
 /**
  * Demonstrates the different ways to use SentenceListeners.
@@ -88,14 +89,14 @@ class SentenceListenerExamples(file: File?) {
         fun main(args: Array<String>) {
             if (args.size != 1) {
                 println("Example usage:\njava FileExample nmea.log")
-                System.exit(1)
+                exitProcess(1)
             }
             try {
                 SentenceListenerExamples(File(args[0]))
                 println("Running, press CTRL-C to stop..")
             } catch (e: IOException) {
                 e.printStackTrace()
-                System.exit(1)
+                exitProcess(1)
             }
         }
     }

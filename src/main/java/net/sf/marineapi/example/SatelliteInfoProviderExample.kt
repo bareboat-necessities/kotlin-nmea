@@ -28,6 +28,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
+import kotlin.system.exitProcess
 
 /**
  * @author Kimmo Tuukkanen
@@ -78,14 +79,14 @@ class SatelliteInfoProviderExample(file: File?) : SatelliteInfoListener {
             if (args.size != 1) {
                 val msg = "Example usage:\njava SatelliteInfoProviderExample nmea.log"
                 println(msg)
-                System.exit(0)
+                exitProcess(0)
             }
             try {
                 SatelliteInfoProviderExample(File(args[0]))
                 println("Running, press CTRL-C to stop..")
             } catch (e: IOException) {
                 e.printStackTrace()
-                System.exit(1)
+                exitProcess(1)
             }
         }
     }

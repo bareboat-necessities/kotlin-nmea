@@ -34,7 +34,7 @@ object Latitude17 {
     private const val DEFAULT_VALUE = 91 * MINUTE_PART_MULTIPLIER
 
     /** Valid range with default value for "no value"  */
-    const val RANGE = "[" + MIN_VALUE + "," + MAX_VALUE + "] + {" + DEFAULT_VALUE + "}"
+    const val RANGE = "[$MIN_VALUE,$MAX_VALUE] + {$DEFAULT_VALUE}"
 
     /**
      * Converts the latitude value (in 1/10000 minutes) to degrees.
@@ -53,7 +53,7 @@ object Latitude17 {
      * @return `true` if available, otherwise `false`.
      */
     fun isAvailable(value: Int): Boolean {
-        return value >= MIN_VALUE && value <= MAX_VALUE
+        return value in MIN_VALUE..MAX_VALUE
     }
 
     /**

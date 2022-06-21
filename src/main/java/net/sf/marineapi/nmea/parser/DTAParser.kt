@@ -122,8 +122,7 @@ internal open class DTAParser : SentenceParser, DTASentence {
 	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getDateTime()
 	 */
     override fun getDateTime(): Date {
-        val value: Date
-        value = try {
+        val value: Date = try {
             DATE_PARSER.parse(getStringValue(getFieldIndex(DATE_TIME)))
         } catch (ex: java.text.ParseException) {
             throw ParseException("Field does not contain date value", ex)

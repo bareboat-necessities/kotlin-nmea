@@ -1,6 +1,5 @@
 package net.sf.marineapi.nmea.parser
 
-import java.util.Date
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
 import org.junit.Assert

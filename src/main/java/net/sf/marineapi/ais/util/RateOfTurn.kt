@@ -20,6 +20,8 @@
  */
 package net.sf.marineapi.ais.util
 
+import kotlin.math.abs
+
 /**
  * Checks a rate-of-turn value for validity.
  *
@@ -47,7 +49,7 @@ object RateOfTurn {
      * @return true if the turn indicator is available
      */
     fun isTurnIndicatorAvailable(value: Int): Boolean {
-        return MINVALUE <= value && value <= MAXVALUE
+        return value in MINVALUE..MAXVALUE
     }
 
     /**
@@ -71,15 +73,14 @@ object RateOfTurn {
      * @return string representation of the ROT information
      */
     fun toString(value: Int): String {
-        val direction: String
-        direction = if (value < 0) "left" else "right"
-        return when (Math.abs(value)) {
+        val direction: String = if (value < 0) "left" else "right"
+        return when (abs(value)) {
             128 -> "no turn information available (default)"
             127 -> "turning $direction at more than 5 degrees per 30 s (No TI available)"
             126 -> "turning $direction at 708 degrees per min or higher"
             0 -> "not turning"
             else -> "turning " + direction + " at " +
-                    Math.abs(toDegreesPerMinute(value)) + " degrees per min"
+                    abs(toDegreesPerMinute(value)) + " degrees per min"
         }
     }
 }

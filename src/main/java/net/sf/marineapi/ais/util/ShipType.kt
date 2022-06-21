@@ -83,15 +83,15 @@ object ShipType {
      */
     fun shipTypeToString(type: Int): String {
         val typeStr = "N/A"
-        if (0 <= type && type <= 255) {
+        if (type in 0..255) {
             if (type >= 200) return "Reserved for future use"
             if (type >= 100) return "Reserved for regional use"
             if (type == 0) return "Not available / no ship"
             val d1 = type / 10
             val d2 = type % 10
-            if (0 <= d1 && d1 <= 9 && 0 <= d2 && d2 <= 9) {
+            if (d1 in 0..9 && 0 <= d2 && d2 <= 9) {
                 return when (d1) {
-                    0 -> FIRST_DIGIT[0] + " " + Integer.toString(type)
+                    0 -> FIRST_DIGIT[0] + " " + type.toString()
                     3 -> FIRST_DIGIT[3] + ", " + VESSEL[d2]
                     5 -> SPECIAL[d2]
                     else -> FIRST_DIGIT[d1] + ", " + SECOND_DIGIT[d2]
@@ -108,15 +108,15 @@ object ShipType {
      */
     fun shipTypeToVesselString(type: Int): String {
         val typeStr = "N/A"
-        if (0 <= type && type <= 255) {
+        if (type in 0..255) {
             if (type >= 200) return "Reserved for future use"
             if (type >= 100) return "Reserved for regional use"
             if (type == 0) return "Not available / no ship"
             val d1 = type / 10
             val d2 = type % 10
-            if (0 <= d1 && d1 <= 9 && 0 <= d2 && d2 <= 9) {
+            if (d1 in 0..9 && 0 <= d2 && d2 <= 9) {
                 return when (d1) {
-                    0 -> FIRST_DIGIT[0] + " " + Integer.toString(type) // Ship type not specified, so just print whole type number
+                    0 -> FIRST_DIGIT[0] + " " + type.toString() // Ship type not specified, so just print whole type number
                     3 -> FIRST_DIGIT[3] // Vessel
                     5 -> SPECIAL[d2] // Describes special vessel types for vessels in U.S. waters
                     else -> FIRST_DIGIT[d1] // Ship type
@@ -134,15 +134,15 @@ object ShipType {
      */
     fun shipTypeToCargoString(type: Int): String {
         val typeStr = "N/A"
-        if (0 <= type && type <= 255) {
+        if (type in 0..255) {
             if (type >= 200) return "Reserved for future use"
             if (type >= 100) return "Reserved for regional use"
             if (type == 0) return "Not available / no ship"
             val d1 = type / 10
             val d2 = type % 10
-            if (0 <= d1 && d1 <= 9 && 0 <= d2 && d2 <= 9) {
+            if (d1 in 0..9 && 0 <= d2 && d2 <= 9) {
                 return when (d1) {
-                    0 -> FIRST_DIGIT[0] + " " + Integer.toString(type) // Cargo not specified, so just print whole type number
+                    0 -> FIRST_DIGIT[0] + " " + type.toString() // Cargo not specified, so just print whole type number
                     3 -> VESSEL[d2] // Describes an activity the vessel is engaged in
                     5 -> SPECIAL[d2] // Describes special vessel types for vessels in U.S. waters
                     else -> SECOND_DIGIT[d2] // Describes the cargo being carried

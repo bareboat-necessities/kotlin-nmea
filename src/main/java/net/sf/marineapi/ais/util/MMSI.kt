@@ -36,7 +36,7 @@ object MMSI {
      * @return true if the value is semantically correct.
      */
     fun isCorrect(value: Long): Boolean {
-        return MINVALUE <= value && value <= MAXVALUE
+        return value in MINVALUE..MAXVALUE
     }
 
     /**
@@ -46,8 +46,7 @@ object MMSI {
      * @return A String describing the region of the transmitter
      */
     fun toString(value: Long): String {
-        val firstDigit = (value / 100000000L).toInt()
-        return when (firstDigit) {
+        return when ((value / 100000000L).toInt()) {
             0 -> "Ship group, coast station, or group of coast stations"
             1 -> "SAR aircraft"
             2 -> "Europe"

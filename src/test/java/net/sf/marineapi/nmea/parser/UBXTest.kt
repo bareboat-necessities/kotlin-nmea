@@ -32,9 +32,9 @@ class UBXTest {
     @Test
     fun testUBXParserTalkerId() {
         val empty: UBXSentence = UBXParser(TalkerId.P)
-        Assert.assertEquals(TalkerId.P, empty.getTalkerId())
-        Assert.assertEquals("UBX", empty.getSentenceId())
-        Assert.assertEquals(6, empty.getFieldCount().toLong())
+        assertEquals(TalkerId.P, empty.getTalkerId())
+        assertEquals("UBX", empty.getSentenceId())
+        assertEquals(6, empty.getFieldCount().toLong())
     }
 
     /**
@@ -52,6 +52,6 @@ class UBXTest {
      */
     @Test
     fun testGetUBXFieldCount() {
-        Assert.assertEquals(20, ubxSentence!!.getUBXFieldCount().toLong())
+        assertEquals(20, ubxSentence!!.getUBXFieldCount().toLong())
     }
 }

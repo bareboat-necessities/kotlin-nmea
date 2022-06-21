@@ -21,6 +21,7 @@
 package net.sf.marineapi.nmea.util
 
 import java.text.DecimalFormat
+import kotlin.math.*
 
 /**
  * Represents a geographic position. Default datum is WGS84 as generally in NMEA
@@ -205,12 +206,12 @@ open class Position(lat: Double, lon: Double) {
         val df = DecimalFormat("00.0000000")
         val sb = StringBuilder()
         sb.append("[")
-        sb.append(df.format(Math.abs(latitude)))
+        sb.append(df.format(abs(latitude)))
         sb.append(" ")
         sb.append(latitudeHemisphere.toChar())
         sb.append(", ")
         df.applyPattern("000.0000000")
-        sb.append(df.format(Math.abs(longitude)))
+        sb.append(df.format(abs(longitude)))
         sb.append(" ")
         sb.append(longitudeHemisphere.toChar())
         sb.append(", ")
@@ -247,10 +248,10 @@ open class Position(lat: Double, lon: Double) {
         val earthRadius = 6366.70702
         val dLat = Math.toRadians(lat2 - lat1)
         val dLon = Math.toRadians(lon2 - lon1)
-        val a = (Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + (Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                * Math.sin(dLon / 2) * Math.sin(dLon / 2)))
-        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+        val a = (sin(dLat / 2) * sin(dLat / 2)
+                + (cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2))
+                * sin(dLon / 2) * sin(dLon / 2)))
+        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
         return earthRadius * c * 1000
     }
 }

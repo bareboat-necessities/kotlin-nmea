@@ -332,10 +332,10 @@ class TimeTest {
         val a = Time(1, 2, 3.456)
         val b = Time(1, 2, 3.456)
         val c = Time(2, 3, 4.567)
-        Assert.assertTrue(a.equals(a))
-        Assert.assertTrue(a.equals(b))
-        Assert.assertFalse(a.equals(c))
-        Assert.assertFalse(a.equals(Any()))
+        Assert.assertTrue(a == a)
+        Assert.assertTrue(a == b)
+        Assert.assertFalse(a == c)
+        Assert.assertFalse(a == Any())
         Assert.assertEquals(a.hashCode().toLong(), b.hashCode().toLong())
     }
 }

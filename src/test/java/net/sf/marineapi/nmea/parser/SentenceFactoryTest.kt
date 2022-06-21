@@ -60,7 +60,7 @@ class SentenceFactoryTest {
         Assert.assertTrue(bod is Sentence)
         Assert.assertTrue(bod is BODSentence)
         Assert.assertTrue(bod is BODParser)
-        Assert.assertEquals(BODTest.EXAMPLE, bod!!.toSentence())
+        assertEquals(BODTest.EXAMPLE, bod!!.toSentence())
     }
 
     /**
@@ -74,8 +74,8 @@ class SentenceFactoryTest {
             Assert.assertNotNull(s)
             Assert.assertTrue(s is Sentence)
             Assert.assertTrue(s is SentenceParser)
-            Assert.assertEquals(TalkerId.ST, s!!.getTalkerId())
-            Assert.assertEquals(id.name, s.getSentenceId())
+            assertEquals(TalkerId.ST, s!!.getTalkerId())
+            assertEquals(id.name, s.getSentenceId())
         }
     }
 
@@ -117,11 +117,11 @@ class SentenceFactoryTest {
         Assert.assertTrue(s is Sentence)
         Assert.assertTrue(s is SentenceParser)
         Assert.assertTrue(s is FOOParser)
-        Assert.assertEquals(TalkerId.II, s!!.getTalkerId())
-        Assert.assertEquals("FOO", s.getSentenceId())
-        Assert.assertEquals("aa", (s as FOOSentence?)!!.valueA)
-        Assert.assertEquals("bb", (s as FOOSentence?)!!.valueB)
-        Assert.assertEquals("cc", (s as FOOSentence?)!!.valueC)
+        assertEquals(TalkerId.II, s!!.getTalkerId())
+        assertEquals("FOO", s.getSentenceId())
+        assertEquals("aa", (s as FOOSentence?)!!.valueA)
+        assertEquals("bb", (s as FOOSentence?)!!.valueB)
+        assertEquals("cc", (s as FOOSentence?)!!.valueC)
     }
 
     /**
@@ -142,7 +142,7 @@ class SentenceFactoryTest {
         Assert.assertTrue(s is Sentence)
         Assert.assertTrue(s is SentenceParser)
         Assert.assertTrue(s is FOOParser)
-        Assert.assertEquals("FOO", s!!.getSentenceId())
+        assertEquals("FOO", s!!.getSentenceId())
     }
 
     /**
@@ -260,7 +260,7 @@ class SentenceFactoryTest {
     @Test
     fun testListParsers() {
         val types = instance.listParsers()
-        Assert.assertEquals(SentenceId.values().size.toLong(), types.size.toLong())
+        assertEquals(SentenceId.values().size.toLong(), types.size.toLong())
         for (id in SentenceId.values()) {
             Assert.assertTrue(types.contains(id.name))
         }

@@ -1,7 +1,6 @@
 package net.sf.marineapi.nmea.parser
 
 import junit.framework.TestCase
-import net.sf.marineapi.nmea.parser.BODParser
 import net.sf.marineapi.nmea.sentence.BODSentence
 import net.sf.marineapi.nmea.sentence.TalkerId
 import org.junit.After
@@ -41,7 +40,7 @@ class BODTest : TestCase() {
 
     /**
      * Test method for
-     * [BODParser.BODParser] .
+     * [BODParser] .
      */
     @Test
     fun testConstructor() {
@@ -50,7 +49,7 @@ class BODTest : TestCase() {
 
     /**
      * Test method for
-     * [BODParser.BODParser]
+     * [BODParser]
      * .
      */
     @Test
@@ -66,7 +65,7 @@ class BODTest : TestCase() {
 
     /**
      * Test method for
-     * [BODParser.BODParser]
+     * [BODParser]
      * .
      */
     @Test
@@ -82,7 +81,7 @@ class BODTest : TestCase() {
 
     /**
      * Test method for
-     * [BODParser.BODParser]
+     * [BODParser]
      * .
      */
     @Test
@@ -98,7 +97,7 @@ class BODTest : TestCase() {
 
     /**
      * Test method for
-     * [BODParser.BODParser]
+     * [BODParser]
      * .
      */
     @Test

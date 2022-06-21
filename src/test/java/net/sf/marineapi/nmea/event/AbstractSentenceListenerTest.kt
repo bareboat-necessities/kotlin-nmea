@@ -17,7 +17,7 @@ class AbstractSentenceListenerTest {
     private val GGA_EVENT = SentenceEvent(this, GGA)
     @Test
     fun testDefaultConstructor() {
-        val bl: BasicListener = BasicListener()
+        val bl = BasicListener()
         Assert.assertEquals(BODSentence::class.java, bl.sentenceType)
     }
 
@@ -29,7 +29,7 @@ class AbstractSentenceListenerTest {
 
     @Test
     fun testParametrizedConstructor() {
-        val gl: GenericsListener<String, BODSentence> = GenericsListener<String, BODSentence>(
+        val gl: GenericsListener<String, BODSentence> = GenericsListener(
             BODSentence::class.java
         )
         Assert.assertEquals(BODSentence::class.java, gl.sentenceType)
@@ -46,7 +46,7 @@ class AbstractSentenceListenerTest {
     @Test
     fun testDefaultConstructorThrows() {
         try {
-            val gl: GenericsListener<String, BODSentence> = GenericsListener<String, BODSentence>()
+            val gl: GenericsListener<String, BODSentence> = GenericsListener()
             Assert.fail("default constructor didn't throw, resolved to " + gl.sentenceType)
         } catch (ise: IllegalStateException) {
             val msg = "Cannot resolve generic type <T>, use constructor with Class<T> param."
@@ -101,7 +101,7 @@ class AbstractSentenceListenerTest {
 
     @Test
     fun testGenericsListenerWithExpectedSentence() {
-        val gl: GenericsListener<Int, GGASentence> = GenericsListener<Int, GGASentence>(
+        val gl: GenericsListener<Int, GGASentence> = GenericsListener(
             GGASentence::class.java
         )
         gl.sentenceRead(GGA_EVENT)
@@ -112,7 +112,7 @@ class AbstractSentenceListenerTest {
 
     @Test
     fun testGenericsListenerWithUnexpectedSentence() {
-        val sl: GenericsListener<Int, GGASentence> = GenericsListener<Int, GGASentence>(
+        val sl: GenericsListener<Int, GGASentence> = GenericsListener(
             GGASentence::class.java
         )
         sl.sentenceRead(BOD_EVENT)
@@ -122,7 +122,7 @@ class AbstractSentenceListenerTest {
     @Test
     fun testExtendedGenericsListenerWithExpectedSentence() {
         val egl: ExtendedGenericsListener<String, Int, GGASentence> =
-            ExtendedGenericsListener<String, Int, GGASentence>(
+            ExtendedGenericsListener(
                 GGASentence::class.java
             )
         egl.sentenceRead(GGA_EVENT)
@@ -135,7 +135,7 @@ class AbstractSentenceListenerTest {
     @Test
     fun testExtendedGenericsListenerWithUnexpectedSentence() {
         val egl: ExtendedGenericsListener<String, Int, GGASentence> =
-            ExtendedGenericsListener<String, Int, GGASentence>(
+            ExtendedGenericsListener(
                 GGASentence::class.java
             )
         egl.sentenceRead(BOD_EVENT)
@@ -144,7 +144,7 @@ class AbstractSentenceListenerTest {
 
     @Test
     fun testGenericsHidingListenerWithExpectedSentence() {
-        val ghl: GenericsHidingListener<Double> = GenericsHidingListener<Double>()
+        val ghl: GenericsHidingListener<Double> = GenericsHidingListener()
         ghl.sentenceRead(BOD_EVENT)
         Assert.assertNotNull(ghl.received)
         Assert.assertEquals(BOD!!.toSentence(), ghl.received!!.toSentence())
@@ -154,7 +154,7 @@ class AbstractSentenceListenerTest {
 
     @Test
     fun testGenericsHidingListenerWithUnexpectedSentence() {
-        val ghl: GenericsHidingListener<Double> = GenericsHidingListener<Double>()
+        val ghl: GenericsHidingListener<Double> = GenericsHidingListener()
         ghl.sentenceRead(GGA_EVENT)
         Assert.assertNull(ghl.received)
     }
@@ -178,8 +178,8 @@ class AbstractSentenceListenerTest {
     internal open inner class GenericsListener<A, B : Sentence?> : AbstractSentenceListener<B> {
         open var received: B? = null
 
-        constructor() {}
-        constructor(type: Class<B>?) : super(type) {}
+        constructor()
+        constructor(type: Class<B>?) : super(type)
 
         fun stringify(obj: A): String {
             return obj.toString()
@@ -191,8 +191,8 @@ class AbstractSentenceListenerTest {
     }
 
     internal inner class ExtendedGenericsListener<A, B, C : Sentence?> : GenericsListener<B, C> {
-        constructor() {}
-        constructor(type: Class<C>?) : super(type) {}
+        constructor()
+        constructor(type: Class<C>?) : super(type)
 
         fun hashify(obj: A): Int {
             return obj.hashCode()

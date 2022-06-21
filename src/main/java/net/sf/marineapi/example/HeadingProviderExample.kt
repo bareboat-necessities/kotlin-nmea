@@ -27,6 +27,7 @@ import net.sf.marineapi.provider.event.HeadingListener
 import net.sf.marineapi.provider.event.ProviderListener
 
 import java.io.*
+import kotlin.system.exitProcess
 
 /**
  * Demonstrates the usage of HeadingProvider.
@@ -76,14 +77,14 @@ class HeadingProviderExample(file: File?) : HeadingListener {
             if (args.size != 1) {
                 val msg = "Example usage:\njava HeadingProviderExample nmea.log"
                 println(msg)
-                System.exit(0)
+                exitProcess(0)
             }
             try {
                 HeadingProviderExample(File(args[0]))
                 println("Running, press CTRL-C to stop..")
             } catch (e: IOException) {
                 e.printStackTrace()
-                System.exit(1)
+                exitProcess(1)
             }
         }
     }

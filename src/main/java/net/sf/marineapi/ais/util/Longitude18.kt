@@ -34,7 +34,7 @@ object Longitude18 {
     private const val DEFAULT_VALUE = 181 * MINUTE_PART_MULTIPLIER
 
     /** The range of valid longitude values with default for "no value".  */
-    const val RANGE = "[" + MIN_VALUE + "," + MAX_VALUE + "] + {" + DEFAULT_VALUE + "}"
+    const val RANGE = "[$MIN_VALUE,$MAX_VALUE] + {$DEFAULT_VALUE}"
 
     /**
      * Converts the longitude value (in 1/10 minutes) to degrees.
@@ -53,7 +53,7 @@ object Longitude18 {
      * @return `true` if available, otherwise `false`.
      */
     fun isAvailable(value: Int): Boolean {
-        return value >= MIN_VALUE && value <= MAX_VALUE
+        return value in MIN_VALUE..MAX_VALUE
     }
 
     /**

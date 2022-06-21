@@ -158,9 +158,8 @@ class GSATest {
         instance!!.setSatelliteIds(ids)
         val satellites = instance!!.getSatelliteIds()
         Assert.assertEquals(ids.size.toLong(), satellites!!.size.toLong())
-        var i = 0
-        for (id in ids) {
-            Assert.assertEquals(id, satellites[i++])
+        for ((i, id) in ids.withIndex()) {
+            Assert.assertEquals(id, satellites[i])
         }
     }
 

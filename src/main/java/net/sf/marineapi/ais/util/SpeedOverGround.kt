@@ -40,7 +40,7 @@ object SpeedOverGround {
      * @return true if the time stamp falls within a range
      */
     fun isAvailable(value: Int): Boolean {
-        return value >= MIN_VALUE && value <= MAX_VALUE
+        return value in MIN_VALUE..MAX_VALUE
     }
 
     /**

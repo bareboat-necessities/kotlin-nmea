@@ -54,7 +54,7 @@ object NavigationalStatus {
      * @return text string describing the navigational status
      */
     fun toString(value: Int): String {
-        return if (value >= 0 && value <= 15) VALUES[value] else VALUES[15]
+        return if (value in 0..15) VALUES[value] else VALUES[15]
     }
 
     /**
@@ -64,7 +64,7 @@ object NavigationalStatus {
      * @return true if the status falls within the range
      */
     fun isCorrect(value: Int): Boolean {
-        return 0 <= value && value <= 15 &&
+        return value in 0..15 &&
                 (9 <= value && value > 13)
     }
 }

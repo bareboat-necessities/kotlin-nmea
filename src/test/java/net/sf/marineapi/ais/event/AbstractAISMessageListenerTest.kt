@@ -20,21 +20,21 @@ class AbstractAISMessageListenerTest {
     private val MSG_05 = mf!!.create(AIS_05_1!!, AIS_05_2!!) as AISMessage05
     @Test
     fun testConstructor() {
-        val bl: BasicListener = BasicListener()
+        val bl = BasicListener()
         Assert.assertNull(bl.received)
         Assert.assertEquals(bl.messageType, AISMessage01::class.java)
     }
 
     @Test
     fun testParametrizedConstructor() {
-        val ebl: ExtendedBasicListener = ExtendedBasicListener()
+        val ebl = ExtendedBasicListener()
         Assert.assertNull(ebl.get())
         Assert.assertEquals(ebl.messageType, AISMessage01::class.java)
     }
 
     @Test
     fun testOnMessageWithExpectedMessage() {
-        val bl: BasicListener = BasicListener()
+        val bl = BasicListener()
         bl.sentenceRead(AIS_01)
         Assert.assertEquals(bl.received.toString(), MSG_01.toString())
     }
@@ -72,7 +72,7 @@ class AbstractAISMessageListenerTest {
 
     @Test
     fun testBasicListenerWithUnexpectedMessage() {
-        val bl: BasicListener = BasicListener()
+        val bl = BasicListener()
         bl.sentenceRead(AIS_05_1)
         bl.sentenceRead(AIS_05_2)
         Assert.assertNull(bl.received)
@@ -80,7 +80,7 @@ class AbstractAISMessageListenerTest {
 
     @Test
     fun testGenericsListener() {
-        val gl: GenericsListener<Int, AISMessage01> = GenericsListener<Int, AISMessage01>(
+        val gl: GenericsListener<Int, AISMessage01> = GenericsListener(
             AISMessage01::class.java
         )
         gl.sentenceRead(AIS_01)
@@ -91,7 +91,7 @@ class AbstractAISMessageListenerTest {
     @Test
     fun testGenericsListenerDefaultConstructorThrows() {
         try {
-            val gl: GenericsListener<Int, AISMessage01> = GenericsListener<Int, AISMessage01>()
+            val gl: GenericsListener<Int, AISMessage01> = GenericsListener()
             Assert.fail("exception not thrown, resolved to " + gl.messageType)
         } catch (ise: IllegalStateException) {
             Assert.assertEquals("Cannot resolve generic type <T>, use constructor with Class<T> param.", ise.message)
@@ -124,8 +124,8 @@ class AbstractAISMessageListenerTest {
     internal inner class GenericsListener<A, B : AISMessage?> : AbstractAISMessageListener<B> {
         var received: B? = null
 
-        constructor() {}
-        constructor(c: Class<B>?) : super(c) {}
+        constructor()
+        constructor(c: Class<B>?) : super(c)
 
         fun dummy(obj: A): String {
             return obj.toString()

@@ -103,7 +103,7 @@ internal class AISMessage05Parser(content: Sixbit) : AISMessageParser(content, 4
         get() = fMaximumDraught / 10.0
 
     override fun toString(): String {
-        var result = "\tIMO:       " + Integer.toString(iMONumber)
+        var result = "\tIMO:       " + iMONumber.toString()
         result += SEPARATOR + "Call sign: " + callSign
         result += SEPARATOR + "Name:      " + name
         result += SEPARATOR + "Type:      " + ShipType.shipTypeToString(
@@ -114,7 +114,7 @@ internal class AISMessage05Parser(content: Sixbit) : AISMessageParser(content, 4
         result += SEPARATOR + "Dim:       " + dim
         result += SEPARATOR + "ETA:       " + "Month: " + eTAMonth + ", D: " + eTADay +
                 ", H: " + eTAHour + ", M: " + eTAMinute
-        result += SEPARATOR + "Draft:     " + java.lang.Float.toString(fMaximumDraught / 10f)
+        result += SEPARATOR + "Draft:     " + (fMaximumDraught / 10f).toString()
         result += SEPARATOR + "EPFD:      " + PositioningDevice.toString(typeOfEPFD)
         result += SEPARATOR + "Dest:      " + destination
         result += SEPARATOR + "DTE:       " + isDteReady

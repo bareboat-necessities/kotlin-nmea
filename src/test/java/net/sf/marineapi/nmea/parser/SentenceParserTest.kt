@@ -23,7 +23,7 @@ class SentenceParserTest {
      */
     @Before
     fun setUp() {
-        instance = SentenceParser(RMCTest.Companion.EXAMPLE)
+        instance = SentenceParser(RMCTest.EXAMPLE)
     }
 
     /**
@@ -125,7 +125,7 @@ class SentenceParserTest {
     @Test
     fun testConstructorWithNullType() {
         try {
-            SentenceParser(RMCTest.Companion.EXAMPLE, null as String?)
+            SentenceParser(RMCTest.EXAMPLE, null as String?)
             Assert.fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // OK
@@ -437,7 +437,7 @@ class SentenceParserTest {
      */
     @Test
     fun testToString() {
-        Assert.assertEquals(RMCTest.Companion.EXAMPLE, instance.toString())
+        Assert.assertEquals(RMCTest.EXAMPLE, instance.toString())
         Assert.assertEquals(instance.toString(), instance!!.toSentence())
     }
 
@@ -448,7 +448,7 @@ class SentenceParserTest {
     @Test
     fun testToSentenceWithMaxLength() {
         val max = instance.toString().length + 1
-        Assert.assertEquals(RMCTest.Companion.EXAMPLE, instance!!.toSentence(max))
+        Assert.assertEquals(RMCTest.EXAMPLE, instance!!.toSentence(max))
     }
 
     /**
@@ -458,7 +458,7 @@ class SentenceParserTest {
     @Test
     fun testToSentenceWithMaxLengthOnLimit() {
         val max = instance.toString().length
-        Assert.assertEquals(RMCTest.Companion.EXAMPLE, instance!!.toSentence(max))
+        Assert.assertEquals(RMCTest.EXAMPLE, instance!!.toSentence(max))
     }
 
     /**
@@ -469,7 +469,7 @@ class SentenceParserTest {
     fun testToSentenceWithMaxLengthExceeded() {
         try {
             val max = instance.toString().length - 1
-            Assert.assertEquals(RMCTest.Companion.EXAMPLE, instance!!.toSentence(max))
+            Assert.assertEquals(RMCTest.EXAMPLE, instance!!.toSentence(max))
             Assert.fail("didn't throw exception")
         } catch (e: Exception) {
             // pass
@@ -482,7 +482,7 @@ class SentenceParserTest {
      */
     @Test
     fun testEquals() {
-        Assert.assertTrue(instance!!.equals(SentenceParser(RMCTest.Companion.EXAMPLE)))
+        Assert.assertTrue(instance!! == SentenceParser(RMCTest.EXAMPLE))
     }
 
     /**
@@ -491,7 +491,7 @@ class SentenceParserTest {
      */
     @Test
     fun testEqualsWithNonEqual() {
-        Assert.assertFalse(instance!!.equals(SentenceParser(RMBTest.Companion.EXAMPLE)))
+        Assert.assertFalse(instance!! == SentenceParser(RMBTest.EXAMPLE))
     }
 
     /**
@@ -509,7 +509,7 @@ class SentenceParserTest {
      */
     @Test
     fun testEqualsWithSelf() {
-        Assert.assertTrue(instance!!.equals(instance))
+        Assert.assertTrue(instance!! == instance)
     }
 
     @Test

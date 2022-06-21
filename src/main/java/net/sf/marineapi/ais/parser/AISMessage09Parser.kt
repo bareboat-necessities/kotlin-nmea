@@ -115,11 +115,13 @@ internal class AISMessage09Parser(content: Sixbit) : AISMessageParser(content, 1
      */
     val sOGString: String
         get() {
-            val msg: String
-            msg =
-                if (speedOverGround == 1023) "no SOG" else if (speedOverGround == 1022) ">=1022" else DecimalFormat("##0.0").format(
-                    speedOverGround / 10.0
-                )
+            val msg: String = when (speedOverGround) {
+                    1023 -> "no SOG"
+                    1022 -> ">=1022"
+                    else -> DecimalFormat("##0.0").format(
+                        speedOverGround / 10.0
+                    )
+                }
             return msg
         }
     override val longitudeInDegrees: Double
@@ -138,7 +140,7 @@ internal class AISMessage09Parser(content: Sixbit) : AISMessageParser(content, 1
     }
 
     override fun toString(): String {
-        var result = "\tAlt:      " + altitude
+        var result = "\tAlt:      $altitude"
         result += SEPARATOR + "SOG:     " + SpeedOverGround.toString(speedOverGround)
         result += SEPARATOR + "Pos acc: " + (if (isAccurate) "high" else "low") + " accuracy"
         result += SEPARATOR + "Lon:     " + Longitude28.toString(fLongitude)

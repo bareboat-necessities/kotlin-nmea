@@ -26,6 +26,8 @@ import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import kotlin.math.abs
+import kotlin.math.floor
 
 /**
  *
@@ -147,7 +149,7 @@ abstract class PositionParser : SentenceParser {
      * @param lat Latitude value in degrees
      */
     fun setLatitude(index: Int, lat: Double) {
-        val deg = Math.floor(lat).toInt()
+        val deg = floor(lat).toInt()
         val min = (lat - deg) * 60
         val df = DecimalFormat("00.000")
         val dfs = DecimalFormatSymbols()
@@ -166,7 +168,7 @@ abstract class PositionParser : SentenceParser {
      * @param lon Longitude value in degrees
      */
     fun setLongitude(index: Int, lon: Double) {
-        val deg = Math.floor(lon).toInt()
+        val deg = floor(lon).toInt()
         val min = (lon - deg) * 60
         val nf = DecimalFormat("00.000")
         val dfs = DecimalFormatSymbols()
@@ -209,8 +211,8 @@ abstract class PositionParser : SentenceParser {
         p: Position, latIndex: Int, latHemIndex: Int,
         lonIndex: Int, lonHemIndex: Int
     ) {
-        setLatitude(latIndex, Math.abs(p.latitude))
-        setLongitude(lonIndex, Math.abs(p.longitude))
+        setLatitude(latIndex, abs(p.latitude))
+        setLongitude(lonIndex, abs(p.longitude))
         setLatHemisphere(latHemIndex, p.latitudeHemisphere)
         setLonHemisphere(lonHemIndex, p.longitudeHemisphere)
     }

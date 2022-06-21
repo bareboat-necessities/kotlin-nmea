@@ -145,7 +145,7 @@ internal class GSAParser : SentenceParser, GSASentence {
 	 * String[])
 	 */
     override fun setSatelliteIds(ids: Array<String?>?) {
-        require(!(ids!!.size > LAST_SV - FIRST_SV + 1)) { "List length exceeded (12)" }
+        require(ids!!.size <= LAST_SV - FIRST_SV + 1) { "List length exceeded (12)" }
         var j = 0
         for (i in FIRST_SV..LAST_SV) {
             val id = if (j < ids.size) ids[j++] else ""

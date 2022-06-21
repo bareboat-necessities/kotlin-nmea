@@ -108,7 +108,7 @@ internal class AISMessage24Parser(content: Sixbit) : AISMessageParser(content, 1
     }
 
     override fun toString(): String {
-        var result = "\tName:      " + name
+        var result = "\tName:      $name"
         result = """$result
 	Type:      ${ShipType.shipTypeToString(typeOfShipAndCargoType)}"""
         result = """$result
@@ -119,7 +119,7 @@ internal class AISMessage24Parser(content: Sixbit) : AISMessageParser(content, 1
 	Serial Number:      $serialNumber"""
         result = """$result
 	Call sign: $callSign"""
-        val dim = "Bow: " + bow + ", Stern: " + stern + ", Port: " + port + ", Starboard: " + starboard + " [m]"
+        val dim = "Bow: $bow, Stern: $stern, Port: $port, Starboard: $starboard [m]"
         result = "$result\n\tDim:       $dim"
         return result
     }

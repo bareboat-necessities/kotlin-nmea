@@ -139,7 +139,7 @@ abstract class AbstractProvider<T : ProviderEvent?> : SentenceListener {
      * captured sentences.
      */
     protected fun hasOne(vararg id: String?): Boolean {
-        val ids = Arrays.asList(*id)
+        val ids = listOf(*id)
         for (s in getSentences()) {
             if (ids.contains(s!!.getSentenceId())) {
                 return true

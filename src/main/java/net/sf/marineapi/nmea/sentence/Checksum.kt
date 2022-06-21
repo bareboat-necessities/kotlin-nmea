@@ -58,8 +58,8 @@ object Checksum {
      */
     fun xor(str: String): String {
         var sum = 0
-        for (i in 0 until str.length) {
-            sum = sum xor str[i].code.toByte().toInt()
+        for (element in str) {
+            sum = sum xor element.code.toByte().toInt()
         }
         return String.format("%02X", sum)
     }

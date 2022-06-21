@@ -24,6 +24,7 @@ import net.sf.marineapi.ais.event.AbstractAISMessageListener
 import net.sf.marineapi.ais.message.AISMessage01
 import net.sf.marineapi.nmea.io.SentenceReader
 import java.io.*
+import kotlin.system.exitProcess
 
 /**
  * Simple example application that takes a filename as command-line argument and
@@ -73,14 +74,14 @@ class AISListenerExample(val file: File?) : AbstractAISMessageListener<AISMessag
         fun main(args: Array<String>) {
             if (args.size != 1) {
                 println("Example usage:\njava AISExample ais.log")
-                System.exit(1)
+                exitProcess(1)
             }
             try {
                 AISListenerExample(File(args[0]))
                 println("Running, press CTRL-C to stop..")
             } catch (e: IOException) {
                 e.printStackTrace()
-                System.exit(1)
+                exitProcess(1)
             }
         }
     }

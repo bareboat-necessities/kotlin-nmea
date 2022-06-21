@@ -40,99 +40,55 @@ internal open class HTCParser : SentenceParser, HTCSentence {
     constructor(tid: TalkerId?, sid: SentenceId, size: Int) : super(tid, sid, size)
 
     override fun getOverride(): DataStatus? {
-        return if (hasValue(OVERRIDE)) {
-            DataStatus.valueOf(getCharValue(OVERRIDE))
-        } else {
-            null
-        }
+        return if (hasValue(OVERRIDE)) DataStatus.valueOf(getCharValue(OVERRIDE)) else null
     }
 
     override fun getRudderAngle(): Double {
-        return if (hasValue(COMMANDED_RUDDER_ANGLE)) {
-            getDoubleValue(COMMANDED_RUDDER_ANGLE)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(COMMANDED_RUDDER_ANGLE)) getDoubleValue(COMMANDED_RUDDER_ANGLE) else Double.NaN
     }
 
     override fun getRudderDirection(): Direction? {
-        return if (hasValue(COMMANDED_RUDDER_DIRECTION)) {
-            Direction.valueOf(getCharValue(COMMANDED_RUDDER_DIRECTION))
-        } else {
-            null
-        }
+        return if (hasValue(COMMANDED_RUDDER_DIRECTION)) Direction.valueOf(getCharValue(COMMANDED_RUDDER_DIRECTION))
+        else null
     }
 
     override fun getSteeringMode(): SteeringMode? {
-        return if (hasValue(SELECTED_STEERING_MODE)) {
-            SteeringMode.valueOf(getCharValue(SELECTED_STEERING_MODE))
-        } else {
-            null
-        }
+        return if (hasValue(SELECTED_STEERING_MODE)) SteeringMode.valueOf(getCharValue(SELECTED_STEERING_MODE))
+        else null
     }
 
     override fun getTurnMode(): TurnMode? {
-        return if (hasValue(TURN_MODE)) {
-            TurnMode.valueOf(getCharValue(TURN_MODE))
-        } else {
-            null
-        }
+        return if (hasValue(TURN_MODE)) TurnMode.valueOf(getCharValue(TURN_MODE)) else null
     }
 
     override fun getRudderLimit(): Double {
-        return if (hasValue(COMMANDED_RUDDER_LIMIT)) {
-            getDoubleValue(COMMANDED_RUDDER_LIMIT)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(COMMANDED_RUDDER_LIMIT)) getDoubleValue(COMMANDED_RUDDER_LIMIT) else Double.NaN
     }
 
     override fun getOffHeadingLimit(): Double {
-        return if (hasValue(COMMANDED_OFF_HEADING_LIMIT)) {
-            getDoubleValue(COMMANDED_OFF_HEADING_LIMIT)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(COMMANDED_OFF_HEADING_LIMIT)) getDoubleValue(COMMANDED_OFF_HEADING_LIMIT) else Double.NaN
     }
 
     override fun getRadiusOfTurn(): Double {
-        return if (hasValue(COMMANDED_RADIUS_OF_TURN_FOR_HEADING_CHANGES)) {
-            getDoubleValue(COMMANDED_RADIUS_OF_TURN_FOR_HEADING_CHANGES)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(COMMANDED_RADIUS_OF_TURN_FOR_HEADING_CHANGES)) getDoubleValue(COMMANDED_RADIUS_OF_TURN_FOR_HEADING_CHANGES)
+        else Double.NaN
     }
 
     override fun getRateOfTurn(): Double {
-        return if (hasValue(COMMANDED_RATE_OF_TURN_FOR_HEADING_CHANGES)) {
-            getDoubleValue(COMMANDED_RATE_OF_TURN_FOR_HEADING_CHANGES)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(COMMANDED_RATE_OF_TURN_FOR_HEADING_CHANGES)) getDoubleValue(COMMANDED_RATE_OF_TURN_FOR_HEADING_CHANGES)
+        else Double.NaN
     }
 
     override fun getHeadingToSteer(): Double {
-        return if (hasValue(COMMANDED_HEADING_TO_STEER)) {
-            getDoubleValue(COMMANDED_HEADING_TO_STEER)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(COMMANDED_HEADING_TO_STEER)) getDoubleValue(COMMANDED_HEADING_TO_STEER) else Double.NaN
     }
 
     override fun getOffTrackLimit(): Double {
-        return if (hasValue(COMMANDED_OFF_TRACK_LIMIT)) {
-            getDoubleValue(COMMANDED_OFF_TRACK_LIMIT)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(COMMANDED_OFF_TRACK_LIMIT)) getDoubleValue(COMMANDED_OFF_TRACK_LIMIT) else Double.NaN
     }
 
     override fun getTrack(): Double {
-        return if (hasValue(COMMANDED_TRACK)) {
-            getDoubleValue(COMMANDED_TRACK)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(COMMANDED_TRACK)) getDoubleValue(COMMANDED_TRACK) else Double.NaN
     }
 
     override fun isHeadingTrue(): Boolean {

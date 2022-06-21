@@ -110,7 +110,7 @@ internal open class AISUTCParser(content: Sixbit) : AISMessageParser(content, 16
     }
 
     override fun toString(): String {
-        var result = "\tYear:    " + utcYear
+        var result = "\tYear:    $utcYear"
         result += SEPARATOR + "Month:   " + utcMonth
         result += SEPARATOR + "Day:     " + utcDay
         result += SEPARATOR + "Hour:    " + utcHour
