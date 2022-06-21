@@ -106,9 +106,7 @@ internal class AISMessage05Parser(content: Sixbit) : AISMessageParser(content, 4
         var result = "\tIMO:       $iMONumber"
         result += SEPARATOR + "Call sign: " + callSign
         result += SEPARATOR + "Name:      " + name
-        result += SEPARATOR + "Type:      " + ShipType.shipTypeToString(
-            typeOfShipAndCargoType
-        )
+        result += SEPARATOR + "Type:      " + ShipType.shipTypeToString(typeOfShipAndCargoType)
         val dim = "Bow: " + bow + ", Stern: " + stern +
                 ", Port: " + port + ", Starboard: " + starboard + " [m]"
         result += SEPARATOR + "Dim:       " + dim
