@@ -32,7 +32,7 @@ tasks.withType<KotlinCompile> {
 tasks.test {
 	useJUnitPlatform()
 	testLogging {
-		events("failed")
+		events("passed", "skipped", "failed")
 	}
 }
 
