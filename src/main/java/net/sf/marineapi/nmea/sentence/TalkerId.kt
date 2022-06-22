@@ -20,7 +20,6 @@
  */
 package net.sf.marineapi.nmea.sentence
 
-import java.lang.Enum
 import kotlin.IllegalArgumentException
 import kotlin.String
 import kotlin.require
@@ -385,13 +384,12 @@ enum class TalkerId {
          */
         fun parse(nmea: String): TalkerId {
             require(SentenceValidator.isSentence(nmea)) { "String is not a sentence" }
-            var tid = ""
-            tid = if (nmea.startsWith("\$P")) {
+            val tid = if (nmea.startsWith("\$P")) {
                 "P"
             } else {
                 nmea.substring(1, 3)
             }
-            return Enum.valueOf(TalkerId::class.java, tid)
+            return TalkerId.valueOf(tid)
         }
     }
 }
