@@ -164,26 +164,14 @@ abstract class AbstractProvider<T : ProviderEvent?> : SentenceListener {
      */
     protected abstract fun isValid(): Boolean
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.event.SentenceListener#readingPaused()
-	 */
     override fun readingPaused() {
         // nothing
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.event.SentenceListener#readingStarted()
-	 */
     override fun readingStarted() {
         reset()
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.event.SentenceListener#readingStopped()
-	 */
     override fun readingStopped() {
         reset()
         reader.removeSentenceListener(this)
@@ -218,11 +206,6 @@ abstract class AbstractProvider<T : ProviderEvent?> : SentenceListener {
         events.removeAll(expired.toSet())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.event.SentenceListener#sentenceRead(
-	 * net.sf.marineapi.nmea.event.SentenceEvent)
-	 */
     override fun sentenceRead(event: SentenceEvent) {
         events.add(event)
         if (isReady()) {

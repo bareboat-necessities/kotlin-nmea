@@ -57,10 +57,7 @@ class PositionProvider
  */
     (reader: SentenceReader) :
     AbstractProvider<PositionEvent>(reader, SentenceId.RMC, SentenceId.GGA, SentenceId.GLL, SentenceId.VTG) {
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.provider.AbstractProvider#createProviderEvent()
-	 */
+
     override fun createProviderEvent(): PositionEvent {
         var p: Position? = null
         var sog: Double? = null
@@ -114,18 +111,10 @@ class PositionProvider
         return PositionEvent(this, p, sog!!, cog, d, t, mode, fix)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.provider.AbstractProvider#isReady()
-	 */
     override fun isReady(): Boolean {
         return hasOne("RMC", "VTG") && hasOne("GGA", "GLL")
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.provider.AbstractProvider#isValid()
-	 */
     override fun isValid(): Boolean {
         for (s in getSentences()) {
             if (s is RMCSentence) {

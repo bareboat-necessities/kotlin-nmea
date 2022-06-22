@@ -50,10 +50,7 @@ class PositionEvent
     source: Any?, private val position: Position?, private val speed: Double, private val course: Double?,
     private val date: Date, private val time: Time?, private val mode: FaaMode?, private val fixQuality: GpsFixQuality?
 ) : ProviderEvent(source), Cloneable {
-    /*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#clone()
-	 */
+
     public override fun clone(): PositionEvent {
         return PositionEvent(
             getSource(), position, speed, course, date, time,
@@ -128,10 +125,6 @@ class PositionEvent
         return time
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see java.util.EventObject#toString()
-	 */
     override fun toString(): String {
         val ptr = "t[%s %s] p%s v[%.01f, %.01f]"
         return String.format(ptr, date, time, position, speed, course)

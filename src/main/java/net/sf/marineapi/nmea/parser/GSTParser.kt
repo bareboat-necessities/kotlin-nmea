@@ -47,132 +47,67 @@ internal class GSTParser : SentenceParser, GSTSentence {
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.GST, 8)
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.TimeSentence#getTime()
-	 */
     override fun getTime(): Time {
         val str = getStringValue(UTC_TIME)
         return Time(str)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getPseudoRangeResidualsRMS
-	 */
     override fun getPseudoRangeResidualsRMS(): Double {
         return getDoubleValue(PSEUDORANGE_RESIDUALS_RMS)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getSemiMajorError
-	 */
     override fun getSemiMajorError(): Double {
         return getDoubleValue(ERROR_ELLIPSE_SEMI_MAJOR)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getSemiMinorError
-	 */
     override fun getSemiMinorError(): Double {
         return getDoubleValue(ERROR_ELLIPSE_SEMI_MINOR)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getErrorEllipseOrientation
-	 */
     override fun getErrorEllipseOrientation(): Double {
         return getDoubleValue(ERROR_ELLIPSE_ORIENTATION)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getLatitudeError
-	 */
     override fun getLatitudeError(): Double {
         return getDoubleValue(LATITUDE_ERROR)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getLongitudeError
-	 */
     override fun getLongitudeError(): Double {
         return getDoubleValue(LONGITUDE_ERROR)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#getAltitudeError
-	 */
     override fun getAltitudeError(): Double {
         return getDoubleValue(ALTITUDE_ERROR)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.nmea.util.Time)
-	 */
     override fun setTime(t: Time?) {
         setStringValue(UTC_TIME, t.toString())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setPseudoRangeResidualsRMS
-	 */
     override fun setPseudoRangeResidualsRMS(rms: Double) {
         setDoubleValue(PSEUDORANGE_RESIDUALS_RMS, rms)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setSemiMajorError
-	 */
     override fun setSemiMajorError(error: Double) {
         setDoubleValue(ERROR_ELLIPSE_SEMI_MAJOR, error)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setSemiMinorError
-	 */
     override fun setSemiMinorError(error: Double) {
         setDoubleValue(ERROR_ELLIPSE_SEMI_MINOR, error)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setErrorEllipseOrientation
-	 */
     override fun setErrorEllipseOrientation(orientation: Double) {
         setDoubleValue(ERROR_ELLIPSE_ORIENTATION, orientation)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setLatitudeError
-	 */
     override fun setLatitudeError(error: Double) {
         setDoubleValue(LATITUDE_ERROR, error)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setLongitudeError
-	 */
     override fun setLongitudeError(error: Double) {
         setDoubleValue(LONGITUDE_ERROR, error)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GSTSentence#setAltitudeError
-	 */
     override fun setAltitudeError(error: Double) {
         setDoubleValue(ALTITUDE_ERROR, error)
     }

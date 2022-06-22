@@ -50,18 +50,10 @@ internal class GLLParser : PositionParser, GLLSentence {
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.GLL, 7)
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.PositionSentence#getPosition()
-	 */
     override fun getPosition(): Position {
         return parsePosition(LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.GLLSentence#getDataStatus()
-	 */
     override fun getStatus(): DataStatus {
         return DataStatus.valueOf(getCharValue(DATA_STATUS))
     }
@@ -74,33 +66,18 @@ internal class GLLParser : PositionParser, GLLSentence {
         }
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.TimeSentence#getTime()
-	 */
+
     override fun getTime(): Time {
         val str = getStringValue(UTC_TIME)
         return Time(str)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.PositionSentence#setPosition(net.sf.marineapi
-	 * .nmea.util.Position)
-	 */
     override fun setPosition(pos: Position) {
         setPositionValues(
             pos, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE
         )
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.GLLSentence#setDataStatus(net.sf.marineapi
-	 * .nmea.util.DataStatus)
-	 */
     override fun setStatus(status: DataStatus?) {
         setCharValue(DATA_STATUS, status!!.toChar())
     }
@@ -112,12 +89,6 @@ internal class GLLParser : PositionParser, GLLSentence {
         setCharValue(MODE, mode!!.toChar())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.TimeSentence#setTime(net.sf.marineapi.
-	 * nmea.util.Time)
-	 */
     override fun setTime(t: Time?) {
         setStringValue(UTC_TIME, t.toString())
     }

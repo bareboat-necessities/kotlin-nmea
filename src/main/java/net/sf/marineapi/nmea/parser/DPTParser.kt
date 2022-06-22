@@ -44,50 +44,26 @@ internal class DPTParser : SentenceParser, DPTSentence {
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.DPT, 3)
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DepthSentence#getDepth()
-	 */
     override fun getDepth(): Double {
         return getDoubleValue(DEPTH)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DPTSentence#getOffset()
-	 */
     override fun getOffset(): Double {
         return getDoubleValue(OFFSET)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DepthSentence#setDepth(double)
-	 */
     override fun setDepth(depth: Double) {
         setDoubleValue(DEPTH, depth, 1, 1)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DPTSentence#setOffset(double)
-	 */
     override fun setOffset(offset: Double) {
         setDoubleValue(OFFSET, offset, 1, 1)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DPTSentence#getMaximum()
-	 */
     override fun getMaximum(): Double {
         return getDoubleValue(MAXIMUM)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DPTSentence#setMaximum(int)
-	 */
     override fun setMaximum(max: Double) {
         setDoubleValue(MAXIMUM, max)
     }

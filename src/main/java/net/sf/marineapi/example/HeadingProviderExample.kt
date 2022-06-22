@@ -55,12 +55,6 @@ class HeadingProviderExample(file: File) : HeadingListener {
         reader.start()
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.provider.event.HeadingListener#providerUpdate(net.sf
-	 * .marineapi.provider.event.HeadingEvent)
-	 */
     override fun providerUpdate(evt: HeadingEvent) {
         println(evt.toString())
     }

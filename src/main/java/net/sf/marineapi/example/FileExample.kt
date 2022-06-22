@@ -53,36 +53,19 @@ class FileExample(file: File?) : SentenceListener {
         reader.start()
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.event.SentenceListener#readingPaused()
-	 */
+
     override fun readingPaused() {
         println("-- Paused --")
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.event.SentenceListener#readingStarted()
-	 */
     override fun readingStarted() {
         println("-- Started --")
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.event.SentenceListener#readingStopped()
-	 */
     override fun readingStopped() {
         println("-- Stopped --")
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.event.SentenceListener#sentenceRead(net.sf.marineapi
-	 * .nmea.event.SentenceEvent)
-	 */
     override fun sentenceRead(event: SentenceEvent) {
 
         // Safe to cast as we are registered only for GGA updates. Could

@@ -75,52 +75,28 @@ internal open class DTAParser : SentenceParser, DTASentence {
         return offset + field
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getChannelNumber()
-	 */
     override fun getChannelNumber(): Int {
         return if (offset == -1) {
             1
         } else getIntValue(CHANNEL_NUMBER)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getGasConcentration()
-	 */
     override fun getGasConcentration(): Double {
         return getDoubleValue(getFieldIndex(GAS_CONCENTRATION))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getConfidenceFactorR2()
-	 */
     override fun getConfidenceFactorR2(): Int {
         return getIntValue(getFieldIndex(CONFIDENCE_FACTOR_R2))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getDistance()
-	 */
     override fun getDistance(): Double {
         return getDoubleValue(getFieldIndex(DISTANCE))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getLightLevel()
-	 */
     override fun getLightLevel(): Int {
         return getIntValue(getFieldIndex(LIGHT_LEVEL))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getDateTime()
-	 */
     override fun getDateTime(): Date {
         val value: Date = try {
             DATE_PARSER.parse(getStringValue(getFieldIndex(DATE_TIME)))
@@ -130,18 +106,10 @@ internal open class DTAParser : SentenceParser, DTASentence {
         return value
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getSerialNumber()
-	 */
     override fun getSerialNumber(): String {
         return getStringValue(getFieldIndex(SER_NUMBER))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DTASentence#getStatusCode()
-	 */
     override fun getStatusCode(): Int {
         return getIntValue(getFieldIndex(STATUS_CODE))
     }

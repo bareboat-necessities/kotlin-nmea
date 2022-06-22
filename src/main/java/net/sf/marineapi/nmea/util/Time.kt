@@ -136,10 +136,6 @@ class Time {
         offsetMinutes = offsetMin
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
     override fun equals(obj: Any?): Boolean {
         if (obj === this) {
             return true
@@ -190,10 +186,6 @@ class Time {
         return seconds
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
     override fun hashCode(): Int {
         val s = String.format("%2d%2d%2f", hour, minutes, seconds)
         return s.hashCode()

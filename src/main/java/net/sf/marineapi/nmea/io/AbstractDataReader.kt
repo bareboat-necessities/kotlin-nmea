@@ -62,11 +62,6 @@ abstract class AbstractDataReader(var parent: SentenceReader? = null) : Runnable
     @Throws(Exception::class)
     abstract fun read(): String?
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Runnable#run()
-	 */
     override fun run() {
         val monitor = ActivityMonitor(parent)
         val factory: SentenceFactory = SentenceFactory.instance

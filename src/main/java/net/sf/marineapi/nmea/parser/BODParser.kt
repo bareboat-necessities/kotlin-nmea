@@ -50,72 +50,34 @@ internal class BODParser : SentenceParser, BODSentence {
         setCharValue(MAGN_INDICATOR, 'M')
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.BODSentence#getDestinationWaypointId()
-	 */
     override fun getDestinationWaypointId(): String {
         return getStringValue(DESTINATION)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.BODSentence#getMagneticBearing()
-	 */
     override fun getMagneticBearing(): Double {
         return getDoubleValue(BEARING_MAGN)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.BODSentence#getOriginWaypointId()
-	 */
     override fun getOriginWaypointId(): String {
         return getStringValue(ORIGIN)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.BODSentence#getTrueBearing()
-	 */
     override fun getTrueBearing(): Double {
         return getDoubleValue(BEARING_TRUE)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.BODSentence#setDestinationWaypointId(java
-	 * .lang.String)
-	 */
     override fun setDestinationWaypointId(id: String?) {
         setStringValue(DESTINATION, id)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.BODSentence#setMagneticBearing(double)
-	 */
     override fun setMagneticBearing(bearing: Double) {
         setDegreesValue(BEARING_MAGN, bearing)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.BODSentence#setOriginWaypointId(java.lang
-	 * .String)
-	 */
     override fun setOriginWaypointId(id: String?) {
         setStringValue(ORIGIN, id)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.BODSentence#setTrueBearing(double)
-	 */
     override fun setTrueBearing(bearing: Double) {
         setDegreesValue(BEARING_TRUE, bearing)
     }

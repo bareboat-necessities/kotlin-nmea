@@ -46,10 +46,6 @@ internal class HDGParser : SentenceParser, HDGSentence {
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.HDG, 5)
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#getDeviation()
-	 */
     override fun getDeviation(): Double {
         val dev = getDoubleValue(DEVIATION)
         if (dev == 0.0) {
@@ -59,18 +55,10 @@ internal class HDGParser : SentenceParser, HDGSentence {
         return if (dir == CompassPoint.WEST) -dev else dev
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#getHeading()
-	 */
     override fun getHeading(): Double {
         return getDoubleValue(HEADING)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#getVariation()
-	 */
     override fun getVariation(): Double {
         val `var` = getDoubleValue(VARIATION)
         if (`var` == 0.0) {
@@ -80,18 +68,11 @@ internal class HDGParser : SentenceParser, HDGSentence {
         return if (dir == CompassPoint.WEST) -`var` else `var`
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HeadingSentence#isTrue()
-	 */
+
     override fun isTrue(): Boolean {
         return false
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#setDeviation(double)
-	 */
     override fun setDeviation(deviation: Double) {
         require(!(deviation < -180 || deviation > 180)) { "Value out of range [-180..180]" }
         if (deviation > 0) {
@@ -104,18 +85,10 @@ internal class HDGParser : SentenceParser, HDGSentence {
         setDoubleValue(DEVIATION, abs(deviation), 3, 1)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#setHeading(double)
-	 */
     override fun setHeading(hdt: Double) {
         setDegreesValue(HEADING, hdt)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HDGSentence#setVariation(double)
-	 */
     override fun setVariation(variation: Double) {
         require(!(variation < -180 || variation > 180)) { "Value out of range [-180..180]" }
         if (variation > 0) {

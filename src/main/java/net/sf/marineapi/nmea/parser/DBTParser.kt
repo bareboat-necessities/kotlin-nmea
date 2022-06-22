@@ -49,50 +49,26 @@ internal class DBTParser : SentenceParser, DBTSentence {
         setCharValue(FATHOMS, Units.FATHOMS.toChar())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#getMeters()
-	 */
     override fun getDepth(): Double {
         return getDoubleValue(DEPTH_METERS)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#getFathoms()
-	 */
     override fun getFathoms(): Double {
         return getDoubleValue(DEPTH_FATHOMS)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#getFeet()
-	 */
     override fun getFeet(): Double {
         return getDoubleValue(DEPTH_FEET)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#setMeters(double)
-	 */
     override fun setDepth(depth: Double) {
         setDoubleValue(DEPTH_METERS, depth, 1, 1)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#setFathoms(double)
-	 */
     override fun setFathoms(depth: Double) {
         setDoubleValue(DEPTH_FATHOMS, depth, 1, 1)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.DBTSentence#setFeet(double)
-	 */
     override fun setFeet(depth: Double) {
         setDoubleValue(DEPTH_FEET, depth, 1, 1)
     }

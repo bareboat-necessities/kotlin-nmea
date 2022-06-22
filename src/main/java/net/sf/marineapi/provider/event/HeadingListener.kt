@@ -26,11 +26,6 @@ package net.sf.marineapi.provider.event
  * @author Kimmo Tuukkanen
  */
 interface HeadingListener : ProviderListener<HeadingEvent> {
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.provider.event.ProviderListener#providerUpdate(net.sf
-	 * .marineapi.provider.event.ProviderEvent)
-	 */
+
     override fun providerUpdate(evt: HeadingEvent)
 }

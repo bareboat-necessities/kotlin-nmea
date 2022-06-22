@@ -89,12 +89,6 @@ class HeadingProviderTest : HeadingListener {
         assertFalse(event!!.isTrue())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.provider.event.HeadingListener#providerUpdate(net.sf
-	 * .marineapi.provider.event.HeadingEvent)
-	 */
     override fun providerUpdate(evt: HeadingEvent) {
         event = evt
     }

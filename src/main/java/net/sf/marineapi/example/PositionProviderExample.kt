@@ -49,12 +49,6 @@ class PositionProviderExample(f: File) : PositionListener, ExceptionListener {
         reader.start()
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.provider.event.PositionListener#providerUpdate(net.sf.marineapi
-	 * .provider.event.PositionEvent)
-	 */
     override fun providerUpdate(evt: PositionEvent) {
         // do something with the data..
         println("TPV: $evt")

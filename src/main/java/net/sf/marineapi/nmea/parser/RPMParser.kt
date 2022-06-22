@@ -62,95 +62,43 @@ internal class RPMParser : SentenceParser, RPMSentence {
         return getDoubleValue(PITCH)
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#getRPM()
-	 */
     override fun getRPM(): Double {
         return getDoubleValue(REVOLUTIONS)
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#getSource()
-	 */
     override fun getSource(): Char {
         return getCharValue(SOURCE)
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#getStatus()
-	 */
     override fun getStatus(): DataStatus {
         return DataStatus.valueOf(getCharValue(STATUS))
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#isEngine()
-	 */
     override fun isEngine(): Boolean {
         return getCharValue(SOURCE) == RPMSentence.ENGINE
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#isShaft()
-	 */
     override fun isShaft(): Boolean {
         return getCharValue(SOURCE) == RPMSentence.SHAFT
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#setId(int)
-	 */
     override fun setId(id: Int) {
         setIntValue(SOURCE_NUMBER, id)
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#setPitch(double)
-	 */
     override fun setPitch(pitch: Double) {
         setDoubleValue(PITCH, pitch, 1, 1)
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#setRPM()
-	 */
     override fun setRPM(rpm: Double) {
         setDoubleValue(REVOLUTIONS, rpm)
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#setSource(char)
-	 */
     override fun setSource(source: Char) {
         require(!(source != RPMSentence.ENGINE && source != RPMSentence.SHAFT)) { "Invalid source indicator, expected 'E' or 'S'" }
         setCharValue(SOURCE, source)
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.RPMSentence#setStatus(net.sf.marineapi
-	 * .nmea.util.DataStatus)
-	 */
     override fun setStatus(status: DataStatus?) {
         setCharValue(STATUS, status!!.toChar())
     }

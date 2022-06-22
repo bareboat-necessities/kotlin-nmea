@@ -36,7 +36,7 @@ import net.sf.marineapi.provider.event.HeadingEvent
  */
 class HeadingProvider
 /**
- * Creates a new intance of HeadingProvider.
+ * Creates a new instance of HeadingProvider.
  *
  * @param reader Reader for capturing heading sentences.
  */

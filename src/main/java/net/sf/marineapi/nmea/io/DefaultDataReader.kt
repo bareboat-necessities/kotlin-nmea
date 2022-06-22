@@ -42,11 +42,6 @@ internal class DefaultDataReader(source: InputStream, parent: SentenceReader?) :
         buffer = BufferedReader(InputStreamReader(source))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.io.AbstractDataReader#read()
-	 */
     @Throws(Exception::class)
     override fun read(): String? {
         return if (buffer.ready()) buffer.readLine() else null

@@ -198,10 +198,6 @@ open class Position(lat: Double, lon: Double) {
     val isLongitudeEast: Boolean
         get() = longitude >= 0.0
 
-    /*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
     override fun toString(): String {
         val df = DecimalFormat("00.0000000")
         val sb = StringBuilder()

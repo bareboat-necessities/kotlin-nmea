@@ -51,37 +51,18 @@ internal class CURParser : SentenceParser, CURSentence {
         setCharValue(SPEED_REFERENCE, 'B')
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.BODSentence#getCurrentDirection()
-	 */
     override fun getCurrentDirection(): Double {
         return getDoubleValue(CURRENT_DIRECTION)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.BODSentence#getCurrentDirectionReference()
-	 */
     override fun getCurrentDirectionReference(): String {
         return getStringValue(DIRECTION_REFERENCE)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.BODSentence#getCurrentHeadingReference()
-	 */
     override fun getCurrentHeadingReference(): String {
         return getStringValue(HEADING_REFERENCE)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.BODSentence#getCurrentSpeed()
-	 */
     override fun getCurrentSpeed(): Double {
         return getDoubleValue(CURRENT_SPEED)
     }

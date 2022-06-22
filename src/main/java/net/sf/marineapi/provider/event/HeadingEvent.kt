@@ -62,10 +62,6 @@ class HeadingEvent(source: Any?, s: HeadingSentence) : ProviderEvent(source) {
         return isTrue
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see java.util.EventObject#toString()
-	 */
     override fun toString(): String {
         return "[" + getHeading() + ", " + (if (isTrue()) "T" else "M") + "]"
     }

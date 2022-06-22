@@ -49,12 +49,6 @@ class SatelliteInfoProviderExample(file: File) : SatelliteInfoListener {
         reader.start()
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.provider.event.SatelliteInfoListener#providerUpdate(net.sf.marineapi
-	 * .provider.event.SatelliteInfoEvent)
-	 */
     override fun providerUpdate(event: SatelliteInfoEvent) {
         println("-- GSV report --")
         for (si in event.getSatelliteInfo()) {

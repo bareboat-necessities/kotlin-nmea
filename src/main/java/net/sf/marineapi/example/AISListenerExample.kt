@@ -51,13 +51,6 @@ class AISListenerExample(val file: File) : AbstractAISMessageListener<AISMessage
         reader.start()
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.ais.event.AbstractAISMessageListener#onMessage(net
-	 * .sf.marineapi.ais.sentence.AISMessage)
-	 */
     override fun onMessage(msg: AISMessage01?) {
         println(msg!!.mMSI.toString() + ": " + msg.latitudeInDegrees)
         println("onMessage: $msg")

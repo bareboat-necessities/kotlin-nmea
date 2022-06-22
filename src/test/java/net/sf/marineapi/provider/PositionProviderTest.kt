@@ -112,12 +112,6 @@ class PositionProviderTest : PositionListener {
         assertNotNull(event)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.provider.event.PositionListener#providerUpdate(net.sf.marineapi
-	 * .provider.event.PositionEvent)
-	 */
     override fun providerUpdate(evt: PositionEvent) {
         event = evt
     }

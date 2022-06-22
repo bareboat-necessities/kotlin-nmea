@@ -80,10 +80,6 @@ class Date {
         setDay(day)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
     override fun equals(obj: Any?): Boolean {
         if (obj === this) {
             return true
@@ -129,10 +125,6 @@ class Date {
         return year
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
     override fun hashCode(): Int {
         return toISO8601().hashCode()
     }

@@ -48,10 +48,6 @@ internal class MWVParser : SentenceParser, MWVSentence {
         setCharValue(DATA_STATUS, DataStatus.VOID.toChar())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#getAngle()
-	 */
     override fun getAngle(): Double {
         return getDoubleValue(WIND_ANGLE)
     }
@@ -130,10 +126,6 @@ internal class MWVParser : SentenceParser, MWVSentence {
         setCharValue(DATA_STATUS, status!!.toChar())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#setTrue(boolean)
-	 */
     override fun setTrue(isTrue: Boolean) {
         setCharValue(REFERENCE, if (isTrue) 'T' else 'R')
     }

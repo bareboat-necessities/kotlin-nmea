@@ -39,10 +39,7 @@ class SatelliteInfoProvider
  * @param reader Reader to scan for GSV sentences.
  */
     (reader: SentenceReader) : AbstractProvider<SatelliteInfoEvent>(reader, "GSA", "GSV") {
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.provider.AbstractProvider#createProviderEvent()
-	 */
+
     override fun createProviderEvent(): SatelliteInfoEvent {
         var gsa: GSASentence? = null
         val info: MutableList<SatelliteInfo?> = ArrayList()
@@ -57,10 +54,6 @@ class SatelliteInfoProvider
         return SatelliteInfoEvent(this, gsa, info)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.provider.AbstractProvider#isReady()
-	 */
     override fun isReady(): Boolean {
         var hasFirstGSV = false
         var hasLastGSV = false
@@ -81,10 +74,6 @@ class SatelliteInfoProvider
         return hasOne("GSA") && hasAllGSV && hasFirstGSV && hasLastGSV
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.provider.AbstractProvider#isValid()
-	 */
     override fun isValid(): Boolean {
         return true
     }
