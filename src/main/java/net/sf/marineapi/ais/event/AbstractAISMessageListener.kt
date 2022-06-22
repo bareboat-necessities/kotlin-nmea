@@ -69,9 +69,7 @@ abstract class AbstractAISMessageListener<T : AISMessage?> : AbstractSentenceLis
      * at runtime.
      */
     constructor() {
-        messageType = GenericTypeResolver.resolve(
-            javaClass, AbstractAISMessageListener::class.java
-        )
+        messageType = GenericTypeResolver.resolve(javaClass, AbstractAISMessageListener::class.java)
     }
 
     /**

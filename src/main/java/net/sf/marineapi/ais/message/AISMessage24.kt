@@ -99,7 +99,7 @@ interface AISMessage24 : AISMessage {
      * Returns the distance from the reference point to the starboard side of
      * the ship.
      *
-     * @return Distance to starborad side, in meters.
+     * @return Distance to starboard side, in meters.
      */
     val starboard: Int
 }

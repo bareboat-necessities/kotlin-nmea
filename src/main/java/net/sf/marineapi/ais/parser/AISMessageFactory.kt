@@ -66,9 +66,8 @@ class AISMessageFactory private constructor() {
             val msg = String.format("no parser for message type %d", parser.messageType)
             throw IllegalArgumentException(msg)
         }
-        val result: AISMessage
         val c = parsers[parser.messageType]!!
-        result = try {
+        val result = try {
             val co = c.getConstructor(Sixbit::class.java)
             co.newInstance(parser.sixbit)
         } catch (e: Exception) {
