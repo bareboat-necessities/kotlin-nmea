@@ -31,17 +31,12 @@ import net.sf.marineapi.ublox.util.UbloxNavigationStatus
  * @author Gunnar Hillert
  */
 internal class UBXMessage00Parser(sentence: UBXSentence) : UBXMessageParser(sentence), UBXMessage00 {
-    /**
-     * @see UBXMessage00.getUtcTime
-     */
+
     override fun getUtcTime(): Time {
         val str = getStringValue(UTC_TIME)
         return Time(str)
     }
 
-    /**
-     * @see UBXMessage00.getPosition
-     */
     override fun getPosition(): Position {
         val latitudeField = sentence.getUBXFieldStringValue(LATITUDE)
         val latitudeHemisphereIndicatorField = sentence.getUBXFieldCharValue(LAT_HEMISPHERE)
@@ -56,83 +51,48 @@ internal class UBXMessage00Parser(sentence: UBXSentence) : UBXMessageParser(sent
         return position
     }
 
-    /**
-     * @see UBXMessage00.getNavigationStatus
-     */
     override fun getNavigationStatus(): UbloxNavigationStatus? {
         return UbloxNavigationStatus.fromNavigationStatusCode(
-            sentence.getUBXFieldStringValue(
-                NAVIGATION_STATUS
-            )
+            sentence.getUBXFieldStringValue(NAVIGATION_STATUS)
         )
     }
 
-    /**
-     * @see UBXMessage00.getHorizontalAccuracyEstimate
-     */
     override fun getHorizontalAccuracyEstimate(): Double {
         return sentence.getUBXFieldDoubleValue(HORIZONTAL_ACCURACY_ESTIMATE)
     }
 
-    /**
-     * @see UBXMessage00.getVerticaAccuracyEstimate
-     */
     override fun getVerticaAccuracyEstimate(): Double {
         return sentence.getUBXFieldDoubleValue(VERTICAL_ACCURACY_ESTIMATE)
     }
 
-    /**
-     * @see UBXMessage00.getSpeedOverGround
-     */
     override fun getSpeedOverGround(): Double {
         return sentence.getUBXFieldDoubleValue(SPEED_OVER_GROUND)
     }
 
-    /**
-     * @see UBXMessage00.getCourseOverGround
-     */
     override fun getCourseOverGround(): Double {
         return sentence.getUBXFieldDoubleValue(COURSE_OVER_GROUND)
     }
 
-    /**
-     * @see UBXMessage00.getVerticaVelocity
-     */
     override fun getVerticaVelocity(): Double {
         return sentence.getUBXFieldDoubleValue(VERTICA_VELOCITY)
     }
 
-    /**
-     * @see UBXMessage00.getAgeOfDifferentialCorrections
-     */
     override fun getAgeOfDifferentialCorrections(): Int {
         return sentence.getUBXFieldIntValue(AGE_OF_DIFFERENTIAL_CORRECTIONS)
     }
 
-    /**
-     * @see UBXMessage00.getHDOP
-     */
     override fun getHDOP(): Double {
         return sentence.getUBXFieldDoubleValue(HDOP)
     }
 
-    /**
-     * @see UBXMessage00.getVDOP
-     */
     override fun getVDOP(): Double {
         return sentence.getUBXFieldDoubleValue(VDOP)
     }
 
-    /**
-     * @see UBXMessage00.getTDOP
-     */
     override fun getTDOP(): Double {
         return sentence.getUBXFieldDoubleValue(TDOP)
     }
 
-    /**
-     * @see UBXMessage00.getNumberOfSatellitesUsed
-     */
     override fun getNumberOfSatellitesUsed(): Int {
         return sentence.getUBXFieldIntValue(NUMBER_OF_SATELLITES_USED)
     }

@@ -47,9 +47,6 @@ internal class TLBParser : SentenceParser, TLBSentence {
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.TLB, 0)
 
-    /**
-     * @see TLBSentence.getTargetIds
-     */
     override fun getTargetIds(): IntArray {
         val ids = IntArray((getFieldCount() / 2))
         var i = 0
@@ -62,9 +59,6 @@ internal class TLBParser : SentenceParser, TLBSentence {
         return ids
     }
 
-    /**
-     * @see TLBSentence.getTargetLabels
-     */
     override fun getTargetLabels(): Array<String?> {
         val labels = arrayOfNulls<String>((getFieldCount() / 2))
         var i = 1
@@ -81,9 +75,6 @@ internal class TLBParser : SentenceParser, TLBSentence {
         return labels
     }
 
-    /**
-     * @see TLBSentence.addTargetLabel
-     */
     override fun addTargetLabel(targetId: Int, targetLabel: String?) {
         val ids = getTargetIds()
         val labels = getTargetLabels()
@@ -112,9 +103,6 @@ internal class TLBParser : SentenceParser, TLBSentence {
         setStringValues(FIRST_PAIR, newFields)
     }
 
-    /**
-     * @see TLBSentence.setTargetPairs
-     */
     override fun setTargetPairs(ids: IntArray, labels: Array<String?>) {
         require(ids.size == labels.size) { "The ID and Label arrays must be the same length." }
         val newFields = arrayOfNulls<String>(ids.size * 2)

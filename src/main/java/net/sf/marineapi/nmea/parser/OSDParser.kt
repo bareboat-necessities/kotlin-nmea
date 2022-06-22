@@ -48,128 +48,74 @@ internal class OSDParser : SentenceParser, OSDSentence {
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.OSD, 9)
 
-    /**
-     * @see OSDSentence.getHeading
-     */
     override fun getHeading(): Double {
         return getDoubleValue(HEADING)
     }
 
-    /**
-     * @see OSDSentence.getHeadingStatus
-     */
     override fun getHeadingStatus(): DataStatus {
         return DataStatus.valueOf(getCharValue(HEADING_STATUS))
     }
 
-    /**
-     * @see OSDSentence.getCourse
-     */
     override fun getCourse(): Double {
         return getDoubleValue(COURSE)
     }
 
-    /**
-     * @see OSDSentence.getCourseReference
-     */
     override fun getCourseReference(): ReferenceSystem {
         return ReferenceSystem.valueOf(getCharValue(COURSE_REFERENCE))
     }
 
-    /**
-     * @see OSDSentence.getSpeed
-     */
     override fun getSpeed(): Double {
         return getDoubleValue(SPEED)
     }
 
-    /**
-     * @see OSDSentence.getSpeedReference
-     */
     override fun getSpeedReference(): ReferenceSystem {
         return ReferenceSystem.valueOf(getCharValue(SPEED_REFERENCE))
     }
 
-    /**
-     * @see OSDSentence.getVesselSet
-     */
     override fun getVesselSet(): Double {
         return getDoubleValue(VESSEL_SET)
     }
 
-    /**
-     * @see OSDSentence.getVesselDrift
-     */
     override fun getVesselDrift(): Double {
         return getDoubleValue(VESSEL_DRIFT)
     }
 
-    /**
-     * @see OSDSentence.getSpeedUnits
-     */
     override fun getSpeedUnits(): Units {
         return Units.valueOf(getCharValue(SPEED_UNITS))
     }
 
-    /**
-     * @see OSDSentence.setHeading
-     */
     override fun setHeading(heading: Double) {
         setDoubleValue(HEADING, heading)
     }
 
-    /**
-     * @see OSDSentence.setHeadingStatus
-     */
     override fun setHeadingStatus(status: DataStatus?) {
         setCharValue(HEADING_STATUS, status!!.toChar())
     }
 
-    /**
-     * @see OSDSentence.setCourse
-     */
     override fun setCourse(course: Double) {
         setDoubleValue(COURSE, course)
     }
 
-    /**
-     * @see OSDSentence.setCourseReference
-     */
     override fun setCourseReference(reference: ReferenceSystem?) {
         setCharValue(COURSE_REFERENCE, reference!!.toChar())
     }
 
-    /**
-     * @see OSDSentence.setSpeed
-     */
     override fun setSpeed(speed: Double) {
         setDoubleValue(SPEED, speed)
     }
 
-    /**
-     * @see OSDSentence.setSpeedReference
-     */
     override fun setSpeedReference(reference: ReferenceSystem?) {
         setCharValue(SPEED_REFERENCE, reference!!.toChar())
     }
 
-    /**
-     * @see OSDSentence.setVesselSet
-     */
     override fun setVesselSet(set: Double) {
         setDoubleValue(VESSEL_SET, set)
     }
 
-    /**
-     * @see OSDSentence.setVesselDrift
-     */
     override fun setVesselDrift(drift: Double) {
         setDoubleValue(VESSEL_DRIFT, drift)
     }
 
-    /**
-     * @see OSDSentence.setSpeedUnits
-     */
     override fun setSpeedUnits(units: Units?) {
         if (listOf(*VALID_SPEED_UNITS).contains(units)) {
             setCharValue(SPEED_UNITS, units!!.toChar())
