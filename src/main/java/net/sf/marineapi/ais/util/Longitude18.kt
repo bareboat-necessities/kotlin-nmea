@@ -74,12 +74,10 @@ object Longitude18 {
      * @return formatted value, "invalid longitude" or "longitude not available"
      */
     fun toString(value: Int): String {
-        return if (!isCorrect(value)) {
-            "invalid longitude"
-        } else if (!isAvailable(value)) {
-            "longitude not available"
-        } else {
-            COORD_FORMAT.format(toDegrees(value))
+        return when {
+            !isCorrect(value) -> "invalid longitude"
+            !isAvailable(value) -> "longitude not available"
+            else -> COORD_FORMAT.format(toDegrees(value))
         }
     }
 }

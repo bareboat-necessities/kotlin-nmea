@@ -75,12 +75,10 @@ object Latitude27 {
      * in degrees.
      */
     fun toString(value: Int): String {
-        return if (!isCorrect(value)) {
-            "invalid latitude"
-        } else if (!isAvailable(value)) {
-            "latitude not available"
-        } else {
-            COORD_FORMAT.format(toDegrees(value))
+        return when {
+            !isCorrect(value) -> "invalid latitude"
+            !isAvailable(value) -> "latitude not available"
+            else -> COORD_FORMAT.format(toDegrees(value))
         }
     }
 }
