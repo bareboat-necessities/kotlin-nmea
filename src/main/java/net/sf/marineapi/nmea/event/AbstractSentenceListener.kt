@@ -118,18 +118,9 @@ abstract class AbstractSentenceListener<T : Sentence?> : SentenceListener {
      */
     abstract fun sentenceRead(sentence: T?)
 
-    /**
-     * Empty implementation.
-     */
     override fun readingPaused() {}
 
-    /**
-     * Empty implementation.
-     */
     override fun readingStarted() {}
 
-    /**
-     * Empty implementation.
-     */
     override fun readingStopped() {}
 }

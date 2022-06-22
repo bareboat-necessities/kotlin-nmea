@@ -123,21 +123,9 @@ abstract class AbstractAISMessageListener<T : AISMessage?> : AbstractSentenceLis
      */
     abstract fun onMessage(msg: T?)
 
-    /**
-     * Empty implementation.
-     * @see SentenceListener.readingPaused
-     */
     override fun readingPaused() {}
 
-    /**
-     * Empty implementation.
-     * @see SentenceListener.readingStarted
-     */
     override fun readingStarted() {}
 
-    /**
-     * Empty implementation.
-     * @see SentenceListener.readingStopped
-     */
     override fun readingStopped() {}
 }
