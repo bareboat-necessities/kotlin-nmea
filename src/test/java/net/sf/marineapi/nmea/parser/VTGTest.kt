@@ -4,6 +4,7 @@ import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.sentence.VTGSentence
 import net.sf.marineapi.nmea.util.FaaMode
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -21,13 +22,13 @@ class VTGTest {
             empty = VTGParser(TalkerId.GP)
             vtg = VTGParser(EXAMPLE)
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        Assert.assertEquals(9, empty!!.getFieldCount().toLong())
+        assertEquals(9, empty!!.getFieldCount().toLong())
     }
 
     /**
@@ -36,7 +37,7 @@ class VTGTest {
      */
     @Test
     fun testGetMagneticCourse() {
-        Assert.assertEquals(348.7, vtg!!.getMagneticCourse(), 0.001)
+        assertEquals(348.7, vtg!!.getMagneticCourse(), 0.001)
     }
 
     /**
@@ -44,7 +45,7 @@ class VTGTest {
      */
     @Test
     fun testGetMode() {
-        Assert.assertEquals(FaaMode.AUTOMATIC, vtg!!.getMode())
+        assertEquals(FaaMode.AUTOMATIC, vtg!!.getMode())
     }
 
     /**
@@ -53,7 +54,7 @@ class VTGTest {
      */
     @Test
     fun testGetSpeedKmh() {
-        Assert.assertEquals(31.28, vtg!!.getSpeedKmh(), 0.001)
+        assertEquals(31.28, vtg!!.getSpeedKmh(), 0.001)
     }
 
     /**
@@ -62,7 +63,7 @@ class VTGTest {
      */
     @Test
     fun testGetSpeedKnots() {
-        Assert.assertEquals(16.89, vtg!!.getSpeedKnots(), 0.001)
+        assertEquals(16.89, vtg!!.getSpeedKnots(), 0.001)
     }
 
     /**
@@ -71,7 +72,7 @@ class VTGTest {
      */
     @Test
     fun testGetTrueCourse() {
-        Assert.assertEquals(360.0, vtg!!.getTrueCourse(), 0.001)
+        assertEquals(360.0, vtg!!.getTrueCourse(), 0.001)
     }
 
     /**
@@ -82,8 +83,8 @@ class VTGTest {
     fun testSetMagneticCourse() {
         val mcog = 95.56789
         vtg!!.setMagneticCourse(mcog)
-        Assert.assertTrue(vtg.toString().contains(",095.6,M,"))
-        Assert.assertEquals(mcog, vtg!!.getMagneticCourse(), 0.1)
+        assertTrue(vtg.toString().contains(",095.6,M,"))
+        assertEquals(mcog, vtg!!.getMagneticCourse(), 0.1)
     }
 
     /**
@@ -94,11 +95,11 @@ class VTGTest {
     fun testSetMagneticCourseWithNegativeValue() {
         try {
             vtg!!.setMagneticCourse(-0.001)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
-            Assert.assertTrue(e.message!!.contains("0..360"))
+            assertTrue(e.message!!.contains("0..360"))
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -110,11 +111,11 @@ class VTGTest {
     fun testSetMagneticCourseWithValueGreaterThanAllowed() {
         try {
             vtg!!.setMagneticCourse(360.001)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
-            Assert.assertTrue(e.message!!.contains("0..360"))
+            assertTrue(e.message!!.contains("0..360"))
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -125,9 +126,9 @@ class VTGTest {
     @Test
     fun testSetMode() {
         vtg!!.setMode(FaaMode.MANUAL)
-        Assert.assertEquals(FaaMode.MANUAL, vtg!!.getMode())
+        assertEquals(FaaMode.MANUAL, vtg!!.getMode())
         vtg!!.setMode(FaaMode.SIMULATED)
-        Assert.assertEquals(FaaMode.SIMULATED, vtg!!.getMode())
+        assertEquals(FaaMode.SIMULATED, vtg!!.getMode())
     }
 
     /**
@@ -138,9 +139,9 @@ class VTGTest {
     fun testSetModeWhenOmitted() {
         val parser = VTGParser("\$GPVTG,360.0,T,348.7,M,16.89,N,31.28,K")
         parser.setMode(FaaMode.MANUAL)
-        Assert.assertEquals(FaaMode.MANUAL, parser.getMode())
+        assertEquals(FaaMode.MANUAL, parser.getMode())
         parser.setMode(FaaMode.SIMULATED)
-        Assert.assertEquals(FaaMode.SIMULATED, parser.getMode())
+        assertEquals(FaaMode.SIMULATED, parser.getMode())
     }
 
     /**
@@ -151,8 +152,8 @@ class VTGTest {
     fun testSetSpeedKmh() {
         val kmh = 12.56789
         vtg!!.setSpeedKmh(kmh)
-        Assert.assertTrue(vtg.toString().contains(",12.57,K,"))
-        Assert.assertEquals(kmh, vtg!!.getSpeedKmh(), 0.01)
+        assertTrue(vtg.toString().contains(",12.57,K,"))
+        assertEquals(kmh, vtg!!.getSpeedKmh(), 0.01)
     }
 
     /**
@@ -164,7 +165,7 @@ class VTGTest {
         try {
             vtg!!.setSpeedKmh(-0.0001)
         } catch (e: IllegalArgumentException) {
-            Assert.assertTrue(e.message!!.contains("cannot be negative"))
+            assertTrue(e.message!!.contains("cannot be negative"))
         }
     }
 
@@ -176,8 +177,8 @@ class VTGTest {
     fun testSetSpeedKnots() {
         val kn = 11.6789
         vtg!!.setSpeedKnots(kn)
-        Assert.assertTrue(vtg.toString().contains(",11.68,N,"))
-        Assert.assertEquals(kn, vtg!!.getSpeedKnots(), 0.01)
+        assertTrue(vtg.toString().contains(",11.68,N,"))
+        assertEquals(kn, vtg!!.getSpeedKnots(), 0.01)
     }
 
     /**
@@ -189,7 +190,7 @@ class VTGTest {
         try {
             vtg!!.setSpeedKnots(-0.0001)
         } catch (e: IllegalArgumentException) {
-            Assert.assertTrue(e.message!!.contains("cannot be negative"))
+            assertTrue(e.message!!.contains("cannot be negative"))
         }
     }
 
@@ -201,8 +202,8 @@ class VTGTest {
     fun testSetTrueCourse() {
         val tcog = 90.56789
         vtg!!.setTrueCourse(tcog)
-        Assert.assertTrue(vtg.toString().contains(",090.6,T,"))
-        Assert.assertEquals(tcog, vtg!!.getTrueCourse(), 0.1)
+        assertTrue(vtg.toString().contains(",090.6,T,"))
+        assertEquals(tcog, vtg!!.getTrueCourse(), 0.1)
     }
 
     /**
@@ -213,11 +214,11 @@ class VTGTest {
     fun testSetTrueCourseWithNegativeValue() {
         try {
             vtg!!.setTrueCourse(-0.001)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
-            Assert.assertTrue(e.message!!.contains("0..360"))
+            assertTrue(e.message!!.contains("0..360"))
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -229,11 +230,11 @@ class VTGTest {
     fun testSetTrueCourseWithValueGreaterThanAllowed() {
         try {
             vtg!!.setTrueCourse(360.001)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
-            Assert.assertTrue(e.message!!.contains("0..360"))
+            assertTrue(e.message!!.contains("0..360"))
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 

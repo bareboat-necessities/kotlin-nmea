@@ -4,6 +4,7 @@ import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.CompassPoint
 import net.sf.marineapi.nmea.util.Time
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -21,13 +22,13 @@ class TLLTest {
             empty = TLLParser(TalkerId.RA)
             tll = TLLParser(EXAMPLE)
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        Assert.assertEquals(9, empty!!.getFieldCount().toLong())
+        assertEquals(9, empty!!.getFieldCount().toLong())
     }
 
     /**
@@ -36,7 +37,7 @@ class TLLTest {
      */
     @Test
     fun testGetNumber() {
-        Assert.assertEquals(1, tll!!.getNumber().toLong())
+        assertEquals(1, tll!!.getNumber().toLong())
     }
 
     /**
@@ -45,7 +46,7 @@ class TLLTest {
      */
     @Test
     fun testGetName() {
-        Assert.assertEquals("ANDROS", tll!!.getName())
+        assertEquals("ANDROS", tll!!.getName())
     }
 
     /**
@@ -58,19 +59,19 @@ class TLLTest {
         val lat = 37 + 31.51205 / 60
         val lon = 24 + 36.0 / 60
         Assert.assertNotNull(p)
-        Assert.assertEquals(lat, p.latitude, 0.0000001)
-        Assert.assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
-        Assert.assertEquals(lon, p.longitude, 0.0000001)
-        Assert.assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
+        assertEquals(lat, p.latitude, 0.0000001)
+        assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
+        assertEquals(lon, p.longitude, 0.0000001)
+        assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
     }
 
     @Test
     fun testGetTime() {
         val t = tll!!.getTime()
         Assert.assertNotNull(t)
-        Assert.assertEquals(16, t.getHour().toLong())
-        Assert.assertEquals(37, t.getMinutes().toLong())
-        Assert.assertEquals(00.86, t.getSeconds(), 0.001)
+        assertEquals(16, t.getHour().toLong())
+        assertEquals(37, t.getMinutes().toLong())
+        assertEquals(00.86, t.getSeconds(), 0.001)
     }
 
     /**
@@ -81,7 +82,7 @@ class TLLTest {
     fun testSetNumber() {
         val number = 999
         tll!!.setNumber(number)
-        Assert.assertTrue(tll.toString().contains(",999,"))
+        assertTrue(tll.toString().contains(",999,"))
     }
 
     /**
@@ -91,7 +92,7 @@ class TLLTest {
     @Test
     fun testSetName() {
         tll!!.setName("VRACHNOU")
-        Assert.assertTrue(tll.toString().contains(",VRACHNOU,"))
+        assertTrue(tll.toString().contains(",VRACHNOU,"))
     }
 
     /**
@@ -102,7 +103,7 @@ class TLLTest {
     fun testSetTime() {
         val t = Time(16, 7, 19.27)
         tll!!.setTime(t)
-        Assert.assertTrue(tll.toString().contains(",160719.27,"))
+        assertTrue(tll.toString().contains(",160719.27,"))
     }
 
     companion object {

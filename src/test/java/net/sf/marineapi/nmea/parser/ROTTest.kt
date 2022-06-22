@@ -5,6 +5,8 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DataStatus
 import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 
@@ -24,47 +26,47 @@ class ROTTest {
     @Test
     fun testConstructor() {
         val empty: ROTSentence = ROTParser(TalkerId.HE)
-        Assert.assertEquals(TalkerId.HE, empty.getTalkerId())
-        Assert.assertEquals(SentenceId.ROT.toString(), empty.getSentenceId())
+        assertEquals(TalkerId.HE, empty.getTalkerId())
+        assertEquals(SentenceId.ROT.toString(), empty.getSentenceId())
         try {
             empty.getRateOfTurn()
         } catch (e: DataNotAvailableException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
     @Test
     fun testGetStatus() {
-        Assert.assertEquals(DataStatus.ACTIVE, rot!!.getStatus())
-        Assert.assertEquals(DataStatus.VOID, irot!!.getStatus())
+        assertEquals(DataStatus.ACTIVE, rot!!.getStatus())
+        assertEquals(DataStatus.VOID, irot!!.getStatus())
     }
 
     @Test
     fun testSetStatus() {
         rot!!.setStatus(DataStatus.VOID)
-        Assert.assertEquals(DataStatus.VOID, rot!!.getStatus())
+        assertEquals(DataStatus.VOID, rot!!.getStatus())
     }
 
     @Test
     fun testGetRateOfTurn() {
         val value = rot!!.getRateOfTurn()
-        Assert.assertEquals(-0.3, value, 0.1)
+        assertEquals(-0.3, value, 0.1)
     }
 
     @Test
     fun testSetRateOfTurn() {
         val newValue = 0.5
         rot!!.setRateOfTurn(newValue)
-        Assert.assertEquals(newValue, rot!!.getRateOfTurn(), 0.1)
+        assertEquals(newValue, rot!!.getRateOfTurn(), 0.1)
     }
 
     @Test
     fun testSetRateOfTurnNegative() {
         val newValue = -12.3
         rot!!.setRateOfTurn(newValue)
-        Assert.assertEquals(newValue, rot!!.getRateOfTurn(), 0.1)
+        assertEquals(newValue, rot!!.getRateOfTurn(), 0.1)
     }
 
     companion object {

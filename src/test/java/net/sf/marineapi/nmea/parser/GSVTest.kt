@@ -4,6 +4,7 @@ import net.sf.marineapi.nmea.sentence.GSVSentence
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.SatelliteInfo
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -21,13 +22,13 @@ class GSVTest {
             empty = GSVParser(TalkerId.GP)
             gsv = GSVParser(EXAMPLE)
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        Assert.assertEquals(19, empty!!.getFieldCount().toLong())
+        assertEquals(19, empty!!.getFieldCount().toLong())
     }
 
     /**
@@ -36,7 +37,7 @@ class GSVTest {
      */
     @Test
     fun testGetSatelliteCount() {
-        Assert.assertEquals(12, gsv!!.getSatelliteCount().toLong())
+        assertEquals(12, gsv!!.getSatelliteCount().toLong())
     }
 
     /**
@@ -46,7 +47,7 @@ class GSVTest {
     @Test
     fun testGetSatelliteInfo() {
         val sat = gsv!!.getSatelliteInfo()
-        Assert.assertEquals(4, sat!!.size.toLong())
+        assertEquals(4, sat!!.size.toLong())
         testSatelliteInfo(sat[0], "15", 56, 182, 51)
         testSatelliteInfo(sat[1], "17", 38, 163, 47)
         testSatelliteInfo(sat[2], "18", 63, 58, 50)
@@ -61,7 +62,7 @@ class GSVTest {
     fun testGetSatelliteInfoWithEmptyFields() {
         val g: GSVSentence = GSVParser("\$GPGSV,3,2,12,15,56,182,51,17,38,163,47,18,,,,21,53,329,47")
         val sat = g.getSatelliteInfo()
-        Assert.assertEquals(3, sat!!.size.toLong())
+        assertEquals(3, sat!!.size.toLong())
         testSatelliteInfo(sat[0], "15", 56, 182, 51)
         testSatelliteInfo(sat[1], "17", 38, 163, 47)
         testSatelliteInfo(sat[2], "21", 53, 329, 47)
@@ -75,7 +76,7 @@ class GSVTest {
     fun testGetSatelliteInfoWithShortSentence() {
         val g: GSVSentence = GSVParser("\$GPGSV,3,2,12,15,56,182,51,17,38,163,47")
         val sat = g.getSatelliteInfo()
-        Assert.assertEquals(2, sat!!.size.toLong())
+        assertEquals(2, sat!!.size.toLong())
         testSatelliteInfo(sat[0], "15", 56, 182, 51)
         testSatelliteInfo(sat[1], "17", 38, 163, 47)
     }
@@ -86,7 +87,7 @@ class GSVTest {
      */
     @Test
     fun testGetSentenceCount() {
-        Assert.assertEquals(3, gsv!!.getSentenceCount().toLong())
+        assertEquals(3, gsv!!.getSentenceCount().toLong())
     }
 
     /**
@@ -95,7 +96,7 @@ class GSVTest {
      */
     @Test
     fun testGetSentenceIndex() {
-        Assert.assertEquals(2, gsv!!.getSentenceIndex().toLong())
+        assertEquals(2, gsv!!.getSentenceIndex().toLong())
     }
 
     /**
@@ -103,7 +104,7 @@ class GSVTest {
      */
     @Test
     fun testIsFirst() {
-        Assert.assertFalse(gsv!!.isFirst())
+        assertFalse(gsv!!.isFirst())
     }
 
     /**
@@ -111,7 +112,7 @@ class GSVTest {
      */
     @Test
     fun testIsLast() {
-        Assert.assertFalse(gsv!!.isLast())
+        assertFalse(gsv!!.isLast())
     }
 
     /**
@@ -121,9 +122,9 @@ class GSVTest {
     @Test
     fun testSetSatelliteCount() {
         gsv!!.setSatelliteCount(5)
-        Assert.assertEquals(5, gsv!!.getSatelliteCount().toLong())
+        assertEquals(5, gsv!!.getSatelliteCount().toLong())
         gsv!!.setSatelliteCount(10)
-        Assert.assertEquals(10, gsv!!.getSatelliteCount().toLong())
+        assertEquals(10, gsv!!.getSatelliteCount().toLong())
     }
 
     /**
@@ -137,9 +138,9 @@ class GSVTest {
         si.add(SatelliteInfo("02", 21, 22, 23))
         si.add(SatelliteInfo("03", 31, 32, 33))
         gsv!!.setSatelliteInfo(si)
-        Assert.assertTrue(gsv.toString().contains(",03,31,032,33,,,,*"))
+        assertTrue(gsv.toString().contains(",03,31,032,33,,,,*"))
         val sat = gsv!!.getSatelliteInfo()
-        Assert.assertEquals(3, sat!!.size.toLong())
+        assertEquals(3, sat!!.size.toLong())
         testSatelliteInfo(sat[0], "01", 11, 12, 13)
         testSatelliteInfo(sat[1], "02", 21, 22, 23)
         testSatelliteInfo(sat[2], "03", 31, 32, 33)
@@ -152,15 +153,15 @@ class GSVTest {
     @Test
     fun testSetSentenceCount() {
         gsv!!.setSentenceCount(1)
-        Assert.assertEquals(1, gsv!!.getSentenceCount().toLong())
+        assertEquals(1, gsv!!.getSentenceCount().toLong())
         gsv!!.setSentenceCount(2)
-        Assert.assertEquals(2, gsv!!.getSentenceCount().toLong())
+        assertEquals(2, gsv!!.getSentenceCount().toLong())
     }
 
     @Test
     fun testParserGlonassGSV() {
         val gl = GSVParser("\$GLGSV,2,1,07,70,28,145,44,71,67,081,46,72,34,359,40,77,16,245,35,1*76")
-        Assert.assertEquals(TalkerId.GL, gl.getTalkerId())
+        assertEquals(TalkerId.GL, gl.getTalkerId())
     }
 
     /**
@@ -170,10 +171,10 @@ class GSVTest {
         si: SatelliteInfo?, id: String, elevation: Int,
         azimuth: Int, noise: Int
     ) {
-        Assert.assertEquals(id, si!!.id)
-        Assert.assertEquals(elevation.toDouble(), si.getElevation().toDouble(), 0.1)
-        Assert.assertEquals(azimuth.toDouble(), si.getAzimuth().toDouble(), 0.1)
-        Assert.assertEquals(noise.toDouble(), si.getNoise().toDouble(), 0.1)
+        assertEquals(id, si!!.id)
+        assertEquals(elevation.toDouble(), si.getElevation().toDouble(), 0.1)
+        assertEquals(azimuth.toDouble(), si.getAzimuth().toDouble(), 0.1)
+        assertEquals(noise.toDouble(), si.getNoise().toDouble(), 0.1)
     }
 
     companion object {

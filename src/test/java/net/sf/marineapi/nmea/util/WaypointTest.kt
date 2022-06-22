@@ -20,7 +20,7 @@
  */
 package net.sf.marineapi.nmea.util
 
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -34,6 +34,7 @@ class WaypointTest {
     private val id2 = "BAR"
     private val desc = "Description text"
     var point: Waypoint? = null
+
     @Before
     fun setUp() {
         point = Waypoint(id1, 60.0, 25.0, Datum.WGS84)
@@ -41,14 +42,14 @@ class WaypointTest {
 
     /**
      * Test method for
-     * [Waypoint.setDescription]
+     * [Waypoint.description]
      * .
      */
     @Test
     fun testDescription() {
-        Assert.assertEquals("", point!!.description)
+        assertEquals("", point!!.description)
         point!!.description = desc
-        Assert.assertEquals(desc, point!!.description)
+        assertEquals(desc, point!!.description)
     }
 
     /**
@@ -57,8 +58,8 @@ class WaypointTest {
      */
     @Test
     fun testId() {
-        Assert.assertEquals(id1, point!!.id)
+        assertEquals(id1, point!!.id)
         point!!.id = id2
-        Assert.assertEquals(id2, point!!.id)
+        assertEquals(id2, point!!.id)
     }
 }

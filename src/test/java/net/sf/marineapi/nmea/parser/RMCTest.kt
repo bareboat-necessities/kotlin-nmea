@@ -3,6 +3,7 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -23,14 +24,14 @@ class RMCTest {
             rmc = RMCParser(EXAMPLE)
             legacy = RMCParser(EXAMPLE_LEGACY)
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        Assert.assertEquals(12, empty!!.getFieldCount().toLong())
-        Assert.assertEquals(11, legacy!!.getFieldCount().toLong())
+        assertEquals(12, empty!!.getFieldCount().toLong())
+        assertEquals(11, legacy!!.getFieldCount().toLong())
     }
 
     /**
@@ -40,7 +41,7 @@ class RMCTest {
     @Test
     fun testGetCorrectedCourse() {
         val expected = rmc!!.getCourse() + rmc!!.getVariation()
-        Assert.assertEquals(expected, rmc!!.getCorrectedCourse(), 0.001)
+        assertEquals(expected, rmc!!.getCorrectedCourse(), 0.001)
     }
 
     /**
@@ -49,7 +50,7 @@ class RMCTest {
      */
     @Test
     fun testGetCourse() {
-        Assert.assertEquals(360.0, rmc!!.getCourse(), 0.001)
+        assertEquals(360.0, rmc!!.getCourse(), 0.001)
     }
 
     /**
@@ -58,7 +59,7 @@ class RMCTest {
      */
     @Test
     fun testGetDataStatus() {
-        Assert.assertEquals(DataStatus.ACTIVE, rmc!!.getStatus())
+        assertEquals(DataStatus.ACTIVE, rmc!!.getStatus())
     }
 
     /**
@@ -68,7 +69,7 @@ class RMCTest {
     fun testGetDate() {
         val expected = Date(2005, 7, 16)
         val parsed = rmc!!.getDate()
-        Assert.assertEquals(expected, parsed)
+        assertEquals(expected, parsed)
     }
 
     /**
@@ -76,7 +77,7 @@ class RMCTest {
      */
     @Test
     fun testGetDay() {
-        Assert.assertEquals(16, rmc!!.getDate().getDay().toLong())
+        assertEquals(16, rmc!!.getDate().getDay().toLong())
     }
 
     /**
@@ -86,8 +87,8 @@ class RMCTest {
      */
     @Test
     fun testGetDirectionOfVariation() {
-        Assert.assertTrue(rmc!!.getVariation() < 0)
-        Assert.assertEquals(CompassPoint.EAST, rmc!!.getDirectionOfVariation())
+        assertTrue(rmc!!.getVariation() < 0)
+        assertEquals(CompassPoint.EAST, rmc!!.getDirectionOfVariation())
     }
 
     /**
@@ -95,7 +96,7 @@ class RMCTest {
      */
     @Test
     fun testGetFaaMode() {
-        Assert.assertEquals(FaaMode.AUTOMATIC, rmc!!.getMode())
+        assertEquals(FaaMode.AUTOMATIC, rmc!!.getMode())
     }
 
     /**
@@ -104,7 +105,7 @@ class RMCTest {
      */
     @Test
     fun testGetMagneticVariation() {
-        Assert.assertEquals(-6.1, rmc!!.getVariation(), 0.001)
+        assertEquals(-6.1, rmc!!.getVariation(), 0.001)
     }
 
     /**
@@ -113,7 +114,7 @@ class RMCTest {
      */
     @Test
     fun testGetMonth() {
-        Assert.assertEquals(7, rmc!!.getDate().getMonth().toLong())
+        assertEquals(7, rmc!!.getDate().getMonth().toLong())
     }
 
     /**
@@ -125,11 +126,11 @@ class RMCTest {
         val lat = 60 + 11.552 / 60
         val lon = 25 + 1.941 / 60
         val p = rmc!!.getPosition()
-        Assert.assertNotNull(p)
-        Assert.assertEquals(lat, p.latitude, 0.0000001)
-        Assert.assertEquals(lon, p.longitude, 0.0000001)
-        Assert.assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
-        Assert.assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
+        assertNotNull(p)
+        assertEquals(lat, p.latitude, 0.0000001)
+        assertEquals(lon, p.longitude, 0.0000001)
+        assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
+        assertEquals(CompassPoint.EAST, p.longitudeHemisphere)
     }
 
     /**
@@ -138,7 +139,7 @@ class RMCTest {
      */
     @Test
     fun testGetSpeed() {
-        Assert.assertEquals(0.0, rmc!!.getSpeed(), 0.001)
+        assertEquals(0.0, rmc!!.getSpeed(), 0.001)
     }
 
     /**
@@ -147,10 +148,10 @@ class RMCTest {
     @Test
     fun testGetTime() {
         val t = rmc!!.getTime()
-        Assert.assertNotNull(t)
-        Assert.assertEquals(12, t.getHour().toLong())
-        Assert.assertEquals(0, t.getMinutes().toLong())
-        Assert.assertEquals(44.567, t.getSeconds(), 0.001)
+        assertNotNull(t)
+        assertEquals(12, t.getHour().toLong())
+        assertEquals(0, t.getMinutes().toLong())
+        assertEquals(44.567, t.getSeconds(), 0.001)
     }
 
     /**
@@ -158,7 +159,7 @@ class RMCTest {
      */
     @Test
     fun testGetYear() {
-        Assert.assertEquals(2005, rmc!!.getDate().getYear().toLong())
+        assertEquals(2005, rmc!!.getDate().getYear().toLong())
     }
 
     /**
@@ -169,8 +170,8 @@ class RMCTest {
     fun testSetCourse() {
         val cog = 90.55555
         rmc!!.setCourse(cog)
-        Assert.assertTrue(rmc.toString().contains(",090.6,"))
-        Assert.assertEquals(cog, rmc!!.getCourse(), 0.1)
+        assertTrue(rmc.toString().contains(",090.6,"))
+        assertEquals(cog, rmc!!.getCourse(), 0.1)
     }
 
     /**
@@ -180,7 +181,7 @@ class RMCTest {
     @Test
     fun testSetDataStatus() {
         rmc!!.setStatus(DataStatus.ACTIVE)
-        Assert.assertEquals(DataStatus.ACTIVE, rmc!!.getStatus())
+        assertEquals(DataStatus.ACTIVE, rmc!!.getStatus())
     }
 
     /**
@@ -189,9 +190,9 @@ class RMCTest {
     @Test
     fun testSetDate() {
         rmc!!.setDate(Date(2010, 6, 9))
-        Assert.assertTrue(rmc.toString().contains(",360.0,090610,006.1,"))
+        assertTrue(rmc.toString().contains(",360.0,090610,006.1,"))
         rmc!!.setDate(Date(2010, 11, 12))
-        Assert.assertTrue(rmc.toString().contains(",360.0,121110,006.1,"))
+        assertTrue(rmc.toString().contains(",360.0,121110,006.1,"))
     }
 
     /**
@@ -202,9 +203,9 @@ class RMCTest {
     @Test
     fun testSetDirectionOfVariation() {
         rmc!!.setDirectionOfVariation(CompassPoint.WEST)
-        Assert.assertEquals(CompassPoint.WEST, rmc!!.getDirectionOfVariation())
+        assertEquals(CompassPoint.WEST, rmc!!.getDirectionOfVariation())
         rmc!!.setDirectionOfVariation(CompassPoint.EAST)
-        Assert.assertEquals(CompassPoint.EAST, rmc!!.getDirectionOfVariation())
+        assertEquals(CompassPoint.EAST, rmc!!.getDirectionOfVariation())
     }
 
     /**
@@ -216,11 +217,11 @@ class RMCTest {
     fun testSetDirectionOfVariationWithInvalidDirection() {
         try {
             rmc!!.setDirectionOfVariation(CompassPoint.NORTH)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -231,9 +232,9 @@ class RMCTest {
     @Test
     fun testSetFaaMode() {
         rmc!!.setMode(FaaMode.SIMULATED)
-        Assert.assertEquals(FaaMode.SIMULATED, rmc!!.getMode())
+        assertEquals(FaaMode.SIMULATED, rmc!!.getMode())
         rmc!!.setMode(FaaMode.ESTIMATED)
-        Assert.assertEquals(FaaMode.ESTIMATED, rmc!!.getMode())
+        assertEquals(FaaMode.ESTIMATED, rmc!!.getMode())
     }
 
     /**
@@ -244,9 +245,9 @@ class RMCTest {
     fun testSetFaaModeWhenOmitted() {
         val parser = RMCParser("\$GPRMC,120044.567,A,6011.552,N,02501.941,E,000.0,360.0,160705,006.1,E")
         parser.setMode(FaaMode.SIMULATED)
-        Assert.assertEquals(FaaMode.SIMULATED, parser.getMode())
+        assertEquals(FaaMode.SIMULATED, parser.getMode())
         parser.setMode(FaaMode.ESTIMATED)
-        Assert.assertEquals(FaaMode.ESTIMATED, parser.getMode())
+        assertEquals(FaaMode.ESTIMATED, parser.getMode())
     }
 
     @Test
@@ -257,12 +258,12 @@ class RMCTest {
         rmc!!.setPosition(p)
         val str = rmc.toString()
         val wp = rmc!!.getPosition()
-        Assert.assertTrue(str.contains(",6101.111,N,02707.777,E,"))
-        Assert.assertNotNull(wp)
-        Assert.assertEquals(lat, wp.latitude, 0.0000001)
-        Assert.assertEquals(lon, wp.longitude, 0.0000001)
-        Assert.assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
-        Assert.assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
+        assertTrue(str.contains(",6101.111,N,02707.777,E,"))
+        assertNotNull(wp)
+        assertEquals(lat, wp.latitude, 0.0000001)
+        assertEquals(lon, wp.longitude, 0.0000001)
+        assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
+        assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
     }
 
     /**
@@ -273,8 +274,8 @@ class RMCTest {
     fun testSetSpeed() {
         val sog = 35.23456
         rmc!!.setSpeed(sog)
-        Assert.assertTrue(rmc.toString().contains(",35.2,"))
-        Assert.assertEquals(sog, rmc!!.getSpeed(), 0.1)
+        assertTrue(rmc.toString().contains(",35.2,"))
+        assertEquals(sog, rmc!!.getSpeed(), 0.1)
     }
 
     /**
@@ -284,7 +285,7 @@ class RMCTest {
     fun testSetTime() {
         val t = Time(1, 2, 3.456)
         rmc!!.setTime(t)
-        Assert.assertTrue(rmc.toString().contains("\$GPRMC,010203.456,A,"))
+        assertTrue(rmc.toString().contains("\$GPRMC,010203.456,A,"))
     }
 
     /**
@@ -296,9 +297,9 @@ class RMCTest {
         val `var` = 1.55555
         rmc!!.setVariation(`var`)
         rmc!!.setDirectionOfVariation(CompassPoint.WEST)
-        Assert.assertTrue(rmc.toString().contains(",001.6,W,"))
-        Assert.assertEquals(`var`, rmc!!.getVariation(), 0.1)
-        Assert.assertEquals(CompassPoint.WEST, rmc!!.getDirectionOfVariation())
+        assertTrue(rmc.toString().contains(",001.6,W,"))
+        assertEquals(`var`, rmc!!.getVariation(), 0.1)
+        assertEquals(CompassPoint.WEST, rmc!!.getDirectionOfVariation())
     }
 
     companion object {

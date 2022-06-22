@@ -20,7 +20,7 @@
  */
 package net.sf.marineapi.nmea.util
 
-import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import java.util.*
@@ -49,8 +49,8 @@ class TimeTest {
         val now = Date()
         time!!.setTime(now)
         val result = time!!.toDate(now)
-        Assert.assertEquals(now, result)
-        Assert.assertEquals(now.time, result.time)
+        assertEquals(now, result)
+        assertEquals(now.time, result.time)
     }
 
     /**
@@ -61,7 +61,7 @@ class TimeTest {
     @Test
     fun testFormatTimeNoDecimals() {
         val t = Time(1, 2, 3.0)
-        Assert.assertEquals("010203.000", t.toString())
+        assertEquals("010203.000", t.toString())
     }
 
     /**
@@ -72,7 +72,7 @@ class TimeTest {
     @Test
     fun testFormatTimeWithDecimals() {
         val t = Time(1, 2, 3.456)
-        Assert.assertEquals("010203.456", t.toString())
+        assertEquals("010203.456", t.toString())
     }
 
     /**
@@ -83,7 +83,7 @@ class TimeTest {
     @Test
     fun testFormatTimeWithOneDecimal() {
         val t = Time(1, 2, 3.4)
-        Assert.assertEquals("010203.400", t.toString())
+        assertEquals("010203.400", t.toString())
     }
 
     /**
@@ -91,23 +91,22 @@ class TimeTest {
      */
     @Test
     fun testGetHour() {
-        Assert.assertEquals(1, time!!.getHour().toLong())
+        assertEquals(1, time!!.getHour().toLong())
     }
 
     /**
-     * Test method for [Time.getMilliseconds]
-     * .
+     * Test method for [Time.milliseconds]
      */
     @Test
     fun testGetMilliseconds() {
         time!!.setHour(12)
         time!!.setMinutes(1)
         time!!.setSeconds(1.0)
-        Assert.assertEquals(43261000, time!!.milliseconds)
+        assertEquals(43261000, time!!.milliseconds)
         time!!.setHour(18)
         time!!.setMinutes(1)
         time!!.setSeconds(1.123)
-        Assert.assertEquals(64861123, time!!.milliseconds)
+        assertEquals(64861123, time!!.milliseconds)
     }
 
     /**
@@ -115,7 +114,7 @@ class TimeTest {
      */
     @Test
     fun testGetMinutes() {
-        Assert.assertEquals(2, time!!.getMinutes().toLong())
+        assertEquals(2, time!!.getMinutes().toLong())
     }
 
     /**
@@ -123,7 +122,7 @@ class TimeTest {
      */
     @Test
     fun testGetSeconds() {
-        Assert.assertEquals(3.4, time!!.getSeconds(), 0.001)
+        assertEquals(3.4, time!!.getSeconds(), 0.001)
     }
 
     /**
@@ -133,9 +132,9 @@ class TimeTest {
     @Test
     fun testParseTimeWithDecimals() {
         val t = Time("010203.456")
-        Assert.assertEquals(1, t.getHour().toLong())
-        Assert.assertEquals(2, t.getMinutes().toLong())
-        Assert.assertEquals(3.456, t.getSeconds(), 0.001)
+        assertEquals(1, t.getHour().toLong())
+        assertEquals(2, t.getMinutes().toLong())
+        assertEquals(3.456, t.getSeconds(), 0.001)
     }
 
     /**
@@ -145,9 +144,9 @@ class TimeTest {
     @Test
     fun testParseTimeWithOneDecimal() {
         val t = Time("010203.4")
-        Assert.assertEquals(1, t.getHour().toLong())
-        Assert.assertEquals(2, t.getMinutes().toLong())
-        Assert.assertEquals(3.4, t.getSeconds(), 0.001)
+        assertEquals(1, t.getHour().toLong())
+        assertEquals(2, t.getMinutes().toLong())
+        assertEquals(3.4, t.getSeconds(), 0.001)
     }
 
     /**
@@ -157,9 +156,9 @@ class TimeTest {
     @Test
     fun testParseTimeWithoutDecimals() {
         val t = Time("010203")
-        Assert.assertEquals(1, t.getHour().toLong())
-        Assert.assertEquals(2, t.getMinutes().toLong())
-        Assert.assertEquals(3.0, t.getSeconds(), 0.001)
+        assertEquals(1, t.getHour().toLong())
+        assertEquals(2, t.getMinutes().toLong())
+        assertEquals(3.0, t.getSeconds(), 0.001)
     }
 
     /**
@@ -168,7 +167,7 @@ class TimeTest {
     @Test
     fun testSetHour() {
         time!!.setHour(12)
-        Assert.assertEquals(12, time!!.getHour().toLong())
+        assertEquals(12, time!!.getHour().toLong())
     }
 
     /**
@@ -178,7 +177,7 @@ class TimeTest {
     fun testSetInvalidHour() {
         try {
             time!!.setHour(60)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -191,7 +190,7 @@ class TimeTest {
     fun testSetInvalidMinutes() {
         try {
             time!!.setMinutes(60)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -205,7 +204,7 @@ class TimeTest {
     fun testSetInvalidSeconds() {
         try {
             time!!.setSeconds(60.0)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -217,7 +216,7 @@ class TimeTest {
     @Test
     fun testSetMinutes() {
         time!!.setMinutes(30)
-        Assert.assertEquals(30, time!!.getMinutes().toLong())
+        assertEquals(30, time!!.getMinutes().toLong())
     }
 
     /**
@@ -227,7 +226,7 @@ class TimeTest {
     fun testSetNegativeHour() {
         try {
             time!!.setHour(-1)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -240,7 +239,7 @@ class TimeTest {
     fun testSetNegativeMinutes() {
         try {
             time!!.setMinutes(-1)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -254,7 +253,7 @@ class TimeTest {
     fun testSetNegativeSeconds() {
         try {
             time!!.setSeconds(-0.001)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -266,7 +265,7 @@ class TimeTest {
     @Test
     fun testSetSeconds() {
         time!!.setSeconds(45.12345)
-        Assert.assertEquals(45.12345, time!!.getSeconds(), 0.001)
+        assertEquals(45.12345, time!!.getSeconds(), 0.001)
     }
 
     /**
@@ -284,9 +283,9 @@ class TimeTest {
         val fullSeconds = cal[Calendar.SECOND]
         val milliSeconds = cal[Calendar.MILLISECOND]
         val seconds = fullSeconds + milliSeconds / 1000.0
-        Assert.assertEquals(hours.toLong(), time!!.getHour().toLong())
-        Assert.assertEquals(minutes.toLong(), time!!.getMinutes().toLong())
-        Assert.assertEquals(seconds, time!!.getSeconds(), 0.001)
+        assertEquals(hours.toLong(), time!!.getHour().toLong())
+        assertEquals(minutes.toLong(), time!!.getMinutes().toLong())
+        assertEquals(seconds, time!!.getSeconds(), 0.001)
     }
 
     /**
@@ -314,14 +313,14 @@ class TimeTest {
         val resultSeconds = resultFullSeconds + resultMilliseconds / 1000.0
 
         // Time portion, should match values in Time exactly
-        Assert.assertEquals(time!!.getHour().toLong(), resultHour.toLong())
-        Assert.assertEquals(time!!.getMinutes().toLong(), resultMinute.toLong())
-        Assert.assertEquals(time!!.getSeconds(), resultSeconds, 0.001)
+        assertEquals(time!!.getHour().toLong(), resultHour.toLong())
+        assertEquals(time!!.getMinutes().toLong(), resultMinute.toLong())
+        assertEquals(time!!.getSeconds(), resultSeconds, 0.001)
 
         // Date portion should not have changed
-        Assert.assertEquals(cal[Calendar.YEAR].toLong(), result[Calendar.YEAR].toLong())
-        Assert.assertEquals(cal[Calendar.MONTH].toLong(), result[Calendar.MONTH].toLong())
-        Assert.assertEquals(
+        assertEquals(cal[Calendar.YEAR].toLong(), result[Calendar.YEAR].toLong())
+        assertEquals(cal[Calendar.MONTH].toLong(), result[Calendar.MONTH].toLong())
+        assertEquals(
             cal[Calendar.DAY_OF_YEAR].toLong(),
             result[Calendar.DAY_OF_YEAR].toLong()
         )
@@ -332,9 +331,9 @@ class TimeTest {
         val a = Time(1, 2, 3.456)
         val b = Time(1, 2, 3.456)
         val c = Time(2, 3, 4.567)
-        Assert.assertTrue(a == b)
-        Assert.assertFalse(a == c)
-        Assert.assertFalse(a == Any())
-        Assert.assertEquals(a.hashCode().toLong(), b.hashCode().toLong())
+        assertTrue(a == b)
+        assertFalse(a == c)
+        assertFalse(a == Any())
+        assertEquals(a.hashCode().toLong(), b.hashCode().toLong())
     }
 }

@@ -24,6 +24,7 @@ import net.sf.marineapi.nmea.sentence.MHUSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -40,67 +41,67 @@ class MHUTest {
     fun setUp() {
         mhu = MHUParser(EXAMPLE)
         empty = MHUParser(TalkerId.II)
-        Assert.assertEquals(4f, mhu!!.getFieldCount().toFloat(), 1f)
+        assertEquals(4f, mhu!!.getFieldCount().toFloat(), 1f)
     }
 
     @Test
     fun testEmptySentenceConstructor() {
-        Assert.assertEquals(TalkerId.II, empty!!.getTalkerId())
-        Assert.assertEquals(SentenceId.MHU.toString(), empty!!.getSentenceId())
-        Assert.assertEquals(4, empty!!.getFieldCount().toLong())
-        Assert.assertEquals('C'.code.toLong(), empty!!.getDewPointUnit().code.toLong())
+        assertEquals(TalkerId.II, empty!!.getTalkerId())
+        assertEquals(SentenceId.MHU.toString(), empty!!.getSentenceId())
+        assertEquals(4, empty!!.getFieldCount().toLong())
+        assertEquals('C'.code.toLong(), empty!!.getDewPointUnit().code.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetRelativeHumidity() {
-        Assert.assertEquals(66.0, mhu!!.getRelativeHumidity(), 0.1)
+        assertEquals(66.0, mhu!!.getRelativeHumidity(), 0.1)
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetAbsoluteHumidity() {
-        Assert.assertEquals(5.0, mhu!!.getAbsoluteHumidity(), 0.1)
+        assertEquals(5.0, mhu!!.getAbsoluteHumidity(), 0.1)
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetDewPoint() {
-        Assert.assertEquals(3.0, mhu!!.getDewPoint(), 0.1)
+        assertEquals(3.0, mhu!!.getDewPoint(), 0.1)
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetDewPointUnit() {
-        Assert.assertEquals('C'.code.toLong(), mhu!!.getDewPointUnit().code.toLong())
+        assertEquals('C'.code.toLong(), mhu!!.getDewPointUnit().code.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun testSetRelativeHumidity() {
         mhu!!.setRelativeHumidity(55.55555)
-        Assert.assertEquals(55.6, mhu!!.getRelativeHumidity(), 0.1)
+        assertEquals(55.6, mhu!!.getRelativeHumidity(), 0.1)
     }
 
     @Test
     @Throws(Exception::class)
     fun testSetAbsoluteHumidity() {
         mhu!!.setAbsoluteHumidity(6.1234)
-        Assert.assertEquals(6.1, mhu!!.getAbsoluteHumidity(), 0.1)
+        assertEquals(6.1, mhu!!.getAbsoluteHumidity(), 0.1)
     }
 
     @Test
     @Throws(Exception::class)
     fun testSetDewPoint() {
         mhu!!.setDewPoint(1.2356)
-        Assert.assertEquals(1.2, mhu!!.getDewPoint(), 0.1)
+        assertEquals(1.2, mhu!!.getDewPoint(), 0.1)
     }
 
     @Test
     @Throws(Exception::class)
     fun testSetDewPointUnit() {
         mhu!!.setDewPointUnit('F')
-        Assert.assertEquals('F'.code.toLong(), mhu!!.getDewPointUnit().code.toLong())
+        assertEquals('F'.code.toLong(), mhu!!.getDewPointUnit().code.toLong())
     }
 
     companion object {

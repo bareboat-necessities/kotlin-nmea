@@ -4,7 +4,7 @@ import net.sf.marineapi.nmea.parser.XDRParser
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.Measurement
 import org.junit.Assert
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Test
 
 /**
@@ -17,7 +17,7 @@ class XDRTest {
     @Test
     fun testConstructor() {
         val xdr = XDRParser(EXAMPLE)
-        Assert.assertTrue(xdr.isValid())
+        assertTrue(xdr.isValid())
         assertEquals("XDR", xdr.getSentenceId())
         assertEquals(4, xdr.getFieldCount().toLong())
         assertEquals('P'.code.toLong(), xdr.getCharValue(0).code.toLong())
@@ -35,7 +35,7 @@ class XDRTest {
         assertEquals("U", m.type)
         assertEquals(14.9, m.getValue(), 0.1)
         assertEquals("V", m.units)
-        Assert.assertNull(m.name)
+        assertNull(m.name)
     }
 
     @Test
@@ -74,7 +74,7 @@ class XDRTest {
         val value = Measurement("C", 19.9, "C", "TempAir")
         xdr.addMeasurement(value)
         assertEquals(8, xdr.getFieldCount().toLong())
-        Assert.assertTrue(xdr.toString().startsWith("\$IIXDR,P,1.02481,B,Barometer,C,19.9,C,TempAir*"))
+        assertTrue(xdr.toString().startsWith("\$IIXDR,P,1.02481,B,Barometer,C,19.9,C,TempAir*"))
     }
 
     /**
@@ -86,7 +86,7 @@ class XDRTest {
         val value = Measurement("C", 19.9, "C", "TempAir")
         xdr.addMeasurement(value)
         assertEquals(4, xdr.getFieldCount().toLong())
-        Assert.assertTrue(xdr.toString().startsWith("\$IIXDR,C,19.9,C,TempAir*"))
+        assertTrue(xdr.toString().startsWith("\$IIXDR,C,19.9,C,TempAir*"))
     }
 
     /**
@@ -99,7 +99,7 @@ class XDRTest {
         val m2 = Measurement("P", 1.08, "B", "Barometer")
         xdr.addMeasurement(m1, m2)
         assertEquals(8, xdr.getFieldCount().toLong())
-        Assert.assertTrue(xdr.toString().startsWith("\$IIXDR,C,19.9,C,TempAir,P,1.08,B,Barometer*"))
+        assertTrue(xdr.toString().startsWith("\$IIXDR,C,19.9,C,TempAir,P,1.08,B,Barometer*"))
     }
 
     /**
@@ -126,7 +126,7 @@ class XDRTest {
         val value = Measurement("C", 19.9, "C", "TempAir")
         xdr.setMeasurement(value)
         assertEquals(4, xdr.getFieldCount().toLong())
-        Assert.assertTrue(xdr.toString().startsWith("\$IIXDR,C,19.9,C,TempAir*"))
+        assertTrue(xdr.toString().startsWith("\$IIXDR,C,19.9,C,TempAir*"))
     }
 
     /**
@@ -140,7 +140,7 @@ class XDRTest {
         values.add(value)
         xdr.setMeasurements(values)
         assertEquals(4, xdr.getFieldCount().toLong())
-        Assert.assertTrue(xdr.toString().startsWith("\$IIXDR,C,19.9,C,TempAir*"))
+        assertTrue(xdr.toString().startsWith("\$IIXDR,C,19.9,C,TempAir*"))
     }
 
     /**
@@ -156,7 +156,7 @@ class XDRTest {
         values.add(v2)
         xdr.setMeasurements(values)
         assertEquals(8, xdr.getFieldCount().toLong())
-        Assert.assertTrue(xdr.toString().startsWith("\$IIXDR,C,19.9,C,TempAir,P,1.08,B,Barometer*"))
+        assertTrue(xdr.toString().startsWith("\$IIXDR,C,19.9,C,TempAir,P,1.08,B,Barometer*"))
     }
 
     companion object {

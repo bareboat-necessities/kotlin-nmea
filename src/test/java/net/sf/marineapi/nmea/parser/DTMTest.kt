@@ -3,6 +3,7 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.DTMSentence
 import net.sf.marineapi.nmea.sentence.TalkerId
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -18,26 +19,26 @@ class DTMTest {
 
     @Test
     fun testDTMParserString() {
-        Assert.assertEquals("DTM", dtm!!.getSentenceId())
-        Assert.assertEquals(TalkerId.GP, dtm!!.getTalkerId())
-        Assert.assertEquals(8, dtm!!.getFieldCount().toLong())
+        assertEquals("DTM", dtm!!.getSentenceId())
+        assertEquals(TalkerId.GP, dtm!!.getTalkerId())
+        assertEquals(8, dtm!!.getFieldCount().toLong())
     }
 
     @Test
     fun testDTMParserTalkerId() {
-        Assert.assertEquals("DTM", empty!!.getSentenceId())
-        Assert.assertEquals(TalkerId.GP, empty!!.getTalkerId())
-        Assert.assertEquals(8, empty!!.getFieldCount().toLong())
+        assertEquals("DTM", empty!!.getSentenceId())
+        assertEquals(TalkerId.GP, empty!!.getTalkerId())
+        assertEquals(8, empty!!.getFieldCount().toLong())
     }
 
     @Test
     fun testGetAltitudeOffset() {
-        Assert.assertEquals(0.0, dtm!!.getAltitudeOffset(), 0.1)
+        assertEquals(0.0, dtm!!.getAltitudeOffset(), 0.1)
     }
 
     @Test
     fun testGetDatumCode() {
-        Assert.assertEquals("W84", dtm!!.getDatumCode())
+        assertEquals("W84", dtm!!.getDatumCode())
     }
 
     @Test
@@ -52,47 +53,47 @@ class DTMTest {
 
     @Test
     fun testGetLatitudeOffset() {
-        Assert.assertEquals(0.0, dtm!!.getLatitudeOffset(), 0.1)
+        assertEquals(0.0, dtm!!.getLatitudeOffset(), 0.1)
     }
 
     @Test
     fun testGetLongitudeOffset() {
-        Assert.assertEquals(0.0, dtm!!.getLongitudeOffset(), 0.1)
+        assertEquals(0.0, dtm!!.getLongitudeOffset(), 0.1)
     }
 
     @Test
     fun testGetName() {
-        Assert.assertEquals("W84", dtm!!.getName())
+        assertEquals("W84", dtm!!.getName())
     }
 
     @Test
     fun testSetDatumCode() {
         dtm!!.setDatumCode("W72")
-        Assert.assertEquals("W72", dtm!!.getDatumCode())
+        assertEquals("W72", dtm!!.getDatumCode())
     }
 
     @Test
     fun testSetDatumSubCode() {
         dtm!!.setDatumSubCode("123")
-        Assert.assertEquals("123", dtm!!.getDatumSubCode())
+        assertEquals("123", dtm!!.getDatumSubCode())
     }
 
     @Test
     fun testSetLatitudeOffset() {
         dtm!!.setLatitudeOffset(0.12345678)
-        Assert.assertEquals(0.1235, dtm!!.getLatitudeOffset(), 0.0001)
+        assertEquals(0.1235, dtm!!.getLatitudeOffset(), 0.0001)
     }
 
     @Test
     fun testSetLongitudeOffset() {
         dtm!!.setLongitudeOffset(1.23456789)
-        Assert.assertEquals(1.2346, dtm!!.getLongitudeOffset(), 0.0001)
+        assertEquals(1.2346, dtm!!.getLongitudeOffset(), 0.0001)
     }
 
     @Test
     fun testSetName() {
         dtm!!.setName("S83")
-        Assert.assertEquals("S83", dtm!!.getName())
+        assertEquals("S83", dtm!!.getName())
     }
 
     companion object {

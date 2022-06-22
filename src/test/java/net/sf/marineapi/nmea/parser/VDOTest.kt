@@ -24,6 +24,7 @@ import net.sf.marineapi.nmea.parser.VDOParser
 import net.sf.marineapi.nmea.sentence.AISSentence
 import net.sf.marineapi.nmea.sentence.TalkerId
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -56,10 +57,10 @@ class VDOTest {
     @Test
     fun testVDOParserTalkerId() {
         val empty: AISSentence = VDOParser(TalkerId.AI)
-        Assert.assertEquals('!'.code.toLong(), empty.getBeginChar().code.toLong())
-        Assert.assertEquals(TalkerId.AI, empty.getTalkerId())
-        Assert.assertEquals("VDO", empty.getSentenceId())
-        Assert.assertEquals(6, empty.getFieldCount().toLong())
+        assertEquals('!'.code.toLong(), empty.getBeginChar().code.toLong())
+        assertEquals(TalkerId.AI, empty.getTalkerId())
+        assertEquals("VDO", empty.getSentenceId())
+        assertEquals(6, empty.getFieldCount().toLong())
     }
 
     /**
@@ -68,9 +69,9 @@ class VDOTest {
      */
     @Test
     fun testGetNumberOfFragments() {
-        Assert.assertEquals(1, vdo!!.getNumberOfFragments().toLong())
-        Assert.assertEquals(2, frag1!!.getNumberOfFragments().toLong())
-        Assert.assertEquals(2, frag2!!.getNumberOfFragments().toLong())
+        assertEquals(1, vdo!!.getNumberOfFragments().toLong())
+        assertEquals(2, frag1!!.getNumberOfFragments().toLong())
+        assertEquals(2, frag2!!.getNumberOfFragments().toLong())
     }
 
     /**
@@ -79,9 +80,9 @@ class VDOTest {
      */
     @Test
     fun testGetFragmentNumber() {
-        Assert.assertEquals(1, vdo!!.getFragmentNumber().toLong())
-        Assert.assertEquals(1, frag1!!.getFragmentNumber().toLong())
-        Assert.assertEquals(2, frag2!!.getFragmentNumber().toLong())
+        assertEquals(1, vdo!!.getFragmentNumber().toLong())
+        assertEquals(1, frag1!!.getFragmentNumber().toLong())
+        assertEquals(2, frag2!!.getFragmentNumber().toLong())
     }
 
     /**
@@ -90,8 +91,8 @@ class VDOTest {
      */
     @Test
     fun testGetMessageId() {
-        Assert.assertEquals("5", frag1!!.getMessageId())
-        Assert.assertEquals("5", frag2!!.getMessageId())
+        assertEquals("5", frag1!!.getMessageId())
+        assertEquals("5", frag2!!.getMessageId())
     }
 
     /**
@@ -100,9 +101,9 @@ class VDOTest {
      */
     @Test
     fun testGetRadioChannel() {
-        Assert.assertEquals("B", vdo!!.getRadioChannel())
-        Assert.assertEquals("B", frag1!!.getRadioChannel())
-        Assert.assertEquals("B", frag2!!.getRadioChannel())
+        assertEquals("B", vdo!!.getRadioChannel())
+        assertEquals("B", frag1!!.getRadioChannel())
+        assertEquals("B", frag2!!.getRadioChannel())
     }
 
     /**
@@ -114,9 +115,9 @@ class VDOTest {
         val pl = "H1c2;qA@PU>0U>060<h5=>0:1Dp"
         val f1 = "E1c2;q@b44ah4ah0h:2ab@70VRpU<Bgpm4:gP50HH`Th`QF5"
         val f2 = "1CQ1A83PCAH0"
-        Assert.assertEquals(pl, vdo!!.getPayload())
-        Assert.assertEquals(f1, frag1!!.getPayload())
-        Assert.assertEquals(f2, frag2!!.getPayload())
+        assertEquals(pl, vdo!!.getPayload())
+        assertEquals(f1, frag1!!.getPayload())
+        assertEquals(f2, frag2!!.getPayload())
     }
 
     /**
@@ -125,9 +126,9 @@ class VDOTest {
      */
     @Test
     fun testGetFillBits() {
-        Assert.assertEquals(2, vdo!!.getFillBits().toLong())
-        Assert.assertEquals(0, frag1!!.getFillBits().toLong())
-        Assert.assertEquals(0, frag2!!.getFillBits().toLong())
+        assertEquals(2, vdo!!.getFillBits().toLong())
+        assertEquals(0, frag1!!.getFillBits().toLong())
+        assertEquals(0, frag2!!.getFillBits().toLong())
     }
 
     /**
@@ -182,8 +183,8 @@ class VDOTest {
     fun testToStringWithAIS() {
         val example: AISSentence = VDOParser(EXAMPLE)
         val empty: AISSentence = VDOParser(TalkerId.AI)
-        Assert.assertEquals(EXAMPLE, example.toString())
-        Assert.assertEquals("!AIVDO,,,,,,*55", empty.toString())
+        assertEquals(EXAMPLE, example.toString())
+        assertEquals("!AIVDO,,,,,,*55", empty.toString())
     }
 
     companion object {

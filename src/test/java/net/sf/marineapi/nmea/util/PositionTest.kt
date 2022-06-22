@@ -1,6 +1,8 @@
 package net.sf.marineapi.nmea.util
 
 import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 
@@ -31,7 +33,7 @@ class PositionTest {
 
             // one degree equals 60 NM
             val expected = 60 * n * 1852.0
-            Assert.assertEquals(expected, distance, 1.0)
+            assertEquals(expected, distance, 1.0)
         }
     }
 
@@ -41,7 +43,7 @@ class PositionTest {
     @Test
     fun testDistanceToSelf() {
         val origin = Position(60.567, 26.123)
-        Assert.assertEquals(0.0, origin.distanceTo(origin), 0.00001)
+        assertEquals(0.0, origin.distanceTo(origin), 0.00001)
     }
 
     /**
@@ -49,7 +51,7 @@ class PositionTest {
      */
     @Test
     fun testGetDatum() {
-        Assert.assertEquals(Datum.WGS84, instance!!.datum)
+        assertEquals(Datum.WGS84, instance!!.datum)
     }
 
     /**
@@ -57,7 +59,7 @@ class PositionTest {
      */
     @Test
     fun testGetLatitude() {
-        Assert.assertEquals(60.0, instance!!.latitude, 0.0000001)
+        assertEquals(60.0, instance!!.latitude, 0.0000001)
     }
 
     /**
@@ -65,7 +67,7 @@ class PositionTest {
      */
     @Test
     fun testGetLatitudeHemisphere() {
-        Assert.assertEquals(CompassPoint.NORTH, instance!!.latitudeHemisphere)
+        assertEquals(CompassPoint.NORTH, instance!!.latitudeHemisphere)
     }
 
     /**
@@ -73,7 +75,7 @@ class PositionTest {
      */
     @Test
     fun testGetLongitude() {
-        Assert.assertEquals(25.0, instance!!.longitude, 0.0000001)
+        assertEquals(25.0, instance!!.longitude, 0.0000001)
     }
 
     /**
@@ -81,7 +83,7 @@ class PositionTest {
      */
     @Test
     fun testGetLongitudeHemisphere() {
-        Assert.assertEquals(CompassPoint.EAST, instance!!.longitudeHemisphere)
+        assertEquals(CompassPoint.EAST, instance!!.longitudeHemisphere)
     }
 
     /**
@@ -91,11 +93,11 @@ class PositionTest {
     fun testSetIllegalLatitudeNorth() {
         try {
             instance!!.latitude = 90.001
-            Assert.fail("Did not throw IllegalArgumentExcetpion")
+            fail("Did not throw IllegalArgumentExcetpion")
         } catch (e: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -106,11 +108,11 @@ class PositionTest {
     fun testSetIllegalLatitudeSouth() {
         try {
             instance!!.latitude = -90.001
-            Assert.fail("Did not throw IllegalArgumentExcetpion")
+            fail("Did not throw IllegalArgumentExcetpion")
         } catch (e: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -121,7 +123,7 @@ class PositionTest {
     fun testSetIllegalLongitudeEast() {
         try {
             instance!!.longitude = 180.0001
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -134,7 +136,7 @@ class PositionTest {
     fun testSetIllegalLongitudeWest() {
         try {
             instance!!.longitude = -180.0001
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -145,10 +147,10 @@ class PositionTest {
      */
     @Test
     fun testSetLatitudeNorth() {
-        Assert.assertEquals(60.0, instance!!.latitude, 0.0000001)
+        assertEquals(60.0, instance!!.latitude, 0.0000001)
         instance!!.latitude = 90.0
-        Assert.assertEquals(90.0, instance!!.latitude, 0.0000001)
-        Assert.assertEquals(CompassPoint.NORTH, instance!!.latitudeHemisphere)
+        assertEquals(90.0, instance!!.latitude, 0.0000001)
+        assertEquals(CompassPoint.NORTH, instance!!.latitudeHemisphere)
     }
 
     /**
@@ -156,10 +158,10 @@ class PositionTest {
      */
     @Test
     fun testSetLatitudeSouth() {
-        Assert.assertEquals(60.0, instance!!.latitude, 0.0000001)
+        assertEquals(60.0, instance!!.latitude, 0.0000001)
         instance!!.latitude = -90.0
-        Assert.assertEquals(-90.0, instance!!.latitude, 0.0000001)
-        Assert.assertEquals(CompassPoint.SOUTH, instance!!.latitudeHemisphere)
+        assertEquals(-90.0, instance!!.latitude, 0.0000001)
+        assertEquals(CompassPoint.SOUTH, instance!!.latitudeHemisphere)
     }
 
     /**
@@ -167,10 +169,10 @@ class PositionTest {
      */
     @Test
     fun testSetLongitudeEast() {
-        Assert.assertEquals(25.0, instance!!.longitude, 0.0000001)
+        assertEquals(25.0, instance!!.longitude, 0.0000001)
         instance!!.longitude = 180.0
-        Assert.assertEquals(180.0, instance!!.longitude, 0.0000001)
-        Assert.assertEquals(CompassPoint.EAST, instance!!.longitudeHemisphere)
+        assertEquals(180.0, instance!!.longitude, 0.0000001)
+        assertEquals(CompassPoint.EAST, instance!!.longitudeHemisphere)
     }
 
     /**
@@ -178,10 +180,10 @@ class PositionTest {
      */
     @Test
     fun testSetLongitudeWest() {
-        Assert.assertEquals(25.0, instance!!.longitude, 0.0000001)
+        assertEquals(25.0, instance!!.longitude, 0.0000001)
         instance!!.longitude = -180.0
-        Assert.assertEquals(-180.0, instance!!.longitude, 0.0000001)
-        Assert.assertEquals(CompassPoint.WEST, instance!!.longitudeHemisphere)
+        assertEquals(-180.0, instance!!.longitude, 0.0000001)
+        assertEquals(CompassPoint.WEST, instance!!.longitudeHemisphere)
     }
 
     /**
@@ -191,12 +193,12 @@ class PositionTest {
     fun testToWaypoint() {
         val name = "TEST"
         val wp = instance!!.toWaypoint(name)
-        Assert.assertEquals(name, wp.id)
-        Assert.assertEquals("", wp.description)
-        Assert.assertEquals(instance!!.latitude, wp.latitude, 0.00001)
-        Assert.assertEquals(instance!!.longitude, wp.longitude, 0.00001)
-        Assert.assertEquals(instance!!.latitudeHemisphere, wp.latitudeHemisphere)
-        Assert.assertEquals(instance!!.longitudeHemisphere, wp.longitudeHemisphere)
-        Assert.assertEquals(instance!!.datum, wp.datum)
+        assertEquals(name, wp.id)
+        assertEquals("", wp.description)
+        assertEquals(instance!!.latitude, wp.latitude, 0.00001)
+        assertEquals(instance!!.longitude, wp.longitude, 0.00001)
+        assertEquals(instance!!.latitudeHemisphere, wp.latitudeHemisphere)
+        assertEquals(instance!!.longitudeHemisphere, wp.longitudeHemisphere)
+        assertEquals(instance!!.datum, wp.datum)
     }
 }

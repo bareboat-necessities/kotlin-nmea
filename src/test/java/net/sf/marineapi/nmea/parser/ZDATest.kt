@@ -3,6 +3,8 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
 import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import java.util.*
@@ -22,13 +24,13 @@ class ZDATest {
             empty = ZDAParser(TalkerId.GP)
             zda = ZDAParser(EXAMPLE)
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        Assert.assertEquals(6, empty!!.getFieldCount().toLong())
+        assertEquals(6, empty!!.getFieldCount().toLong())
     }
 
     /**
@@ -38,7 +40,7 @@ class ZDATest {
     fun testGetDate() {
         val expected = net.sf.marineapi.nmea.util.Date(2004, 8, 7)
         val parsed = zda!!.getDate()
-        Assert.assertEquals(expected, parsed)
+        assertEquals(expected, parsed)
     }
 
     /**
@@ -46,7 +48,7 @@ class ZDATest {
      */
     @Test
     fun testGetDay() {
-        Assert.assertEquals(7, zda!!.getDate().getDay().toLong())
+        assertEquals(7, zda!!.getDate().getDay().toLong())
     }
 
     /**
@@ -55,7 +57,7 @@ class ZDATest {
      */
     @Test
     fun testGetLocalZoneHours() {
-        Assert.assertEquals(0, zda!!.getLocalZoneHours().toLong())
+        assertEquals(0, zda!!.getLocalZoneHours().toLong())
     }
 
     /**
@@ -67,7 +69,7 @@ class ZDATest {
         val hours = 7
         zda!!.setLocalZoneHours(hours)
         Assert.assertTrue(zda.toString().contains(",2004,07,00*"))
-        Assert.assertEquals(hours.toLong(), zda!!.getLocalZoneHours().toLong())
+        assertEquals(hours.toLong(), zda!!.getLocalZoneHours().toLong())
     }
 
     /**
@@ -76,7 +78,7 @@ class ZDATest {
      */
     @Test
     fun testGetLocalZoneMinutes() {
-        Assert.assertEquals(0, zda!!.getLocalZoneMinutes().toLong())
+        assertEquals(0, zda!!.getLocalZoneMinutes().toLong())
     }
 
     /**
@@ -88,7 +90,7 @@ class ZDATest {
         val min = 9
         zda!!.setLocalZoneMinutes(min)
         Assert.assertTrue(zda.toString().contains(",2004,00,09*"))
-        Assert.assertEquals(min.toLong(), zda!!.getLocalZoneMinutes().toLong())
+        assertEquals(min.toLong(), zda!!.getLocalZoneMinutes().toLong())
     }
 
     /**
@@ -97,7 +99,7 @@ class ZDATest {
      */
     @Test
     fun testGetMonth() {
-        Assert.assertEquals(8, zda!!.getDate().getMonth().toLong())
+        assertEquals(8, zda!!.getDate().getMonth().toLong())
     }
 
     /**
@@ -107,9 +109,9 @@ class ZDATest {
     fun testGetTime() {
         val t = zda!!.getTime()
         Assert.assertNotNull(t)
-        Assert.assertEquals(3, t.getHour().toLong())
-        Assert.assertEquals(29, t.getMinutes().toLong())
-        Assert.assertEquals(15.0, t.getSeconds(), 0.1)
+        assertEquals(3, t.getHour().toLong())
+        assertEquals(29, t.getMinutes().toLong())
+        assertEquals(15.0, t.getSeconds(), 0.1)
     }
 
     /**
@@ -117,7 +119,7 @@ class ZDATest {
      */
     @Test
     fun testGetYear() {
-        Assert.assertEquals(2004, zda!!.getDate().getYear().toLong())
+        assertEquals(2004, zda!!.getDate().getYear().toLong())
     }
 
     /**
@@ -150,8 +152,8 @@ class ZDATest {
         // 09:08:07.6+01:02
         val t = Time(9, 8, 7.6, 1, 2)
         zda!!.setTimeAndLocalZone(t)
-        Assert.assertEquals(1, zda!!.getLocalZoneHours().toLong())
-        Assert.assertEquals(2, zda!!.getLocalZoneMinutes().toLong())
+        assertEquals(1, zda!!.getLocalZoneHours().toLong())
+        assertEquals(2, zda!!.getLocalZoneMinutes().toLong())
         Assert.assertTrue(zda.toString().startsWith("\$GPZDA,090807.600,07,"))
         Assert.assertTrue(zda.toString().contains("2004,01,02*"))
     }
@@ -175,8 +177,8 @@ class ZDATest {
         cal[Calendar.MILLISECOND] = 246
         val result = zda!!.toDate()
         val expected = cal.time
-        Assert.assertEquals(expected, result)
-        Assert.assertEquals(expected.time, result.time)
+        assertEquals(expected, result)
+        assertEquals(expected.time, result.time)
     }
 
     companion object {

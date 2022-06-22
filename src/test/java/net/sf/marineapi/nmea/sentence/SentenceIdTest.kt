@@ -20,7 +20,8 @@
  */
 package net.sf.marineapi.nmea.sentence
 
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Test
 
 /**
@@ -30,14 +31,14 @@ class SentenceIdTest {
     @Test
     fun testParseKnownId() {
         val s = SentenceId.parse("\$GPGLL,,,,,,,")
-        Assert.assertEquals(SentenceId.GLL, s)
+        assertEquals(SentenceId.GLL, s)
     }
 
     @Test
     fun testParseUnknownId() {
         try {
             SentenceId.parse("\$ABCDE,,,,,,")
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: Exception) {
             // pass
         }
@@ -46,30 +47,30 @@ class SentenceIdTest {
     @Test
     fun testParseStrStandardId() {
         val s = SentenceId.parseStr("\$GPGLL,,,,,,,")
-        Assert.assertEquals("GLL", s)
+        assertEquals("GLL", s)
     }
 
     @Test
     fun testParseStrNormalLengthProprietaryId() {
         val s = SentenceId.parseStr("\$PGRMZ,,,,,,,")
-        Assert.assertEquals("GRMZ", s)
+        assertEquals("GRMZ", s)
     }
 
     @Test
     fun testParseStrShortProprietaryId() {
         val s = SentenceId.parseStr("\$PBVE,,,,,,,")
-        Assert.assertEquals("BVE", s)
+        assertEquals("BVE", s)
     }
 
     @Test
     fun testParseStrShortestPossibleProprietaryId() {
         val s = SentenceId.parseStr("\$PAB,,,,,,,")
-        Assert.assertEquals("AB", s)
+        assertEquals("AB", s)
     }
 
     @Test
     fun testParseStrLongestPossibleProprietaryId() {
         val s = SentenceId.parseStr("\$PABCDEFGHI,,,,,,,")
-        Assert.assertEquals("ABCDEFGHI", s)
+        assertEquals("ABCDEFGHI", s)
     }
 }

@@ -24,6 +24,7 @@ import net.sf.marineapi.nmea.sentence.Checksum.add
 import net.sf.marineapi.nmea.sentence.Checksum.calculate
 import net.sf.marineapi.nmea.sentence.Checksum.index
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**
@@ -42,9 +43,9 @@ class ChecksumTest {
         val b = "\$GPGLL,6011.552,N,02501.941,E,120045,A*"
         val c = "\$GPGLL,6011.552,N,02501.941,E,120045,A*00"
         val expected = "$a*26"
-        Assert.assertEquals(expected, add(a))
-        Assert.assertEquals(expected, add(b))
-        Assert.assertEquals(expected, add(c))
+        assertEquals(expected, add(a))
+        assertEquals(expected, add(b))
+        assertEquals(expected, add(c))
     }
 
     /**
@@ -54,19 +55,19 @@ class ChecksumTest {
      */
     @Test
     fun testCalculate() {
-        Assert.assertEquals("1D", calculate(BODTest.EXAMPLE))
-        Assert.assertEquals("63", calculate(GGATest.EXAMPLE))
-        Assert.assertEquals("26", calculate(GLLTest.EXAMPLE))
-        Assert.assertEquals("0B", calculate(RMCTest.EXAMPLE))
-        Assert.assertEquals("3D", calculate(GSATest.EXAMPLE))
-        Assert.assertEquals("73", calculate(GSVTest.EXAMPLE))
-        Assert.assertEquals("58", calculate(RMBTest.EXAMPLE))
-        Assert.assertEquals("25", calculate(RTETest.EXAMPLE))
+        assertEquals("1D", calculate(BODTest.EXAMPLE))
+        assertEquals("63", calculate(GGATest.EXAMPLE))
+        assertEquals("26", calculate(GLLTest.EXAMPLE))
+        assertEquals("0B", calculate(RMCTest.EXAMPLE))
+        assertEquals("3D", calculate(GSATest.EXAMPLE))
+        assertEquals("73", calculate(GSVTest.EXAMPLE))
+        assertEquals("58", calculate(RMBTest.EXAMPLE))
+        assertEquals("25", calculate(RTETest.EXAMPLE))
     }
 
     @Test
     fun testDelimiterIndex() {
-        Assert.assertEquals(13, index("\$GPGGA,,,,,,,").toLong())
-        Assert.assertEquals(13, index("\$GPGGA,,,,,,,*00").toLong())
+        assertEquals(13, index("\$GPGGA,,,,,,,").toLong())
+        assertEquals(13, index("\$GPGGA,,,,,,,*00").toLong())
     }
 }

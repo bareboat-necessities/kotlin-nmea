@@ -26,6 +26,7 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -52,9 +53,9 @@ class MWVTest {
     @Test
     fun testMWVParserTalkerId() {
         val mwvp = MWVParser(TalkerId.II)
-        Assert.assertEquals(TalkerId.II, mwvp.getTalkerId())
-        Assert.assertEquals(SentenceId.MWV.toString(), mwvp.getSentenceId())
-        Assert.assertEquals(DataStatus.VOID, mwvp.getStatus())
+        assertEquals(TalkerId.II, mwvp.getTalkerId())
+        assertEquals(SentenceId.MWV.toString(), mwvp.getSentenceId())
+        assertEquals(DataStatus.VOID, mwvp.getStatus())
     }
 
     /**
@@ -63,7 +64,7 @@ class MWVTest {
      */
     @Test
     fun testGetAngle() {
-        Assert.assertEquals(125.1, mwv!!.getAngle(), 0.1) // "$IIMWV,125.1,T,5.5,A"
+        assertEquals(125.1, mwv!!.getAngle(), 0.1) // "$IIMWV,125.1,T,5.5,A"
     }
 
     /**
@@ -72,7 +73,7 @@ class MWVTest {
      */
     @Test
     fun testGetSpeed() {
-        Assert.assertEquals(5.5, mwv!!.getSpeed(), 0.1)
+        assertEquals(5.5, mwv!!.getSpeed(), 0.1)
     }
 
     /**
@@ -81,7 +82,7 @@ class MWVTest {
      */
     @Test
     fun testGetSpeedUnit() {
-        Assert.assertEquals(Units.METER, mwv!!.getSpeedUnit())
+        assertEquals(Units.METER, mwv!!.getSpeedUnit())
     }
 
     /**
@@ -90,7 +91,7 @@ class MWVTest {
      */
     @Test
     fun testGetStatus() {
-        Assert.assertEquals(DataStatus.ACTIVE, mwv!!.getStatus())
+        assertEquals(DataStatus.ACTIVE, mwv!!.getStatus())
     }
 
     /**
@@ -109,7 +110,7 @@ class MWVTest {
     fun testSetAngle() {
         val angle = 88.123
         mwv!!.setAngle(angle)
-        Assert.assertEquals(angle, mwv!!.getAngle(), 0.1)
+        assertEquals(angle, mwv!!.getAngle(), 0.1)
     }
 
     /**
@@ -154,7 +155,7 @@ class MWVTest {
     fun testSetSpeed() {
         val speed = 7.75
         mwv!!.setSpeed(speed)
-        Assert.assertEquals(speed, mwv!!.getSpeed(), 0.1)
+        assertEquals(speed, mwv!!.getSpeed(), 0.1)
     }
 
     /**
@@ -182,7 +183,7 @@ class MWVTest {
     @Test
     fun testSetSpeedUnit() {
         mwv!!.setSpeedUnit(Units.KILOMETERS)
-        Assert.assertEquals(Units.KILOMETERS, mwv!!.getSpeedUnit())
+        assertEquals(Units.KILOMETERS, mwv!!.getSpeedUnit())
     }
 
     /**
@@ -210,7 +211,7 @@ class MWVTest {
     @Test
     fun testSetStatus() {
         mwv!!.setStatus(DataStatus.VOID)
-        Assert.assertEquals(DataStatus.VOID, mwv!!.getStatus())
+        assertEquals(DataStatus.VOID, mwv!!.getStatus())
     }
 
     /**

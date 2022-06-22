@@ -3,6 +3,7 @@ package net.sf.marineapi.ais.parser
 import net.sf.marineapi.ais.message.AISMessage21
 import net.sf.marineapi.ais.util.Sixbit
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**
@@ -21,13 +22,13 @@ class AISMessage21ParserTest {
     @Throws(Exception::class)
     fun getAidType() {
         // Nav Type?
-        Assert.assertEquals(1, msg.aidType.toLong())
+        assertEquals(1, msg.aidType.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getName() {
-        Assert.assertEquals("THIS IS A TEST NAME1", msg.name)
+        assertEquals("THIS IS A TEST NAME1", msg.name)
     }
 
     @Test
@@ -39,63 +40,63 @@ class AISMessage21ParserTest {
     @Test
     @Throws(Exception::class)
     fun getLongitudeInDegrees() {
-        Assert.assertEquals(145.181, msg.longitudeInDegrees, 0.001)
+        assertEquals(145.181, msg.longitudeInDegrees, 0.001)
     }
 
     @Test
     @Throws(Exception::class)
     fun getLatitudeInDegrees() {
-        Assert.assertEquals(-38.220167, msg.latitudeInDegrees, 0.000001)
+        assertEquals(-38.220167, msg.latitudeInDegrees, 0.000001)
     }
 
     @Test
     @Throws(Exception::class)
     fun getBow() {
-        Assert.assertEquals(5, msg.bow.toLong())
+        assertEquals(5, msg.bow.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getStern() {
-        Assert.assertEquals(3, msg.stern.toLong())
+        assertEquals(3, msg.stern.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getPort() {
-        Assert.assertEquals(3, msg.port.toLong())
+        assertEquals(3, msg.port.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getStarboard() {
-        Assert.assertEquals(5, msg.starboard.toLong())
+        assertEquals(5, msg.starboard.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getTypeOfEPFD() {
-        Assert.assertEquals(1, msg.typeOfEPFD.toLong())
+        assertEquals(1, msg.typeOfEPFD.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getUtcSecond() {
         // UTC time stamp?
-        Assert.assertEquals(9, msg.utcSecond.toLong())
+        assertEquals(9, msg.utcSecond.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getOffPositionIndicator() {
-        Assert.assertEquals(true, msg.offPositionIndicator)
+        assertEquals(true, msg.offPositionIndicator)
     }
 
     @Test
     @Throws(Exception::class)
     fun getRegional() {
         // "00001010" ?
-        Assert.assertEquals(10, msg.regional.toLong())
+        assertEquals(10, msg.regional.toLong())
     }
 
     @Test
@@ -119,16 +120,16 @@ class AISMessage21ParserTest {
     @Test
     @Throws(Exception::class)
     fun getNameExtension() {
-        Assert.assertEquals("EXTENDED NAME", msg.nameExtension)
+        assertEquals("EXTENDED NAME", msg.nameExtension)
     }
 
     @Test
     fun hasLatitude() {
-        Assert.assertEquals(true, msg.hasLatitude())
+        assertEquals(true, msg.hasLatitude())
     }
 
     @Test
     fun hasLongitude() {
-        Assert.assertEquals(true, msg.hasLongitude())
+        assertEquals(true, msg.hasLongitude())
     }
 }

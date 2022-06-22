@@ -25,6 +25,7 @@ import net.sf.marineapi.nmea.sentence.HDGSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -49,14 +50,14 @@ class HDGTest {
     @Test
     fun testConstructor() {
         val empty: HDGSentence = HDGParser(TalkerId.HC)
-        Assert.assertEquals(TalkerId.HC, empty.getTalkerId())
-        Assert.assertEquals(SentenceId.HDG.toString(), empty.getSentenceId())
+        assertEquals(TalkerId.HC, empty.getTalkerId())
+        assertEquals(SentenceId.HDG.toString(), empty.getSentenceId())
         try {
             empty.getHeading()
         } catch (e: DataNotAvailableException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -65,7 +66,7 @@ class HDGTest {
      */
     @Test
     fun testIsTrue() {
-        Assert.assertFalse(hdg!!.isTrue())
+        assertFalse(hdg!!.isTrue())
     }
 
     /**
@@ -75,9 +76,9 @@ class HDGTest {
      */
     @Test
     fun testHDGParserString() {
-        Assert.assertTrue(hdg!!.isValid())
-        Assert.assertEquals(TalkerId.HC, hdg!!.getTalkerId())
-        Assert.assertEquals("HDG", hdg!!.getSentenceId())
+        assertTrue(hdg!!.isValid())
+        assertEquals(TalkerId.HC, hdg!!.getTalkerId())
+        assertEquals("HDG", hdg!!.getSentenceId())
     }
 
     /**
@@ -88,9 +89,9 @@ class HDGTest {
     @Test
     fun testHDGParserTalkerId() {
         val hdgp = HDGParser(TalkerId.HC)
-        Assert.assertTrue(hdgp.isValid())
-        Assert.assertEquals(TalkerId.HC, hdgp.getTalkerId())
-        Assert.assertEquals("HDG", hdgp.getSentenceId())
+        assertTrue(hdgp.isValid())
+        assertEquals(TalkerId.HC, hdgp.getTalkerId())
+        assertEquals("HDG", hdgp.getSentenceId())
     }
 
     /**
@@ -99,7 +100,7 @@ class HDGTest {
      */
     @Test
     fun testGetDeviation() {
-        Assert.assertEquals(1.2, hdg!!.getDeviation(), 0.1)
+        assertEquals(1.2, hdg!!.getDeviation(), 0.1)
     }
 
     /**
@@ -108,7 +109,7 @@ class HDGTest {
      */
     @Test
     fun testGetHeading() {
-        Assert.assertEquals(123.4, hdg!!.getHeading(), 0.1)
+        assertEquals(123.4, hdg!!.getHeading(), 0.1)
     }
 
     /**
@@ -118,7 +119,7 @@ class HDGTest {
     @Test
     fun testGetVariation() {
         // 1.2 degrees west -> -1.2
-        Assert.assertEquals(-1.2, hdg!!.getVariation(), 0.1)
+        assertEquals(-1.2, hdg!!.getVariation(), 0.1)
     }
 
     /**
@@ -129,8 +130,8 @@ class HDGTest {
     fun testSetDeviationWest() {
         val dev = -5.5
         hdg!!.setDeviation(dev)
-        Assert.assertEquals(dev, hdg!!.getDeviation(), 0.1)
-        Assert.assertTrue(hdg.toString().contains(",005.5,W,"))
+        assertEquals(dev, hdg!!.getDeviation(), 0.1)
+        assertTrue(hdg.toString().contains(",005.5,W,"))
     }
 
     /**
@@ -141,8 +142,8 @@ class HDGTest {
     fun testSetDeviationEast() {
         val dev = 5.5
         hdg!!.setDeviation(dev)
-        Assert.assertEquals(dev, hdg!!.getDeviation(), 0.1)
-        Assert.assertTrue(hdg.toString().contains(",005.5,E,"))
+        assertEquals(dev, hdg!!.getDeviation(), 0.1)
+        assertTrue(hdg.toString().contains(",005.5,E,"))
     }
 
     /**
@@ -154,11 +155,11 @@ class HDGTest {
         val value = 180.000001
         try {
             hdg!!.setDeviation(value)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -171,11 +172,11 @@ class HDGTest {
         val value = -180.000001
         try {
             hdg!!.setHeading(value)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -187,7 +188,7 @@ class HDGTest {
     fun testSetHeading() {
         val value = 359.9
         hdg!!.setHeading(value)
-        Assert.assertEquals(value, hdg!!.getHeading(), 0.1)
+        assertEquals(value, hdg!!.getHeading(), 0.1)
     }
 
     /**
@@ -199,11 +200,11 @@ class HDGTest {
         val value = 360.000001
         try {
             hdg!!.setHeading(value)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -216,11 +217,11 @@ class HDGTest {
         val value = -0.000001
         try {
             hdg!!.setHeading(value)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -232,8 +233,8 @@ class HDGTest {
     fun testSetVariationEast() {
         val `var` = 179.9
         hdg!!.setVariation(`var`)
-        Assert.assertEquals(`var`, hdg!!.getVariation(), 0.1)
-        Assert.assertTrue(hdg.toString().contains(",179.9,E*"))
+        assertEquals(`var`, hdg!!.getVariation(), 0.1)
+        assertTrue(hdg.toString().contains(",179.9,E*"))
     }
 
     /**
@@ -244,8 +245,8 @@ class HDGTest {
     fun testSetVariationWest() {
         val `var` = -0.1
         hdg!!.setVariation(`var`)
-        Assert.assertEquals(`var`, hdg!!.getVariation(), 0.1)
-        Assert.assertTrue(hdg.toString().contains(",000.1,W*"))
+        assertEquals(`var`, hdg!!.getVariation(), 0.1)
+        assertTrue(hdg.toString().contains(",000.1,W*"))
     }
 
     /**
@@ -257,11 +258,11 @@ class HDGTest {
         val `var` = 180.00001
         try {
             hdg!!.setVariation(`var`)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -274,11 +275,11 @@ class HDGTest {
         val `var` = -180.00001
         try {
             hdg!!.setVariation(`var`)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 

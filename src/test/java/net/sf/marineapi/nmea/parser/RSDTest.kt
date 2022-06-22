@@ -25,6 +25,7 @@ import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DisplayRotation
 import net.sf.marineapi.nmea.util.Units
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -48,7 +49,7 @@ class RSDTest {
      */
     @Test
     fun testGetOriginOneRange() {
-        Assert.assertEquals(12.0, example!!.getOriginOneRange(), 0.0)
+        assertEquals(12.0, example!!.getOriginOneRange(), 0.0)
     }
 
     /**
@@ -57,7 +58,7 @@ class RSDTest {
      */
     @Test
     fun testGetOriginOneBearing() {
-        Assert.assertEquals(90.0, example!!.getOriginOneBearing(), 0.0)
+        assertEquals(90.0, example!!.getOriginOneBearing(), 0.0)
     }
 
     /**
@@ -66,7 +67,7 @@ class RSDTest {
      */
     @Test
     fun testGetVRMOneRange() {
-        Assert.assertEquals(24.0, example!!.getVRMOneRange(), 0.0)
+        assertEquals(24.0, example!!.getVRMOneRange(), 0.0)
     }
 
     /**
@@ -75,7 +76,7 @@ class RSDTest {
      */
     @Test
     fun testGetEBLOneBearing() {
-        Assert.assertEquals(45.0, example!!.getEBLOneBearing(), 0.0)
+        assertEquals(45.0, example!!.getEBLOneBearing(), 0.0)
     }
 
     /**
@@ -84,7 +85,7 @@ class RSDTest {
      */
     @Test
     fun testGetOriginTwoRange() {
-        Assert.assertEquals(6.0, example!!.getOriginTwoRange(), 0.0)
+        assertEquals(6.0, example!!.getOriginTwoRange(), 0.0)
     }
 
     /**
@@ -93,7 +94,7 @@ class RSDTest {
      */
     @Test
     fun testGetOriginTwoBearing() {
-        Assert.assertEquals(270.0, example!!.getOriginTwoBearing(), 0.0)
+        assertEquals(270.0, example!!.getOriginTwoBearing(), 0.0)
     }
 
     /**
@@ -102,7 +103,7 @@ class RSDTest {
      */
     @Test
     fun testGetVRMTwoRange() {
-        Assert.assertEquals(12.0, example!!.getVRMTwoRange(), 0.0)
+        assertEquals(12.0, example!!.getVRMTwoRange(), 0.0)
     }
 
     /**
@@ -111,7 +112,7 @@ class RSDTest {
      */
     @Test
     fun testGetEBLTwoBearing() {
-        Assert.assertEquals(315.0, example!!.getEBLTwoBearing(), 0.0)
+        assertEquals(315.0, example!!.getEBLTwoBearing(), 0.0)
     }
 
     /**
@@ -120,7 +121,7 @@ class RSDTest {
      */
     @Test
     fun testGetCursorRange() {
-        Assert.assertEquals(6.5, example!!.getCursorRange(), 0.0)
+        assertEquals(6.5, example!!.getCursorRange(), 0.0)
     }
 
     /**
@@ -129,7 +130,7 @@ class RSDTest {
      */
     @Test
     fun testGetCursorBearing() {
-        Assert.assertEquals(118.0, example!!.getCursorBearing(), 0.0)
+        assertEquals(118.0, example!!.getCursorBearing(), 0.0)
     }
 
     /**
@@ -138,7 +139,7 @@ class RSDTest {
      */
     @Test
     fun testGetRangeScale() {
-        Assert.assertEquals(96.0, example!!.getRangeScale(), 0.0)
+        assertEquals(96.0, example!!.getRangeScale(), 0.0)
     }
 
     /**
@@ -147,7 +148,7 @@ class RSDTest {
      */
     @Test
     fun testGetRangeUnits() {
-        Assert.assertEquals(Units.NAUTICAL_MILES, example!!.getRangeUnits())
+        assertEquals(Units.NAUTICAL_MILES, example!!.getRangeUnits())
     }
 
     /**
@@ -156,7 +157,7 @@ class RSDTest {
      */
     @Test
     fun testGetDisplayRotation() {
-        Assert.assertEquals(DisplayRotation.NORTH_UP, example!!.getDisplayRotation())
+        assertEquals(DisplayRotation.NORTH_UP, example!!.getDisplayRotation())
     }
 
     /**
@@ -167,7 +168,7 @@ class RSDTest {
     fun testSetOriginOneRange() {
         val newRange = 0.75
         empty!!.setOriginOneRange(newRange)
-        Assert.assertEquals(newRange, empty!!.getOriginOneRange(), 0.0)
+        assertEquals(newRange, empty!!.getOriginOneRange(), 0.0)
     }
 
     /**
@@ -178,7 +179,7 @@ class RSDTest {
     fun testSetOriginOneBearing() {
         val newBearing = 93.2
         empty!!.setOriginOneBearing(newBearing)
-        Assert.assertEquals(newBearing, empty!!.getOriginOneBearing(), 0.0)
+        assertEquals(newBearing, empty!!.getOriginOneBearing(), 0.0)
     }
 
     /**
@@ -189,7 +190,7 @@ class RSDTest {
     fun testSetVRMOneRange() {
         val newRange = 12.5
         empty!!.setVRMOneRange(newRange)
-        Assert.assertEquals(newRange, empty!!.getVRMOneRange(), 0.0)
+        assertEquals(newRange, empty!!.getVRMOneRange(), 0.0)
     }
 
     /**
@@ -200,7 +201,7 @@ class RSDTest {
     fun testSetEBLOneBearing() {
         val newBearing = 147.0
         empty!!.setEBLOneBearing(newBearing)
-        Assert.assertEquals(newBearing, empty!!.getEBLOneBearing(), 0.0)
+        assertEquals(newBearing, empty!!.getEBLOneBearing(), 0.0)
     }
 
     /**
@@ -211,7 +212,7 @@ class RSDTest {
     fun testSetOriginTwoRange() {
         val newRange = 0.75
         empty!!.setOriginTwoRange(newRange)
-        Assert.assertEquals(newRange, empty!!.getOriginTwoRange(), 0.0)
+        assertEquals(newRange, empty!!.getOriginTwoRange(), 0.0)
     }
 
     /**
@@ -222,7 +223,7 @@ class RSDTest {
     fun testSetOriginTwoBearing() {
         val newBearing = 93.2
         empty!!.setOriginTwoBearing(newBearing)
-        Assert.assertEquals(newBearing, empty!!.getOriginTwoBearing(), 0.0)
+        assertEquals(newBearing, empty!!.getOriginTwoBearing(), 0.0)
     }
 
     /**
@@ -233,7 +234,7 @@ class RSDTest {
     fun testSetVRMTwoRange() {
         val newRange = 12.5
         empty!!.setVRMTwoRange(newRange)
-        Assert.assertEquals(newRange, empty!!.getVRMTwoRange(), 0.0)
+        assertEquals(newRange, empty!!.getVRMTwoRange(), 0.0)
     }
 
     /**
@@ -244,7 +245,7 @@ class RSDTest {
     fun testSetEBLTwoBearing() {
         val newBearing = 147.0
         empty!!.setEBLTwoBearing(newBearing)
-        Assert.assertEquals(newBearing, empty!!.getEBLTwoBearing(), 0.0)
+        assertEquals(newBearing, empty!!.getEBLTwoBearing(), 0.0)
     }
 
     /**
@@ -255,7 +256,7 @@ class RSDTest {
     fun testSetCursorRange() {
         val newRange = 48.32
         empty!!.setCursorRange(newRange)
-        Assert.assertEquals(newRange, empty!!.getCursorRange(), 0.0)
+        assertEquals(newRange, empty!!.getCursorRange(), 0.0)
     }
 
     /**
@@ -266,7 +267,7 @@ class RSDTest {
     fun testSetCursorBearing() {
         val newBearing = 300.4
         empty!!.setCursorBearing(newBearing)
-        Assert.assertEquals(newBearing, empty!!.getCursorBearing(), 0.0)
+        assertEquals(newBearing, empty!!.getCursorBearing(), 0.0)
     }
 
     /**
@@ -277,7 +278,7 @@ class RSDTest {
     fun testSetRangeScale() {
         val newScale = 0.75
         empty!!.setRangeScale(newScale)
-        Assert.assertEquals(newScale, empty!!.getRangeScale(), 0.0)
+        assertEquals(newScale, empty!!.getRangeScale(), 0.0)
     }
 
     /**
@@ -288,7 +289,7 @@ class RSDTest {
     fun testSetRangeUnits() {
         val newUnits = Units.KILOMETERS
         empty!!.setRangeUnits(newUnits)
-        Assert.assertEquals(newUnits, empty!!.getRangeUnits())
+        assertEquals(newUnits, empty!!.getRangeUnits())
 
         // Invalid range unit. Should throw IllegalArgumentException
         val invalidUnits = Units.FATHOMS
@@ -303,7 +304,7 @@ class RSDTest {
     fun testSetDisplayRotation() {
         val newRotation = DisplayRotation.COURSE_UP
         empty!!.setDisplayRotation(newRotation)
-        Assert.assertEquals(newRotation, empty!!.getDisplayRotation())
+        assertEquals(newRotation, empty!!.getDisplayRotation())
     }
 
     companion object {

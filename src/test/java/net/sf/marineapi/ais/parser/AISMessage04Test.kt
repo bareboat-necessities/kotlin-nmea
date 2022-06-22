@@ -3,6 +3,7 @@ package net.sf.marineapi.ais.parser
 import net.sf.marineapi.ais.message.AISMessage04
 import net.sf.marineapi.ais.util.Sixbit
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**
@@ -19,55 +20,55 @@ class AISMessage04Test {
     @Test
     @Throws(Exception::class)
     fun getUtcYear() {
-        Assert.assertEquals(2012, msg.utcYear.toLong())
+        assertEquals(2012, msg.utcYear.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getUtcMonth() {
-        Assert.assertEquals(6, msg.utcMonth.toLong())
+        assertEquals(6, msg.utcMonth.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getUtcDay() {
-        Assert.assertEquals(8, msg.utcDay.toLong())
+        assertEquals(8, msg.utcDay.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getUtcHour() {
-        Assert.assertEquals(7, msg.utcHour.toLong())
+        assertEquals(7, msg.utcHour.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getUtcMinute() {
-        Assert.assertEquals(38, msg.utcMinute.toLong())
+        assertEquals(38, msg.utcMinute.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getUtcSecond() {
-        Assert.assertEquals(20, msg.utcSecond.toLong())
+        assertEquals(20, msg.utcSecond.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getLatitudeInDegrees() {
-        Assert.assertEquals(-29.870835, msg.latitudeInDegrees, 0.000001)
+        assertEquals(-29.870835, msg.latitudeInDegrees, 0.000001)
     }
 
     @Test
     @Throws(Exception::class)
     fun getLongitudeInDegrees() {
-        Assert.assertEquals(31.033513, msg.longitudeInDegrees, 0.000001)
+        assertEquals(31.033513, msg.longitudeInDegrees, 0.000001)
     }
 
     @Test
     @Throws(Exception::class)
     fun getTypeOfEPFD() {
         // 1 = GPS
-        Assert.assertEquals(1, msg.typeOfEPFD.toLong())
+        assertEquals(1, msg.typeOfEPFD.toLong())
     }
 }

@@ -24,7 +24,8 @@ import net.sf.marineapi.nmea.parser.*
 import net.sf.marineapi.nmea.sentence.Checksum.add
 import net.sf.marineapi.nmea.sentence.SentenceValidator.isSentence
 import net.sf.marineapi.nmea.sentence.SentenceValidator.isValid
-import org.junit.Assert
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
@@ -36,123 +37,123 @@ class SentenceValidatorTest {
 
         // "normal"
         val a = "\$ABCDE,1,2,3,4,5,6,7,8,9"
-        Assert.assertTrue(isValid(a))
-        Assert.assertTrue(isValid(add(a)))
+        assertTrue(isValid(a))
+        assertTrue(isValid(add(a)))
 
         // empty sentence, single field
         val b = "\$ABCDE,"
-        Assert.assertTrue(isValid(b))
-        Assert.assertTrue(isValid(add(b)))
+        assertTrue(isValid(b))
+        assertTrue(isValid(add(b)))
 
         // empty sentence, multiple fields
         val c = "\$ABCDE,,,,,,"
-        Assert.assertTrue(isValid(c))
-        Assert.assertTrue(isValid(add(c)))
+        assertTrue(isValid(c))
+        assertTrue(isValid(add(c)))
         val d = "\$ABCDE,1,TWO,three,FOUR?,5,6.0,-7.0,Eigth-8,N1N3,#T3n"
-        Assert.assertTrue(isValid(d))
-        Assert.assertTrue(isValid(add(d)))
+        assertTrue(isValid(d))
+        assertTrue(isValid(add(d)))
 
         // '!' begin char
         val e = "!ABCDE,1,2,3,4,5,6,7,8,9"
-        Assert.assertTrue(isValid(e))
-        Assert.assertTrue(isValid(add(e)))
+        assertTrue(isValid(e))
+        assertTrue(isValid(add(e)))
     }
 
     @Test
     fun testIsValidWithInvalidInput() {
         // invalid checksum, otherwise valid
-        Assert.assertFalse(isValid("\$ABCDE,1,2,3,4,5,6,7,8,9*00"))
+        assertFalse(isValid("\$ABCDE,1,2,3,4,5,6,7,8,9*00"))
         // something weird
-        Assert.assertFalse(isValid(""))
-        Assert.assertFalse(isValid("$"))
-        Assert.assertFalse(isValid("*"))
-        Assert.assertFalse(isValid("$,*"))
-        Assert.assertFalse(isValid("\$GPGSV*"))
-        Assert.assertFalse(isValid("foobar"))
-        Assert.assertFalse(isValid("\$gpgga,1,2,3,4,5,6,7,8,9"))
-        Assert.assertFalse(isValid("GPGGA,1,2,3,4,5,6,7,8,9"))
-        Assert.assertFalse(isValid("\$GpGGA,1,2,3,4,5,6,7,8,9"))
-        Assert.assertFalse(isValid("\$GPGGa,1,2,3,4,5,6,7,8,9"))
-        Assert.assertFalse(isValid("\$GPGG#,1,2,3,4,5,6,7,8,9"))
-        Assert.assertFalse(isValid("\$AB,1,2,3,4,5,6,7,8,9"))
-        Assert.assertFalse(isValid("\$ABCDEFGHIJK,1,2,3,4,5,6,7,8,9"))
-        Assert.assertFalse(isValid("\$GPGGA,1,2,3,4,5,6,7,8,9*00"))
+        assertFalse(isValid(""))
+        assertFalse(isValid("$"))
+        assertFalse(isValid("*"))
+        assertFalse(isValid("$,*"))
+        assertFalse(isValid("\$GPGSV*"))
+        assertFalse(isValid("foobar"))
+        assertFalse(isValid("\$gpgga,1,2,3,4,5,6,7,8,9"))
+        assertFalse(isValid("GPGGA,1,2,3,4,5,6,7,8,9"))
+        assertFalse(isValid("\$GpGGA,1,2,3,4,5,6,7,8,9"))
+        assertFalse(isValid("\$GPGGa,1,2,3,4,5,6,7,8,9"))
+        assertFalse(isValid("\$GPGG#,1,2,3,4,5,6,7,8,9"))
+        assertFalse(isValid("\$AB,1,2,3,4,5,6,7,8,9"))
+        assertFalse(isValid("\$ABCDEFGHIJK,1,2,3,4,5,6,7,8,9"))
+        assertFalse(isValid("\$GPGGA,1,2,3,4,5,6,7,8,9*00"))
     }
 
     @Test
     fun testIsValidWithValidInput() {
-        Assert.assertTrue(isValid(BODTest.EXAMPLE))
-        Assert.assertTrue(isValid(GGATest.EXAMPLE))
-        Assert.assertTrue(isValid(GLLTest.EXAMPLE))
-        Assert.assertTrue(isValid(GSATest.EXAMPLE))
-        Assert.assertTrue(isValid(GSVTest.EXAMPLE))
-        Assert.assertTrue(isValid(RMBTest.EXAMPLE))
-        Assert.assertTrue(isValid(RMCTest.EXAMPLE))
-        Assert.assertTrue(isValid(RTETest.EXAMPLE))
-        Assert.assertTrue(isValid(VTGTest.EXAMPLE))
-        Assert.assertTrue(isValid(WPLTest.EXAMPLE))
-        Assert.assertTrue(isValid(ZDATest.EXAMPLE))
+        assertTrue(isValid(BODTest.EXAMPLE))
+        assertTrue(isValid(GGATest.EXAMPLE))
+        assertTrue(isValid(GLLTest.EXAMPLE))
+        assertTrue(isValid(GSATest.EXAMPLE))
+        assertTrue(isValid(GSVTest.EXAMPLE))
+        assertTrue(isValid(RMBTest.EXAMPLE))
+        assertTrue(isValid(RMCTest.EXAMPLE))
+        assertTrue(isValid(RTETest.EXAMPLE))
+        assertTrue(isValid(VTGTest.EXAMPLE))
+        assertTrue(isValid(WPLTest.EXAMPLE))
+        assertTrue(isValid(ZDATest.EXAMPLE))
     }
 
     @Test
     fun testIsValidWithLongProprietaryId() {
         val str = "\$PRWIILOG,GGA,A,T,1,0"
-        Assert.assertTrue(isSentence(str))
-        Assert.assertTrue(isValid(str))
+        assertTrue(isSentence(str))
+        assertTrue(isValid(str))
     }
 
     @Test
     fun testIsValidWithShortProprietaryId() {
         val str = "\$PUBX,03,GT{,ID,s,AZM,EL,SN,LK},"
-        Assert.assertTrue(isSentence(str))
-        Assert.assertTrue(isValid(str))
+        assertTrue(isSentence(str))
+        assertTrue(isValid(str))
     }
 
     @Test
     fun testIsSentenceWithChecksum() {
         var nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,*20"
-        Assert.assertTrue(isSentence(nmea))
+        assertTrue(isSentence(nmea))
         nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,*20xy"
-        Assert.assertFalse(isSentence(nmea))
+        assertFalse(isSentence(nmea))
         nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,*201"
-        Assert.assertFalse(isSentence(nmea))
+        assertFalse(isSentence(nmea))
         nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,*2"
-        Assert.assertFalse(isSentence(nmea))
+        assertFalse(isSentence(nmea))
         nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,*"
-        Assert.assertFalse(isSentence(nmea))
+        assertFalse(isSentence(nmea))
     }
 
     @Test
     fun testIsSentenceWithoutChecksum() {
         val nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,"
-        Assert.assertTrue(isSentence(nmea))
+        assertTrue(isSentence(nmea))
     }
 
     @Test
     fun testIsSentenceWithChecksumAndNewline() {
         var nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,*20\r\n"
-        Assert.assertTrue(isSentence(nmea))
+        assertTrue(isSentence(nmea))
         nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,*20\n\r"
-        Assert.assertTrue(isSentence(nmea))
+        assertTrue(isSentence(nmea))
         nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,*20\r"
-        Assert.assertTrue(isSentence(nmea))
+        assertTrue(isSentence(nmea))
         nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,*20\n"
-        Assert.assertTrue(isSentence(nmea))
+        assertTrue(isSentence(nmea))
         nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,*20\r\n\r\n"
-        Assert.assertFalse(isSentence(nmea))
+        assertFalse(isSentence(nmea))
     }
 
     @Test
     fun testIsSentenceNoChecksumWithNewline() {
         var nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,\r\n"
-        Assert.assertTrue(isSentence(nmea))
+        assertTrue(isSentence(nmea))
         nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,\n\r"
-        Assert.assertTrue(isSentence(nmea))
+        assertTrue(isSentence(nmea))
         nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,\r"
-        Assert.assertTrue(isSentence(nmea))
+        assertTrue(isSentence(nmea))
         nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,\n"
-        Assert.assertTrue(isSentence(nmea))
+        assertTrue(isSentence(nmea))
         nmea = "\$GPRMC,142312.000,V,,,,,,,080514,,\r\n\r\n"
-        Assert.assertFalse(isSentence(nmea))
+        assertFalse(isSentence(nmea))
     }
 }

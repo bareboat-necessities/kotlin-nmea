@@ -7,6 +7,7 @@ import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.Direction
 import net.sf.marineapi.nmea.util.Waypoint
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -28,13 +29,13 @@ class RMBTest {
             empty = RMBParser(TalkerId.GP)
             rmb = RMBParser(EXAMPLE)
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        Assert.assertEquals(13, empty!!.getFieldCount().toLong())
+        assertEquals(13, empty!!.getFieldCount().toLong())
     }
 
     /**
@@ -43,14 +44,14 @@ class RMBTest {
      */
     @Test
     fun testArrivalStatus() {
-        Assert.assertEquals(DataStatus.VOID, rmb!!.getArrivalStatus())
-        Assert.assertFalse(rmb!!.hasArrived())
+        assertEquals(DataStatus.VOID, rmb!!.getArrivalStatus())
+        assertFalse(rmb!!.hasArrived())
         rmb!!.setArrivalStatus(DataStatus.ACTIVE)
-        Assert.assertEquals(DataStatus.ACTIVE, rmb!!.getArrivalStatus())
-        Assert.assertTrue(rmb!!.hasArrived())
+        assertEquals(DataStatus.ACTIVE, rmb!!.getArrivalStatus())
+        assertTrue(rmb!!.hasArrived())
         rmb!!.setArrivalStatus(DataStatus.VOID)
-        Assert.assertEquals(DataStatus.VOID, rmb!!.getArrivalStatus())
-        Assert.assertFalse(rmb!!.hasArrived())
+        assertEquals(DataStatus.VOID, rmb!!.getArrivalStatus())
+        assertFalse(rmb!!.hasArrived())
     }
 
     /**
@@ -59,7 +60,7 @@ class RMBTest {
      */
     @Test
     fun testGetBearing() {
-        Assert.assertEquals(234.9, rmb!!.getBearing(), 0.001)
+        assertEquals(234.9, rmb!!.getBearing(), 0.001)
     }
 
     /**
@@ -68,7 +69,7 @@ class RMBTest {
      */
     @Test
     fun testGetCrossTrackError() {
-        Assert.assertEquals(0.0, rmb!!.getCrossTrackError(), 0.001)
+        assertEquals(0.0, rmb!!.getCrossTrackError(), 0.001)
     }
 
     /**
@@ -81,12 +82,12 @@ class RMBTest {
         val lat = 55 + 36.200 / 60
         val lon = 14 + 36.500 / 60
         val wp = rmb!!.getDestination()
-        Assert.assertNotNull(wp)
-        Assert.assertEquals(id, wp!!.id)
-        Assert.assertEquals(lat, wp.latitude, 0.0000001)
-        Assert.assertEquals(lon, wp.longitude, 0.0000001)
-        Assert.assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
-        Assert.assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
+        assertNotNull(wp)
+        assertEquals(id, wp!!.id)
+        assertEquals(lat, wp.latitude, 0.0000001)
+        assertEquals(lon, wp.longitude, 0.0000001)
+        assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
+        assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
     }
 
     /**
@@ -97,10 +98,10 @@ class RMBTest {
     fun testGetOriginId() {
         // FIXME test data should contain ID
         try {
-            Assert.assertEquals("", rmb!!.getOriginId())
-            Assert.fail("Did not throw ParseException")
+            assertEquals("", rmb!!.getOriginId())
+            fail("Did not throw ParseException")
         } catch (e: Exception) {
-            Assert.assertTrue(e is DataNotAvailableException)
+            assertTrue(e is DataNotAvailableException)
         }
     }
 
@@ -110,7 +111,7 @@ class RMBTest {
      */
     @Test
     fun testGetRange() {
-        Assert.assertEquals(432.3, rmb!!.getRange(), 0.001)
+        assertEquals(432.3, rmb!!.getRange(), 0.001)
     }
 
     /**
@@ -119,7 +120,7 @@ class RMBTest {
      */
     @Test
     fun testGetStatus() {
-        Assert.assertEquals(DataStatus.ACTIVE, rmb!!.getStatus())
+        assertEquals(DataStatus.ACTIVE, rmb!!.getStatus())
     }
 
     /**
@@ -128,7 +129,7 @@ class RMBTest {
      */
     @Test
     fun testGetSteerTo() {
-        Assert.assertEquals(Direction.RIGHT, rmb!!.getSteerTo())
+        assertEquals(Direction.RIGHT, rmb!!.getSteerTo())
     }
 
     /**
@@ -139,10 +140,10 @@ class RMBTest {
     fun testGetVelocity() {
         // FIXME test data should contain velocity
         try {
-            Assert.assertEquals(0.0, rmb!!.getVelocity(), 0.001)
-            Assert.fail("Did not throw ParseException")
+            assertEquals(0.0, rmb!!.getVelocity(), 0.001)
+            fail("Did not throw ParseException")
         } catch (e: Exception) {
-            Assert.assertTrue(e is DataNotAvailableException)
+            assertTrue(e is DataNotAvailableException)
         }
     }
 
@@ -154,8 +155,8 @@ class RMBTest {
     fun testSetBearing() {
         val brg = 90.56789
         rmb!!.setBearing(brg)
-        Assert.assertTrue(rmb.toString().contains(",090.6,"))
-        Assert.assertEquals(brg, rmb!!.getBearing(), 0.1)
+        assertTrue(rmb.toString().contains(",090.6,"))
+        assertEquals(brg, rmb!!.getBearing(), 0.1)
     }
 
     /**
@@ -166,9 +167,9 @@ class RMBTest {
     fun testSetBearingWithNegativeValue() {
         try {
             rmb!!.setBearing(-0.001)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
-            Assert.assertTrue(e.message!!.contains("0..360"))
+            assertTrue(e.message!!.contains("0..360"))
         }
     }
 
@@ -180,9 +181,9 @@ class RMBTest {
     fun testSetBearingWithValueGreaterThanAllowed() {
         try {
             rmb!!.setBearing(360.001)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
-            Assert.assertTrue(e.message!!.contains("0..360"))
+            assertTrue(e.message!!.contains("0..360"))
         }
     }
 
@@ -195,8 +196,8 @@ class RMBTest {
     fun testSetCrossTrackError() {
         val xte = 2.56789
         rmb!!.setCrossTrackError(xte)
-        Assert.assertTrue(rmb.toString().contains(",2.57,"))
-        Assert.assertEquals(xte, rmb!!.getCrossTrackError(), 0.2)
+        assertTrue(rmb.toString().contains(",2.57,"))
+        assertEquals(xte, rmb!!.getCrossTrackError(), 0.2)
     }
 
     /**
@@ -212,13 +213,13 @@ class RMBTest {
         rmb!!.setDestination(d)
         val str = rmb.toString()
         val wp = rmb!!.getDestination()
-        Assert.assertTrue(str.contains(",MYDEST,6101.111,N,02707.777,E,"))
-        Assert.assertNotNull(wp)
-        Assert.assertEquals(id, wp!!.id)
-        Assert.assertEquals(lat, wp.latitude, 0.0000001)
-        Assert.assertEquals(lon, wp.longitude, 0.0000001)
-        Assert.assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
-        Assert.assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
+        assertTrue(str.contains(",MYDEST,6101.111,N,02707.777,E,"))
+        assertNotNull(wp)
+        assertEquals(id, wp!!.id)
+        assertEquals(lat, wp.latitude, 0.0000001)
+        assertEquals(lon, wp.longitude, 0.0000001)
+        assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
+        assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
     }
 
     /**
@@ -228,8 +229,8 @@ class RMBTest {
     @Test
     fun testSetOriginId() {
         rmb!!.setOriginId("ORIGIN")
-        Assert.assertTrue(rmb.toString().contains(",ORIGIN,RUSKI,"))
-        Assert.assertEquals("ORIGIN", rmb!!.getOriginId())
+        assertTrue(rmb.toString().contains(",ORIGIN,RUSKI,"))
+        assertEquals("ORIGIN", rmb!!.getOriginId())
     }
 
     /**
@@ -240,8 +241,8 @@ class RMBTest {
     fun testSetRange() {
         val range = 12.3456
         rmb!!.setRange(range)
-        Assert.assertTrue(rmb.toString().contains(",12.3,"))
-        Assert.assertEquals(range, rmb!!.getRange(), 0.1)
+        assertTrue(rmb.toString().contains(",12.3,"))
+        assertEquals(range, rmb!!.getRange(), 0.1)
     }
 
     /**
@@ -251,7 +252,7 @@ class RMBTest {
     @Test
     fun testSetStatus() {
         rmb!!.setStatus(DataStatus.ACTIVE)
-        Assert.assertEquals(DataStatus.ACTIVE, rmb!!.getStatus())
+        assertEquals(DataStatus.ACTIVE, rmb!!.getStatus())
     }
 
     /**
@@ -261,8 +262,8 @@ class RMBTest {
     @Test
     fun testSetSteerTo() {
         rmb!!.setSteerTo(Direction.LEFT)
-        Assert.assertTrue(rmb.toString().contains(",L,"))
-        Assert.assertEquals(Direction.LEFT, rmb!!.getSteerTo())
+        assertTrue(rmb.toString().contains(",L,"))
+        assertEquals(Direction.LEFT, rmb!!.getSteerTo())
     }
 
     /**
@@ -273,11 +274,11 @@ class RMBTest {
     fun testSetSteerToWithNull() {
         try {
             rmb!!.setSteerTo(null)
-            Assert.fail("Did not throw IllegalArgumentException")
+            fail("Did not throw IllegalArgumentException")
         } catch (e: IllegalArgumentException) {
-            Assert.assertTrue(e.message!!.contains("LEFT or RIGHT"))
+            assertTrue(e.message!!.contains("LEFT or RIGHT"))
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -289,8 +290,8 @@ class RMBTest {
     fun testSetVelocity() {
         val v = 40.66666
         rmb!!.setVelocity(v)
-        Assert.assertTrue(rmb.toString().contains(",40.7,"))
-        Assert.assertEquals(v, rmb!!.getVelocity(), 0.1)
+        assertTrue(rmb.toString().contains(",40.7,"))
+        assertEquals(v, rmb!!.getVelocity(), 0.1)
     }
 
     /**
@@ -301,8 +302,8 @@ class RMBTest {
     fun testSetVelocityWithNegativeValue() {
         val v = -0.123
         rmb!!.setVelocity(v)
-        Assert.assertTrue(rmb.toString().contains(",-0.1,"))
-        Assert.assertEquals(v, rmb!!.getVelocity(), 0.1)
+        assertTrue(rmb.toString().contains(",-0.1,"))
+        assertEquals(v, rmb!!.getVelocity(), 0.1)
     }
 
     companion object {

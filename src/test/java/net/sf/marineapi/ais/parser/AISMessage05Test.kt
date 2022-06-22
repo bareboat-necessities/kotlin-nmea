@@ -3,6 +3,7 @@ package net.sf.marineapi.ais.parser
 import net.sf.marineapi.ais.message.AISMessage05
 import net.sf.marineapi.ais.util.Sixbit
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**
@@ -20,97 +21,97 @@ class AISMessage05Test {
     @Test
     @Throws(Exception::class)
     fun getAISVersionIndicator() {
-        Assert.assertEquals(0, msg.aISVersionIndicator.toLong())
+        assertEquals(0, msg.aISVersionIndicator.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getIMONumber() {
-        Assert.assertEquals(439303422, msg.iMONumber.toLong())
+        assertEquals(439303422, msg.iMONumber.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getCallSign() {
-        Assert.assertEquals("ZA83R", msg.callSign)
+        assertEquals("ZA83R", msg.callSign)
     }
 
     @Test
     @Throws(Exception::class)
     fun getName() {
-        Assert.assertEquals("ARCO AVON", msg.name)
+        assertEquals("ARCO AVON", msg.name)
     }
 
     @Test
     @Throws(Exception::class)
     fun getTypeOfShipAndCargoType() {
-        Assert.assertEquals(69, msg.typeOfShipAndCargoType.toLong())
+        assertEquals(69, msg.typeOfShipAndCargoType.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getBow() {
-        Assert.assertEquals(113, msg.bow.toLong())
+        assertEquals(113, msg.bow.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getStern() {
-        Assert.assertEquals(31, msg.stern.toLong())
+        assertEquals(31, msg.stern.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getPort() {
-        Assert.assertEquals(17, msg.port.toLong())
+        assertEquals(17, msg.port.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getStarboard() {
-        Assert.assertEquals(11, msg.starboard.toLong())
+        assertEquals(11, msg.starboard.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getTypeOfEPFD() {
-        Assert.assertEquals(0, msg.typeOfEPFD.toLong())
+        assertEquals(0, msg.typeOfEPFD.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getETAMonth() {
-        Assert.assertEquals(3, msg.eTAMonth.toLong())
+        assertEquals(3, msg.eTAMonth.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getETADay() {
-        Assert.assertEquals(23, msg.eTADay.toLong())
+        assertEquals(23, msg.eTADay.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getETAHour() {
-        Assert.assertEquals(19, msg.eTAHour.toLong())
+        assertEquals(19, msg.eTAHour.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getETAMinute() {
-        Assert.assertEquals(45, msg.eTAMinute.toLong())
+        assertEquals(45, msg.eTAMinute.toLong())
     }
 
     @Test
     @Throws(Exception::class)
     fun getMaximumDraught() {
-        Assert.assertEquals(13.2, msg.maximumDraught, 0.1)
+        assertEquals(13.2, msg.maximumDraught, 0.1)
     }
 
     @Test
     @Throws(Exception::class)
     fun getDestination() {
-        Assert.assertEquals("HOUSTON", msg.destination)
+        assertEquals("HOUSTON", msg.destination)
     }
 
     @Test

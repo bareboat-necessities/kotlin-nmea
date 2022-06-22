@@ -23,6 +23,8 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.TLBSentence
 import net.sf.marineapi.nmea.sentence.TalkerId
 import org.junit.Assert
+import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -53,15 +55,15 @@ class TLBTest {
     @Test
     fun testAddTargetLabel() {
         empty!!.addTargetLabel(3, "SHIPTHREE")
-        Assert.assertTrue(empty.toString().contains("3,SHIPTHREE*"))
+        assertTrue(empty.toString().contains("3,SHIPTHREE*"))
         empty!!.addTargetLabel(5, "SHIPFIVE")
-        Assert.assertTrue(empty.toString().contains("3,SHIPTHREE,5,SHIPFIVE*")) // SHIPFIVE is now at the end
+        assertTrue(empty.toString().contains("3,SHIPTHREE,5,SHIPFIVE*")) // SHIPFIVE is now at the end
         empty!!.addTargetLabel(99, "SHIP99")
-        Assert.assertTrue(empty.toString().contains("3,SHIPTHREE,5,SHIPFIVE,99,SHIP99*"))
+        assertTrue(empty.toString().contains("3,SHIPTHREE,5,SHIPFIVE,99,SHIP99*"))
 
         // Adding to existing sentence
         threeTargets!!.addTargetLabel(4, "SHIPFOUR")
-        Assert.assertTrue(threeTargets.toString().contains("1,SHIPONE,2,SHIPTWO,3,SHIPTHREE,4,SHIPFOUR*"))
+        assertTrue(threeTargets.toString().contains("1,SHIPONE,2,SHIPTWO,3,SHIPTHREE,4,SHIPFOUR*"))
     }
 
     /**
@@ -73,7 +75,7 @@ class TLBTest {
         val ids = intArrayOf(1, 2, 3)
         val labels = arrayOf<String?>("SHIPONE", "SHIPTWO", "SHIPTHREE")
         empty!!.setTargetPairs(ids, labels)
-        Assert.assertTrue(empty.toString().contains("1,SHIPONE,2,SHIPTWO,3,SHIPTHREE*"))
+        assertTrue(empty.toString().contains("1,SHIPONE,2,SHIPTWO,3,SHIPTHREE*"))
         val ids_two = intArrayOf(5, 6)
         val labels_two = arrayOf<String?>("SHIPFIVE", "SHIPSIX", "SHIPSEVEN") // Intentionally larger than ids_two[]
         empty!!.setTargetPairs(ids_two, labels_two) // Will throw exception
@@ -86,9 +88,9 @@ class TLBTest {
     @Test
     fun testGetTargetIds() {
         val ids = intArrayOf(1, 2, 3)
-        Assert.assertArrayEquals(ids, threeTargets!!.getTargetIds())
+        assertArrayEquals(ids, threeTargets!!.getTargetIds())
         val ids_empty = intArrayOf()
-        Assert.assertArrayEquals(ids_empty, empty!!.getTargetIds())
+        assertArrayEquals(ids_empty, empty!!.getTargetIds())
     }
 
     /**
@@ -98,9 +100,9 @@ class TLBTest {
     @Test
     fun testGetTargetLabels() {
         val labels = arrayOf("SHIPONE", "SHIPTWO", "SHIPTHREE")
-        Assert.assertArrayEquals(labels, threeTargets!!.getTargetLabels())
+        assertArrayEquals(labels, threeTargets!!.getTargetLabels())
         val labels_empty = arrayOf<String>()
-        Assert.assertArrayEquals(labels_empty, empty!!.getTargetLabels())
+        assertArrayEquals(labels_empty, empty!!.getTargetLabels())
     }
 
     companion object {

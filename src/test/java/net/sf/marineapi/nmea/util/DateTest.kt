@@ -21,6 +21,7 @@
 package net.sf.marineapi.nmea.util
 
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import java.util.*
@@ -47,9 +48,9 @@ class DateTest {
      */
     @Test
     fun testConstructor() {
-        Assert.assertEquals(cal!![Calendar.YEAR].toLong(), instance!!.getYear().toLong())
-        Assert.assertEquals((cal!![Calendar.MONTH] + 1).toLong(), instance!!.getMonth().toLong())
-        Assert.assertEquals(cal!![Calendar.DAY_OF_MONTH].toLong(), instance!!.getDay().toLong())
+        assertEquals(cal!![Calendar.YEAR].toLong(), instance!!.getYear().toLong())
+        assertEquals((cal!![Calendar.MONTH] + 1).toLong(), instance!!.getMonth().toLong())
+        assertEquals(cal!![Calendar.DAY_OF_MONTH].toLong(), instance!!.getDay().toLong())
     }
 
     /**
@@ -59,9 +60,9 @@ class DateTest {
     @Test
     fun testConstructorWithValues() {
         val d = Date(2010, 6, 15)
-        Assert.assertEquals(2010, d.getYear().toLong())
-        Assert.assertEquals(6, d.getMonth().toLong())
-        Assert.assertEquals(15, d.getDay().toLong())
+        assertEquals(2010, d.getYear().toLong())
+        assertEquals(6, d.getMonth().toLong())
+        assertEquals(15, d.getDay().toLong())
     }
 
     /**
@@ -71,9 +72,9 @@ class DateTest {
     @Test
     fun testConstructorWithString() {
         val d = Date("150610")
-        Assert.assertEquals(2010, d.getYear().toLong())
-        Assert.assertEquals(6, d.getMonth().toLong())
-        Assert.assertEquals(15, d.getDay().toLong())
+        assertEquals(2010, d.getYear().toLong())
+        assertEquals(6, d.getMonth().toLong())
+        assertEquals(15, d.getDay().toLong())
     }
 
     /**
@@ -83,10 +84,10 @@ class DateTest {
     @Test
     fun testEqualsAfterInit() {
         val d = Date()
-        Assert.assertTrue(d == instance)
+        assertTrue(d == instance)
         val one = Date(2010, 6, 15)
         val two = Date(2010, 6, 15)
-        Assert.assertTrue(one == two)
+        assertTrue(one == two)
     }
 
     /**
@@ -101,17 +102,17 @@ class DateTest {
         val a = Date(y, m, d)
         val b = Date(y, m, d)
         a.setDay(b.getDay() - 1)
-        Assert.assertFalse(a == b)
+        assertFalse(a == b)
         b.setDay(a.getDay())
-        Assert.assertTrue(a == b)
+        assertTrue(a == b)
         a.setMonth(b.getMonth() - 1)
-        Assert.assertFalse(a == b)
+        assertFalse(a == b)
         b.setMonth(a.getMonth())
-        Assert.assertTrue(a == b)
+        assertTrue(a == b)
         a.setYear(b.getYear() - 1)
-        Assert.assertFalse(a == b)
+        assertFalse(a == b)
         b.setYear(a.getYear())
-        Assert.assertTrue(a == b)
+        assertTrue(a == b)
     }
 
     /**
@@ -122,8 +123,8 @@ class DateTest {
     fun testEqualsWrongType() {
         val str = "foobar"
         val dbl: Any = java.lang.Double.valueOf(123.0)
-        Assert.assertFalse(instance!!.equals(str))
-        Assert.assertFalse(instance!! == dbl)
+        assertFalse(instance!!.equals(str))
+        assertFalse(instance!! == dbl)
     }
 
     /**
@@ -131,7 +132,7 @@ class DateTest {
      */
     @Test
     fun testGetDay() {
-        Assert.assertEquals(cal!![Calendar.DAY_OF_MONTH].toLong(), instance!!.getDay().toLong())
+        assertEquals(cal!![Calendar.DAY_OF_MONTH].toLong(), instance!!.getDay().toLong())
     }
 
     /**
@@ -139,7 +140,7 @@ class DateTest {
      */
     @Test
     fun testGetMonth() {
-        Assert.assertEquals((cal!![Calendar.MONTH] + 1).toLong(), instance!!.getMonth().toLong())
+        assertEquals((cal!![Calendar.MONTH] + 1).toLong(), instance!!.getMonth().toLong())
     }
 
     /**
@@ -147,7 +148,7 @@ class DateTest {
      */
     @Test
     fun testGetYear() {
-        Assert.assertEquals(cal!![Calendar.YEAR].toLong(), instance!!.getYear().toLong())
+        assertEquals(cal!![Calendar.YEAR].toLong(), instance!!.getYear().toLong())
     }
 
     /**
@@ -157,7 +158,7 @@ class DateTest {
     fun testSetDay() {
         val day = 10
         instance!!.setDay(day)
-        Assert.assertEquals(day.toLong(), instance!!.getDay().toLong())
+        assertEquals(day.toLong(), instance!!.getDay().toLong())
     }
 
     /**
@@ -168,14 +169,14 @@ class DateTest {
         var day = 0
         try {
             instance!!.setDay(day)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
         day = 32
         try {
             instance!!.setDay(day)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -188,7 +189,7 @@ class DateTest {
     fun testSetMonth() {
         val month = 10
         instance!!.setMonth(month)
-        Assert.assertEquals(month.toLong(), instance!!.getMonth().toLong())
+        assertEquals(month.toLong(), instance!!.getMonth().toLong())
     }
 
     /**
@@ -199,14 +200,14 @@ class DateTest {
         var month = 0
         try {
             instance!!.setMonth(month)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
         month = 32
         try {
             instance!!.setMonth(month)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -219,7 +220,7 @@ class DateTest {
     fun testSetYearFiveDigits() {
         try {
             instance!!.setYear(10000)
-            Assert.fail("Did not throw IllegalArgumentException")
+            fail("Did not throw IllegalArgumentException")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -232,7 +233,7 @@ class DateTest {
     fun testSetYearFourDigit() {
         for (year in 1000..9999) {
             instance!!.setYear(year)
-            Assert.assertEquals(year.toLong(), instance!!.getYear().toLong())
+            assertEquals(year.toLong(), instance!!.getYear().toLong())
         }
     }
 
@@ -243,7 +244,7 @@ class DateTest {
     fun testSetYearNegative() {
         try {
             instance!!.setYear(-1)
-            Assert.fail("Did not throw IllegalArgumentException")
+            fail("Did not throw IllegalArgumentException")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -256,13 +257,13 @@ class DateTest {
     fun testSetYearThreeDigits() {
         try {
             instance!!.setYear(100)
-            Assert.fail("Did not throw IllegalArgumentException")
+            fail("Did not throw IllegalArgumentException")
         } catch (e: IllegalArgumentException) {
             // pass
         }
         try {
             instance!!.setYear(999)
-            Assert.fail("Did not throw IllegalArgumentException")
+            fail("Did not throw IllegalArgumentException")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -276,7 +277,7 @@ class DateTest {
         var century = 2000
         for (year in 0..99) {
             instance!!.setYear(year)
-            Assert.assertEquals((century + year).toLong(), instance!!.getYear().toLong())
+            assertEquals((century + year).toLong(), instance!!.getYear().toLong())
             if (year == Date.PIVOT_YEAR) {
                 century = 1900
             }
@@ -286,52 +287,52 @@ class DateTest {
     @Test
     fun testToStringTwoDigitYear() {
         val d = Date(13, 9, 2)
-        Assert.assertEquals("020913", d.toString())
+        assertEquals("020913", d.toString())
     }
 
     @Test
     fun testToStringFourDigitYear() {
         val d = Date(2013, 9, 2)
-        Assert.assertEquals("020913", d.toString())
+        assertEquals("020913", d.toString())
     }
 
     @Test
     fun testToISO8601TwoDigitYear() {
         val d = Date(13, 9, 2)
-        Assert.assertEquals("2013-09-02", d.toISO8601())
+        assertEquals("2013-09-02", d.toISO8601())
     }
 
     @Test
     fun testToISO8601FourDigitYear() {
         val d = Date(2013, 9, 2)
-        Assert.assertEquals("2013-09-02", d.toISO8601())
+        assertEquals("2013-09-02", d.toISO8601())
     }
 
     @Test
     fun testToISO8601WithTime() {
         val d = Date(2013, 9, 2)
         val t = Time(2, 7, 9.0)
-        Assert.assertEquals("2013-09-02T02:07:09+00:00", d.toISO8601(t))
+        assertEquals("2013-09-02T02:07:09+00:00", d.toISO8601(t))
     }
 
     @Test
     fun testToISO8601WithTimeAndZeroZone() {
         val d = Date(2013, 9, 2)
         val t = Time(2, 7, 9.0, 0, 0)
-        Assert.assertEquals("2013-09-02T02:07:09+00:00", d.toISO8601(t))
+        assertEquals("2013-09-02T02:07:09+00:00", d.toISO8601(t))
     }
 
     @Test
     fun testToISO8601WithTimeAndPositiveOffset() {
         val d = Date(2013, 9, 2)
         val t = Time(2, 7, 9.0, 2, 0)
-        Assert.assertEquals("2013-09-02T02:07:09+02:00", d.toISO8601(t))
+        assertEquals("2013-09-02T02:07:09+02:00", d.toISO8601(t))
     }
 
     @Test
     fun testToISO8601WithTimeAndNegativeOffset() {
         val d = Date(2013, 9, 2)
         val t = Time(2, 7, 9.0, -2, 5)
-        Assert.assertEquals("2013-09-02T02:07:09-02:05", d.toISO8601(t))
+        assertEquals("2013-09-02T02:07:09-02:05", d.toISO8601(t))
     }
 }

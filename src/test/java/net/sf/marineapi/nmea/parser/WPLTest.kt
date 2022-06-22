@@ -5,8 +5,10 @@ import net.sf.marineapi.nmea.sentence.WPLSentence
 import net.sf.marineapi.nmea.util.CompassPoint
 import net.sf.marineapi.nmea.util.Waypoint
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import java.lang.Double
 
 /**
  * WPLTest
@@ -22,13 +24,13 @@ class WPLTest {
             empty = WPLParser(TalkerId.GP)
             wpl = WPLParser(EXAMPLE)
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        Assert.assertEquals(5, empty!!.getFieldCount().toLong())
+        assertEquals(5, empty!!.getFieldCount().toLong())
     }
 
     /**
@@ -40,12 +42,12 @@ class WPLTest {
         val lat = java.lang.Double.valueOf(55 + 36.200 / 60)
         val lon = java.lang.Double.valueOf(14 + 36.500 / 60)
         val wp = wpl!!.getWaypoint()
-        Assert.assertNotNull(wp)
-        Assert.assertEquals("RUSKI", wp!!.id)
-        Assert.assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
-        Assert.assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
-        Assert.assertEquals(lat, java.lang.Double.valueOf(wp.latitude), 0.0000001)
-        Assert.assertEquals(lon, java.lang.Double.valueOf(wp.longitude), 0.0000001)
+        assertNotNull(wp)
+        assertEquals("RUSKI", wp!!.id)
+        assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
+        assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
+        assertEquals(lat, Double.valueOf(wp.latitude), 0.0000001)
+        assertEquals(lon, Double.valueOf(wp.longitude), 0.0000001)
     }
 
     /**
@@ -59,11 +61,11 @@ class WPLTest {
         val p2 = Waypoint("WAYP2", lat, lon)
         wpl!!.setWaypoint(p2)
         val s2 = wpl.toString()
-        Assert.assertTrue(s2.contains(",6011.552,N,02501.941,E,WAYP2*"))
+        assertTrue(s2.contains(",6011.552,N,02501.941,E,WAYP2*"))
         val p = wpl!!.getWaypoint()
-        Assert.assertNotNull(p)
-        Assert.assertEquals(lat, p!!.latitude, 0.0000001)
-        Assert.assertEquals(lon, p.longitude, 0.0000001)
+        assertNotNull(p)
+        assertEquals(lat, p!!.latitude, 0.0000001)
+        assertEquals(lon, p.longitude, 0.0000001)
     }
 
     /**
@@ -75,11 +77,11 @@ class WPLTest {
         val p1 = Waypoint("WAYP1", 0.0, 0.0)
         wpl!!.setWaypoint(p1)
         val s1 = wpl.toString()
-        Assert.assertTrue(s1.contains(",0000.000,N,00000.000,E,WAYP1*"))
+        assertTrue(s1.contains(",0000.000,N,00000.000,E,WAYP1*"))
         val p = wpl!!.getWaypoint()
-        Assert.assertNotNull(p)
-        Assert.assertEquals(0.0, p!!.latitude, 0.0000001)
-        Assert.assertEquals(0.0, p.longitude, 0.0000001)
+        assertNotNull(p)
+        assertEquals(0.0, p!!.latitude, 0.0000001)
+        assertEquals(0.0, p.longitude, 0.0000001)
     }
 
     companion object {

@@ -24,6 +24,7 @@ import net.sf.marineapi.nmea.sentence.HDTSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -48,14 +49,14 @@ class HDTTest {
     @Test
     fun testConstructor() {
         val empty: HDTSentence = HDTParser(TalkerId.HE)
-        Assert.assertEquals(TalkerId.HE, empty.getTalkerId())
-        Assert.assertEquals(SentenceId.HDT.toString(), empty.getSentenceId())
+        assertEquals(TalkerId.HE, empty.getTalkerId())
+        assertEquals(SentenceId.HDT.toString(), empty.getSentenceId())
         try {
             empty.getHeading()
         } catch (e: DataNotAvailableException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -64,7 +65,7 @@ class HDTTest {
      */
     @Test
     fun testIsTrue() {
-        Assert.assertTrue(hdt!!.isTrue())
+        assertTrue(hdt!!.isTrue())
     }
 
     /**
@@ -74,7 +75,7 @@ class HDTTest {
     @Test
     fun testGetHeading() {
         val value = hdt!!.getHeading()
-        Assert.assertEquals(90.0, value, 0.1)
+        assertEquals(90.0, value, 0.1)
     }
 
     /**
@@ -84,7 +85,7 @@ class HDTTest {
     @Test
     fun testSetHeading() {
         hdt!!.setHeading(123.45)
-        Assert.assertEquals(123.5, hdt!!.getHeading(), 0.1)
+        assertEquals(123.5, hdt!!.getHeading(), 0.1)
     }
 
     /**
@@ -95,11 +96,11 @@ class HDTTest {
     fun testSetNegativeHeading() {
         try {
             hdt!!.setHeading(-0.005)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -111,11 +112,11 @@ class HDTTest {
     fun testSetHeadingTooHigh() {
         try {
             hdt!!.setHeading(360.0001)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 

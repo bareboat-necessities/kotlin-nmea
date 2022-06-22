@@ -24,6 +24,7 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.util.CompassPoint
 import net.sf.marineapi.nmea.util.Position
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -51,7 +52,7 @@ class PositionParserTest {
      */
     @Test
     fun testParseHemisphereLat() {
-        Assert.assertEquals(CompassPoint.NORTH, instance!!.parseHemisphereLat(1))
+        assertEquals(CompassPoint.NORTH, instance!!.parseHemisphereLat(1))
     }
 
     /**
@@ -61,7 +62,7 @@ class PositionParserTest {
      */
     @Test
     fun testParseHemisphereLon() {
-        Assert.assertEquals(CompassPoint.EAST, instance!!.parseHemisphereLon(3))
+        assertEquals(CompassPoint.EAST, instance!!.parseHemisphereLon(3))
     }
 
     /**
@@ -72,7 +73,7 @@ class PositionParserTest {
     fun testParseDegreesWithLatitude() {
         // 6011.552 = 60 deg 11.552 min
         val lat = 60 + 11.552 / 60
-        Assert.assertEquals(lat, instance!!.parseDegrees(0), 0.000001)
+        assertEquals(lat, instance!!.parseDegrees(0), 0.000001)
     }
 
     @Test
@@ -80,7 +81,7 @@ class PositionParserTest {
         // 0611.552 = 6 deg 11.552 min
         val lat = 6 + 11.552 / 60
         val pp: PositionParser = object : PositionParser("\$GPGLL,0611.552,N,0.0,E", SentenceId.GLL) {}
-        Assert.assertEquals(lat, pp.parseDegrees(0), 0.000001)
+        assertEquals(lat, pp.parseDegrees(0), 0.000001)
     }
 
     @Test
@@ -88,7 +89,7 @@ class PositionParserTest {
         // 611.552 = 6 deg 11.552 min
         val lat = 6 + 11.552 / 60
         val pp: PositionParser = object : PositionParser("\$GPGLL,611.552,N,0.0,E", SentenceId.GLL) {}
-        Assert.assertEquals(lat, pp.parseDegrees(0), 0.000001)
+        assertEquals(lat, pp.parseDegrees(0), 0.000001)
     }
 
     /**
@@ -99,7 +100,7 @@ class PositionParserTest {
     fun testParseDegreesLongitudeWithLeadingZero() {
         // 02501.941 = 25 deg 1.941 min
         val lon = 25 + 1.941 / 60
-        Assert.assertEquals(lon, instance!!.parseDegrees(2), 0.000001)
+        assertEquals(lon, instance!!.parseDegrees(2), 0.000001)
     }
 
     @Test
@@ -108,7 +109,7 @@ class PositionParserTest {
         // 2501.941 = 25 deg 1.941 min
         val lon = 25 + 01.941 / 60
         val pp: PositionParser = object : PositionParser("\$GPGLL,0.0,N,2501.941,E", SentenceId.GLL) {}
-        Assert.assertEquals(lon, pp.parseDegrees(2), 0.000001)
+        assertEquals(lon, pp.parseDegrees(2), 0.000001)
     }
 
     @Test
@@ -117,7 +118,7 @@ class PositionParserTest {
         // 501.941 = 5 deg 1.941 min
         val lon = 5 + 1.941 / 60
         val pp: PositionParser = object : PositionParser("\$GPGLL,0.0,N,501.941,E", SentenceId.GLL) {}
-        Assert.assertEquals(lon, pp.parseDegrees(2), 0.000001)
+        assertEquals(lon, pp.parseDegrees(2), 0.000001)
     }
 
     @Test
@@ -126,7 +127,7 @@ class PositionParserTest {
         // 28.844957 = 0 deg 28.844957 min
         val lon = 0 + 28.844957 / 60
         val pp: PositionParser = object : PositionParser("\$GPGLL,0.0,N,28.844957,E", SentenceId.GLL) {}
-        Assert.assertEquals(lon, pp.parseDegrees(2), 0.000001)
+        assertEquals(lon, pp.parseDegrees(2), 0.000001)
     }
 
     @Test
@@ -135,7 +136,7 @@ class PositionParserTest {
         // 8.844957 = 0 deg 8.844957 min
         val lon = 0 + 8.844957 / 60
         val pp: PositionParser = object : PositionParser("\$GPGLL,0.0,N,8.844957,E", SentenceId.GLL) {}
-        Assert.assertEquals(lon, pp.parseDegrees(2), 0.000001)
+        assertEquals(lon, pp.parseDegrees(2), 0.000001)
     }
 
     @Test
@@ -144,21 +145,21 @@ class PositionParserTest {
         // .844957 = 0 deg 0.844957 min
         val lon = 0 + 0.844957 / 60
         val pp: PositionParser = object : PositionParser("\$GPGLL,0.0,N,.844957,E", SentenceId.GLL) {}
-        Assert.assertEquals(lon, pp.parseDegrees(2), 0.000001)
+        assertEquals(lon, pp.parseDegrees(2), 0.000001)
     }
 
     @Test
     fun testParseDegreesWithZeroInt() {
         // 0 = 0 deg 0 min
         val pp: PositionParser = object : PositionParser("\$GPGLL,0,N,0,E", SentenceId.GLL) {}
-        Assert.assertEquals(0.0, pp.parseDegrees(2), 0.000001)
+        assertEquals(0.0, pp.parseDegrees(2), 0.000001)
     }
 
     @Test
     fun testParseDegreesWithZeroDecimal() {
         // 0.0 = 0 deg 0 min
         val pp: PositionParser = object : PositionParser("\$GPGLL,0.0,N,0.0,E", SentenceId.GLL) {}
-        Assert.assertEquals(0.0, pp.parseDegrees(2), 0.000001)
+        assertEquals(0.0, pp.parseDegrees(2), 0.000001)
     }
 
     /**
@@ -170,7 +171,7 @@ class PositionParserTest {
     fun testSetLatHemisphere() {
         instance!!.setLatHemisphere(1, CompassPoint.SOUTH)
         Assert.assertTrue(instance.toString().contains(",S,"))
-        Assert.assertEquals(CompassPoint.SOUTH, instance!!.parseHemisphereLat(1))
+        assertEquals(CompassPoint.SOUTH, instance!!.parseHemisphereLat(1))
     }
 
     /**
@@ -184,7 +185,7 @@ class PositionParserTest {
         val lat = 25 + 01.941 / 60
         instance!!.setLatitude(0, lat)
         Assert.assertTrue(instance.toString().contains(",02501.941"))
-        Assert.assertEquals(lat, instance!!.parseDegrees(0), 0.000001)
+        assertEquals(lat, instance!!.parseDegrees(0), 0.000001)
     }
 
     /**
@@ -198,7 +199,7 @@ class PositionParserTest {
         val lon = 28 + 01.941 / 60
         instance!!.setLongitude(2, lon)
         Assert.assertTrue(instance.toString().contains(",02801.941"))
-        Assert.assertEquals(lon, instance!!.parseDegrees(2), 0.000001)
+        assertEquals(lon, instance!!.parseDegrees(2), 0.000001)
     }
 
     /**
@@ -210,7 +211,7 @@ class PositionParserTest {
     fun testSetLonHemisphere() {
         instance!!.setLonHemisphere(3, CompassPoint.WEST)
         Assert.assertTrue(instance.toString().contains(",W,"))
-        Assert.assertEquals(CompassPoint.WEST, instance!!.parseHemisphereLon(3))
+        assertEquals(CompassPoint.WEST, instance!!.parseHemisphereLon(3))
     }
 
     /**
@@ -228,8 +229,8 @@ class PositionParserTest {
         Assert.assertTrue(s2.contains(",6011.552,N,"))
         Assert.assertTrue(s2.contains(",02501.941,E,"))
         Assert.assertNotNull(p)
-        Assert.assertEquals(lat, p.latitude, 0.0000001)
-        Assert.assertEquals(lon, p.longitude, 0.0000001)
+        assertEquals(lat, p.latitude, 0.0000001)
+        assertEquals(lon, p.longitude, 0.0000001)
     }
 
     /**
@@ -247,7 +248,7 @@ class PositionParserTest {
         Assert.assertTrue(s2.contains(",6011.552,S,"))
         Assert.assertTrue(s2.contains(",02501.941,W,"))
         Assert.assertNotNull(p)
-        Assert.assertEquals(lat, p.latitude, 0.0000001)
-        Assert.assertEquals(lon, p.longitude, 0.0000001)
+        assertEquals(lat, p.latitude, 0.0000001)
+        assertEquals(lon, p.longitude, 0.0000001)
     }
 }

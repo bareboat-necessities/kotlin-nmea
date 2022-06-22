@@ -26,6 +26,7 @@ import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.ReferenceSystem
 import net.sf.marineapi.nmea.util.Units
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -49,7 +50,7 @@ class OSDTest {
      */
     @Test
     fun testGetHeading() {
-        Assert.assertEquals(35.1, example!!.getHeading(), 0.0)
+        assertEquals(35.1, example!!.getHeading(), 0.0)
     }
 
     /**
@@ -58,7 +59,7 @@ class OSDTest {
      */
     @Test
     fun testGetHeadingStatus() {
-        Assert.assertEquals(DataStatus.ACTIVE, example!!.getHeadingStatus())
+        assertEquals(DataStatus.ACTIVE, example!!.getHeadingStatus())
     }
 
     /**
@@ -67,7 +68,7 @@ class OSDTest {
      */
     @Test
     fun testGetCourse() {
-        Assert.assertEquals(36.0, example!!.getCourse(), 0.0)
+        assertEquals(36.0, example!!.getCourse(), 0.0)
     }
 
     /**
@@ -76,7 +77,7 @@ class OSDTest {
      */
     @Test
     fun testGetCourseReference() {
-        Assert.assertEquals(
+        assertEquals(
             ReferenceSystem.POSITIONING_SYSTEM_GROUND_REFERENCE,
             example!!.getCourseReference()
         )
@@ -88,7 +89,7 @@ class OSDTest {
      */
     @Test
     fun testGetSpeed() {
-        Assert.assertEquals(10.2, example!!.getSpeed(), 0.0)
+        assertEquals(10.2, example!!.getSpeed(), 0.0)
     }
 
     /**
@@ -97,7 +98,7 @@ class OSDTest {
      */
     @Test
     fun testGetSpeedReference() {
-        Assert.assertEquals(
+        assertEquals(
             ReferenceSystem.POSITIONING_SYSTEM_GROUND_REFERENCE,
             example!!.getSpeedReference()
         )
@@ -109,7 +110,7 @@ class OSDTest {
      */
     @Test
     fun testGetVesselSet() {
-        Assert.assertEquals(15.3, example!!.getVesselSet(), 0.0)
+        assertEquals(15.3, example!!.getVesselSet(), 0.0)
     }
 
     /**
@@ -118,7 +119,7 @@ class OSDTest {
      */
     @Test
     fun testGetVesselDrift() {
-        Assert.assertEquals(0.1, example!!.getVesselDrift(), 0.0)
+        assertEquals(0.1, example!!.getVesselDrift(), 0.0)
     }
 
     /**
@@ -127,7 +128,7 @@ class OSDTest {
      */
     @Test
     fun testGetSpeedUnits() {
-        Assert.assertEquals(Units.NAUTICAL_MILES, example!!.getSpeedUnits())
+        assertEquals(Units.NAUTICAL_MILES, example!!.getSpeedUnits())
     }
 
     /**
@@ -138,7 +139,7 @@ class OSDTest {
     fun testSetHeading() {
         val newHeading = 275.2
         empty!!.setHeading(newHeading)
-        Assert.assertEquals(newHeading, empty!!.getHeading(), 0.0)
+        assertEquals(newHeading, empty!!.getHeading(), 0.0)
     }
 
     /**
@@ -149,7 +150,7 @@ class OSDTest {
     fun testSetHeadingStatus() {
         val newStatus = DataStatus.VOID
         empty!!.setHeadingStatus(newStatus)
-        Assert.assertEquals(newStatus, empty!!.getHeadingStatus())
+        assertEquals(newStatus, empty!!.getHeadingStatus())
     }
 
     /**
@@ -160,7 +161,7 @@ class OSDTest {
     fun testSetCourse() {
         val newCourse = 95.3
         empty!!.setCourse(newCourse)
-        Assert.assertEquals(newCourse, empty!!.getCourse(), 0.0)
+        assertEquals(newCourse, empty!!.getCourse(), 0.0)
     }
 
     /**
@@ -171,7 +172,7 @@ class OSDTest {
     fun testSetCourseReference() {
         val newReference = ReferenceSystem.BOTTOM_TRACKING_LOG
         empty!!.setCourseReference(newReference)
-        Assert.assertEquals(newReference, empty!!.getCourseReference())
+        assertEquals(newReference, empty!!.getCourseReference())
     }
 
     /**
@@ -182,7 +183,7 @@ class OSDTest {
     fun testSetSpeed() {
         val newSpeed = 11.2
         empty!!.setSpeed(newSpeed)
-        Assert.assertEquals(newSpeed, empty!!.getSpeed(), 0.0)
+        assertEquals(newSpeed, empty!!.getSpeed(), 0.0)
     }
 
     /**
@@ -193,7 +194,7 @@ class OSDTest {
     fun testSetSpeedReference() {
         val newReference = ReferenceSystem.RADAR_TRACKING
         empty!!.setSpeedReference(newReference)
-        Assert.assertEquals(newReference, empty!!.getSpeedReference())
+        assertEquals(newReference, empty!!.getSpeedReference())
     }
 
     /**
@@ -204,7 +205,7 @@ class OSDTest {
     fun testSetVesselSet() {
         val newSet = 13.9
         empty!!.setVesselSet(newSet)
-        Assert.assertEquals(newSet, empty!!.getVesselSet(), 0.0)
+        assertEquals(newSet, empty!!.getVesselSet(), 0.0)
     }
 
     /**
@@ -215,7 +216,7 @@ class OSDTest {
     fun testSetVesselDrift() {
         val newDrift = 365.4
         empty!!.setVesselDrift(newDrift)
-        Assert.assertEquals(newDrift, empty!!.getVesselDrift(), 0.0)
+        assertEquals(newDrift, empty!!.getVesselDrift(), 0.0)
     }
 
     /**
@@ -226,7 +227,7 @@ class OSDTest {
     fun testSetSpeedUnits() {
         val newUnits = Units.NAUTICAL_MILES
         empty!!.setSpeedUnits(newUnits)
-        Assert.assertEquals(newUnits, empty!!.getSpeedUnits())
+        assertEquals(newUnits, empty!!.getSpeedUnits())
 
         // An invalid speed unit. Should throw IllegalArgumentException.
         empty!!.setSpeedUnits(Units.CELSIUS)

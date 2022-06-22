@@ -3,6 +3,7 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -21,13 +22,13 @@ class TTMTest {
             empty = TTMParser(TalkerId.RA)
             ttm = TTMParser(EXAMPLE)
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        Assert.assertEquals(15, empty!!.getFieldCount().toLong())
+        assertEquals(15, empty!!.getFieldCount().toLong())
     }
 
     /**
@@ -36,7 +37,7 @@ class TTMTest {
      */
     @Test
     fun testGetNumber() {
-        Assert.assertEquals(11, ttm!!.getNumber().toLong())
+        assertEquals(11, ttm!!.getNumber().toLong())
     }
 
     /**
@@ -45,7 +46,7 @@ class TTMTest {
      */
     @Test
     fun testGetDistance() {
-        Assert.assertEquals(25.3, ttm!!.getDistance(), 0.001)
+        assertEquals(25.3, ttm!!.getDistance(), 0.001)
     }
 
     /**
@@ -54,7 +55,7 @@ class TTMTest {
      */
     @Test
     fun testGetBearing() {
-        Assert.assertEquals(13.7, ttm!!.getBearing(), 0.001)
+        assertEquals(13.7, ttm!!.getBearing(), 0.001)
     }
 
     /**
@@ -63,7 +64,7 @@ class TTMTest {
      */
     @Test
     fun testGetSpeed() {
-        Assert.assertEquals(7.0, ttm!!.getSpeed(), 0.001)
+        assertEquals(7.0, ttm!!.getSpeed(), 0.001)
     }
 
     /**
@@ -72,7 +73,7 @@ class TTMTest {
      */
     @Test
     fun testGetCourse() {
-        Assert.assertEquals(20.0, ttm!!.getCourse(), 0.001)
+        assertEquals(20.0, ttm!!.getCourse(), 0.001)
     }
 
     /**
@@ -81,7 +82,7 @@ class TTMTest {
      */
     @Test
     fun testGetDistanceOfCPA() {
-        Assert.assertEquals(10.1, ttm!!.getDistanceOfCPA(), 0.001)
+        assertEquals(10.1, ttm!!.getDistanceOfCPA(), 0.001)
     }
 
     /**
@@ -90,7 +91,7 @@ class TTMTest {
      */
     @Test
     fun testGetTimeToCPA() {
-        Assert.assertEquals(20.2, ttm!!.getTimeToCPA(), 0.001)
+        assertEquals(20.2, ttm!!.getTimeToCPA(), 0.001)
     }
 
     /**
@@ -99,7 +100,7 @@ class TTMTest {
      */
     @Test
     fun testGetUnits() {
-        Assert.assertEquals(Units.NAUTICAL_MILES, ttm!!.getUnits())
+        assertEquals(Units.NAUTICAL_MILES, ttm!!.getUnits())
     }
 
     /**
@@ -108,7 +109,7 @@ class TTMTest {
      */
     @Test
     fun testGetName() {
-        Assert.assertEquals("NAME", ttm!!.getName())
+        assertEquals("NAME", ttm!!.getName())
     }
 
     /**
@@ -117,7 +118,7 @@ class TTMTest {
      */
     @Test
     fun testGetStatus() {
-        Assert.assertEquals(TargetStatus.QUERY, ttm!!.getStatus())
+        assertEquals(TargetStatus.QUERY, ttm!!.getStatus())
     }
 
     /**
@@ -128,9 +129,9 @@ class TTMTest {
     fun testGetTime() {
         val t = ttm!!.getTime()
         Assert.assertNotNull(t)
-        Assert.assertEquals(17, t.getHour().toLong())
-        Assert.assertEquals(55, t.getMinutes().toLong())
-        Assert.assertEquals(50.24, t.getSeconds(), 0.001)
+        assertEquals(17, t.getHour().toLong())
+        assertEquals(55, t.getMinutes().toLong())
+        assertEquals(50.24, t.getSeconds(), 0.001)
     }
 
     /**
@@ -139,7 +140,7 @@ class TTMTest {
      */
     @Test
     fun testGetAcquisitionType() {
-        Assert.assertEquals(AcquisitionType.AUTO, ttm!!.getAcquisitionType())
+        assertEquals(AcquisitionType.AUTO, ttm!!.getAcquisitionType())
     }
 
     /**
@@ -150,7 +151,7 @@ class TTMTest {
     fun testSetNumber() {
         val number = 90
         ttm!!.setNumber(number)
-        Assert.assertTrue(ttm.toString().contains(",90,"))
+        assertTrue(ttm.toString().contains(",90,"))
     }
 
     /**
@@ -160,8 +161,8 @@ class TTMTest {
     @Test
     fun testSetDistance() {
         ttm!!.setDistance(56.4)
-        Assert.assertTrue(ttm.toString().contains(",56.4,"))
-        Assert.assertTrue(ttm.toString().contains(",N,"))
+        assertTrue(ttm.toString().contains(",56.4,"))
+        assertTrue(ttm.toString().contains(",N,"))
     }
 
     /**
@@ -171,15 +172,15 @@ class TTMTest {
     @Test
     fun testSetTrueBearing() {
         ttm!!.setTrueBearing(34.1)
-        Assert.assertTrue(ttm!!.isTrueBearing())
-        Assert.assertTrue(ttm.toString().contains(",34.1,T,"))
+        assertTrue(ttm!!.isTrueBearing())
+        assertTrue(ttm.toString().contains(",34.1,T,"))
     }
 
     @Test
     fun testSetRelativeBearing() {
         ttm!!.setRelativeBearing(56.7)
-        Assert.assertFalse(ttm!!.isTrueBearing())
-        Assert.assertTrue(ttm.toString().contains(",56.7,R,"))
+        assertFalse(ttm!!.isTrueBearing())
+        assertTrue(ttm.toString().contains(",56.7,R,"))
     }
 
     /**
@@ -189,8 +190,8 @@ class TTMTest {
     @Test
     fun testSetSpeed() {
         ttm!!.setSpeed(44.1)
-        Assert.assertTrue(ttm.toString().contains(",44.1,"))
-        Assert.assertTrue(ttm.toString().contains(",N,"))
+        assertTrue(ttm.toString().contains(",44.1,"))
+        assertTrue(ttm.toString().contains(",N,"))
     }
 
     /**
@@ -200,8 +201,8 @@ class TTMTest {
     @Test
     fun testSetTrueCourse() {
         ttm!!.setTrueCourse(234.9)
-        Assert.assertTrue(ttm!!.isTrueCourse())
-        Assert.assertTrue(ttm.toString().contains(",234.9,T,"))
+        assertTrue(ttm!!.isTrueCourse())
+        assertTrue(ttm.toString().contains(",234.9,T,"))
     }
 
     /**
@@ -211,8 +212,8 @@ class TTMTest {
     @Test
     fun testSetRelativeCourse() {
         ttm!!.setRelativeCourse(123.4)
-        Assert.assertFalse(ttm!!.isTrueCourse())
-        Assert.assertTrue(ttm.toString().contains(",123.4,R,"))
+        assertFalse(ttm!!.isTrueCourse())
+        assertTrue(ttm.toString().contains(",123.4,R,"))
     }
 
     /**
@@ -222,7 +223,7 @@ class TTMTest {
     @Test
     fun testSetDistanceOfCPA() {
         ttm!!.setDistanceOfCPA(55.2)
-        Assert.assertTrue(ttm.toString().contains(",55.2,"))
+        assertTrue(ttm.toString().contains(",55.2,"))
     }
 
     /**
@@ -232,7 +233,7 @@ class TTMTest {
     @Test
     fun testSetTimeToCPA() {
         ttm!!.setTimeToCPA(15.0)
-        Assert.assertTrue(ttm.toString().contains(",15.0,"))
+        assertTrue(ttm.toString().contains(",15.0,"))
     }
 
     /**
@@ -242,7 +243,7 @@ class TTMTest {
     @Test
     fun testSetUnits() {
         ttm!!.setUnits(Units.KILOMETERS)
-        Assert.assertTrue(ttm.toString().contains(",K,"))
+        assertTrue(ttm.toString().contains(",K,"))
     }
 
     /**
@@ -252,7 +253,7 @@ class TTMTest {
     @Test
     fun testSetName() {
         ttm!!.setName("FRED")
-        Assert.assertTrue(ttm.toString().contains(",FRED,"))
+        assertTrue(ttm.toString().contains(",FRED,"))
     }
 
     /**
@@ -262,7 +263,7 @@ class TTMTest {
     @Test
     fun testSetStatus() {
         ttm!!.setStatus(TargetStatus.LOST)
-        Assert.assertTrue(ttm.toString().contains(",T,"))
+        assertTrue(ttm.toString().contains(",T,"))
     }
 
     /**
@@ -272,13 +273,13 @@ class TTMTest {
     @Test
     fun testSetReferenceTrue() {
         ttm!!.setReference(true)
-        Assert.assertTrue(ttm.toString().contains(",R,"))
+        assertTrue(ttm.toString().contains(",R,"))
     }
 
     @Test
     fun testSetReferenceFalse() {
         ttm!!.setReference(false)
-        Assert.assertTrue(!ttm.toString().contains(",R,"))
+        assertTrue(!ttm.toString().contains(",R,"))
     }
 
     /**
@@ -289,7 +290,7 @@ class TTMTest {
     fun testSetTime() {
         val t = Time(1, 2, 3.45)
         ttm!!.setTime(t)
-        Assert.assertTrue(ttm.toString().contains(",010203.45,"))
+        assertTrue(ttm.toString().contains(",010203.45,"))
     }
 
     /**
@@ -299,7 +300,7 @@ class TTMTest {
     @Test
     fun testSetAcquisitionType() {
         ttm!!.setAcquisitionType(AcquisitionType.MANUAL)
-        Assert.assertTrue(ttm.toString().contains(",M*"))
+        assertTrue(ttm.toString().contains(",M*"))
     }
 
     companion object {

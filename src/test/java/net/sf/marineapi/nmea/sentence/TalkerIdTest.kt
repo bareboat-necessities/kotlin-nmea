@@ -2,6 +2,7 @@ package net.sf.marineapi.nmea.sentence
 
 import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 
@@ -64,7 +65,7 @@ class TalkerIdTest {
     fun testParseUnknown() {
         try {
             TalkerId.parse("\$XXXXX,,,,,,")
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: Exception) {
             // pass
         }

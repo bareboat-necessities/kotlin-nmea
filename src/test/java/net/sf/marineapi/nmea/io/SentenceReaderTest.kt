@@ -12,6 +12,7 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TXTSentence
 import net.sf.marineapi.test.util.UDPServerMock
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import java.io.File
@@ -49,7 +50,7 @@ class SentenceReaderTest {
         reader.start()
         Thread.sleep(200)
         reader.stop()
-        Assert.assertEquals(sentence.toString(), TXTTest.EXAMPLE)
+        assertEquals(sentence.toString(), TXTTest.EXAMPLE)
     }
 
     @Test
@@ -60,31 +61,31 @@ class SentenceReaderTest {
 
     @Test
     fun testGetPauseTimeout() {
-        Assert.assertEquals(SentenceReader.DEFAULT_TIMEOUT.toLong(), reader!!.pauseTimeout.toLong())
+        assertEquals(SentenceReader.DEFAULT_TIMEOUT.toLong(), reader!!.pauseTimeout.toLong())
     }
 
     @Test
     fun testRemoveSentenceListener() {
-        Assert.assertFalse(started)
+        assertFalse(started)
         reader!!.removeSentenceListener(testListener!!)
         reader!!.fireReadingStarted()
-        Assert.assertFalse(started)
+        assertFalse(started)
     }
 
     @Test
     fun testRemoveSentenceListenerByType() {
         reader!!.removeSentenceListener(testListener!!)
         reader!!.removeSentenceListener(dummyListener!!)
-        Assert.assertEquals(0, reader!!.sentenceListeners.size.toLong())
+        assertEquals(0, reader!!.sentenceListeners.size.toLong())
         reader!!.addSentenceListener(testListener!!, SentenceId.GLL)
         reader!!.addSentenceListener(dummyListener!!, SentenceId.GGA)
-        Assert.assertEquals(2, reader!!.sentenceListeners.size.toLong())
+        assertEquals(2, reader!!.sentenceListeners.size.toLong())
         reader!!.removeSentenceListener(testListener!!, SentenceId.GLL)
-        Assert.assertEquals(1, reader!!.sentenceListeners.size.toLong())
+        assertEquals(1, reader!!.sentenceListeners.size.toLong())
         reader!!.removeSentenceListener(dummyListener!!, SentenceId.GNS)
-        Assert.assertEquals(1, reader!!.sentenceListeners.size.toLong())
+        assertEquals(1, reader!!.sentenceListeners.size.toLong())
         reader!!.removeSentenceListener(dummyListener!!, SentenceId.GGA)
-        Assert.assertEquals(0, reader!!.sentenceListeners.size.toLong())
+        assertEquals(0, reader!!.sentenceListeners.size.toLong())
     }
 
     @Test
@@ -115,74 +116,74 @@ class SentenceReaderTest {
         })
         reader!!.start()
         Thread.sleep(1000)
-        Assert.assertFalse(received.isEmpty())
-        Assert.assertEquals(server.TXT, received[0].toString())
+        assertFalse(received.isEmpty())
+        assertEquals(server.TXT, received[0].toString())
     }
 
     @Test
     fun testSetPauseTimeout() {
         val timeout = 2500
         reader!!.pauseTimeout = timeout
-        Assert.assertEquals(timeout.toLong(), reader!!.pauseTimeout.toLong())
+        assertEquals(timeout.toLong(), reader!!.pauseTimeout.toLong())
     }
 
     @Test
     fun testFireReadingPaused() {
-        Assert.assertFalse(paused)
+        assertFalse(paused)
         reader!!.fireReadingPaused()
-        Assert.assertTrue(paused)
+        assertTrue(paused)
     }
 
     @Test
     fun testFireReadingStarted() {
-        Assert.assertFalse(started)
+        assertFalse(started)
         reader!!.fireReadingStarted()
-        Assert.assertTrue(started)
+        assertTrue(started)
     }
 
     @Test
     fun testFireReadingStopped() {
-        Assert.assertFalse(stopped)
+        assertFalse(stopped)
         reader!!.fireReadingStopped()
-        Assert.assertTrue(stopped)
+        assertTrue(stopped)
     }
 
     @Test
     fun testFireSentenceEventWithExpectedType() {
-        Assert.assertNull(sentence)
+        assertNull(sentence)
         val sf = instance
         val s = sf.createParser(GGATest.EXAMPLE)
         reader!!.fireSentenceEvent(s)
-        Assert.assertEquals(s, sentence)
+        assertEquals(s, sentence)
     }
 
     @Test
     fun testFireSentenceEventWithUnexpectedType() {
-        Assert.assertNull(sentence)
+        assertNull(sentence)
         val sf = instance
         val s = sf.createParser(BODTest.EXAMPLE)
         reader!!.fireSentenceEvent(s)
-        Assert.assertNull(sentence)
+        assertNull(sentence)
     }
 
     @Test
     fun testStartAndStop() {
         try {
-            Assert.assertNull(sentence)
-            Assert.assertFalse(started)
-            Assert.assertFalse(paused)
-            Assert.assertFalse(stopped)
+            assertNull(sentence)
+            assertFalse(started)
+            assertFalse(paused)
+            assertFalse(stopped)
             reader!!.start()
             Thread.sleep(500)
-            Assert.assertNotNull(sentence)
-            Assert.assertTrue(started)
-            Assert.assertFalse(paused)
+            assertNotNull(sentence)
+            assertTrue(started)
+            assertFalse(paused)
             reader!!.stop()
             Thread.sleep(100)
-            Assert.assertFalse(paused)
-            Assert.assertTrue(stopped)
+            assertFalse(paused)
+            assertTrue(stopped)
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -192,9 +193,9 @@ class SentenceReaderTest {
         reader!!.exceptionListener = object : ExceptionListener {
             private var calls = 0
             override fun onException(e: Exception?) {
-                Assert.assertEquals(calls++.toLong(), 0)
-                Assert.assertTrue(e is IllegalStateException)
-                Assert.assertEquals(ERR_MSG, e!!.message)
+                assertEquals(calls++.toLong(), 0)
+                assertTrue(e is IllegalStateException)
+                assertEquals(ERR_MSG, e!!.message)
             }
         }
         reader!!.handleException("test", IllegalStateException(ERR_MSG))
@@ -207,7 +208,7 @@ class SentenceReaderTest {
         val expected = "=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2010.02.13 13:08:23 =~=~=~=~=~=~=~=~=~=~=~="
         val listener: DataListener = object : DataListener {
             override fun dataRead(data: String?) {
-                Assert.assertEquals(expected, data)
+                assertEquals(expected, data)
                 reader!!.stop()
             }
         }

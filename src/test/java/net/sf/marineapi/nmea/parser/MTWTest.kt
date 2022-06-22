@@ -4,6 +4,7 @@ import net.sf.marineapi.nmea.parser.MTWParser
 import net.sf.marineapi.nmea.sentence.MTWSentence
 import net.sf.marineapi.nmea.sentence.TalkerId
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -31,8 +32,8 @@ class MTWTest {
      */
     @Test
     fun testMTWParserString() {
-        Assert.assertEquals("MTW", mtw!!.getSentenceId())
-        Assert.assertEquals(TalkerId.II, mtw!!.getTalkerId())
+        assertEquals("MTW", mtw!!.getSentenceId())
+        assertEquals(TalkerId.II, mtw!!.getTalkerId())
     }
 
     /**
@@ -43,10 +44,10 @@ class MTWTest {
     @Test
     fun testMTWParserTalkerId() {
         val empty = MTWParser(TalkerId.II)
-        Assert.assertEquals("MTW", empty.getSentenceId())
-        Assert.assertEquals(TalkerId.II, empty.getTalkerId())
-        Assert.assertEquals(2, empty.getFieldCount().toLong())
-        Assert.assertEquals('C'.code.toLong(), empty.getCharValue(1).code.toLong())
+        assertEquals("MTW", empty.getSentenceId())
+        assertEquals(TalkerId.II, empty.getTalkerId())
+        assertEquals(2, empty.getFieldCount().toLong())
+        assertEquals('C'.code.toLong(), empty.getCharValue(1).code.toLong())
     }
 
     /**
@@ -55,7 +56,7 @@ class MTWTest {
      */
     @Test
     fun testGetTemperature() {
-        Assert.assertEquals(17.75, mtw!!.getTemperature(), 0.01)
+        assertEquals(17.75, mtw!!.getTemperature(), 0.01)
     }
 
     /**
@@ -65,7 +66,7 @@ class MTWTest {
     @Test
     fun testSetTemperature() {
         mtw!!.setTemperature(12.345)
-        Assert.assertEquals(12.345, mtw!!.getTemperature(), 0.01)
+        assertEquals(12.345, mtw!!.getTemperature(), 0.01)
     }
 
     companion object {

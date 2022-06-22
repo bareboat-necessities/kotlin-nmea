@@ -4,6 +4,8 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.sentence.VDRSentence
 import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -19,53 +21,53 @@ class VDRTest {
 
     @Test
     fun testVDRParserString() {
-        Assert.assertEquals(TalkerId.II, vdr!!.getTalkerId())
-        Assert.assertEquals(SentenceId.VDR.name, vdr!!.getSentenceId())
-        Assert.assertEquals(6, vdr!!.getFieldCount().toLong())
+        assertEquals(TalkerId.II, vdr!!.getTalkerId())
+        assertEquals(SentenceId.VDR.name, vdr!!.getSentenceId())
+        assertEquals(6, vdr!!.getFieldCount().toLong())
     }
 
     @Test
     fun testVDRParserTalkerId() {
-        Assert.assertEquals(TalkerId.IN, empty!!.getTalkerId())
-        Assert.assertEquals(SentenceId.VDR.name, empty!!.getSentenceId())
-        Assert.assertEquals(6, empty!!.getFieldCount().toLong())
-        Assert.assertTrue(empty.toString().startsWith("\$INVDR,,T,,M,,N*"))
+        assertEquals(TalkerId.IN, empty!!.getTalkerId())
+        assertEquals(SentenceId.VDR.name, empty!!.getSentenceId())
+        assertEquals(6, empty!!.getFieldCount().toLong())
+        assertTrue(empty.toString().startsWith("\$INVDR,,T,,M,,N*"))
     }
 
     @Test
     fun testGetMagneticDirection() {
-        Assert.assertEquals(124.5, vdr!!.getMagneticDirection(), 0.1)
+        assertEquals(124.5, vdr!!.getMagneticDirection(), 0.1)
     }
 
     @Test
     fun testGetSpeed() {
-        Assert.assertEquals(1.2, vdr!!.getSpeed(), 0.1)
+        assertEquals(1.2, vdr!!.getSpeed(), 0.1)
     }
 
     @Test
     fun testGetTrueDirection() {
-        Assert.assertEquals(123.4, vdr!!.getTrueDirection(), 0.1)
+        assertEquals(123.4, vdr!!.getTrueDirection(), 0.1)
     }
 
     @Test
     fun testSetMagneticDirection() {
         val dir = 45.123
         empty!!.setMagneticDirection(dir)
-        Assert.assertEquals(dir, empty!!.getMagneticDirection(), 0.1)
+        assertEquals(dir, empty!!.getMagneticDirection(), 0.1)
     }
 
     @Test
     fun testSetSpeed() {
         val speed = 2.124
         empty!!.setSpeed(speed)
-        Assert.assertEquals(speed, empty!!.getSpeed(), 0.1)
+        assertEquals(speed, empty!!.getSpeed(), 0.1)
     }
 
     @Test
     fun testSetTrueDirection() {
         val dir = 55.234
         empty!!.setTrueDirection(dir)
-        Assert.assertEquals(dir, empty!!.getTrueDirection(), 0.1)
+        assertEquals(dir, empty!!.getTrueDirection(), 0.1)
     }
 
     companion object {

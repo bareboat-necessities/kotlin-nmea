@@ -3,6 +3,7 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.AISSentence
 import net.sf.marineapi.nmea.sentence.TalkerId
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -33,9 +34,9 @@ class VDMTest {
     @Test
     fun testVDMParserTalkerId() {
         val empty: AISSentence = VDMParser(TalkerId.AI)
-        Assert.assertEquals(TalkerId.AI, empty.getTalkerId())
-        Assert.assertEquals("VDM", empty.getSentenceId())
-        Assert.assertEquals(6, empty.getFieldCount().toLong())
+        assertEquals(TalkerId.AI, empty.getTalkerId())
+        assertEquals("VDM", empty.getSentenceId())
+        assertEquals(6, empty.getFieldCount().toLong())
     }
 
     /**
@@ -44,9 +45,9 @@ class VDMTest {
      */
     @Test
     fun testGetNumberOfFragments() {
-        Assert.assertEquals(1, vdm!!.getNumberOfFragments().toLong())
-        Assert.assertEquals(2, frag1!!.getNumberOfFragments().toLong())
-        Assert.assertEquals(2, frag2!!.getNumberOfFragments().toLong())
+        assertEquals(1, vdm!!.getNumberOfFragments().toLong())
+        assertEquals(2, frag1!!.getNumberOfFragments().toLong())
+        assertEquals(2, frag2!!.getNumberOfFragments().toLong())
     }
 
     /**
@@ -55,9 +56,9 @@ class VDMTest {
      */
     @Test
     fun testGetFragmentNumber() {
-        Assert.assertEquals(1, vdm!!.getFragmentNumber().toLong())
-        Assert.assertEquals(1, frag1!!.getFragmentNumber().toLong())
-        Assert.assertEquals(2, frag2!!.getFragmentNumber().toLong())
+        assertEquals(1, vdm!!.getFragmentNumber().toLong())
+        assertEquals(1, frag1!!.getFragmentNumber().toLong())
+        assertEquals(2, frag2!!.getFragmentNumber().toLong())
     }
 
     /**
@@ -66,8 +67,8 @@ class VDMTest {
      */
     @Test
     fun testGetMessageId() {
-        Assert.assertEquals("1", frag1!!.getMessageId())
-        Assert.assertEquals("1", frag2!!.getMessageId())
+        assertEquals("1", frag1!!.getMessageId())
+        assertEquals("1", frag2!!.getMessageId())
     }
 
     /**
@@ -76,9 +77,9 @@ class VDMTest {
      */
     @Test
     fun testGetRadioChannel() {
-        Assert.assertEquals("A", vdm!!.getRadioChannel())
-        Assert.assertEquals("A", frag1!!.getRadioChannel())
-        Assert.assertEquals("A", frag2!!.getRadioChannel())
+        assertEquals("A", vdm!!.getRadioChannel())
+        assertEquals("A", frag1!!.getRadioChannel())
+        assertEquals("A", frag2!!.getRadioChannel())
     }
 
     /**
@@ -87,8 +88,8 @@ class VDMTest {
      */
     @Test
     fun testGetPayload() {
-        Assert.assertEquals("403OviQuMGCqWrRO9>E6fE700@GO", vdm!!.getPayload())
-        Assert.assertEquals("88888888880", frag2!!.getPayload())
+        assertEquals("403OviQuMGCqWrRO9>E6fE700@GO", vdm!!.getPayload())
+        assertEquals("88888888880", frag2!!.getPayload())
     }
 
     /**
@@ -97,9 +98,9 @@ class VDMTest {
      */
     @Test
     fun testGetFillBits() {
-        Assert.assertEquals(0, vdm!!.getFillBits().toLong())
-        Assert.assertEquals(0, frag1!!.getFillBits().toLong())
-        Assert.assertEquals(2, frag2!!.getFillBits().toLong())
+        assertEquals(0, vdm!!.getFillBits().toLong())
+        assertEquals(0, frag1!!.getFillBits().toLong())
+        assertEquals(2, frag2!!.getFillBits().toLong())
     }
 
     /**
@@ -108,9 +109,9 @@ class VDMTest {
      */
     @Test
     fun testIsFragmented() {
-        Assert.assertFalse(vdm!!.isFragmented())
-        Assert.assertTrue(frag1!!.isFragmented())
-        Assert.assertTrue(frag2!!.isFragmented())
+        assertFalse(vdm!!.isFragmented())
+        assertTrue(frag1!!.isFragmented())
+        assertTrue(frag2!!.isFragmented())
     }
 
     /**
@@ -119,9 +120,9 @@ class VDMTest {
      */
     @Test
     fun testIsFirstFragment() {
-        Assert.assertTrue(vdm!!.isFirstFragment())
-        Assert.assertTrue(frag1!!.isFirstFragment())
-        Assert.assertFalse(frag2!!.isFirstFragment())
+        assertTrue(vdm!!.isFirstFragment())
+        assertTrue(frag1!!.isFirstFragment())
+        assertFalse(frag2!!.isFirstFragment())
     }
 
     /**
@@ -130,9 +131,9 @@ class VDMTest {
      */
     @Test
     fun testIsLastFragment() {
-        Assert.assertTrue(vdm!!.isLastFragment())
-        Assert.assertFalse(frag1!!.isLastFragment())
-        Assert.assertTrue(frag2!!.isLastFragment())
+        assertTrue(vdm!!.isLastFragment())
+        assertFalse(frag1!!.isLastFragment())
+        assertTrue(frag2!!.isLastFragment())
     }
 
     /**
@@ -142,20 +143,20 @@ class VDMTest {
      */
     @Test
     fun testIsPartOfMessage() {
-        Assert.assertFalse(vdm!!.isPartOfMessage(frag1))
-        Assert.assertFalse(vdm!!.isPartOfMessage(frag2))
-        Assert.assertFalse(frag1!!.isPartOfMessage(vdm))
-        Assert.assertFalse(frag2!!.isPartOfMessage(vdm))
-        Assert.assertTrue(frag1!!.isPartOfMessage(frag2))
-        Assert.assertFalse(frag2!!.isPartOfMessage(frag1))
+        assertFalse(vdm!!.isPartOfMessage(frag1))
+        assertFalse(vdm!!.isPartOfMessage(frag2))
+        assertFalse(frag1!!.isPartOfMessage(vdm))
+        assertFalse(frag2!!.isPartOfMessage(vdm))
+        assertTrue(frag1!!.isPartOfMessage(frag2))
+        assertFalse(frag2!!.isPartOfMessage(frag1))
     }
 
     @Test
     fun testToStringWithAIS() {
         val vdm: AISSentence = VDMParser(EXAMPLE)
         val empty: AISSentence = VDMParser(TalkerId.AI)
-        Assert.assertEquals(EXAMPLE, vdm.toString())
-        Assert.assertEquals("!AIVDM,,,,,,*57", empty.toString())
+        assertEquals(EXAMPLE, vdm.toString())
+        assertEquals("!AIVDM,,,,,,*57", empty.toString())
     }
 
     companion object {

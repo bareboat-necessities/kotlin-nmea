@@ -30,6 +30,8 @@ import net.sf.marineapi.provider.event.PositionEvent
 import net.sf.marineapi.provider.event.PositionListener
 import org.junit.After
 import org.junit.Assert
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import java.io.File
@@ -73,13 +75,13 @@ class PositionProviderTest : PositionListener {
     fun testSentenceReadWithGGA() {
         val sf: SentenceFactory = SentenceFactory.instance
         val gga = sf.createParser(GGATest.EXAMPLE)
-        Assert.assertNull(event)
+        assertNull(event)
         instance!!.sentenceRead(SentenceEvent(this, gga))
-        Assert.assertNull(event)
+        assertNull(event)
         val rmc = sf.createParser(RMCTest.EXAMPLE)
-        Assert.assertNull(event)
+        assertNull(event)
         instance!!.sentenceRead(SentenceEvent(this, rmc))
-        Assert.assertNotNull(event)
+        assertNotNull(event)
     }
 
     /**
@@ -91,24 +93,24 @@ class PositionProviderTest : PositionListener {
     fun testSentenceReadWithGLL() {
         val sf: SentenceFactory = SentenceFactory.Companion.instance
         val gll = sf.createParser(GLLTest.EXAMPLE)
-        Assert.assertNull(event)
+        assertNull(event)
         instance!!.sentenceRead(SentenceEvent(this, gll))
-        Assert.assertNull(event)
+        assertNull(event)
         val rmc = sf.createParser(RMCTest.EXAMPLE)
         instance!!.sentenceRead(SentenceEvent(this, rmc))
-        Assert.assertNotNull(event)
+        assertNotNull(event)
     }
 
     @Test
     fun testSentenceReadWithLegacyRMC() {
         val sf: SentenceFactory = SentenceFactory.Companion.instance
         val gll = sf.createParser(GLLTest.EXAMPLE)
-        Assert.assertNull(event)
+        assertNull(event)
         instance!!.sentenceRead(SentenceEvent(this, gll))
-        Assert.assertNull(event)
+        assertNull(event)
         val rmc = sf.createParser(RMCTest.EXAMPLE_LEGACY)
         instance!!.sentenceRead(SentenceEvent(this, rmc))
-        Assert.assertNotNull(event)
+        assertNotNull(event)
     }
 
     /*

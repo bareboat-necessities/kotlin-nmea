@@ -76,8 +76,8 @@ class SentenceListenerExamples(file: File) {
     }
 
     inner class GSAListener : AbstractSentenceListener<GSASentence>() {
-        override fun sentenceRead(gsa: GSASentence?) {
-            println("GSA position DOP: " + gsa!!.getPositionDOP())
+        override fun sentenceRead(sentence: GSASentence?) {
+            println("GSA position DOP: " + sentence!!.getPositionDOP())
         }
     }
 

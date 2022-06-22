@@ -5,6 +5,7 @@ import net.sf.marineapi.ais.message.AISMessage05
 import net.sf.marineapi.nmea.parser.SentenceFactory
 import net.sf.marineapi.nmea.sentence.AISSentence
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Test
 
 /**
@@ -23,26 +24,26 @@ class AISMessageFactoryTest {
     @Test
     fun testCreate() {
         val msg = amf!!.create(single!!)
-        Assert.assertTrue(msg is AISMessage01)
-        Assert.assertEquals(1, msg.messageType.toLong())
+        assertTrue(msg is AISMessage01)
+        assertEquals(1, msg.messageType.toLong())
     }
 
     @Test
     fun testCreateWithTwo() {
         val msg = amf!!.create(split1!!, split2!!)
-        Assert.assertTrue(msg is AISMessage05)
-        Assert.assertEquals(5, msg.messageType.toLong())
+        assertTrue(msg is AISMessage05)
+        assertEquals(5, msg.messageType.toLong())
     }
 
     @Test
     fun testCreateWithIncorrectOrder() {
         try {
             amf!!.create(split2!!, split1!!)
-            Assert.fail("AISMessageFactory didn't throw on incorrect order")
+            fail("AISMessageFactory didn't throw on incorrect order")
         } catch (iae: IllegalArgumentException) {
-            Assert.assertEquals("Incorrect order of AIS sentences", iae.message)
+            assertEquals("Incorrect order of AIS sentences", iae.message)
         } catch (e: Exception) {
-            Assert.fail("Unexpected exception thrown from AISMessageFactory")
+            fail("Unexpected exception thrown from AISMessageFactory")
         }
     }
 }

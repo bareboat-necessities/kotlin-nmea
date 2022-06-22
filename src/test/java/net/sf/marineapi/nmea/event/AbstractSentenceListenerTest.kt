@@ -7,6 +7,7 @@ import net.sf.marineapi.nmea.sentence.BODSentence
 import net.sf.marineapi.nmea.sentence.GGASentence
 import net.sf.marineapi.nmea.sentence.Sentence
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Test
 
 class AbstractSentenceListenerTest {
@@ -18,13 +19,13 @@ class AbstractSentenceListenerTest {
     @Test
     fun testDefaultConstructor() {
         val bl = BasicListener()
-        Assert.assertEquals(BODSentence::class.java, bl.sentenceType)
+        assertEquals(BODSentence::class.java, bl.sentenceType)
     }
 
     @Test
     fun testDefaultConstructorWhenExtended() {
         val ebl = ExtendedBasicListener()
-        Assert.assertEquals(BODSentence::class.java, ebl.sentenceType)
+        assertEquals(BODSentence::class.java, ebl.sentenceType)
     }
 
     @Test
@@ -32,7 +33,7 @@ class AbstractSentenceListenerTest {
         val gl: GenericsListener<String, BODSentence> = GenericsListener(
             BODSentence::class.java
         )
-        Assert.assertEquals(BODSentence::class.java, gl.sentenceType)
+        assertEquals(BODSentence::class.java, gl.sentenceType)
     }
 
     @Test
@@ -40,19 +41,19 @@ class AbstractSentenceListenerTest {
         val gl = ExtendedGenericsListener<String, Int, BODSentence>(
             BODSentence::class.java
         )
-        Assert.assertEquals(BODSentence::class.java, gl.sentenceType)
+        assertEquals(BODSentence::class.java, gl.sentenceType)
     }
 
     @Test
     fun testDefaultConstructorThrows() {
         try {
             val gl: GenericsListener<String, BODSentence> = GenericsListener()
-            Assert.fail("default constructor didn't throw, resolved to " + gl.sentenceType)
+            fail("default constructor didn't throw, resolved to " + gl.sentenceType)
         } catch (ise: IllegalStateException) {
             val msg = "Cannot resolve generic type <T>, use constructor with Class<T> param."
-            Assert.assertEquals(msg, ise.message)
+            assertEquals(msg, ise.message)
         } catch (e: Exception) {
-            Assert.fail("unexpected exception was thrown: " + e.message)
+            fail("unexpected exception was thrown: " + e.message)
         }
     }
 
@@ -60,12 +61,12 @@ class AbstractSentenceListenerTest {
     fun testDefaultConstructorThrowsWhenExtended() {
         try {
             val egl = ExtendedGenericsListener<String, Int, GGASentence>()
-            Assert.fail("default constructor didn't throw, resolved to " + egl.sentenceType)
+            fail("default constructor didn't throw, resolved to " + egl.sentenceType)
         } catch (ise: IllegalStateException) {
             val msg = "Cannot resolve generic type <T>, use constructor with Class<T> param."
-            Assert.assertEquals(msg, ise.message)
+            assertEquals(msg, ise.message)
         } catch (e: Exception) {
-            Assert.fail("unexpected exception was thrown: " + e.message)
+            fail("unexpected exception was thrown: " + e.message)
         }
     }
 
@@ -73,30 +74,30 @@ class AbstractSentenceListenerTest {
     fun testBasicListenerWithExpectedSentence() {
         val bl: BasicListener = BasicListener()
         bl.sentenceRead(BOD_EVENT)
-        Assert.assertNotNull(bl.received)
-        Assert.assertEquals(BOD!!.toSentence(), bl.received!!.toSentence())
+        assertNotNull(bl.received)
+        assertEquals(BOD!!.toSentence(), bl.received!!.toSentence())
     }
 
     @Test
     fun testBasicListenerWithOtherSentence() {
         val bl: BasicListener = BasicListener()
         bl.sentenceRead(GGA_EVENT)
-        Assert.assertNull(bl.received)
+        assertNull(bl.received)
     }
 
     @Test
     fun testExtendedBasicListenerWithExpectedSentence() {
         val ebl: ExtendedBasicListener = ExtendedBasicListener()
         ebl.sentenceRead(BOD_EVENT)
-        Assert.assertNotNull(ebl.received)
-        Assert.assertEquals(BOD!!.toSentence(), ebl.received!!.toSentence())
+        assertNotNull(ebl.received)
+        assertEquals(BOD!!.toSentence(), ebl.received!!.toSentence())
     }
 
     @Test
     fun testExtendedBasicListenerWithUnexpectedSentence() {
         val ebl: ExtendedBasicListener = ExtendedBasicListener()
         ebl.sentenceRead(GGA_EVENT)
-        Assert.assertNull(ebl.received)
+        assertNull(ebl.received)
     }
 
     @Test
@@ -105,9 +106,9 @@ class AbstractSentenceListenerTest {
             GGASentence::class.java
         )
         gl.sentenceRead(GGA_EVENT)
-        Assert.assertNotNull(gl.received)
-        Assert.assertEquals(GGA!!.toSentence(), gl.received!!.toSentence())
-        Assert.assertEquals("1", gl.stringify(1))
+        assertNotNull(gl.received)
+        assertEquals(GGA!!.toSentence(), gl.received!!.toSentence())
+        assertEquals("1", gl.stringify(1))
     }
 
     @Test
@@ -116,7 +117,7 @@ class AbstractSentenceListenerTest {
             GGASentence::class.java
         )
         sl.sentenceRead(BOD_EVENT)
-        Assert.assertNull(sl.received)
+        assertNull(sl.received)
     }
 
     @Test
@@ -126,10 +127,10 @@ class AbstractSentenceListenerTest {
                 GGASentence::class.java
             )
         egl.sentenceRead(GGA_EVENT)
-        Assert.assertNotNull(egl.received)
-        Assert.assertEquals(GGA!!.toSentence(), egl.received!!.toSentence())
-        Assert.assertEquals(3556498, egl.hashify("test").toLong())
-        Assert.assertEquals("3", egl.stringify(3))
+        assertNotNull(egl.received)
+        assertEquals(GGA!!.toSentence(), egl.received!!.toSentence())
+        assertEquals(3556498, egl.hashify("test").toLong())
+        assertEquals("3", egl.stringify(3))
     }
 
     @Test
@@ -139,24 +140,24 @@ class AbstractSentenceListenerTest {
                 GGASentence::class.java
             )
         egl.sentenceRead(BOD_EVENT)
-        Assert.assertNull(egl.received)
+        assertNull(egl.received)
     }
 
     @Test
     fun testGenericsHidingListenerWithExpectedSentence() {
         val ghl: GenericsHidingListener<Double> = GenericsHidingListener()
         ghl.sentenceRead(BOD_EVENT)
-        Assert.assertNotNull(ghl.received)
-        Assert.assertEquals(BOD!!.toSentence(), ghl.received!!.toSentence())
-        Assert.assertEquals("4.5", ghl.dummy(4.5))
-        Assert.assertEquals("5", ghl.stringify(5))
+        assertNotNull(ghl.received)
+        assertEquals(BOD!!.toSentence(), ghl.received!!.toSentence())
+        assertEquals("4.5", ghl.dummy(4.5))
+        assertEquals("5", ghl.stringify(5))
     }
 
     @Test
     fun testGenericsHidingListenerWithUnexpectedSentence() {
         val ghl: GenericsHidingListener<Double> = GenericsHidingListener()
         ghl.sentenceRead(GGA_EVENT)
-        Assert.assertNull(ghl.received)
+        assertNull(ghl.received)
     }
 
     /** Listeners  */

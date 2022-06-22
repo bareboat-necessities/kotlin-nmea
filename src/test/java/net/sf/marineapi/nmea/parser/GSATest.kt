@@ -5,6 +5,7 @@ import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.FaaMode
 import net.sf.marineapi.nmea.util.GpsFixStatus
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -22,13 +23,13 @@ class GSATest {
             empty = GSAParser(TalkerId.GP)
             instance = GSAParser(EXAMPLE)
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
     @Test
     fun testConstructor() {
-        Assert.assertEquals(17, empty!!.getFieldCount().toLong())
+        assertEquals(17, empty!!.getFieldCount().toLong())
     }
 
     /**
@@ -37,7 +38,7 @@ class GSATest {
      */
     @Test
     fun testGetFixStatus() {
-        Assert.assertEquals(GpsFixStatus.GPS_3D, instance!!.getFixStatus())
+        assertEquals(GpsFixStatus.GPS_3D, instance!!.getFixStatus())
     }
 
     /**
@@ -45,7 +46,7 @@ class GSATest {
      */
     @Test
     fun testGetFaaMode() {
-        Assert.assertEquals(FaaMode.AUTOMATIC, instance!!.getMode())
+        assertEquals(FaaMode.AUTOMATIC, instance!!.getMode())
     }
 
     /**
@@ -55,7 +56,7 @@ class GSATest {
     @Test
     fun testGetHorizontalDOP() {
         val hdop = instance!!.getHorizontalDOP()
-        Assert.assertEquals(1.6, hdop, 0.001)
+        assertEquals(1.6, hdop, 0.001)
     }
 
     /**
@@ -65,7 +66,7 @@ class GSATest {
     @Test
     fun testGetPositionDOP() {
         val pdop = instance!!.getPositionDOP()
-        Assert.assertEquals(1.6, pdop, 0.001)
+        assertEquals(1.6, pdop, 0.001)
     }
 
     /**
@@ -75,12 +76,12 @@ class GSATest {
     @Test
     fun testGetSatelliteIds() {
         val satellites = instance!!.getSatelliteIds()
-        Assert.assertEquals(5, satellites!!.size.toLong())
-        Assert.assertEquals("02", satellites[0])
-        Assert.assertEquals("07", satellites[1])
-        Assert.assertEquals("09", satellites[2])
-        Assert.assertEquals("24", satellites[3])
-        Assert.assertEquals("26", satellites[4])
+        assertEquals(5, satellites!!.size.toLong())
+        assertEquals("02", satellites[0])
+        assertEquals("07", satellites[1])
+        assertEquals("09", satellites[2])
+        assertEquals("24", satellites[3])
+        assertEquals("26", satellites[4])
     }
 
     /**
@@ -90,7 +91,7 @@ class GSATest {
     @Test
     fun testGetVerticalDOP() {
         val vdop = instance!!.getVerticalDOP()
-        Assert.assertEquals(1.0, vdop, 0.001)
+        assertEquals(1.0, vdop, 0.001)
     }
 
     /**
@@ -101,14 +102,14 @@ class GSATest {
     @Test
     fun testSetFixStatus() {
         instance!!.setFixStatus(GpsFixStatus.GPS_NA)
-        Assert.assertTrue(instance.toString().contains(",A,1,"))
-        Assert.assertEquals(GpsFixStatus.GPS_NA, instance!!.getFixStatus())
+        assertTrue(instance.toString().contains(",A,1,"))
+        assertEquals(GpsFixStatus.GPS_NA, instance!!.getFixStatus())
         instance!!.setFixStatus(GpsFixStatus.GPS_2D)
-        Assert.assertTrue(instance.toString().contains(",A,2,"))
-        Assert.assertEquals(GpsFixStatus.GPS_2D, instance!!.getFixStatus())
+        assertTrue(instance.toString().contains(",A,2,"))
+        assertEquals(GpsFixStatus.GPS_2D, instance!!.getFixStatus())
         instance!!.setFixStatus(GpsFixStatus.GPS_3D)
-        Assert.assertTrue(instance.toString().contains(",A,3,"))
-        Assert.assertEquals(GpsFixStatus.GPS_3D, instance!!.getFixStatus())
+        assertTrue(instance.toString().contains(",A,3,"))
+        assertEquals(GpsFixStatus.GPS_3D, instance!!.getFixStatus())
     }
 
     /**
@@ -118,11 +119,11 @@ class GSATest {
     @Test
     fun testSetFaaMode() {
         instance!!.setMode(FaaMode.DGPS)
-        Assert.assertTrue(instance.toString().contains(",D,"))
-        Assert.assertEquals(FaaMode.DGPS, instance!!.getMode())
+        assertTrue(instance.toString().contains(",D,"))
+        assertEquals(FaaMode.DGPS, instance!!.getMode())
         instance!!.setMode(FaaMode.SIMULATED)
-        Assert.assertTrue(instance.toString().contains(",S,"))
-        Assert.assertEquals(FaaMode.SIMULATED, instance!!.getMode())
+        assertTrue(instance.toString().contains(",S,"))
+        assertEquals(FaaMode.SIMULATED, instance!!.getMode())
     }
 
     /**
@@ -133,7 +134,7 @@ class GSATest {
     fun testSetHorizontalDOP() {
         val hdop = 1.98765
         instance!!.setHorizontalDOP(hdop)
-        Assert.assertEquals(hdop, instance!!.getHorizontalDOP(), 0.1)
+        assertEquals(hdop, instance!!.getHorizontalDOP(), 0.1)
     }
 
     /**
@@ -144,7 +145,7 @@ class GSATest {
     fun testSetPositionDOP() {
         val pdop = 1.56788
         instance!!.setPositionDOP(pdop)
-        Assert.assertEquals(pdop, instance!!.getPositionDOP(), 0.1)
+        assertEquals(pdop, instance!!.getPositionDOP(), 0.1)
     }
 
     /**
@@ -157,9 +158,9 @@ class GSATest {
         val ids = arrayOf<String?>("02", "04", "06", "08", "10", "12")
         instance!!.setSatelliteIds(ids)
         val satellites = instance!!.getSatelliteIds()
-        Assert.assertEquals(ids.size.toLong(), satellites!!.size.toLong())
+        assertEquals(ids.size.toLong(), satellites!!.size.toLong())
         for ((i, id) in ids.withIndex()) {
-            Assert.assertEquals(id, satellites[i])
+            assertEquals(id, satellites[i])
         }
     }
 
@@ -171,7 +172,7 @@ class GSATest {
     fun testSetVerticalDOP() {
         val vdop = 1.56789
         instance!!.setVerticalDOP(vdop)
-        Assert.assertEquals(vdop, instance!!.getVerticalDOP(), 0.1)
+        assertEquals(vdop, instance!!.getVerticalDOP(), 0.1)
     }
 
     companion object {

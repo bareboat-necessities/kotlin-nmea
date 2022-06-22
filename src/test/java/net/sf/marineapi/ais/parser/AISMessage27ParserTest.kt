@@ -3,6 +3,8 @@ package net.sf.marineapi.ais.parser
 import net.sf.marineapi.ais.message.AISMessage27
 import net.sf.marineapi.ais.util.Sixbit
 import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Test
 
 /**
@@ -19,51 +21,51 @@ class AISMessage27ParserTest {
 
     @Test
     fun getRepeatIndicator() {
-        Assert.assertEquals(3, message.repeatIndicator.toLong())
+        assertEquals(3, message.repeatIndicator.toLong())
     }
 
     @Test
     fun getMMSI() {
-        Assert.assertEquals(212752000, message.mMSI.toLong())
+        assertEquals(212752000, message.mMSI.toLong())
     }
 
     @Test
     fun isAccurate() {
-        Assert.assertFalse(message.isAccurate)
+        assertFalse(message.isAccurate)
     }
 
     @Test
     fun getRaimFlag() {
-        Assert.assertFalse(message.rAIMFlag)
+        assertFalse(message.rAIMFlag)
     }
 
     @Test
     fun getNavigationalStatus() {
-        Assert.assertEquals(0, message.navigationalStatus.toLong())
+        assertEquals(0, message.navigationalStatus.toLong())
     }
 
     @Test
     fun getLongitude() {
-        Assert.assertEquals(-7.3566666666666665, message.longitudeInDegrees, 0.0)
+        assertEquals(-7.3566666666666665, message.longitudeInDegrees, 0.0)
     }
 
     @Test
     fun getLatitude() {
-        Assert.assertEquals(56.36333333333334, message.latitudeInDegrees, 0.0)
+        assertEquals(56.36333333333334, message.latitudeInDegrees, 0.0)
     }
 
     @Test
     fun getSpeedOverGround() {
-        Assert.assertEquals(15.0, message.speedOverGround, 0.0)
+        assertEquals(15.0, message.speedOverGround, 0.0)
     }
 
     @Test
     fun getCourseOverGround() {
-        Assert.assertEquals(340.0, message.courseOverGround, 0.0)
+        assertEquals(340.0, message.courseOverGround, 0.0)
     }
 
     @Test
     fun getPositionLatency() {
-        Assert.assertEquals(0, message.positionLatency.toLong())
+        assertEquals(0, message.positionLatency.toLong())
     }
 }

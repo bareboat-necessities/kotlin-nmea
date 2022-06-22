@@ -9,8 +9,8 @@ import net.sf.marineapi.test.util.FOOParser
 import net.sf.marineapi.test.util.FOOSentence
 import net.sf.marineapi.test.util.VDMParser
 import org.junit.After
-import org.junit.Assert.assertEquals
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -44,7 +44,7 @@ class SentenceFactoryTest {
     fun testSupportedTypesRegistered() {
         for (id in SentenceId.values()) {
             val msg = "Parser not registered: $id"
-            Assert.assertTrue(msg, instance.hasParser(id.toString()))
+            assertTrue(msg, instance.hasParser(id.toString()))
         }
     }
 
@@ -56,10 +56,10 @@ class SentenceFactoryTest {
     @Test
     fun testCreateParser() {
         val bod = instance.createParser(BODTest.EXAMPLE)
-        Assert.assertNotNull(bod)
-        Assert.assertTrue(bod is Sentence)
-        Assert.assertTrue(bod is BODSentence)
-        Assert.assertTrue(bod is BODParser)
+        assertNotNull(bod)
+        assertTrue(bod is Sentence)
+        assertTrue(bod is BODSentence)
+        assertTrue(bod is BODParser)
         assertEquals(BODTest.EXAMPLE, bod!!.toSentence())
     }
 
@@ -71,9 +71,9 @@ class SentenceFactoryTest {
     fun testCreateEmptyParserWithSentenceId() {
         for (id in SentenceId.values()) {
             val s = instance.createParser(TalkerId.ST, id)
-            Assert.assertNotNull(s)
-            Assert.assertTrue(s is Sentence)
-            Assert.assertTrue(s is SentenceParser)
+            assertNotNull(s)
+            assertTrue(s is Sentence)
+            assertTrue(s is SentenceParser)
             assertEquals(TalkerId.ST, s!!.getTalkerId())
             assertEquals(id.name, s.getSentenceId())
         }
@@ -88,9 +88,9 @@ class SentenceFactoryTest {
     fun testCreateEmptyParserWithSentenceIdStr() {
         for (id in SentenceId.values()) {
             val s = instance.createParser(TalkerId.ST, id.name)
-            Assert.assertNotNull(s)
-            Assert.assertTrue(s is Sentence)
-            Assert.assertTrue(s is SentenceParser)
+            assertNotNull(s)
+            assertTrue(s is Sentence)
+            assertTrue(s is SentenceParser)
         }
     }
 
@@ -103,20 +103,20 @@ class SentenceFactoryTest {
     fun testCreateCustomParser() {
         try {
             instance.registerParser("FOO", FOOParser::class.java)
-            Assert.assertTrue(instance.hasParser("FOO"))
+            assertTrue(instance.hasParser("FOO"))
         } catch (e: Exception) {
-            Assert.fail("parser registering failed")
+            fail("parser registering failed")
         }
         var s: Sentence? = null
         try {
             s = instance.createParser("\$IIFOO,aa,bb,cc")
         } catch (e: Exception) {
-            Assert.fail("sentence parsing failed")
+            fail("sentence parsing failed")
         }
-        Assert.assertNotNull(s)
-        Assert.assertTrue(s is Sentence)
-        Assert.assertTrue(s is SentenceParser)
-        Assert.assertTrue(s is FOOParser)
+        assertNotNull(s)
+        assertTrue(s is Sentence)
+        assertTrue(s is SentenceParser)
+        assertTrue(s is FOOParser)
         assertEquals(TalkerId.II, s!!.getTalkerId())
         assertEquals("FOO", s.getSentenceId())
         assertEquals("aa", (s as FOOSentence?)!!.valueA)
@@ -133,15 +133,15 @@ class SentenceFactoryTest {
     fun testCreateEmptyCustomParser() {
         try {
             instance.registerParser("FOO", FOOParser::class.java)
-            Assert.assertTrue(instance.hasParser("FOO"))
+            assertTrue(instance.hasParser("FOO"))
         } catch (e: Exception) {
-            Assert.fail("parser registering failed")
+            fail("parser registering failed")
         }
         val s = instance.createParser(TalkerId.II, "FOO")
-        Assert.assertNotNull(s)
-        Assert.assertTrue(s is Sentence)
-        Assert.assertTrue(s is SentenceParser)
-        Assert.assertTrue(s is FOOParser)
+        assertNotNull(s)
+        assertTrue(s is Sentence)
+        assertTrue(s is SentenceParser)
+        assertTrue(s is FOOParser)
         assertEquals("FOO", s!!.getSentenceId())
     }
 
@@ -154,7 +154,7 @@ class SentenceFactoryTest {
     fun testCreateParserWithEmptyString() {
         try {
             instance.createParser("")
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -169,7 +169,7 @@ class SentenceFactoryTest {
     fun testCreateParserWithRandom() {
         try {
             instance.createParser("asdqas,dwersa,dsdfas,das")
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: IllegalArgumentException) {
             // pass
         }
@@ -184,7 +184,7 @@ class SentenceFactoryTest {
     fun testCreateParserWithUnregistered() {
         try {
             instance.createParser("\$GPXYZ,1,2,3,4,5,6,7,8")
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (e: UnsupportedSentenceException) {
             // pass
         }
@@ -199,17 +199,17 @@ class SentenceFactoryTest {
     fun testRegisterParserWithAlternativeBeginChar() {
         try {
             instance.registerParser("VDM", VDMParser::class.java)
-            Assert.assertTrue(instance.hasParser("VDM"))
+            assertTrue(instance.hasParser("VDM"))
         } catch (e: Exception) {
-            Assert.fail("parser registering failed")
+            fail("parser registering failed")
         }
         val s = instance.createParser("!AIVDM,1,2,3")
-        Assert.assertNotNull(s)
-        Assert.assertTrue(s is Sentence)
-        Assert.assertTrue(s is SentenceParser)
-        Assert.assertTrue(s is VDMParser)
+        assertNotNull(s)
+        assertTrue(s is Sentence)
+        assertTrue(s is SentenceParser)
+        assertTrue(s is VDMParser)
         instance.unregisterParser(VDMParser::class.java)
-        Assert.assertFalse(instance.hasParser("VDM"))
+        assertFalse(instance.hasParser("VDM"))
     }
 
     /**
@@ -221,11 +221,11 @@ class SentenceFactoryTest {
     fun testRegisterInvalidParser() {
         try {
             instance.registerParser("BAR", BARParser::class.java)
-            Assert.fail("did not throw exception")
+            fail("did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -237,9 +237,9 @@ class SentenceFactoryTest {
     @Test
     fun testUnregisterParser() {
         instance.registerParser("FOO", FOOParser::class.java)
-        Assert.assertTrue(instance.hasParser("FOO"))
+        assertTrue(instance.hasParser("FOO"))
         instance.unregisterParser(FOOParser::class.java)
-        Assert.assertFalse(instance.hasParser("FOO"))
+        assertFalse(instance.hasParser("FOO"))
     }
 
     /**
@@ -249,8 +249,8 @@ class SentenceFactoryTest {
      */
     @Test
     fun testHasParser() {
-        Assert.assertTrue(instance.hasParser("GLL"))
-        Assert.assertFalse(instance.hasParser("ABC"))
+        assertTrue(instance.hasParser("GLL"))
+        assertFalse(instance.hasParser("ABC"))
     }
 
     /**
@@ -262,7 +262,7 @@ class SentenceFactoryTest {
         val types = instance.listParsers()
         assertEquals(SentenceId.values().size.toLong(), types.size.toLong())
         for (id in SentenceId.values()) {
-            Assert.assertTrue(types.contains(id.name))
+            assertTrue(types.contains(id.name))
         }
     }
 
@@ -272,8 +272,8 @@ class SentenceFactoryTest {
      */
     @Test
     fun testGetInstance() {
-        Assert.assertNotNull(instance)
-        Assert.assertTrue(instance == SentenceFactory.instance)
+        assertNotNull(instance)
+        assertTrue(instance == SentenceFactory.instance)
         assertEquals(instance, SentenceFactory.instance)
     }
 }
