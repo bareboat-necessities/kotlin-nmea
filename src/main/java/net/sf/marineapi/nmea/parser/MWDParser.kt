@@ -49,9 +49,6 @@ internal class MWDParser : SentenceParser, MWDSentence {
         setCharValue(WIND_SPEED_KNOTS_UNIT, 'N')
     }
 
-    /* (non-Javadoc)
-     * @see net.sf.marineapi.nmea.sentence.MWDSentence#getMagneticWindDirection()
-     */
     override fun getMagneticWindDirection(): Double {
         return if (hasValue(WIND_DIRECTION_MAGNETIC) && hasValue(WIND_DIRECTION_MAGNETIC_UNIT) && getStringValue(
                 WIND_DIRECTION_MAGNETIC_UNIT
@@ -63,9 +60,6 @@ internal class MWDParser : SentenceParser, MWDSentence {
         }
     }
 
-    /* (non-Javadoc)
-     * @see net.sf.marineapi.nmea.sentence.MWDSentence#getTrueWindDirection()
-     */
     override fun getTrueWindDirection(): Double {
         return if (hasValue(WIND_DIRECTION_TRUE) && hasValue(WIND_DIRECTION_TRUE_UNIT) &&
             getStringValue(WIND_DIRECTION_TRUE_UNIT).equals("T", ignoreCase = true)
@@ -76,9 +70,6 @@ internal class MWDParser : SentenceParser, MWDSentence {
         }
     }
 
-    /* (non-Javadoc)
-     * @see net.sf.marineapi.nmea.sentence.MWDSentence#getWindSpeed()
-     */
     override fun getWindSpeed(): Double {
         return if (hasValue(WIND_SPEED_METERS) && hasValue(WIND_SPEED_METERS_UNIT) &&
             getStringValue(WIND_SPEED_METERS_UNIT).equals("M", ignoreCase = true)
@@ -89,9 +80,6 @@ internal class MWDParser : SentenceParser, MWDSentence {
         }
     }
 
-    /* (non-Javadoc)
-     * @see net.sf.marineapi.nmea.sentence.MWDSentence#getWindSpeedKnots()
-     */
     override fun getWindSpeedKnots(): Double {
         return if (hasValue(WIND_SPEED_KNOTS) && hasValue(WIND_SPEED_KNOTS_UNIT) &&
             getStringValue(WIND_SPEED_KNOTS_UNIT).equals("N", ignoreCase = true)
@@ -102,30 +90,18 @@ internal class MWDParser : SentenceParser, MWDSentence {
         }
     }
 
-    /* (non-Javadoc)
-     * @see net.sf.marineapi.nmea.sentence.MWDSentence#setMagneticWindDirections(double)
-     */
     override fun setMagneticWindDirection(direction: Double) {
         setDegreesValue(WIND_DIRECTION_MAGNETIC, direction)
     }
 
-    /* (non-Javadoc)
-     * @see net.sf.marineapi.nmea.sentence.MWDSentence#setTrueWindDirection(double)
-     */
     override fun setTrueWindDirection(direction: Double) {
         setDegreesValue(WIND_DIRECTION_TRUE, direction)
     }
 
-    /* (non-Javadoc)
-     * @see net.sf.marineapi.nmea.sentence.MWDSentence#setWindSpeed(double)
-     */
     override fun setWindSpeed(speed: Double) {
         setDoubleValue(WIND_SPEED_METERS, speed)
     }
 
-    /* (non-Javadoc)
-     * @see net.sf.marineapi.nmea.sentence.MWDSentence#setWindSpeedKnots(double)
-     */
     override fun setWindSpeedKnots(speed: Double) {
         setDoubleValue(WIND_SPEED_KNOTS, speed)
     }

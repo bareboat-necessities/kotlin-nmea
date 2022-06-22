@@ -51,87 +51,45 @@ internal class VTGParser : SentenceParser, VTGSentence {
         setCharValue(KMPH_INDICATOR, VTGSentence.KMPH)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VTGSentence#getMagneticCourse()
-	 */
     override fun getMagneticCourse(): Double {
         return getDoubleValue(MAGNETIC_COURSE)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VTGSentence#getMode()
-	 */
     override fun getMode(): FaaMode {
         return FaaMode.valueOf(getCharValue(MODE))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VTGSentence#getSpeedKmh()
-	 */
     override fun getSpeedKmh(): Double {
         return getDoubleValue(SPEED_KMPH)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VTGSentence#getSpeedKnots()
-	 */
     override fun getSpeedKnots(): Double {
         return getDoubleValue(SPEED_KNOTS)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VTGSentence#getTrueCourse()
-	 */
     override fun getTrueCourse(): Double {
         return getDoubleValue(TRUE_COURSE)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VTGSentence#setMagneticCourse(double)
-	 */
     override fun setMagneticCourse(mcog: Double) {
         setDegreesValue(MAGNETIC_COURSE, mcog)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.VTGSentence#setMode(net.sf.marineapi.nmea
-	 * .util.FaaMode)
-	 */
     override fun setMode(mode: FaaMode) {
         setFieldCount(9)
         setCharValue(MODE, mode.toChar())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VTGSentence#setSpeedKmh(double)
-	 */
     override fun setSpeedKmh(kmh: Double) {
         require(kmh >= 0) { "Speed cannot be negative" }
         setDoubleValue(SPEED_KMPH, kmh, 1, 2)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VTGSentence#setSpeedKnots(double)
-	 */
     override fun setSpeedKnots(knots: Double) {
         require(knots >= 0) { "Speed cannot be negative" }
         setDoubleValue(SPEED_KNOTS, knots, 1, 2)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VTGSentence#setTrueCourse(double)
-	 */
     override fun setTrueCourse(tcog: Double) {
         setDegreesValue(TRUE_COURSE, tcog)
     }

@@ -49,100 +49,42 @@ internal class XTEParser : SentenceParser, XTESentence {
         setCharValue(DISTANCE_UNIT, 'N')
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getCycleLockStatus()
-	 */
     override fun getCycleLockStatus(): DataStatus {
         return DataStatus.valueOf(getCharValue(CYCLE_LOCK_STATUS))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getMagnitude()
-	 */
     override fun getMagnitude(): Double {
         return getDoubleValue(DISTANCE)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getMode()
-	 */
     override fun getMode(): FaaMode {
         return FaaMode.valueOf(getCharValue(FAA_MODE))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getStatus()
-	 */
     override fun getStatus(): DataStatus {
         return DataStatus.valueOf(getCharValue(SIGNAL_STATUS))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.XTESentence#getSteerTo()
-	 */
     override fun getSteerTo(): Direction {
         return Direction.valueOf(getCharValue(DIRECTION))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.XTESentence#setCycleLockStatus(net.sf.
-	 * marineapi.nmea.util.DataStatus)
-	 */
     override fun setCycleLockStatus(status: DataStatus) {
         setCharValue(CYCLE_LOCK_STATUS, status.toChar())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.XTESentence#setMagnitude(double)
-	 */
     override fun setMagnitude(distance: Double) {
         setDoubleValue(DISTANCE, distance, 0, 2)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.XTESentence#setMode(net.sf.marineapi.nmea
-	 * .util.FaaMode)
-	 */
     override fun setMode(mode: FaaMode) {
         setCharValue(FAA_MODE, mode.toChar())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.XTESentence#setStatus(net.sf.marineapi
-	 * .nmea.util.DataStatus)
-	 */
     override fun setStatus(status: DataStatus) {
         setCharValue(SIGNAL_STATUS, status.toChar())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.XTESentence#setSteerTo(net.sf.marineapi
-	 * .nmea.util.Direction)
-	 */
     override fun setSteerTo(direction: Direction) {
         setCharValue(DIRECTION, direction.toChar())
     }
