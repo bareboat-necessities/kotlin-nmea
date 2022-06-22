@@ -4,6 +4,7 @@ import net.sf.marineapi.ais.message.AISMessage05
 import net.sf.marineapi.ais.util.Sixbit
 import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Test
 
 /**
@@ -116,6 +117,6 @@ class AISMessage05Test {
 
     @Test
     fun testIsDteReady() {
-        Assert.assertFalse(msg.isDteReady)
+        assertFalse(msg.isDteReady)
     }
 }

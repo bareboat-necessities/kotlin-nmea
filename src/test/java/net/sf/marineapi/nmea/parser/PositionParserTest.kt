@@ -24,7 +24,7 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.util.CompassPoint
 import net.sf.marineapi.nmea.util.Position
 import org.junit.Assert
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -170,7 +170,7 @@ class PositionParserTest {
     @Test
     fun testSetLatHemisphere() {
         instance!!.setLatHemisphere(1, CompassPoint.SOUTH)
-        Assert.assertTrue(instance.toString().contains(",S,"))
+        assertTrue(instance.toString().contains(",S,"))
         assertEquals(CompassPoint.SOUTH, instance!!.parseHemisphereLat(1))
     }
 
@@ -184,7 +184,7 @@ class PositionParserTest {
         // 2501.941
         val lat = 25 + 01.941 / 60
         instance!!.setLatitude(0, lat)
-        Assert.assertTrue(instance.toString().contains(",02501.941"))
+        assertTrue(instance.toString().contains(",02501.941"))
         assertEquals(lat, instance!!.parseDegrees(0), 0.000001)
     }
 
@@ -198,7 +198,7 @@ class PositionParserTest {
         // 02801.941
         val lon = 28 + 01.941 / 60
         instance!!.setLongitude(2, lon)
-        Assert.assertTrue(instance.toString().contains(",02801.941"))
+        assertTrue(instance.toString().contains(",02801.941"))
         assertEquals(lon, instance!!.parseDegrees(2), 0.000001)
     }
 
@@ -210,7 +210,7 @@ class PositionParserTest {
     @Test
     fun testSetLonHemisphere() {
         instance!!.setLonHemisphere(3, CompassPoint.WEST)
-        Assert.assertTrue(instance.toString().contains(",W,"))
+        assertTrue(instance.toString().contains(",W,"))
         assertEquals(CompassPoint.WEST, instance!!.parseHemisphereLon(3))
     }
 
@@ -226,9 +226,9 @@ class PositionParserTest {
         instance!!.setPositionValues(p2, 0, 1, 2, 3)
         val s2 = instance.toString()
         val p = instance!!.parsePosition(0, 1, 2, 3)
-        Assert.assertTrue(s2.contains(",6011.552,N,"))
-        Assert.assertTrue(s2.contains(",02501.941,E,"))
-        Assert.assertNotNull(p)
+        assertTrue(s2.contains(",6011.552,N,"))
+        assertTrue(s2.contains(",02501.941,E,"))
+        assertNotNull(p)
         assertEquals(lat, p.latitude, 0.0000001)
         assertEquals(lon, p.longitude, 0.0000001)
     }
@@ -245,9 +245,9 @@ class PositionParserTest {
         instance!!.setPositionValues(p2, 0, 1, 2, 3)
         val s2 = instance.toString()
         val p = instance!!.parsePosition(0, 1, 2, 3)
-        Assert.assertTrue(s2.contains(",6011.552,S,"))
-        Assert.assertTrue(s2.contains(",02501.941,W,"))
-        Assert.assertNotNull(p)
+        assertTrue(s2.contains(",6011.552,S,"))
+        assertTrue(s2.contains(",02501.941,W,"))
+        assertNotNull(p)
         assertEquals(lat, p.latitude, 0.0000001)
         assertEquals(lon, p.longitude, 0.0000001)
     }

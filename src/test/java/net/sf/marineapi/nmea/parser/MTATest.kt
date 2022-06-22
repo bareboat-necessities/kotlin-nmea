@@ -5,6 +5,7 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -27,7 +28,7 @@ class MTATest {
         val empty = MTAParser(TalkerId.WI)
         assertEquals(TalkerId.WI, empty.getTalkerId())
         assertEquals(SentenceId.MTA.name, empty.getSentenceId())
-        Assert.assertTrue(empty.getCharValue(1) == 'C')
+        assertTrue(empty.getCharValue(1) == 'C')
     }
 
     @Test

@@ -28,6 +28,7 @@ import net.sf.marineapi.nmea.util.Position
 import net.sf.marineapi.nmea.util.Time
 import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -109,7 +110,7 @@ class GNSTest {
     @Throws(Exception::class)
     fun setGpsMode() {
         gns!!.setGpsMode(GNSSentence.Mode.DGPS)
-        Assert.assertTrue(gns.toString().contains(",DR,"))
+        assertTrue(gns.toString().contains(",DR,"))
         assertEquals(GNSSentence.Mode.DGPS, gns!!.getGpsMode())
         assertEquals(GNSSentence.Mode.RTK, gns!!.getGlonassMode())
         assertEquals(0, gns!!.getAdditionalModes()!!.size.toLong())
@@ -126,7 +127,7 @@ class GNSTest {
     @Throws(Exception::class)
     fun setGlonassMode() {
         gns!!.setGlonassMode(GNSSentence.Mode.FRTK)
-        Assert.assertTrue(gns.toString().contains(",RF,"))
+        assertTrue(gns.toString().contains(",RF,"))
         assertEquals(GNSSentence.Mode.FRTK, gns!!.getGlonassMode())
         assertEquals(GNSSentence.Mode.RTK, gns!!.getGpsMode())
         assertEquals(0, gns!!.getAdditionalModes()!!.size.toLong())
@@ -136,7 +137,7 @@ class GNSTest {
     @Throws(Exception::class)
     fun setAdditionalModes() {
         gns!!.setAdditionalModes(GNSSentence.Mode.AUTOMATIC, GNSSentence.Mode.ESTIMATED)
-        Assert.assertTrue(gns.toString().contains(",RRAE,"))
+        assertTrue(gns.toString().contains(",RRAE,"))
         assertEquals(GNSSentence.Mode.RTK, gns!!.getGpsMode())
         assertEquals(GNSSentence.Mode.RTK, gns!!.getGlonassMode())
     }
@@ -161,7 +162,7 @@ class GNSTest {
     @Throws(Exception::class)
     fun setSatelliteCount() {
         gns!!.setSatelliteCount(8)
-        Assert.assertTrue(gns.toString().contains(",08,"))
+        assertTrue(gns.toString().contains(",08,"))
         assertEquals(8, gns!!.getSatelliteCount().toLong())
     }
 
@@ -208,7 +209,7 @@ class GNSTest {
     @Throws(Exception::class)
     fun testDgpsAge() {
         empty!!.setDgpsAge(10.0)
-        Assert.assertTrue(empty.toString().contains(",10.0,*"))
+        assertTrue(empty.toString().contains(",10.0,*"))
         assertEquals(10.0, empty!!.getDgpsAge(), 0.1)
     }
 
@@ -216,7 +217,7 @@ class GNSTest {
     @Throws(Exception::class)
     fun testDgpsStationId() {
         gns!!.setDgpsStationId("1234")
-        Assert.assertTrue(gns.toString().contains(",1234*"))
+        assertTrue(gns.toString().contains(",1234*"))
         assertEquals("1234", gns!!.getDgpsStationId())
     }
 

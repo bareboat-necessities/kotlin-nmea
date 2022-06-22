@@ -97,7 +97,7 @@ class GGATest {
         val lon = 25 + 1.941 / 60
         val alt = 28.0
         val p = gga!!.getPosition()
-        Assert.assertNotNull(p)
+        assertNotNull(p)
         assertEquals(lat, p.latitude, 0.0000001)
         assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
         assertEquals(lon, p.longitude, 0.0000001)
@@ -109,7 +109,7 @@ class GGATest {
     @Test
     fun testGetTime() {
         val t = gga!!.getTime()
-        Assert.assertNotNull(t)
+        assertNotNull(t)
         assertEquals(12, t.getHour().toLong())
         assertEquals(0, t.getMinutes().toLong())
         assertEquals(44.567, t.getSeconds(), 0.001)
@@ -192,7 +192,7 @@ class GGATest {
         assertTrue(str.contains(",6101.111,N,"))
         assertTrue(str.contains(",02707.777,E,"))
         val wp = gga!!.getPosition()
-        Assert.assertNotNull(wp)
+        assertNotNull(wp)
         assertEquals(lat, wp.latitude, 0.0000001)
         assertEquals(lon, wp.longitude, 0.0000001)
         assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)

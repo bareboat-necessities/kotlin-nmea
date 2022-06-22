@@ -24,7 +24,7 @@ import net.sf.marineapi.nmea.parser.VDOParser
 import net.sf.marineapi.nmea.sentence.AISSentence
 import net.sf.marineapi.nmea.sentence.TalkerId
 import org.junit.Assert
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -137,9 +137,9 @@ class VDOTest {
      */
     @Test
     fun testIsFragmented() {
-        Assert.assertFalse(vdo!!.isFragmented())
-        Assert.assertTrue(frag1!!.isFragmented())
-        Assert.assertTrue(frag2!!.isFragmented())
+        assertFalse(vdo!!.isFragmented())
+        assertTrue(frag1!!.isFragmented())
+        assertTrue(frag2!!.isFragmented())
     }
 
     /**
@@ -148,9 +148,9 @@ class VDOTest {
      */
     @Test
     fun testIsFirstFragment() {
-        Assert.assertTrue(vdo!!.isFirstFragment())
-        Assert.assertTrue(frag1!!.isFirstFragment())
-        Assert.assertFalse(frag2!!.isFirstFragment())
+        assertTrue(vdo!!.isFirstFragment())
+        assertTrue(frag1!!.isFirstFragment())
+        assertFalse(frag2!!.isFirstFragment())
     }
 
     /**
@@ -159,9 +159,9 @@ class VDOTest {
      */
     @Test
     fun testIsLastFragment() {
-        Assert.assertTrue(vdo!!.isLastFragment())
-        Assert.assertFalse(frag1!!.isLastFragment())
-        Assert.assertTrue(frag2!!.isLastFragment())
+        assertTrue(vdo!!.isLastFragment())
+        assertFalse(frag1!!.isLastFragment())
+        assertTrue(frag2!!.isLastFragment())
     }
 
     /**
@@ -171,12 +171,12 @@ class VDOTest {
      */
     @Test
     fun testIsPartOfMessage() {
-        Assert.assertFalse(vdo!!.isPartOfMessage(frag1))
-        Assert.assertFalse(vdo!!.isPartOfMessage(frag2))
-        Assert.assertFalse(frag1!!.isPartOfMessage(vdo))
-        Assert.assertFalse(frag2!!.isPartOfMessage(vdo))
-        Assert.assertTrue(frag1!!.isPartOfMessage(frag2))
-        Assert.assertFalse(frag2!!.isPartOfMessage(frag1))
+        assertFalse(vdo!!.isPartOfMessage(frag1))
+        assertFalse(vdo!!.isPartOfMessage(frag2))
+        assertFalse(frag1!!.isPartOfMessage(vdo))
+        assertFalse(frag2!!.isPartOfMessage(vdo))
+        assertTrue(frag1!!.isPartOfMessage(frag2))
+        assertFalse(frag2!!.isPartOfMessage(frag1))
     }
 
     @Test

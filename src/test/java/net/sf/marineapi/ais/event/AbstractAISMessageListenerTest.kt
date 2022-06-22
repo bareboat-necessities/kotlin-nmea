@@ -7,6 +7,8 @@ import net.sf.marineapi.ais.parser.AISMessageFactory
 import net.sf.marineapi.nmea.parser.SentenceFactory
 import net.sf.marineapi.nmea.sentence.AISSentence
 import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Test
 
 class AbstractAISMessageListenerTest {
@@ -21,53 +23,53 @@ class AbstractAISMessageListenerTest {
     @Test
     fun testConstructor() {
         val bl = BasicListener()
-        Assert.assertNull(bl.received)
-        Assert.assertEquals(bl.messageType, AISMessage01::class.java)
+        assertNull(bl.received)
+        assertEquals(bl.messageType, AISMessage01::class.java)
     }
 
     @Test
     fun testParametrizedConstructor() {
         val ebl = ExtendedBasicListener()
-        Assert.assertNull(ebl.get())
-        Assert.assertEquals(ebl.messageType, AISMessage01::class.java)
+        assertNull(ebl.get())
+        assertEquals(ebl.messageType, AISMessage01::class.java)
     }
 
     @Test
     fun testOnMessageWithExpectedMessage() {
         val bl = BasicListener()
         bl.sentenceRead(AIS_01)
-        Assert.assertEquals(bl.received.toString(), MSG_01.toString())
+        assertEquals(bl.received.toString(), MSG_01.toString())
     }
 
     @Test
     fun testSequenceListener() {
         val sl = SequenceListener()
         sl.sentenceRead(AIS_05_1)
-        Assert.assertNull(sl.received)
+        assertNull(sl.received)
         sl.sentenceRead(AIS_05_2)
-        Assert.assertEquals(sl.received.toString(), MSG_05.toString())
+        assertEquals(sl.received.toString(), MSG_05.toString())
     }
 
     @Test
     fun testSequenceListenerWithIncorrectOrder() {
         val sl = SequenceListener()
         sl.sentenceRead(AIS_05_2)
-        Assert.assertNull(sl.received)
+        assertNull(sl.received)
         sl.sentenceRead(AIS_05_1)
-        Assert.assertNull(sl.received)
+        assertNull(sl.received)
         sl.sentenceRead(AIS_05_2)
-        Assert.assertEquals(sl.received.toString(), MSG_05.toString())
+        assertEquals(sl.received.toString(), MSG_05.toString())
     }
 
     @Test
     fun testSequenceListenerWithMixedOrder() {
         val sl = SequenceListener()
         sl.sentenceRead(AIS_05_1)
-        Assert.assertNull(sl.received)
+        assertNull(sl.received)
         sl.sentenceRead(AIS_01)
-        Assert.assertNull(sl.received)
+        assertNull(sl.received)
         sl.sentenceRead(AIS_05_2)
-        Assert.assertNull(sl.received)
+        assertNull(sl.received)
     }
 
     @Test
@@ -75,7 +77,7 @@ class AbstractAISMessageListenerTest {
         val bl = BasicListener()
         bl.sentenceRead(AIS_05_1)
         bl.sentenceRead(AIS_05_2)
-        Assert.assertNull(bl.received)
+        assertNull(bl.received)
     }
 
     @Test
@@ -84,8 +86,8 @@ class AbstractAISMessageListenerTest {
             AISMessage01::class.java
         )
         gl.sentenceRead(AIS_01)
-        Assert.assertEquals(gl.received.toString(), MSG_01.toString())
-        Assert.assertEquals("1", gl.dummy(1))
+        assertEquals(gl.received.toString(), MSG_01.toString())
+        assertEquals("1", gl.dummy(1))
     }
 
     @Test
@@ -94,7 +96,7 @@ class AbstractAISMessageListenerTest {
             val gl: GenericsListener<Int, AISMessage01> = GenericsListener()
             Assert.fail("exception not thrown, resolved to " + gl.messageType)
         } catch (ise: IllegalStateException) {
-            Assert.assertEquals("Cannot resolve generic type <T>, use constructor with Class<T> param.", ise.message)
+            assertEquals("Cannot resolve generic type <T>, use constructor with Class<T> param.", ise.message)
         } catch (e: Exception) {
             Assert.fail("unexpected exception thrown: " + e.message)
         }

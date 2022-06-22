@@ -3,7 +3,7 @@ package net.sf.marineapi.ais.parser
 import net.sf.marineapi.ais.message.AISMessage21
 import net.sf.marineapi.ais.util.Sixbit
 import org.junit.Assert
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Test
 
 /**
@@ -34,7 +34,7 @@ class AISMessage21ParserTest {
     @Test
     @Throws(Exception::class)
     fun getPositionAccuracy() {
-        Assert.assertFalse(msg.isAccurate)
+        assertFalse(msg.isAccurate)
     }
 
     @Test
@@ -102,19 +102,19 @@ class AISMessage21ParserTest {
     @Test
     @Throws(Exception::class)
     fun getRAIMFlag() {
-        Assert.assertFalse(msg.rAIMFlag)
+        assertFalse(msg.rAIMFlag)
     }
 
     @Test
     @Throws(Exception::class)
     fun getVirtualAidFlag() {
-        Assert.assertFalse(msg.virtualAidFlag)
+        assertFalse(msg.virtualAidFlag)
     }
 
     @Test
     @Throws(Exception::class)
     fun getAssignedModeFlag() {
-        Assert.assertTrue(msg.assignedModeFlag)
+        assertTrue(msg.assignedModeFlag)
     }
 
     @Test
