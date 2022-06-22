@@ -92,8 +92,7 @@ internal open class HTCParser : SentenceParser, HTCSentence {
     }
 
     override fun isHeadingTrue(): Boolean {
-        return (hasValue(HEADING_REFERENCE_IN_USE)
-                && getCharValue(HEADING_REFERENCE_IN_USE) == 'T')
+        return hasValue(HEADING_REFERENCE_IN_USE) && getCharValue(HEADING_REFERENCE_IN_USE) == 'T'
     }
 
     companion object {

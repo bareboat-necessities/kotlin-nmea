@@ -136,8 +136,7 @@ abstract class PositionParser : SentenceParser {
      */
     fun setLatHemisphere(field: Int, hem: CompassPoint) {
         require(!(hem != CompassPoint.NORTH && hem != CompassPoint.SOUTH)) {
-            ("Invalid latitude hemisphere: "
-                    + hem)
+            ("Invalid latitude hemisphere: " + hem)
         }
         setCharValue(field, hem.toChar())
     }

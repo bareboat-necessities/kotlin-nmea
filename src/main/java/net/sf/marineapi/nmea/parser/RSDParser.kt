@@ -46,177 +46,102 @@ internal class RSDParser : SentenceParser, RSDSentence {
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.RSD, 13)
 
-    /**
-     * @see RSDSentence.getOriginOneRange
-     */
     override fun getOriginOneRange(): Double {
         return getDoubleValue(ORIGIN_ONE_RANGE)
     }
 
-    /**
-     * @see RSDSentence.getOriginOneBearing
-     */
     override fun getOriginOneBearing(): Double {
         return getDoubleValue(ORIGIN_ONE_BEARING)
     }
 
-    /**
-     * @see RSDSentence.getVRMOneRange
-     */
     override fun getVRMOneRange(): Double {
         return getDoubleValue(VRM_ONE_RANGE)
     }
 
-    /**
-     * @see RSDSentence.getEBLOneBearing
-     */
     override fun getEBLOneBearing(): Double {
         return getDoubleValue(EBL_ONE_BEARING)
     }
 
-    /**
-     * @see RSDSentence.getOriginTwoRange
-     */
     override fun getOriginTwoRange(): Double {
         return getDoubleValue(ORIGIN_TWO_RANGE)
     }
 
-    /**
-     * @see RSDSentence.getOriginTwoBearing
-     */
     override fun getOriginTwoBearing(): Double {
         return getDoubleValue(ORIGIN_TWO_BEARING)
     }
 
-    /**
-     * @see RSDSentence.getVRMTwoRange
-     */
     override fun getVRMTwoRange(): Double {
         return getDoubleValue(VRM_TWO_RANGE)
     }
 
-    /**
-     * @see RSDSentence.getEBLTwoBearing
-     */
     override fun getEBLTwoBearing(): Double {
         return getDoubleValue(EBL_TWO_BEARING)
     }
 
-    /**
-     * @see RSDSentence.getCursorRange
-     */
     override fun getCursorRange(): Double {
         return getDoubleValue(CURSOR_RANGE)
     }
 
-    /**
-     * @see RSDSentence.getCursorBearing
-     */
     override fun getCursorBearing(): Double {
         return getDoubleValue(CURSOR_BEARING)
     }
 
-    /**
-     * @see RSDSentence.getRangeScale
-     */
     override fun getRangeScale(): Double {
         return getDoubleValue(RANGE_SCALE)
     }
 
-    /**
-     * @see RSDSentence.getRangeUnits
-     */
     override fun getRangeUnits(): Units {
         return Units.valueOf(getCharValue(RANGE_UNITS))
     }
 
-    /**
-     * @see RSDSentence.getDisplayRotation
-     */
     override fun getDisplayRotation(): DisplayRotation {
         return DisplayRotation.valueOf(getCharValue(DISPLAY_ROTATION))
     }
 
-    /**
-     * @see RSDSentence.setOriginOneRange
-     */
     override fun setOriginOneRange(range: Double) {
         setDoubleValue(ORIGIN_ONE_RANGE, range)
     }
 
-    /**
-     * @see RSDSentence.setOriginOneBearing
-     */
     override fun setOriginOneBearing(bearing: Double) {
         setDoubleValue(ORIGIN_ONE_BEARING, bearing)
     }
 
-    /**
-     * @see RSDSentence.setVRMOneRange
-     */
     override fun setVRMOneRange(range: Double) {
         setDoubleValue(VRM_ONE_RANGE, range)
     }
 
-    /**
-     * @see RSDSentence.setEBLOneBearing
-     */
     override fun setEBLOneBearing(bearing: Double) {
         setDoubleValue(EBL_ONE_BEARING, bearing)
     }
 
-    /**
-     * @see RSDSentence.setOriginTwoRange
-     */
     override fun setOriginTwoRange(range: Double) {
         setDoubleValue(ORIGIN_TWO_RANGE, range)
     }
 
-    /**
-     * @see RSDSentence.setOriginTwoBearing
-     */
     override fun setOriginTwoBearing(bearing: Double) {
         setDoubleValue(ORIGIN_TWO_BEARING, bearing)
     }
 
-    /**
-     * @see RSDSentence.setVRMTwoRange
-     */
     override fun setVRMTwoRange(range: Double) {
         setDoubleValue(VRM_TWO_RANGE, range)
     }
 
-    /**
-     * @see RSDSentence.setEBLTwoBearing
-     */
     override fun setEBLTwoBearing(bearing: Double) {
         setDoubleValue(EBL_TWO_BEARING, bearing)
     }
 
-    /**
-     * @see RSDSentence.setCursorRange
-     */
     override fun setCursorRange(range: Double) {
         setDoubleValue(CURSOR_RANGE, range)
     }
 
-    /**
-     * @see RSDSentence.setCursorBearing
-     */
     override fun setCursorBearing(bearing: Double) {
         setDoubleValue(CURSOR_BEARING, bearing)
     }
 
-    /**
-     * @see RSDSentence.setRangeScale
-     */
     override fun setRangeScale(rangeScale: Double) {
         setDoubleValue(RANGE_SCALE, rangeScale)
     }
 
-    /**
-     * @see RSDSentence.setRangeUnits
-     */
     override fun setRangeUnits(units: Units?) {
         if (listOf(*VALID_RANGE_UNITS).contains(units)) {
             setCharValue(RANGE_UNITS, units!!.toChar())
@@ -233,9 +158,6 @@ internal class RSDParser : SentenceParser, RSDSentence {
         }
     }
 
-    /**
-     * @see RSDSentence.setDisplayRotation
-     */
     override fun setDisplayRotation(rotation: DisplayRotation?) {
         setCharValue(DISPLAY_ROTATION, rotation!!.toChar())
     }

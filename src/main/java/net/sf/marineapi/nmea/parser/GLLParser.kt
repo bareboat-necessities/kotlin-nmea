@@ -59,23 +59,15 @@ internal class GLLParser : PositionParser, GLLSentence {
     }
 
     override fun getMode(): FaaMode? {
-        return if (getFieldCount() > MODE) {
-            FaaMode.valueOf(getCharValue(MODE))
-        } else {
-            null
-        }
+        return if (getFieldCount() > MODE) FaaMode.valueOf(getCharValue(MODE)) else null
     }
 
-
     override fun getTime(): Time {
-        val str = getStringValue(UTC_TIME)
-        return Time(str)
+        return Time(getStringValue(UTC_TIME))
     }
 
     override fun setPosition(pos: Position) {
-        setPositionValues(
-            pos, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE
-        )
+        setPositionValues(pos, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE)
     }
 
     override fun setStatus(status: DataStatus?) {

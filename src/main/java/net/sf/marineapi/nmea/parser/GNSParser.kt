@@ -158,8 +158,8 @@ internal class GNSParser : PositionParser, GNSSentence {
         return getStringValue(DGPS_STATION)
     }
 
-    override fun setDgpsStationId(stationId: String?) {
-        setStringValue(DGPS_STATION, stationId)
+    override fun setDgpsStationId(id: String?) {
+        setStringValue(DGPS_STATION, id)
     }
 
     companion object {

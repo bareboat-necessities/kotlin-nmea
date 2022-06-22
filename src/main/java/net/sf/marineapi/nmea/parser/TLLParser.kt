@@ -61,8 +61,7 @@ internal class TLLParser : PositionParser, TLLSentence {
     }
 
     override fun getTime(): Time {
-        val str = getStringValue(UTC_TIME)
-        return Time(str)
+        return Time(getStringValue(UTC_TIME))
     }
 
     override fun setNumber(number: Int) {
@@ -88,9 +87,7 @@ internal class TLLParser : PositionParser, TLLSentence {
     }
 
     override fun setReference(isReference: Boolean) {
-        if (isReference) {
-            setCharValue(REFERENCE, 'R')
-        }
+        if (isReference) setCharValue(REFERENCE, 'R')
     }
 
     companion object {

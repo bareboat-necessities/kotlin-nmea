@@ -46,35 +46,19 @@ internal class HTDParser : HTCParser, HTDSentence {
     constructor(talker: TalkerId?) : super(talker, SentenceId.HTD, 17)
 
     override fun getRudderStatus(): DataStatus? {
-        return if (hasValue(RUDDER_STATUS)) {
-            DataStatus.valueOf(getCharValue(RUDDER_STATUS))
-        } else {
-            null
-        }
+        return if (hasValue(RUDDER_STATUS)) DataStatus.valueOf(getCharValue(RUDDER_STATUS)) else null
     }
 
     override fun getOffHeadingStatus(): DataStatus? {
-        return if (hasValue(OFF_HEADING_STATUS)) {
-            DataStatus.valueOf(getCharValue(OFF_HEADING_STATUS))
-        } else {
-            null
-        }
+        return if (hasValue(OFF_HEADING_STATUS)) DataStatus.valueOf(getCharValue(OFF_HEADING_STATUS)) else null
     }
 
     override fun getOffTrackStatus(): DataStatus? {
-        return if (hasValue(OFF_TRACK_STATUS)) {
-            DataStatus.valueOf(getCharValue(OFF_TRACK_STATUS))
-        } else {
-            null
-        }
+        return if (hasValue(OFF_TRACK_STATUS)) DataStatus.valueOf(getCharValue(OFF_TRACK_STATUS)) else null
     }
 
     override fun getHeading(): Double {
-        return if (hasValue(HEADING)) {
-            getDoubleValue(HEADING)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(HEADING)) getDoubleValue(HEADING) else Double.NaN
     }
 
     override fun isTrue(): Boolean {

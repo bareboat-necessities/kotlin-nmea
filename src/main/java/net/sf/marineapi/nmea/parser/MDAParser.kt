@@ -58,43 +58,23 @@ internal class MDAParser : SentenceParser, MDASentence {
     }
 
     override fun getAbsoluteHumidity(): Double {
-        return if (hasValue(ABSOLUTE_HUMIDITY)) {
-            getDoubleValue(ABSOLUTE_HUMIDITY)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(ABSOLUTE_HUMIDITY)) getDoubleValue(ABSOLUTE_HUMIDITY) else Double.NaN
     }
 
     override fun getAirTemperature(): Double {
-        return if (hasValue(AIR_TEMPERATURE)) {
-            getDoubleValue(AIR_TEMPERATURE)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(AIR_TEMPERATURE)) getDoubleValue(AIR_TEMPERATURE) else Double.NaN
     }
 
     override fun getDewPoint(): Double {
-        return if (hasValue(DEW_POINT)) {
-            getDoubleValue(DEW_POINT)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(DEW_POINT)) getDoubleValue(DEW_POINT) else Double.NaN
     }
 
     override fun getMagneticWindDirection(): Double {
-        return if (hasValue(WIND_DIRECTION_MAGNETIC)) {
-            getDoubleValue(WIND_DIRECTION_MAGNETIC)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(WIND_DIRECTION_MAGNETIC)) getDoubleValue(WIND_DIRECTION_MAGNETIC) else Double.NaN
     }
 
     override fun getPrimaryBarometricPressure(): Double {
-        return if (hasValue(PRIMARY_BAROMETRIC_PRESSURE)) {
-            getDoubleValue(PRIMARY_BAROMETRIC_PRESSURE)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(PRIMARY_BAROMETRIC_PRESSURE)) getDoubleValue(PRIMARY_BAROMETRIC_PRESSURE) else Double.NaN
     }
 
     override fun getPrimaryBarometricPressureUnit(): Char {
@@ -102,19 +82,11 @@ internal class MDAParser : SentenceParser, MDASentence {
     }
 
     override fun getRelativeHumidity(): Double {
-        return if (hasValue(RELATIVE_HUMIDITY)) {
-            getDoubleValue(RELATIVE_HUMIDITY)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(RELATIVE_HUMIDITY)) getDoubleValue(RELATIVE_HUMIDITY) else Double.NaN
     }
 
     override fun getSecondaryBarometricPressure(): Double {
-        return if (hasValue(SECONDARY_BAROMETRIC_PRESSURE)) {
-            getDoubleValue(SECONDARY_BAROMETRIC_PRESSURE)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(SECONDARY_BAROMETRIC_PRESSURE)) getDoubleValue(SECONDARY_BAROMETRIC_PRESSURE) else Double.NaN
     }
 
     override fun getSecondaryBarometricPressureUnit(): Char {
@@ -122,35 +94,19 @@ internal class MDAParser : SentenceParser, MDASentence {
     }
 
     override fun getTrueWindDirection(): Double {
-        return if (hasValue(WIND_DIRECTION_TRUE)) {
-            getDoubleValue(WIND_DIRECTION_TRUE)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(WIND_DIRECTION_TRUE)) getDoubleValue(WIND_DIRECTION_TRUE) else Double.NaN
     }
 
     override fun getWaterTemperature(): Double {
-        return if (hasValue(WATER_TEMPERATURE)) {
-            getDoubleValue(WATER_TEMPERATURE)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(WATER_TEMPERATURE)) getDoubleValue(WATER_TEMPERATURE) else Double.NaN
     }
 
     override fun getWindSpeed(): Double {
-        return if (hasValue(WIND_SPEED_METERS)) {
-            getDoubleValue(WIND_SPEED_METERS)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(WIND_SPEED_METERS)) getDoubleValue(WIND_SPEED_METERS) else Double.NaN
     }
 
     override fun getWindSpeedKnots(): Double {
-        return if (hasValue(WIND_SPEED_KNOTS)) {
-            getDoubleValue(WIND_SPEED_KNOTS)
-        } else {
-            Double.NaN
-        }
+        return if (hasValue(WIND_SPEED_KNOTS)) getDoubleValue(WIND_SPEED_KNOTS) else Double.NaN
     }
 
     override fun setAbsoluteHumidity(humitidy: Double) {

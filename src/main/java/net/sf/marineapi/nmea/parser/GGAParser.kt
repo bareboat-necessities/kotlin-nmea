@@ -143,9 +143,7 @@ internal class GGAParser : PositionParser, GGASentence {
     }
 
     override fun setPosition(pos: Position) {
-        setPositionValues(
-            pos, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE
-        )
+        setPositionValues(pos, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE)
         setAltitude(pos.altitude)
         setAltitudeUnits(Units.METER)
     }

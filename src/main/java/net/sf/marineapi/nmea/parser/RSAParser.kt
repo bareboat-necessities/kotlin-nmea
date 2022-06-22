@@ -50,23 +50,16 @@ internal class RSAParser : SentenceParser, RSASentence {
     }
 
     override fun getRudderAngle(side: Side): Double {
-        return if (Side.STARBOARD == side) {
-            getDoubleValue(STARBOARD_SENSOR)
-        } else getDoubleValue(PORT_SENSOR)
+        return if (Side.STARBOARD == side) getDoubleValue(STARBOARD_SENSOR) else getDoubleValue(PORT_SENSOR)
     }
 
     override fun setRudderAngle(side: Side, angle: Double) {
-        if (Side.STARBOARD == side) {
-            setDoubleValue(STARBOARD_SENSOR, angle)
-        } else {
-            setDoubleValue(PORT_SENSOR, angle)
-        }
+        if (Side.STARBOARD == side) setDoubleValue(STARBOARD_SENSOR, angle) else setDoubleValue(PORT_SENSOR, angle)
     }
 
     override fun getStatus(side: Side): DataStatus {
-        return if (Side.STARBOARD == side) {
-            DataStatus.valueOf(getCharValue(STARBOARD_STATUS))
-        } else DataStatus.valueOf(getCharValue(PORT_STATUS))
+        return if (Side.STARBOARD == side) DataStatus.valueOf(getCharValue(STARBOARD_STATUS))
+        else DataStatus.valueOf(getCharValue(PORT_STATUS))
     }
 
     override fun setStatus(side: Side, status: DataStatus) {

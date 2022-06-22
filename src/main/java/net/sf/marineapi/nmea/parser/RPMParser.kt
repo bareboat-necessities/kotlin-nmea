@@ -85,7 +85,8 @@ internal class RPMParser : SentenceParser, RPMSentence {
     }
 
     override fun setSource(source: Char) {
-        require(!(source != RPMSentence.ENGINE && source != RPMSentence.SHAFT)) { "Invalid source indicator, expected 'E' or 'S'" }
+        require(!(source != RPMSentence.ENGINE && source != RPMSentence.SHAFT)) {
+            "Invalid source indicator, expected 'E' or 'S'" }
         setCharValue(SOURCE, source)
     }
 

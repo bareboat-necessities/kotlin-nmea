@@ -82,12 +82,8 @@ internal class MWDParser : SentenceParser, MWDSentence {
 
     override fun getWindSpeedKnots(): Double {
         return if (hasValue(WIND_SPEED_KNOTS) && hasValue(WIND_SPEED_KNOTS_UNIT) &&
-            getStringValue(WIND_SPEED_KNOTS_UNIT).equals("N", ignoreCase = true)
-        ) {
-            getDoubleValue(WIND_SPEED_KNOTS)
-        } else {
-            Double.NaN
-        }
+            getStringValue(WIND_SPEED_KNOTS_UNIT).equals("N", ignoreCase = true)) getDoubleValue(WIND_SPEED_KNOTS)
+        else Double.NaN
     }
 
     override fun setMagneticWindDirection(direction: Double) {

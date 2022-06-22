@@ -76,9 +76,7 @@ internal open class DTAParser : SentenceParser, DTASentence {
     }
 
     override fun getChannelNumber(): Int {
-        return if (offset == -1) {
-            1
-        } else getIntValue(CHANNEL_NUMBER)
+        return if (offset == -1) 1 else getIntValue(CHANNEL_NUMBER)
     }
 
     override fun getGasConcentration(): Double {

@@ -197,9 +197,7 @@ internal class TTMParser : SentenceParser, TTMSentence {
     }
 
     override fun setReference(isReference: Boolean) {
-        if (isReference) {
-            setCharValue(REFERENCE, 'R')
-        }
+        if (isReference) setCharValue(REFERENCE, 'R')
     }
 
     override fun setAcquisitionType(acquisitionType: AcquisitionType) {

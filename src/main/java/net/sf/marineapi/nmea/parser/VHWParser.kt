@@ -69,8 +69,8 @@ internal class VHWParser : SentenceParser, VHWSentence {
         return true
     }
 
-    override fun setHeading(hdg: Double) {
-        setDegreesValue(TRUE_HEADING, hdg)
+    override fun setHeading(hdt: Double) {
+        setDegreesValue(TRUE_HEADING, hdt)
     }
 
     override fun setMagneticHeading(hdg: Double) {

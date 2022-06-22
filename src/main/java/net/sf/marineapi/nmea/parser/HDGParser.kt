@@ -75,12 +75,10 @@ internal class HDGParser : SentenceParser, HDGSentence {
 
     override fun setDeviation(deviation: Double) {
         require(!(deviation < -180 || deviation > 180)) { "Value out of range [-180..180]" }
-        if (deviation > 0) {
-            setCharValue(DEV_DIRECTION, CompassPoint.EAST.toChar())
-        } else if (deviation < 0) {
-            setCharValue(DEV_DIRECTION, CompassPoint.WEST.toChar())
-        } else {
-            setStringValue(DEV_DIRECTION, "")
+        when {
+            deviation > 0 -> setCharValue(DEV_DIRECTION, CompassPoint.EAST.toChar())
+            deviation < 0 -> setCharValue(DEV_DIRECTION, CompassPoint.WEST.toChar())
+            else -> setStringValue(DEV_DIRECTION, "")
         }
         setDoubleValue(DEVIATION, abs(deviation), 3, 1)
     }
@@ -91,12 +89,10 @@ internal class HDGParser : SentenceParser, HDGSentence {
 
     override fun setVariation(variation: Double) {
         require(!(variation < -180 || variation > 180)) { "Value out of range [-180..180]" }
-        if (variation > 0) {
-            setCharValue(VAR_DIRECTION, CompassPoint.EAST.toChar())
-        } else if (variation < 0) {
-            setCharValue(VAR_DIRECTION, CompassPoint.WEST.toChar())
-        } else {
-            setStringValue(VAR_DIRECTION, "")
+        when {
+            variation > 0 -> setCharValue(VAR_DIRECTION, CompassPoint.EAST.toChar())
+            variation < 0 -> setCharValue(VAR_DIRECTION, CompassPoint.WEST.toChar())
+            else -> setStringValue(VAR_DIRECTION, "")
         }
         setDoubleValue(VARIATION, abs(variation), 3, 1)
     }

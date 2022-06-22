@@ -101,7 +101,8 @@ internal class RMCParser : PositionParser, RMCSentence {
     }
 
     override fun setDirectionOfVariation(dir: CompassPoint?) {
-        require(!(dir != CompassPoint.EAST && dir != CompassPoint.WEST)) { "Invalid variation direction, expected EAST or WEST." }
+        require(!(dir != CompassPoint.EAST && dir != CompassPoint.WEST)) {
+            "Invalid variation direction, expected EAST or WEST." }
         setCharValue(VAR_HEMISPHERE, dir!!.toChar())
     }
 
