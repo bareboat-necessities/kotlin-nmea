@@ -121,9 +121,7 @@ class DateTest {
     @Test
     fun testEqualsWrongType() {
         val str = "foobar"
-        val dbl: Any = java.lang.Double.valueOf(123.0)
         assertFalse(instance!!.equals(str))
-        assertFalse(instance!! == dbl)
     }
 
     /**

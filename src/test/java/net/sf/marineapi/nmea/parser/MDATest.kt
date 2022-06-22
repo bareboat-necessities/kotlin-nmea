@@ -7,7 +7,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import java.lang.Double
+
 import kotlin.Exception
 import kotlin.Throws
 import kotlin.code
@@ -38,14 +38,14 @@ class MDATest {
 
     @Test
     fun testGetMagneticWindDirection() {
-        assertTrue(Double.isNaN(mda!!.getMagneticWindDirection()))
+        assertTrue((mda!!.getMagneticWindDirection()).isNaN())
         assertEquals(38.7, mda2!!.getMagneticWindDirection(), 0.1)
     }
 
     @Test
     fun testGetTrueWindDirection() {
         assertEquals(295.19, mda!!.getTrueWindDirection(), 0.1)
-        assertTrue(Double.isNaN(mda2!!.getTrueWindDirection()))
+        assertTrue((mda2!!.getTrueWindDirection()).isNaN())
     }
 
     @Test
@@ -62,7 +62,7 @@ class MDATest {
 
     @Test
     fun testGetAbsoluteHumidity() {
-        assertTrue(Double.isNaN(mda!!.getAbsoluteHumidity()))
+        assertTrue((mda!!.getAbsoluteHumidity()).isNaN())
         assertEquals(16.4, mda2!!.getAbsoluteHumidity(), 0.1)
     }
 
@@ -90,20 +90,20 @@ class MDATest {
 
     @Test
     fun testGetRelativeHumidity() {
-        assertTrue(Double.isNaN(mda!!.getRelativeHumidity()))
+        assertTrue((mda!!.getRelativeHumidity()).isNaN())
         assertEquals(64.2, mda2!!.getRelativeHumidity(), 0.1)
     }
 
     @Test
     fun testGetDewPoint() {
-        assertTrue(Double.isNaN(mda!!.getDewPoint()))
+        assertTrue((mda!!.getDewPoint()).isNaN())
         assertEquals(19.5, mda2!!.getDewPoint(), 0.1)
     }
 
     @Test
     fun testGetWaterTemperature() {
-        assertTrue(Double.isNaN(mda!!.getWaterTemperature()))
-        assertTrue(Double.isNaN(mda2!!.getWaterTemperature()))
+        assertTrue((mda!!.getWaterTemperature()).isNaN())
+        assertTrue((mda2!!.getWaterTemperature()).isNaN())
     }
 
     @Test

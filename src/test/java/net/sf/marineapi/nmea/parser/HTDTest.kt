@@ -7,7 +7,7 @@ import net.sf.marineapi.nmea.util.SteeringMode
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import java.lang.Double
+
 import kotlin.Exception
 import kotlin.Throws
 
@@ -71,31 +71,31 @@ class HTDTest {
     @Test
     @Throws(Exception::class)
     fun testGetRadiusOfTurnForHEadingChanges() {
-        assertTrue(Double.isNaN(htd!!.getRadiusOfTurn()))
+        assertTrue((htd!!.getRadiusOfTurn()).isNaN())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetRateOfTurn() {
-        assertTrue(Double.isNaN(htd!!.getRateOfTurn()))
+        assertTrue((htd!!.getRateOfTurn()).isNaN())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetHeadingToSteer() {
-        assertTrue(Double.isNaN(htd!!.getHeadingToSteer()))
+        assertTrue((htd!!.getHeadingToSteer()).isNaN())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetOffTrackLimit() {
-        assertTrue(Double.isNaN(htd!!.getOffTrackLimit()))
+        assertTrue((htd!!.getOffTrackLimit()).isNaN())
     }
 
     @Test
     @Throws(Exception::class)
     fun testGetTrack() {
-        assertTrue(Double.isNaN(htd!!.getTrack()))
+        assertTrue((htd!!.getTrack()).isNaN())
     }
 
     @Test

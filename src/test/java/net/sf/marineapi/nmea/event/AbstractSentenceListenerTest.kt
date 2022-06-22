@@ -80,7 +80,7 @@ class AbstractSentenceListenerTest {
 
     @Test
     fun testBasicListenerWithOtherSentence() {
-        val bl: BasicListener = BasicListener()
+        val bl = BasicListener()
         bl.sentenceRead(GGA_EVENT)
         assertNull(bl.received)
     }

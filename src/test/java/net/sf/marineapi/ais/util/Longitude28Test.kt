@@ -2,7 +2,6 @@ package net.sf.marineapi.ais.util
 
 import org.junit.Assert.*
 import org.junit.Test
-import java.lang.Double
 
 class Longitude28Test {
     @Test
@@ -67,18 +66,18 @@ class Longitude28Test {
 
     @Test
     fun conversionToKnotsWorks() {
-        assertEquals(-180.0, Longitude28.toDegrees(Double.valueOf(-180.0 * 60 * 10000).toInt()), DELTA)
-        assertEquals(-45.1, Longitude28.toDegrees(Double.valueOf(-45.1 * 60 * 10000).toInt()), DELTA)
+        assertEquals(-180.0, Longitude28.toDegrees((-180.0 * 60 * 10000).toInt()), DELTA)
+        assertEquals(-45.1, Longitude28.toDegrees((-45.1 * 60 * 10000).toInt()), DELTA)
         assertEquals(0.0, Longitude28.toDegrees(0), 0.00001)
-        assertEquals(45.9, Longitude28.toDegrees(Double.valueOf(45.9 * 60 * 10000).toInt()), DELTA)
-        assertEquals(180.0, Longitude28.toDegrees(Double.valueOf(180.0 * 60 * 10000).toInt()), DELTA)
+        assertEquals(45.9, Longitude28.toDegrees((45.9 * 60 * 10000).toInt()), DELTA)
+        assertEquals(180.0, Longitude28.toDegrees((180.0 * 60 * 10000).toInt()), DELTA)
     }
 
     @Test
     fun conversionReturnsOnInvalidValues() {
-        assertEquals(-201.1, Longitude28.toDegrees(Double.valueOf(-201.1 * 60 * 10000).toInt()), DELTA)
-        assertEquals(181.1, Longitude28.toDegrees(Double.valueOf(181.1 * 60 * 10000).toInt()), DELTA)
-        assertEquals(202.3, Longitude28.toDegrees(Double.valueOf(202.3 * 60 * 10000).toInt()), DELTA)
+        assertEquals(-201.1, Longitude28.toDegrees((-201.1 * 60 * 10000).toInt()), DELTA)
+        assertEquals(181.1, Longitude28.toDegrees((181.1 * 60 * 10000).toInt()), DELTA)
+        assertEquals(202.3, Longitude28.toDegrees((202.3 * 60 * 10000).toInt()), DELTA)
     }
 
     companion object {

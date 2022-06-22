@@ -7,7 +7,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import java.lang.Double
+
 import kotlin.Exception
 import kotlin.Throws
 
@@ -35,7 +35,7 @@ class MWDTest {
 
     @Test
     fun testGetMagneticWindDirection() {
-        assertTrue(Double.isNaN(mwd!!.getMagneticWindDirection()))
+        assertTrue(mwd!!.getMagneticWindDirection().isNaN())
     }
 
     @Test
