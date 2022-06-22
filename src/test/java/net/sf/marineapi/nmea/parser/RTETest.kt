@@ -6,7 +6,8 @@ import net.sf.marineapi.nmea.util.RouteType
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import java.util.*
+
+import java.util.Arrays
 
 /**
  * RTETest
