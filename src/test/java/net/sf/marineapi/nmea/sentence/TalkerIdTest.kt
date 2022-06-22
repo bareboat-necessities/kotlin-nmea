@@ -28,13 +28,6 @@ import org.junit.Test
  * @author Kimmo Tuukkanen
  */
 class TalkerIdTest {
-    /**
-     * @throws Exception
-     */
-    @Before
-    @Throws(Exception::class)
-    fun setUp() {
-    }
 
     /**
      * Test method for

@@ -72,7 +72,7 @@ class AbstractSentenceListenerTest {
 
     @Test
     fun testBasicListenerWithExpectedSentence() {
-        val bl: BasicListener = BasicListener()
+        val bl = BasicListener()
         bl.sentenceRead(BOD_EVENT)
         assertNotNull(bl.received)
         assertEquals(BOD!!.toSentence(), bl.received!!.toSentence())
