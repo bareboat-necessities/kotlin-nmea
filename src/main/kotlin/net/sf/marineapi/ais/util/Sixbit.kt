@@ -34,9 +34,9 @@ class Sixbit(payload: String?, fillBits: Int) {
      * @return Sixbit encoded String.
      */
     val payload: String
+
     private val fBitVector: BitVector
-    private val fFillBits // Number of padding bits at end
-            : Int
+    private val fFillBits: Int // Number of padding bits at end
 
     /**
      * Constructor.
@@ -59,16 +59,14 @@ class Sixbit(payload: String?, fillBits: Int) {
     }
 
     private fun convert(value: Int, from: Int, length: Int) {
-        var value = value
-        var length = length
+        var value1 = value
+        var length1 = length
         var index = from + BITS_PER_CHAR
-        while (value.toLong() != 0L && length > 0) {
-            if (value % 2L != 0L) {
-                fBitVector.set(index)
-            }
+        while (value1.toLong() != 0L && length1 > 0) {
+            if (value1 % 2L != 0L) fBitVector.set(index)
             index--
-            value = value ushr 1
-            length--
+            value1 = value1 ushr 1
+            length1--
         }
     }
 
@@ -115,8 +113,7 @@ class Sixbit(payload: String?, fillBits: Int) {
      */
     private fun transportToBinary(ascii: Char): Int {
         require(isValidCharacter(ascii)) { "Invalid transport character: $ascii" }
-        val retval: Int = if (ascii.code < 0x60) ascii.code - 0x30 else ascii.code - 0x38
-        return retval
+        return if (ascii.code < 0x60) ascii.code - 0x30 else ascii.code - 0x38
     }
 
     /** Decode a binary value to a content character.

@@ -103,14 +103,14 @@ internal class TLBParser : SentenceParser, TLBSentence {
         setStringValues(FIRST_PAIR, newFields)
     }
 
-    override fun setTargetPairs(ids: IntArray, labels: Array<String?>) {
-        require(ids.size == labels.size) { "The ID and Label arrays must be the same length." }
-        val newFields = arrayOfNulls<String>(ids.size * 2)
+    override fun setTargetPairs(targetIds: IntArray, targetLabels: Array<String?>) {
+        require(targetIds.size == targetLabels.size) { "The ID and Label arrays must be the same length." }
+        val newFields = arrayOfNulls<String>(targetIds.size * 2)
         var i = 0
         var j = 0
-        while (i < ids.size) {
-            newFields[j] = ids[i].toString()
-            newFields[j + 1] = labels[i]
+        while (i < targetIds.size) {
+            newFields[j] = targetIds[i].toString()
+            newFields[j + 1] = targetLabels[i]
             i++
             j += 2
         }

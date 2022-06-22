@@ -39,9 +39,10 @@ internal class UDPDataReader
  */(private val socket: DatagramSocket, parent: SentenceReader?) : AbstractDataReader(parent) {
     private val buffer = ByteArray(1024)
     private val queue: Queue<String> = LinkedList()
+
     @Throws(Exception::class)
     override fun read(): String? {
-        var data: String? = null
+        var data: String?
         while (true) {
             // If there is a backlog of sentences in the queue, then return the old sentences first so that each packet is uploaded compete.
             if (queue.poll().also { data = it } != null) break

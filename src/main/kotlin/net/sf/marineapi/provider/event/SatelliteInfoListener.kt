@@ -27,5 +27,5 @@ interface SatelliteInfoListener : ProviderListener<SatelliteInfoEvent> {
     /**
      * Invoked when new satellite data is available.
      */
-    override fun providerUpdate(event: SatelliteInfoEvent)
+    override fun providerUpdate(evt: SatelliteInfoEvent)
 }

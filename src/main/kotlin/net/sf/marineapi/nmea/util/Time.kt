@@ -136,14 +136,13 @@ class Time {
         offsetMinutes = offsetMin
     }
 
-    override fun equals(obj: Any?): Boolean {
-        if (obj === this) {
-            return true
-        }
-        if (obj is Time) {
-            return obj.getHour() == getHour() && obj.getMinutes() == getMinutes() && obj.getSeconds() == getSeconds() && obj.offsetHours == offsetHours && obj.offsetMinutes == offsetMinutes
-        }
-        return false
+    override fun equals(other: Any?): Boolean {
+        if (other === this) return true
+        return if (other is Time) {
+            (other.getHour() == getHour() && other.getMinutes() == getMinutes()
+                    && other.getSeconds() == getSeconds() && other.offsetHours == offsetHours
+                    && other.offsetMinutes == offsetMinutes)
+        } else false
     }
 
     /**
