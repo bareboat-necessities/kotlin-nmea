@@ -24,7 +24,6 @@ import net.sf.marineapi.ais.message.AISMessage
 
 import net.sf.marineapi.ais.parser.AISMessageFactory
 import net.sf.marineapi.nmea.event.AbstractSentenceListener
-import net.sf.marineapi.nmea.event.SentenceListener
 import net.sf.marineapi.nmea.sentence.AISSentence
 import net.sf.marineapi.util.GenericTypeResolver
 

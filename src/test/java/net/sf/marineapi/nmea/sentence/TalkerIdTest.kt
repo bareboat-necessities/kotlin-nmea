@@ -1,8 +1,9 @@
 package net.sf.marineapi.nmea.sentence
 
+import net.sf.marineapi.nmea.sentence.TalkerId.*
+import net.sf.marineapi.nmea.sentence.TalkerId.Companion.parse
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
-import org.junit.Before
 import org.junit.Test
 
 /*
@@ -35,28 +36,28 @@ class TalkerIdTest {
      */
     @Test
     fun testParse() {
-        assertEquals(TalkerId.GP, TalkerId.parse("\$GPGLL,,,,,,,"))
-        assertEquals(TalkerId.GL, TalkerId.parse("\$GLGSV,,,,,,,"))
-        assertEquals(TalkerId.GN, TalkerId.parse("\$GNGSV,,,,,,,"))
-        assertEquals(TalkerId.II, TalkerId.parse("\$IIDPT,,,,,,,"))
+        assertEquals(GP, parse("\$GPGLL,,,,,,,"))
+        assertEquals(GL, parse("\$GLGSV,,,,,,,"))
+        assertEquals(GN, parse("\$GNGSV,,,,,,,"))
+        assertEquals(II, parse("\$IIDPT,,,,,,,"))
     }
 
     @Test
     fun testParseProprietary() {
-        assertEquals(TalkerId.P, TalkerId.parse("\$PRWIILOG,GGA,A,T,1,0"))
+        assertEquals(P, parse("\$PRWIILOG,GGA,A,T,1,0"))
     }
 
     @Test
     fun testParseAIS() {
-        assertEquals(TalkerId.AI, TalkerId.parse("!AIVDM,,,,,,,"))
-        assertEquals(TalkerId.AB, TalkerId.parse("!ABVDM,,,,,,,"))
-        assertEquals(TalkerId.BS, TalkerId.parse("!BSVDM,,,,,,,"))
+        assertEquals(AI, parse("!AIVDM,,,,,,,"))
+        assertEquals(AB, parse("!ABVDM,,,,,,,"))
+        assertEquals(BS, parse("!BSVDM,,,,,,,"))
     }
 
     @Test
     fun testParseUnknown() {
         try {
-            TalkerId.parse("\$XXXXX,,,,,,")
+            parse("\$XXXXX,,,,,,")
             fail("Did not throw exception")
         } catch (e: Exception) {
             // pass

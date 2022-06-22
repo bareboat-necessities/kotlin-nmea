@@ -20,7 +20,6 @@
 package net.sf.marineapi.ublox.event
 
 import net.sf.marineapi.nmea.event.AbstractSentenceListener
-import net.sf.marineapi.nmea.event.SentenceListener
 import net.sf.marineapi.nmea.sentence.UBXSentence
 import net.sf.marineapi.ublox.message.UBXMessage
 import net.sf.marineapi.ublox.parser.UBXMessageFactory
