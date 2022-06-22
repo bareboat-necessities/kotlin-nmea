@@ -43,74 +43,34 @@ internal class VLWParser : SentenceParser, VLWSentence {
      */
     constructor(talker: TalkerId?) : super(talker, "VLW", 4)
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#getTotal()
-	 */
     override fun getTotal(): Double {
         return getDoubleValue(TOTAL)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#getTotalUnits()
-	 */
     override fun getTotalUnits(): Char {
         return getCharValue(TOTAL_UNITS)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#getTrip()
-	 */
     override fun getTrip(): Double {
         return getDoubleValue(TRIP)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#getTripUnits()
-	 */
     override fun getTripUnits(): Char {
         return getCharValue(TRIP_UNITS)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#setTotal(double)
-	 */
     override fun setTotal(distance: Double) {
         setDoubleValue(TOTAL, distance, 1, 1)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#setTotalUnits(char)
-	 */
     override fun setTotalUnits(unit: Char) {
         setUnit(TOTAL_UNITS, unit)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#setTrip(double)
-	 */
     override fun setTrip(distance: Double) {
         setDoubleValue(TRIP, distance, 1, 1)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.VLWSentence#setTripUnits(char)
-	 */
     override fun setTripUnits(unit: Char) {
         setUnit(TRIP_UNITS, unit)
     }

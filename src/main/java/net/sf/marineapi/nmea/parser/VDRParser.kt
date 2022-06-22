@@ -49,57 +49,26 @@ internal class VDRParser : SentenceParser, VDRSentence {
         setCharValue(SPEED_UNITS, Units.NAUTICAL_MILES.toChar())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.VDRSentence#getMagneticDirection()
-	 */
     override fun getMagneticDirection(): Double {
         return getDoubleValue(MAGN_DIRECTION)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.VDRSentence#getSpeed()
-	 */
     override fun getSpeed(): Double {
         return getDoubleValue(SPEED)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.VDRSentence#getTrueDirection()
-	 */
     override fun getTrueDirection(): Double {
         return getDoubleValue(TRUE_DIRECTION)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.VDRSentence#setMagneticDirection(double)
-	 */
     override fun setMagneticDirection(direction: Double) {
         setDegreesValue(MAGN_DIRECTION, direction)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.VDRSentence#setSpeed(double)
-	 */
     override fun setSpeed(speed: Double) {
         setDoubleValue(SPEED, speed, 0, 1)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.marineapi.nmea.sentence.VDRSentence#setTrueDirection(double)
-	 */
     override fun setTrueDirection(direction: Double) {
         setDegreesValue(TRUE_DIRECTION, direction)
     }

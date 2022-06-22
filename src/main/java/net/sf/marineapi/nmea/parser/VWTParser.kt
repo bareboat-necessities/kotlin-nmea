@@ -58,69 +58,35 @@ internal class VWTParser : SentenceParser, VWTSentence {
         return getDoubleValue(WIND_ANGLE_DEGREES)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VWTSentence#getDirectionLeftRight()
-	 */
     override fun getDirectionLeftRight(): Direction {
         return Direction.valueOf(getCharValue(WIND_DIRECTION_LEFT_RIGHT_OF_BOW))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VWTSentence#getSpeedKmh()
-	 */
     override fun getSpeedKmh(): Double {
         return getDoubleValue(SPEED_KMPH)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VWTSentence#getSpeedKnots()
-	 */
     override fun getSpeedKnots(): Double {
         return getDoubleValue(SPEED_KNOTS)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VWTSentence#getSpeedMps()
-	 */
     val trueCourse: Double
         get() = getDoubleValue(SPEED_MPS)
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VWTSentence#setSpeedKmh(double)
-	 */
     override fun setSpeedKmh(kmh: Double) {
         require(kmh >= 0) { "Speed cannot be negative" }
         setDoubleValue(SPEED_KMPH, kmh, 1, 2)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VWTSentence#setSpeedKnots(double)
-	 */
     override fun setSpeedKnots(knots: Double) {
         require(knots >= 0) { "Speed cannot be negative" }
         setDoubleValue(SPEED_KNOTS, knots, 1, 2)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VWTSentence#setWindAngle(double)
-	 */
     override fun setWindAngle(mWindAngle: Double) {
         setDegreesValue(WIND_ANGLE_DEGREES, mWindAngle)
     }
-
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.VWTSentence#setMode(net.sf.marineapi.nmea
-	 * .com.sailgrib.nmea.util.Direction)
-	 */
+    
     override fun setDirectionLeftRight(direction: Direction) {
         setCharValue(WIND_DIRECTION_LEFT_RIGHT_OF_BOW, direction.toChar())
     }

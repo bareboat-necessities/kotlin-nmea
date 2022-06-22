@@ -88,7 +88,7 @@ internal class XDRParser : SentenceParser, XDRSentence {
         setFieldCount(DATA_SET_LENGTH)
         insertValues(TYPE_INDEX, m)
     }
-    
+
     override fun setMeasurements(measurements: List<Measurement>) {
         setFieldCount(measurements.size * DATA_SET_LENGTH)
         var i = 0

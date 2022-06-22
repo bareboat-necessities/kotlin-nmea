@@ -45,40 +45,18 @@ internal class ROTParser : SentenceParser, ROTSentence {
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.ROT, 2)
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.parser.RateOfTurnSentance#getRateOfTurn()
-	 */
     override fun getRateOfTurn(): Double {
         return getDoubleValue(RATE_OF_TURN)
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RateOfTurnSentance#getStatus()
-	 */
     override fun getStatus(): DataStatus {
         return DataStatus.valueOf(getCharValue(STATUS))
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.ROTSentence#setRateOfTurn(double)
-	 */
     override fun setRateOfTurn(rot: Double) {
         setDoubleValue(RATE_OF_TURN, rot, 3, 1)
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.ROTSentence#setStatus(net.sf.marineapi
-	 * .nmea.util.DataStatus)
-	 */
     override fun setStatus(status: DataStatus?) {
         setCharValue(STATUS, status!!.toChar())
     }
