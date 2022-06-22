@@ -25,8 +25,7 @@ import net.sf.marineapi.nmea.sentence.MWVSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
-import org.junit.Assert
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -99,7 +98,7 @@ class MWVTest {
      */
     @Test
     fun testIsTrue() {
-        Assert.assertTrue(mwv!!.isTrue())
+        assertTrue(mwv!!.isTrue())
     }
 
     /**
@@ -122,11 +121,11 @@ class MWVTest {
         val angle = -0.1
         try {
             mwv!!.setAngle(angle)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -139,11 +138,11 @@ class MWVTest {
         val angle = 360.1
         try {
             mwv!!.setAngle(angle)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -167,11 +166,11 @@ class MWVTest {
         val speed = -0.01
         try {
             mwv!!.setSpeed(speed)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -195,11 +194,11 @@ class MWVTest {
     fun testSetInvalidSpeedUnit() {
         try {
             mwv!!.setSpeedUnit(Units.FATHOMS)
-            Assert.fail("Did not throw exception")
+            fail("Did not throw exception")
         } catch (iae: IllegalArgumentException) {
             // pass
         } catch (e: Exception) {
-            Assert.fail(e.message)
+            fail(e.message)
         }
     }
 
@@ -220,9 +219,9 @@ class MWVTest {
      */
     @Test
     fun testSetTrue() {
-        Assert.assertTrue(mwv!!.isTrue())
+        assertTrue(mwv!!.isTrue())
         mwv!!.setTrue(false)
-        Assert.assertFalse(mwv!!.isTrue())
+        assertFalse(mwv!!.isTrue())
     }
 
     companion object {

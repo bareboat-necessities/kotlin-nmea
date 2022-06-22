@@ -4,7 +4,7 @@ import net.sf.marineapi.nmea.sentence.RPMSentence
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DataStatus
 import org.junit.Assert
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -59,12 +59,12 @@ class RPMTest {
 
     @Test
     fun testIsEngine() {
-        Assert.assertTrue(rpm!!.isEngine())
+        assertTrue(rpm!!.isEngine())
     }
 
     @Test
     fun testIsShaft() {
-        Assert.assertFalse(rpm!!.isShaft())
+        assertFalse(rpm!!.isShaft())
     }
 
     @Test
@@ -88,7 +88,7 @@ class RPMTest {
     @Test
     fun testSetSource() {
         empty!!.setSource(RPMSentence.SHAFT)
-        Assert.assertTrue(empty!!.isShaft())
+        assertTrue(empty!!.isShaft())
         assertEquals(RPMSentence.SHAFT.code.toLong(), empty!!.getSource().code.toLong())
     }
 
@@ -96,7 +96,7 @@ class RPMTest {
     fun testSetInvalidSource() {
         try {
             empty!!.setSource('A')
-            Assert.fail("Didn't throw exception")
+            fail("Didn't throw exception")
         } catch (e: Exception) {
             // pass
         }

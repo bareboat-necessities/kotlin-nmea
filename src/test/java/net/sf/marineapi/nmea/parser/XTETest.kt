@@ -8,6 +8,7 @@ import net.sf.marineapi.nmea.util.Direction
 import net.sf.marineapi.nmea.util.FaaMode
 import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -26,7 +27,7 @@ class XTETest {
         assertEquals(TalkerId.II, instance!!.getTalkerId())
         assertEquals(SentenceId.XTE.name, instance!!.getSentenceId())
         assertEquals(6, instance!!.getFieldCount().toLong())
-        Assert.assertTrue(instance!!.isValid())
+        assertTrue(instance!!.isValid())
     }
 
     @Test
@@ -34,7 +35,7 @@ class XTETest {
         assertEquals(TalkerId.GP, empty!!.getTalkerId())
         assertEquals(SentenceId.XTE.name, empty!!.getSentenceId())
         assertEquals(6, empty!!.getFieldCount().toLong())
-        Assert.assertTrue(empty!!.isValid())
+        assertTrue(empty!!.isValid())
     }
 
     @Test

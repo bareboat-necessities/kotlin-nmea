@@ -4,6 +4,7 @@ import net.sf.marineapi.nmea.sentence.DTMSentence
 import net.sf.marineapi.nmea.sentence.TalkerId
 import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 
@@ -45,7 +46,7 @@ class DTMTest {
     fun testGetDatumSubCode() {
         try {
             dtm!!.getDatumSubCode()
-            Assert.fail("didn't throw exception")
+            fail("didn't throw exception")
         } catch (e: Exception) {
             // pass
         }

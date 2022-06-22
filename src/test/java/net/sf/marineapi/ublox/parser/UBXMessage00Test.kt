@@ -50,7 +50,7 @@ class UBXMessage00Test {
         assertEquals("Wrong FieldCount.", 20, (ubxMessage00 as UBXMessage00Parser).getFieldCount().toLong())
         assertEquals("Wrong UtcTime.", "202920.000", ubxMessage00.getUtcTime().toString())
         val position = ubxMessage00.getPosition()
-        Assert.assertNotNull(position)
+        assertNotNull(position)
         assertEquals("Wrong Altitude.", 451.876, position.altitude, 0.1)
         assertEquals("Wrong Latitude.", 19.538970166666665, position.latitude, 0.001)
         assertEquals("Wrong LatitudeHemisphere indicator.", CompassPoint.NORTH, position.latitudeHemisphere)

@@ -58,7 +58,7 @@ class TLLTest {
         val p = tll!!.getPosition()
         val lat = 37 + 31.51205 / 60
         val lon = 24 + 36.0 / 60
-        Assert.assertNotNull(p)
+        assertNotNull(p)
         assertEquals(lat, p.latitude, 0.0000001)
         assertEquals(CompassPoint.NORTH, p.latitudeHemisphere)
         assertEquals(lon, p.longitude, 0.0000001)
@@ -68,7 +68,7 @@ class TLLTest {
     @Test
     fun testGetTime() {
         val t = tll!!.getTime()
-        Assert.assertNotNull(t)
+        assertNotNull(t)
         assertEquals(16, t.getHour().toLong())
         assertEquals(37, t.getMinutes().toLong())
         assertEquals(00.86, t.getSeconds(), 0.001)

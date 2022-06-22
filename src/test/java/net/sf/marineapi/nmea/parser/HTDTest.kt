@@ -5,8 +5,7 @@ import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.Direction
 import net.sf.marineapi.nmea.util.SteeringMode
 import org.junit.Assert
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import java.lang.Double
@@ -53,7 +52,7 @@ class HTDTest {
     @Test
     @Throws(Exception::class)
     fun testGetTurnMode() {
-        Assert.assertNull(htd!!.getTurnMode())
+        assertNull(htd!!.getTurnMode())
     }
 
     @Test

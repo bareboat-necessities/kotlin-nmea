@@ -3,8 +3,7 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.*
 import org.junit.Assert
-import org.junit.Assert.assertEquals
-import org.junit.Assert.fail
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import java.util.*
@@ -68,7 +67,7 @@ class ZDATest {
     fun testSetLocalZoneHours() {
         val hours = 7
         zda!!.setLocalZoneHours(hours)
-        Assert.assertTrue(zda.toString().contains(",2004,07,00*"))
+        assertTrue(zda.toString().contains(",2004,07,00*"))
         assertEquals(hours.toLong(), zda!!.getLocalZoneHours().toLong())
     }
 
@@ -89,7 +88,7 @@ class ZDATest {
     fun testSetLocalZoneMinutes() {
         val min = 9
         zda!!.setLocalZoneMinutes(min)
-        Assert.assertTrue(zda.toString().contains(",2004,00,09*"))
+        assertTrue(zda.toString().contains(",2004,00,09*"))
         assertEquals(min.toLong(), zda!!.getLocalZoneMinutes().toLong())
     }
 
@@ -108,7 +107,7 @@ class ZDATest {
     @Test
     fun testGetTime() {
         val t = zda!!.getTime()
-        Assert.assertNotNull(t)
+        assertNotNull(t)
         assertEquals(3, t.getHour().toLong())
         assertEquals(29, t.getMinutes().toLong())
         assertEquals(15.0, t.getSeconds(), 0.1)
@@ -128,9 +127,9 @@ class ZDATest {
     @Test
     fun testSetDate() {
         zda!!.setDate(net.sf.marineapi.nmea.util.Date(10, 6, 9))
-        Assert.assertTrue(zda.toString().contains(",032915,09,06,2010,00,"))
+        assertTrue(zda.toString().contains(",032915,09,06,2010,00,"))
         zda!!.setDate(net.sf.marineapi.nmea.util.Date(85, 12, 11))
-        Assert.assertTrue(zda.toString().contains(",032915,11,12,1985,00,"))
+        assertTrue(zda.toString().contains(",032915,11,12,1985,00,"))
     }
 
     /**
@@ -141,7 +140,7 @@ class ZDATest {
         // 09:08:07.6
         val t = Time(9, 8, 7.6)
         zda!!.setTime(t)
-        Assert.assertTrue(zda.toString().startsWith("\$GPZDA,090807.600,07,"))
+        assertTrue(zda.toString().startsWith("\$GPZDA,090807.600,07,"))
     }
 
     /**
@@ -154,8 +153,8 @@ class ZDATest {
         zda!!.setTimeAndLocalZone(t)
         assertEquals(1, zda!!.getLocalZoneHours().toLong())
         assertEquals(2, zda!!.getLocalZoneMinutes().toLong())
-        Assert.assertTrue(zda.toString().startsWith("\$GPZDA,090807.600,07,"))
-        Assert.assertTrue(zda.toString().contains("2004,01,02*"))
+        assertTrue(zda.toString().startsWith("\$GPZDA,090807.600,07,"))
+        assertTrue(zda.toString().contains("2004,01,02*"))
     }
 
     /**

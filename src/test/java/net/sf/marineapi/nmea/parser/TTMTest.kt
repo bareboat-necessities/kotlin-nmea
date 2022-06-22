@@ -128,7 +128,7 @@ class TTMTest {
     @Test
     fun testGetTime() {
         val t = ttm!!.getTime()
-        Assert.assertNotNull(t)
+        assertNotNull(t)
         assertEquals(17, t.getHour().toLong())
         assertEquals(55, t.getMinutes().toLong())
         assertEquals(50.24, t.getSeconds(), 0.001)

@@ -7,8 +7,7 @@ import net.sf.marineapi.ais.parser.AISMessageFactory
 import net.sf.marineapi.nmea.parser.SentenceFactory
 import net.sf.marineapi.nmea.sentence.AISSentence
 import org.junit.Assert
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
+import org.junit.Assert.*
 import org.junit.Test
 
 class AbstractAISMessageListenerTest {
@@ -94,11 +93,11 @@ class AbstractAISMessageListenerTest {
     fun testGenericsListenerDefaultConstructorThrows() {
         try {
             val gl: GenericsListener<Int, AISMessage01> = GenericsListener()
-            Assert.fail("exception not thrown, resolved to " + gl.messageType)
+            fail("exception not thrown, resolved to " + gl.messageType)
         } catch (ise: IllegalStateException) {
             assertEquals("Cannot resolve generic type <T>, use constructor with Class<T> param.", ise.message)
         } catch (e: Exception) {
-            Assert.fail("unexpected exception thrown: " + e.message)
+            fail("unexpected exception thrown: " + e.message)
         }
     }
 

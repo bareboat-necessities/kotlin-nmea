@@ -6,6 +6,7 @@ import net.sf.marineapi.nmea.sentence.VBWSentence
 import net.sf.marineapi.nmea.util.DataStatus
 import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -31,7 +32,7 @@ class VBWTest {
         assertEquals(TalkerId.II, empty!!.getTalkerId())
         assertEquals(SentenceId.VBW.name, empty!!.getSentenceId())
         assertEquals(10, empty!!.getFieldCount().toLong())
-        Assert.assertTrue(empty.toString().startsWith("\$IIVBW,"))
+        assertTrue(empty.toString().startsWith("\$IIVBW,"))
     }
 
     @Test
