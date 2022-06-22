@@ -59,9 +59,8 @@ class UBXMessageFactory private constructor() {
             val msg = String.format("no parser for message type %d", parser.getMessageType())
             throw IllegalArgumentException(msg)
         }
-        val result: UBXMessage
         val c = parsers[parser.getMessageType()]!!
-        result = try {
+        val result = try {
             val co = c.getConstructor(UBXSentence::class.java)
             co.newInstance(sentence)
         } catch (e: Exception) {
@@ -79,9 +78,7 @@ class UBXMessageFactory private constructor() {
          * @return UBXMessageFactory
          */
         fun getInstance(): UBXMessageFactory? {
-            if (instance == null) {
-                instance = UBXMessageFactory()
-            }
+            if (instance == null) instance = UBXMessageFactory()
             return instance
         }
     }

@@ -24,6 +24,7 @@ import net.sf.marineapi.nmea.sentence.UBXSentence
 import net.sf.marineapi.nmea.util.*
 import net.sf.marineapi.ublox.message.UBXMessage00
 import net.sf.marineapi.ublox.util.UbloxNavigationStatus
+import net.sf.marineapi.ublox.util.UbloxNavigationStatus.Companion.fromNavigationStatusCode
 
 /**
  * Parser implementation for [UBXMessage00] (Lat/Long Position Data).
@@ -42,7 +43,7 @@ internal class UBXMessage00Parser(sentence: UBXSentence) : UBXMessageParser(sent
         val latitudeHemisphereIndicatorField = sentence.getUBXFieldCharValue(LAT_HEMISPHERE)
         val longitudeField = sentence.getUBXFieldStringValue(LONGITUDE)
         val longitudeHemisphereIndicatorField = sentence.getUBXFieldCharValue(LON_HEMISPHERE)
-        val position: Position = PositionParser.parsePosition(
+        val position = PositionParser.parsePosition(
             latitudeField, latitudeHemisphereIndicatorField,
             longitudeField, longitudeHemisphereIndicatorField
         )
@@ -52,9 +53,7 @@ internal class UBXMessage00Parser(sentence: UBXSentence) : UBXMessageParser(sent
     }
 
     override fun getNavigationStatus(): UbloxNavigationStatus? {
-        return UbloxNavigationStatus.fromNavigationStatusCode(
-            sentence.getUBXFieldStringValue(NAVIGATION_STATUS)
-        )
+        return fromNavigationStatusCode(sentence.getUBXFieldStringValue(NAVIGATION_STATUS))
     }
 
     override fun getHorizontalAccuracyEstimate(): Double {

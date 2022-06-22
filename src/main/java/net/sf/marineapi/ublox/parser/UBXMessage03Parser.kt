@@ -42,31 +42,29 @@ internal class UBXMessage03Parser(sentence: UBXSentence) : UBXMessageParser(sent
      * @see UBXMessage03.getSatellites
      */
     override fun getSatellites(): List<UbloxSatelliteInfo> {
-        val numberOfTrackedSatellites = this.getNumberOfTrackedSatellites()
-        val satellites: MutableList<UbloxSatelliteInfo> = ArrayList(numberOfTrackedSatellites)
-        for (i in 0 until numberOfTrackedSatellites) {
+        val trackedSats = this.getNumberOfTrackedSatellites()
+        val satellites: MutableList<UbloxSatelliteInfo> = ArrayList(trackedSats)
+        for (i in 0 until trackedSats) {
             val satelliteId = sentence.getUBXFieldIntValue(UBX_SATELLITE_ID + i * 6)
-            val satelliteStatus: UbloxSatelliteStatus? = UbloxSatelliteStatus.fromStatusFlag(
-                sentence.getUBXFieldCharValue(
-                    SATELLITE_STATUS + i * 6
-                )
+            val satelliteStatus = UbloxSatelliteStatus.fromStatusFlag(
+                sentence.getUBXFieldCharValue(SATELLITE_STATUS + i * 6)
             )
-            val satelliteAzimuth: Int = try {
+            val satelliteAzimuth = try {
                 sentence.getUBXFieldIntValue(SATELLITE_AZIMUTH + i * 6)
             } catch (e: DataNotAvailableException) {
                 -1
             }
-            val satelliteElevation: Int = try {
+            val satelliteElevation = try {
                 sentence.getUBXFieldIntValue(SATELLITE_ELEVATION + i * 6)
             } catch (e: DataNotAvailableException) {
                 -1
             }
-            val signalStrength: Int = try {
+            val signalStrength = try {
                 sentence.getUBXFieldIntValue(SATELLITE_SIGNAL_STRENGTH + i * 6)
             } catch (e: DataNotAvailableException) {
                 -1
             }
-            val satelliteCarrierLockTime: Int = try {
+            val satelliteCarrierLockTime = try {
                 sentence.getUBXFieldIntValue(SATELLIT_CARRIER_LOCK_TIME + i * 6)
             } catch (e: DataNotAvailableException) {
                 -1

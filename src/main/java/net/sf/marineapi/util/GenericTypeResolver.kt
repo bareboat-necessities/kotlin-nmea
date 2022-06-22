@@ -78,11 +78,8 @@ object GenericTypeResolver {
                     types[typeParams[i]] = typeArgs[i]
                 }
             }
-            return if (rawType == parent) {
-                types.getOrDefault(typeParams[0], typeParams[0])
-            } else {
-                resolve(rawType, parent, types)
-            }
+            return if (rawType == parent) types.getOrDefault(typeParams[0], typeParams[0])
+            else resolve(rawType, parent, types)
         }
         return resolve(superClass as Class<*>, parent, types)
     }
