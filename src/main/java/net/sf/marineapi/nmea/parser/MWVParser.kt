@@ -52,62 +52,32 @@ internal class MWVParser : SentenceParser, MWVSentence {
         return getDoubleValue(WIND_ANGLE)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#getSpeed()
-	 */
     override fun getSpeed(): Double {
         return getDoubleValue(WIND_SPEED)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#getSpeedUnit()
-	 */
     override fun getSpeedUnit(): Units {
         return Units.valueOf(getCharValue(SPEED_UNITS))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#getStatus()
-	 */
     override fun getStatus(): DataStatus {
         return DataStatus.valueOf(getCharValue(DATA_STATUS))
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#isTrue()
-	 */
     override fun isTrue(): Boolean {
         val ch = getCharValue(REFERENCE)
         return ch == 'T'
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#setAngle(double)
-	 */
     override fun setAngle(angle: Double) {
         setDegreesValue(WIND_ANGLE, angle)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.MWVSentence#setSpeed(double)
-	 */
     override fun setSpeed(speed: Double) {
         require(speed >= 0) { "Speed must be positive" }
         setDoubleValue(WIND_SPEED, speed, 1, 1)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.MWVSentence#setSpeedUnit(net.sf.marineapi
-	 * .nmea.util.Units)
-	 */
     override fun setSpeedUnit(unit: Units?) {
         if (unit == Units.METER || unit == Units.KILOMETERS || unit == Units.NAUTICAL_MILES) {
             setCharValue(SPEED_UNITS, unit.toChar())
@@ -116,12 +86,6 @@ internal class MWVParser : SentenceParser, MWVSentence {
         throw IllegalArgumentException("Invalid unit for speed")
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.MWVSentence#setStatus(net.sf.marineapi
-	 * .nmea.util.DataStatus)
-	 */
     override fun setStatus(status: DataStatus?) {
         setCharValue(DATA_STATUS, status!!.toChar())
     }

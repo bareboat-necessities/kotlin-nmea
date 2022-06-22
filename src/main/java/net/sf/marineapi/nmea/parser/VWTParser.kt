@@ -50,10 +50,6 @@ internal class VWTParser : SentenceParser, VWTSentence {
         setCharValue(KMPH_INDICATOR, VWTSentence.KMPH)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VWTSentence#getWindAngle()
-	 */
     override fun getWindAngle(): Double {
         return getDoubleValue(WIND_ANGLE_DEGREES)
     }
@@ -86,7 +82,7 @@ internal class VWTParser : SentenceParser, VWTSentence {
     override fun setWindAngle(mWindAngle: Double) {
         setDegreesValue(WIND_ANGLE_DEGREES, mWindAngle)
     }
-    
+
     override fun setDirectionLeftRight(direction: Direction) {
         setCharValue(WIND_DIRECTION_LEFT_RIGHT_OF_BOW, direction.toChar())
     }

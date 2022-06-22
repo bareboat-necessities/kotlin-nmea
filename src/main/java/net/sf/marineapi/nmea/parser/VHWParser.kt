@@ -49,75 +49,38 @@ internal class VHWParser : SentenceParser, VHWSentence {
         setCharValue(KMH_INDICATOR, 'K')
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HeadingSentence#getHeading()
-	 */
     override fun getHeading(): Double {
         return getDoubleValue(TRUE_HEADING)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VHWSentence#getMagneticHeading()
-	 */
     override fun getMagneticHeading(): Double {
         return getDoubleValue(MAGNETIC_HEADING)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VHWSentence#getSpeedKilometres()
-	 */
     override fun getSpeedKmh(): Double {
         return getDoubleValue(SPEED_KMH)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VHWSentence#getSpeedKnots()
-	 */
     override fun getSpeedKnots(): Double {
         return getDoubleValue(SPEED_KNOTS)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HeadingSentence#isTrue()
-	 */
     override fun isTrue(): Boolean {
         return true
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HeadingSentence#setHeading(double)
-	 */
     override fun setHeading(hdg: Double) {
         setDegreesValue(TRUE_HEADING, hdg)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.VHWSentence#setMagneticHeading(double)
-	 */
     override fun setMagneticHeading(hdg: Double) {
         setDegreesValue(MAGNETIC_HEADING, hdg)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VHWSentence#setSpeedKmh(double)
-	 */
     override fun setSpeedKmh(kmh: Double) {
         setDoubleValue(SPEED_KMH, kmh, 1, 1)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.VHWSentence#setSpeedKnots(double)
-	 */
     override fun setSpeedKnots(knots: Double) {
         setDoubleValue(SPEED_KNOTS, knots, 1, 1)
     }
