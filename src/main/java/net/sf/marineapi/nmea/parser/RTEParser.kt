@@ -46,12 +46,6 @@ internal class RTEParser : SentenceParser, RTESentence {
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.RTE, 4)
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.RTESentence#addWaypointId(java.lang.String
-	 * )
-	 */
     override fun addWaypointId(id: String?): Int {
         val ids = getWaypointIds()
         val newIds = arrayOfNulls<String>(ids.size + 1)
@@ -61,42 +55,22 @@ internal class RTEParser : SentenceParser, RTESentence {
         return newIds.size
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RTESentence#getRouteId()
-	 */
     override fun getRouteId(): String {
         return getStringValue(ROUTE_ID)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RTESentence#getSentenceCount()
-	 */
     override fun getSentenceCount(): Int {
         return getIntValue(NUMBER_OF_SENTENCES)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RTESentence#getSentenceIndex()
-	 */
     override fun getSentenceIndex(): Int {
         return getIntValue(SENTENCE_NUMBER)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RTESentence#getWaypointCount()
-	 */
     override fun getWaypointCount(): Int {
         return getWaypointIds().size
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RTESentence#getWaypointIds()
-	 */
     override fun getWaypointIds(): Array<String?> {
         val temp: MutableList<String?> = ArrayList()
         for (i in FIRST_WPT until getFieldCount()) {
@@ -109,81 +83,40 @@ internal class RTEParser : SentenceParser, RTESentence {
         return temp.toTypedArray()
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RTESentence#isActiveRoute()
-	 */
     override fun isActiveRoute(): Boolean {
         return getCharValue(STATUS) == RouteType.ACTIVE.toChar()
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RTESentence#isFirst()
-	 */
     override fun isFirst(): Boolean {
         return getSentenceIndex() == 1
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RTESentence#isLast()
-	 */
     override fun isLast(): Boolean {
         return getSentenceIndex() == getSentenceCount()
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RTESentence#isWorkingRoute()
-	 */
     override fun isWorkingRoute(): Boolean {
         return getCharValue(STATUS) == RouteType.WORKING.toChar()
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.RTESentence#setRouteId(java.lang.String)
-	 */
     override fun setRouteId(id: String?) {
         setStringValue(ROUTE_ID, id)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.RTESentence#setRouteType(net.sf.marineapi
-	 * .nmea.util.RouteType)
-	 */
     override fun setRouteType(type: RouteType?) {
         setCharValue(STATUS, type!!.toChar())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RTESentence#setSentenceCount(int)
-	 */
     override fun setSentenceCount(count: Int) {
         require(count >= 0) { "Count cannot be negative" }
         setIntValue(NUMBER_OF_SENTENCES, count)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.RTESentence#setSentenceIndex(int)
-	 */
     override fun setSentenceIndex(index: Int) {
         require(index >= 0) { "Index cannot be negative" }
         setIntValue(SENTENCE_NUMBER, index)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.RTESentence#setWaypointIds(java.lang.String
-	 * [])
-	 */
     override fun setWaypointIds(ids: Array<String?>?) {
         setStringValues(FIRST_WPT, ids!!)
     }

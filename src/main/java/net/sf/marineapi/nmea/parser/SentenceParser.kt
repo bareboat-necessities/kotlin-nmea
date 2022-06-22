@@ -182,10 +182,6 @@ open class SentenceParser : Sentence {
      */
     internal constructor(tid: TalkerId?, sid: SentenceId, size: Int) : this(tid, sid.toString(), size)
 
-    /*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
     override fun equals(other: Any?): Boolean {
         if (other === this) {
             return true
@@ -196,44 +192,24 @@ open class SentenceParser : Sentence {
         return false
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.Sentence#getBeginChar()
-	 */
     override fun getBeginChar(): Char {
         return beginChar
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.Sentence#getFieldCount()
-	 */
     override fun getFieldCount(): Int {
         return if (fields == null) {
             0
         } else fields!!.size
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.Sentence#getSentenceId()
-	 */
     override fun getSentenceId(): String {
         return sentenceId
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.Sentence#getTalkerId()
-	 */
     override fun getTalkerId(): TalkerId {
         return talkerId
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
     override fun hashCode(): Int {
         return toString().hashCode()
     }
@@ -243,36 +219,20 @@ open class SentenceParser : Sentence {
         return listOf(*types).contains(getSentenceId())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.Sentence#isProprietary()
-	 */
     override fun isProprietary(): Boolean {
         return TalkerId.P == getTalkerId()
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.Sentence#isValid()
-	 */
     override fun isValid(): Boolean {
         return SentenceValidator.isValid(toString())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.Sentence#reset()
-	 */
     override fun reset() {
         for (i in fields!!.indices) {
             fields!![i] = ""
         }
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.Sentence#setBeginChar(char)
-	 */
     override fun setBeginChar(ch: Char) {
         if (ch != Sentence.BEGIN_CHAR && ch != Sentence.ALTERNATIVE_BEGIN_CHAR) {
             val msg = "Invalid begin char; expected '$' or '!'"
@@ -281,20 +241,10 @@ open class SentenceParser : Sentence {
         beginChar = ch
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.Sentence#setTalkerId(net.sf.marineapi.
-	 * nmea.util.TalkerId)
-	 */
     override fun setTalkerId(id: TalkerId) {
         talkerId = id
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.Sentence#toSentence()
-	 */
     override fun toSentence(): String {
         val s = toString()
         if (!SentenceValidator.isValid(s)) {
@@ -304,10 +254,6 @@ open class SentenceParser : Sentence {
         return s
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.Sentence#toSentence(int)
-	 */
     override fun toSentence(maxLength: Int): String {
         val s = toSentence()
         if (s.length > maxLength) {
@@ -317,10 +263,6 @@ open class SentenceParser : Sentence {
         return s
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
     override fun toString(): String {
         val sb = StringBuilder(Sentence.MAX_LENGTH)
         sb.append(talkerId.toString())

@@ -98,7 +98,7 @@ internal class ZDAParser : SentenceParser, ZDASentence {
         setLocalZoneHours(t!!.offsetHours)
         setLocalZoneMinutes(t.offsetMinutes)
     }
-    
+
     override fun toDate(): Date {
         val d = getDate()
         val t = getTime()
