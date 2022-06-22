@@ -24,7 +24,6 @@ import net.sf.marineapi.nmea.parser.HDGParser
 import net.sf.marineapi.nmea.sentence.HDGSentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

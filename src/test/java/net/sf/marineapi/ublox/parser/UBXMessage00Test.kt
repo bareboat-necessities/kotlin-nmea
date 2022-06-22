@@ -25,7 +25,6 @@ import net.sf.marineapi.nmea.sentence.UBXSentence
 import net.sf.marineapi.nmea.util.CompassPoint
 import net.sf.marineapi.ublox.message.UBXMessage00
 import net.sf.marineapi.ublox.util.UbloxNavigationStatus
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Test
 

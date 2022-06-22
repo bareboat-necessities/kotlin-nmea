@@ -26,7 +26,6 @@ import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.CompassPoint
 import net.sf.marineapi.nmea.util.Position
 import net.sf.marineapi.nmea.util.Time
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before

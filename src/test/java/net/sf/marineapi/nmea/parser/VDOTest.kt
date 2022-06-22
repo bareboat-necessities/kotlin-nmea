@@ -23,7 +23,6 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.parser.VDOParser
 import net.sf.marineapi.nmea.sentence.AISSentence
 import net.sf.marineapi.nmea.sentence.TalkerId
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

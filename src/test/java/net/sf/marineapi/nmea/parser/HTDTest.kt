@@ -4,11 +4,12 @@ import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.Direction
 import net.sf.marineapi.nmea.util.SteeringMode
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import java.lang.Double
+import kotlin.Exception
+import kotlin.Throws
 
 class HTDTest {
     private var htd: HTDParser? = null

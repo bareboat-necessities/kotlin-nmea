@@ -3,7 +3,6 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.CompassPoint
 import net.sf.marineapi.nmea.util.Time
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

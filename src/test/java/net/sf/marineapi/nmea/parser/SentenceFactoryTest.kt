@@ -9,7 +9,6 @@ import net.sf.marineapi.test.util.FOOParser
 import net.sf.marineapi.test.util.FOOSentence
 import net.sf.marineapi.test.util.VDMParser
 import org.junit.After
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

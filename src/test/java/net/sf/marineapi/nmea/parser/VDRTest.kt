@@ -3,7 +3,6 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.sentence.VDRSentence
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before

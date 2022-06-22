@@ -1,6 +1,5 @@
 package net.sf.marineapi.nmea.util
 
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 import org.junit.Before

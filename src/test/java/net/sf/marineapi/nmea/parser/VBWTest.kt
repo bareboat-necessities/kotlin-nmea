@@ -4,7 +4,6 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.sentence.VBWSentence
 import net.sf.marineapi.nmea.util.DataStatus
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before

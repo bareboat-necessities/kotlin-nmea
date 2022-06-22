@@ -22,7 +22,6 @@ package net.sf.marineapi.nmea.parser
 
 import net.sf.marineapi.nmea.sentence.TLBSentence
 import net.sf.marineapi.nmea.sentence.TalkerId
-import org.junit.Assert
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before

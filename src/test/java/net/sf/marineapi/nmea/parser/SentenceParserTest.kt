@@ -5,7 +5,6 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.test.util.FOOParser
 import net.sf.marineapi.test.util.FOOSentence
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Assume
 import org.junit.Before

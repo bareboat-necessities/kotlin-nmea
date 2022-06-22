@@ -1,6 +1,5 @@
 package net.sf.marineapi.ais.util
 
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Test
 import java.lang.Double

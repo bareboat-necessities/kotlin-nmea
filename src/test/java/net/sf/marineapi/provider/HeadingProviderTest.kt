@@ -10,7 +10,6 @@ import net.sf.marineapi.provider.event.HeadingEvent
 import net.sf.marineapi.provider.event.HeadingListener
 import net.sf.marineapi.provider.event.ProviderListener
 import org.junit.After
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

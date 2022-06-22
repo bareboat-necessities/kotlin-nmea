@@ -4,7 +4,6 @@ import net.sf.marineapi.nmea.sentence.GSASentence
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.FaaMode
 import net.sf.marineapi.nmea.util.GpsFixStatus
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

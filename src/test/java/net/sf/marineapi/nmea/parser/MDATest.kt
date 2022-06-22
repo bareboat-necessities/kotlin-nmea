@@ -3,12 +3,14 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.MDASentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TalkerId
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.lang.Double
+import kotlin.Exception
+import kotlin.Throws
+import kotlin.code
 
 /**
  * @author Richard van Nieuwenhoven

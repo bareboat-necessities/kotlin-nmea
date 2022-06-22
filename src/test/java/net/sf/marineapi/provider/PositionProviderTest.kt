@@ -29,7 +29,6 @@ import net.sf.marineapi.nmea.parser.SentenceFactory
 import net.sf.marineapi.provider.event.PositionEvent
 import net.sf.marineapi.provider.event.PositionListener
 import org.junit.After
-import org.junit.Assert
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Before

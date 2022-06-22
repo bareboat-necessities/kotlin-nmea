@@ -6,7 +6,6 @@ import net.sf.marineapi.nmea.util.CompassPoint
 import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.Direction
 import net.sf.marineapi.nmea.util.Waypoint
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
