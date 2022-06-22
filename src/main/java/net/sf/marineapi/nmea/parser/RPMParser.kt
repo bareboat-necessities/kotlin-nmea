@@ -44,20 +44,10 @@ internal class RPMParser : SentenceParser, RPMSentence {
      */
     constructor(talker: TalkerId?) : super(talker, "RPM", 5)
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#getId()
-	 */
     override fun getId(): Int {
         return getIntValue(SOURCE_NUMBER)
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see net.sf.marineapi.nmea.sentence.RPMSentence#getPitch()
-	 */
     override fun getPitch(): Double {
         return getDoubleValue(PITCH)
     }

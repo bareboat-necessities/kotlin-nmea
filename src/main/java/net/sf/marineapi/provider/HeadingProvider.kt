@@ -50,7 +50,7 @@ class HeadingProvider
         }
         return null
     }
-    
+
     override fun isReady(): Boolean {
         return hasOne("HDT", "HDM", "HDG")
     }

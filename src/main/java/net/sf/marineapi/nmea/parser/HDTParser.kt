@@ -46,26 +46,14 @@ internal class HDTParser : SentenceParser, HDTSentence {
         setCharValue(TRUE_INDICATOR, 'T')
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.parser.HeadingSentence#getHeading()
-	 */
     override fun getHeading(): Double {
         return getDoubleValue(HEADING)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.HeadingSentence#isTrue()
-	 */
     override fun isTrue(): Boolean {
         return true
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.parser.HeadingSentence#setHeading(double)
-	 */
     override fun setHeading(hdt: Double) {
         setDegreesValue(HEADING, hdt)
     }

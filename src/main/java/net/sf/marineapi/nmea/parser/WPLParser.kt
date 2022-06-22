@@ -46,10 +46,6 @@ internal class WPLParser : PositionParser, WPLSentence {
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.WPL, 5)
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.WPLSentence#getWaypoint()
-	 */
     override fun getWaypoint(): Waypoint {
         val id = getStringValue(WAYPOINT_ID)
         val p = parsePosition(
@@ -58,12 +54,6 @@ internal class WPLParser : PositionParser, WPLSentence {
         return p.toWaypoint(id)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see
-	 * net.sf.marineapi.nmea.sentence.WPLSentence#setWaypoint(net.sf.marineapi
-	 * .nmea.util.Waypoint)
-	 */
     override fun setWaypoint(wp: Waypoint) {
         setStringValue(WAYPOINT_ID, wp.id)
         setPositionValues(wp, LATITUDE, LAT_HEMISPHERE, LONGITUDE, LON_HEMISPHERE)

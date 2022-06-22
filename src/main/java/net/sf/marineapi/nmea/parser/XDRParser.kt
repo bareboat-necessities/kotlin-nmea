@@ -65,18 +65,12 @@ internal class XDRParser : SentenceParser, XDRSentence {
      */
     constructor(talker: TalkerId?) : super(talker, SentenceId.XDR, DATA_SET_LENGTH)
 
-    /* (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#addMeasurement(net.sf.marineapi.nmea.util.Measurement[])
-	 */
     override fun addMeasurement(vararg m: Measurement?) {
         val ms = getMeasurements()
         ms.addAll(listOf(*m) as Collection<Measurement>)
         setMeasurements(ms)
     }
 
-    /* (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#getMeasurements()
-	 */
     override fun getMeasurements(): MutableList<Measurement> {
         val result = ArrayList<Measurement>()
         var i = 0
@@ -90,17 +84,11 @@ internal class XDRParser : SentenceParser, XDRSentence {
         return result
     }
 
-    /* (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#setMeasurement(net.sf.marineapi.nmea.util.Measurement)
-	 */
     override fun setMeasurement(m: Measurement?) {
         setFieldCount(DATA_SET_LENGTH)
         insertValues(TYPE_INDEX, m)
     }
-
-    /* (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.XDRSentence#setMeasurements(java.util.List)
-	 */
+    
     override fun setMeasurements(measurements: List<Measurement>) {
         setFieldCount(measurements.size * DATA_SET_LENGTH)
         var i = 0

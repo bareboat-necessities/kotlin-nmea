@@ -47,18 +47,10 @@ internal class MTAParser : SentenceParser, MTASentence {
         setCharValue(UNIT_INDICATOR, Units.CELSIUS.toChar())
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.MTASentence#getTemperature()
-	 */
     override fun getTemperature(): Double {
         return getDoubleValue(TEMPERATURE)
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.nmea.sentence.MTASentence#setTemperature(double)
-	 */
     override fun setTemperature(temp: Double) {
         setDoubleValue(TEMPERATURE, temp, 1, 2)
     }
