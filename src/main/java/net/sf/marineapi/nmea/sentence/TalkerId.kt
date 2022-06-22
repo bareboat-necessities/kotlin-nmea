@@ -384,11 +384,7 @@ enum class TalkerId {
          */
         fun parse(nmea: String): TalkerId {
             require(SentenceValidator.isSentence(nmea)) { "String is not a sentence" }
-            val tid = if (nmea.startsWith("\$P")) {
-                "P"
-            } else {
-                nmea.substring(1, 3)
-            }
+            val tid = if (nmea.startsWith("\$P")) "P" else nmea.substring(1, 3)
             return TalkerId.valueOf(tid)
         }
     }
