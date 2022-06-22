@@ -21,9 +21,11 @@
 package net.sf.marineapi.nmea.parser
 
 import net.sf.marineapi.nmea.sentence.*
+
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.util.*
+import java.util.Arrays
+
 import kotlin.collections.ArrayList
 
 /**

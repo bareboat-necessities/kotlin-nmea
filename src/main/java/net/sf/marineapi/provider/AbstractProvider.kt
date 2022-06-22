@@ -27,7 +27,7 @@ import net.sf.marineapi.nmea.sentence.Sentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.provider.event.ProviderEvent
 import net.sf.marineapi.provider.event.ProviderListener
-import java.util.*
+
 import java.util.stream.Collectors
 
 /**
@@ -42,7 +42,7 @@ import java.util.stream.Collectors
  *
  * @author Kimmo Tuukkanen
  * @param <T> The [ProviderEvent] to be dispatched.
-</T> */
+ */
 abstract class AbstractProvider<T : ProviderEvent?> : SentenceListener {
     private var reader: SentenceReader
     private val events: MutableList<SentenceEvent> = ArrayList()

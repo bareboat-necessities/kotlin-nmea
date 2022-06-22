@@ -27,13 +27,13 @@ import net.sf.marineapi.nmea.sentence.SentenceId
 
 import java.io.InputStream
 import java.net.DatagramSocket
-import java.util.*
+import java.util.Vector
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 import java.util.function.Consumer
-
 import java.util.logging.Level
 import java.util.logging.Logger
+
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
 

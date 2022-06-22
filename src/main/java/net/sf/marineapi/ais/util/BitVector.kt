@@ -20,7 +20,7 @@
  */
 package net.sf.marineapi.ais.util
 
-import java.util.*
+import java.util.BitSet
 
 /**
  * Class holding bit values in an array and implementing put/get

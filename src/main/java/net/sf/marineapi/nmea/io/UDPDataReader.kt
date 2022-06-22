@@ -22,7 +22,8 @@ package net.sf.marineapi.nmea.io
 
 import java.net.DatagramPacket
 import java.net.DatagramSocket
-import java.util.*
+import java.util.LinkedList
+import java.util.Queue
 
 /**
  * DataReader implementation using DatagramSocket as data source.

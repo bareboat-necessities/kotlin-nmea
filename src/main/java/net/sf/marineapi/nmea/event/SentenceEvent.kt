@@ -22,7 +22,8 @@ package net.sf.marineapi.nmea.event
 
 import net.sf.marineapi.nmea.sentence.Sentence
 
-import java.util.*
+import java.util.EventObject
+
 
 /**
  * Sentence events occur when a valid NMEA 0183 sentence has been read from the

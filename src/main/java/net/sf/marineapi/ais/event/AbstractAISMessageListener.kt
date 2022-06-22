@@ -28,7 +28,8 @@ import net.sf.marineapi.nmea.event.SentenceListener
 import net.sf.marineapi.nmea.sentence.AISSentence
 import net.sf.marineapi.util.GenericTypeResolver
 
-import java.util.*
+import java.util.Queue
+import java.util.LinkedList
 
 /**
  *

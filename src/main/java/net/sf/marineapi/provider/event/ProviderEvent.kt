@@ -20,7 +20,7 @@
  */
 package net.sf.marineapi.provider.event
 
-import java.util.*
+import java.util.EventObject
 
 /**
  * Abstract base class for provider events.

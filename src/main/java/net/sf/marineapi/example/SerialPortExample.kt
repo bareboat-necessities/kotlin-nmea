@@ -27,12 +27,11 @@ import net.sf.marineapi.nmea.event.SentenceEvent
 import net.sf.marineapi.nmea.event.SentenceListener
 import net.sf.marineapi.nmea.io.SentenceReader
 import net.sf.marineapi.nmea.sentence.SentenceValidator
+
 import java.io.BufferedReader
 import java.io.IOException
-
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.util.*
 
 /**
  * Serial port example using GNU/RXTX libraries (see readme.txt). Scans through
@@ -97,7 +96,7 @@ class SerialPortExample : SentenceListener {
      */
     private fun getSerialPort(): SerialPort? {
         try {
-            val e: Enumeration<*> = CommPortIdentifier.getPortIdentifiers()
+            val e = CommPortIdentifier.getPortIdentifiers()
             while (e.hasMoreElements()) {
                 val id: CommPortIdentifier = e.nextElement() as CommPortIdentifier
                 if (id.portType === CommPortIdentifier.PORT_SERIAL) {
