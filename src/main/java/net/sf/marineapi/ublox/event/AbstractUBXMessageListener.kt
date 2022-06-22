@@ -60,9 +60,7 @@ abstract class AbstractUBXMessageListener<T : UBXMessage?> : AbstractSentenceLis
      * at runtime.
      */
     constructor() {
-        messageType = GenericTypeResolver.resolve(
-            javaClass, AbstractUBXMessageListener::class.java
-        )
+        messageType = GenericTypeResolver.resolve(javaClass, AbstractUBXMessageListener::class.java)
     }
 
     /**
