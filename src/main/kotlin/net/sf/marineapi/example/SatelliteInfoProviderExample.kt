@@ -38,7 +38,6 @@ class SatelliteInfoProviderExample(file: File) : SatelliteInfoListener {
     var provider: SatelliteInfoProvider
 
     init {
-
         // create sentence reader and provide input stream
         val stream: InputStream = FileInputStream(file)
         reader = SentenceReader(stream)
