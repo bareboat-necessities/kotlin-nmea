@@ -41,10 +41,7 @@ class HeadingProvider
  * @param reader Reader for capturing heading sentences.
  */
     (reader: SentenceReader) : AbstractProvider<HeadingEvent?>(reader, SentenceId.HDT, SentenceId.HDM, SentenceId.HDG) {
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.provider.AbstractProvider#createEvent()
-	 */
+
     override fun createProviderEvent(): HeadingEvent? {
         for (s in getSentences()) {
             if (s is HeadingSentence) {
@@ -53,19 +50,11 @@ class HeadingProvider
         }
         return null
     }
-
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.provider.AbstractProvider#isReady()
-	 */
+    
     override fun isReady(): Boolean {
         return hasOne("HDT", "HDM", "HDG")
     }
 
-    /*
-	 * (non-Javadoc)
-	 * @see net.sf.marineapi.provider.AbstractProvider#isValid()
-	 */
     override fun isValid(): Boolean {
         return true
     }
