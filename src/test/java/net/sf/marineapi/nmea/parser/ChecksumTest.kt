@@ -23,7 +23,7 @@ package net.sf.marineapi.nmea.parser
 import net.sf.marineapi.nmea.sentence.Checksum.add
 import net.sf.marineapi.nmea.sentence.Checksum.calculate
 import net.sf.marineapi.nmea.sentence.Checksum.index
-import org.junit.Assert
+
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

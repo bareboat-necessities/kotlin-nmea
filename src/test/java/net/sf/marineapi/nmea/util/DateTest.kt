@@ -20,7 +20,6 @@
  */
 package net.sf.marineapi.nmea.util
 
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

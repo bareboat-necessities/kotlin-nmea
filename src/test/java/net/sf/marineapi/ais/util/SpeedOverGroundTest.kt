@@ -1,7 +1,6 @@
 package net.sf.marineapi.ais.util
 
 import net.sf.marineapi.ais.util.SpeedOverGround.toKnots
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Test
 

@@ -11,7 +11,7 @@ import net.sf.marineapi.nmea.sentence.Sentence
 import net.sf.marineapi.nmea.sentence.SentenceId
 import net.sf.marineapi.nmea.sentence.TXTSentence
 import net.sf.marineapi.test.util.UDPServerMock
-import org.junit.Assert
+
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

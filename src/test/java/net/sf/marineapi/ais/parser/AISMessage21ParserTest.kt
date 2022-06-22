@@ -2,7 +2,7 @@ package net.sf.marineapi.ais.parser
 
 import net.sf.marineapi.ais.message.AISMessage21
 import net.sf.marineapi.ais.util.Sixbit
-import org.junit.Assert
+
 import org.junit.Assert.*
 import org.junit.Test
 

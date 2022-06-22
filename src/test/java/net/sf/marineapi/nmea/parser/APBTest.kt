@@ -4,7 +4,7 @@ import net.sf.marineapi.nmea.sentence.APBSentence
 import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.Direction
-import org.junit.Assert
+
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -12,6 +12,7 @@ import org.junit.Test
 class APBTest {
     private var apb: APBSentence? = null
     private var empty: APBSentence? = null
+
     @Before
     @Throws(Exception::class)
     fun setUp() {

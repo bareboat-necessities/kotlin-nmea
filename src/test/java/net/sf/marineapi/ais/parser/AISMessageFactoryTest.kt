@@ -4,7 +4,7 @@ import net.sf.marineapi.ais.message.AISMessage01
 import net.sf.marineapi.ais.message.AISMessage05
 import net.sf.marineapi.nmea.parser.SentenceFactory
 import net.sf.marineapi.nmea.sentence.AISSentence
-import org.junit.Assert
+
 import org.junit.Assert.*
 import org.junit.Test
 

@@ -4,11 +4,11 @@ import net.sf.marineapi.nmea.sentence.TalkerId
 import net.sf.marineapi.nmea.sentence.WPLSentence
 import net.sf.marineapi.nmea.util.CompassPoint
 import net.sf.marineapi.nmea.util.Waypoint
-import org.junit.Assert
+
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import java.lang.Double
+
 
 /**
  * WPLTest
@@ -39,15 +39,15 @@ class WPLTest {
      */
     @Test
     fun testGetWaypoint() {
-        val lat = java.lang.Double.valueOf(55 + 36.200 / 60)
-        val lon = java.lang.Double.valueOf(14 + 36.500 / 60)
+        val lat = 55 + 36.200 / 60
+        val lon = 14 + 36.500 / 60
         val wp = wpl!!.getWaypoint()
         assertNotNull(wp)
         assertEquals("RUSKI", wp!!.id)
         assertEquals(CompassPoint.NORTH, wp.latitudeHemisphere)
         assertEquals(CompassPoint.EAST, wp.longitudeHemisphere)
-        assertEquals(lat, Double.valueOf(wp.latitude), 0.0000001)
-        assertEquals(lon, Double.valueOf(wp.longitude), 0.0000001)
+        assertEquals(lat, wp.latitude, 0.0000001)
+        assertEquals(lon, wp.longitude, 0.0000001)
     }
 
     /**

@@ -6,7 +6,7 @@ import net.sf.marineapi.nmea.parser.SentenceFactory.Companion.instance
 import net.sf.marineapi.nmea.sentence.BODSentence
 import net.sf.marineapi.nmea.sentence.GGASentence
 import net.sf.marineapi.nmea.sentence.Sentence
-import org.junit.Assert
+
 import org.junit.Assert.*
 import org.junit.Test
 

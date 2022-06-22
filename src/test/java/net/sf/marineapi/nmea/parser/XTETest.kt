@@ -6,7 +6,7 @@ import net.sf.marineapi.nmea.sentence.XTESentence
 import net.sf.marineapi.nmea.util.DataStatus
 import net.sf.marineapi.nmea.util.Direction
 import net.sf.marineapi.nmea.util.FaaMode
-import org.junit.Assert
+
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
